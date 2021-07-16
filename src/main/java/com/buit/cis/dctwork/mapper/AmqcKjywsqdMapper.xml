@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.dctwork.dao.AmqcKjywsqdDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        SQDH as sqdh,JZLX as jzlx,JZXH as jzxh,BRKS as brks,BRBQ as brbq,BRCH as brch,JBBH as jbbh,YSYKJY as ysykjy,MQBQ as mqbq,YPXH as ypxh,RZYL as rzyl,YYLC as yylc,GRBQYZZ as grbqyzz,MYGNDX as mygndx,SQYWMG as sqywmg,JYBGH as jybgh,HZKS as hzks,QTYY as qtyy,QTYYXS as qtyyxs,SQYS as sqys,DJRQ as djrq,SQRQ as sqrq,SQKZR as sqkzr,SPYL as spyl,ZJYJ as zjyj,ZJQM as zjqm,ZJSPRQ as zjsprq,YWKSHYS as ywkshys,YWKSHRQ as ywkshrq,DJZT as djzt,SPJG as spjg,ZFBZ as zfbz,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO AMQC_KJYWSQD (
+            SQDH ,
+            JZLX ,
+            JZXH ,
+            BRKS ,
+            BRBQ ,
+            BRCH ,
+            JBBH ,
+            YSYKJY ,
+            MQBQ ,
+            YPXH ,
+            RZYL ,
+            YYLC ,
+            GRBQYZZ ,
+            MYGNDX ,
+            SQYWMG ,
+            JYBGH ,
+            HZKS ,
+            QTYY ,
+            QTYYXS ,
+            SQYS ,
+            DJRQ ,
+            SQRQ ,
+            SQKZR ,
+            SPYL ,
+            ZJYJ ,
+            ZJQM ,
+            ZJSPRQ ,
+            YWKSHYS ,
+            YWKSHRQ ,
+            DJZT ,
+            SPJG ,
+            ZFBZ ,
+            JGID 
+        ) VALUES (
+            #{sqdh} ,
+            #{jzlx} ,
+            #{jzxh} ,
+            #{brks} ,
+            #{brbq} ,
+            #{brch} ,
+            #{jbbh} ,
+            #{ysykjy} ,
+            #{mqbq} ,
+            #{ypxh} ,
+            #{rzyl} ,
+            #{yylc} ,
+            #{grbqyzz} ,
+            #{mygndx} ,
+            #{sqywmg} ,
+            #{jybgh} ,
+            #{hzks} ,
+            #{qtyy} ,
+            #{qtyyxs} ,
+            #{sqys} ,
+            #{djrq} ,
+            #{sqrq} ,
+            #{sqkzr} ,
+            #{spyl} ,
+            #{zjyj} ,
+            #{zjqm} ,
+            #{zjsprq} ,
+            #{ywkshys} ,
+            #{ywkshrq} ,
+            #{djzt} ,
+            #{spjg} ,
+            #{zfbz} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" > 
+        UPDATE AMQC_KJYWSQD SET
+            JZLX = #{jzlx} ,
+            JZXH = #{jzxh} ,
+            BRKS = #{brks} ,
+            BRBQ = #{brbq} ,
+            BRCH = #{brch} ,
+            JBBH = #{jbbh} ,
+            YSYKJY = #{ysykjy} ,
+            MQBQ = #{mqbq} ,
+            YPXH = #{ypxh} ,
+            RZYL = #{rzyl} ,
+            YYLC = #{yylc} ,
+            GRBQYZZ = #{grbqyzz} ,
+            MYGNDX = #{mygndx} ,
+            SQYWMG = #{sqywmg} ,
+            JYBGH = #{jybgh} ,
+            HZKS = #{hzks} ,
+            QTYY = #{qtyy} ,
+            QTYYXS = #{qtyyxs} ,
+            SQYS = #{sqys} ,
+            DJRQ = #{djrq} ,
+            SQRQ = #{sqrq} ,
+            SQKZR = #{sqkzr} ,
+            SPYL = #{spyl} ,
+            ZJYJ = #{zjyj} ,
+            ZJQM = #{zjqm} ,
+            ZJSPRQ = #{zjsprq} ,
+            YWKSHYS = #{ywkshys} ,
+            YWKSHRQ = #{ywkshrq} ,
+            DJZT = #{djzt} ,
+            SPJG = #{spjg} ,
+            ZFBZ = #{zfbz} ,
+            JGID = #{jgid} 
+        WHERE 
+            SQDH = #{sqdh}             
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM AMQC_KJYWSQD WHERE
+        SQDH = #{sqdh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM AMQC_KJYWSQD <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="AmqcKjywsqd">
+        SELECT <include refid="columns" />
+            FROM AMQC_KJYWSQD 
+            WHERE 
+        SQDH = #{sqdh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqdh)"> -->
+<!--                     AND SQDH = #{sqdh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jzlx)"> -->
+<!--                     AND JZLX = #{jzlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jzxh)"> -->
+<!--                     AND JZXH = #{jzxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brks)"> -->
+<!--                     AND BRKS = #{brks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brbq)"> -->
+<!--                     AND BRBQ = #{brbq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brch)"> -->
+<!--                     AND BRCH = #{brch} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jbbh)"> -->
+<!--                     AND JBBH = #{jbbh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ysykjy)"> -->
+<!--                     AND YSYKJY = #{ysykjy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mqbq)"> -->
+<!--                     AND MQBQ = #{mqbq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ypxh)"> -->
+<!--                     AND YPXH = #{ypxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rzyl)"> -->
+<!--                     AND RZYL = #{rzyl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yylc)"> -->
+<!--                     AND YYLC = #{yylc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(grbqyzz)"> -->
+<!--                     AND GRBQYZZ = #{grbqyzz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mygndx)"> -->
+<!--                     AND MYGNDX = #{mygndx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqywmg)"> -->
+<!--                     AND SQYWMG = #{sqywmg} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jybgh)"> -->
+<!--                     AND JYBGH = #{jybgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hzks)"> -->
+<!--                     AND HZKS = #{hzks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qtyy)"> -->
+<!--                     AND QTYY = #{qtyy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qtyyxs)"> -->
+<!--                     AND QTYYXS = #{qtyyxs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqys)"> -->
+<!--                     AND SQYS = #{sqys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(djrq)"> -->
+<!--                     AND DJRQ = #{djrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqrq)"> -->
+<!--                     AND SQRQ = #{sqrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqkzr)"> -->
+<!--                     AND SQKZR = #{sqkzr} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(spyl)"> -->
+<!--                     AND SPYL = #{spyl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zjyj)"> -->
+<!--                     AND ZJYJ = #{zjyj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zjqm)"> -->
+<!--                     AND ZJQM = #{zjqm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zjsprq)"> -->
+<!--                     AND ZJSPRQ = #{zjsprq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ywkshys)"> -->
+<!--                     AND YWKSHYS = #{ywkshys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ywkshrq)"> -->
+<!--                     AND YWKSHRQ = #{ywkshrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(djzt)"> -->
+<!--                     AND DJZT = #{djzt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(spjg)"> -->
+<!--                     AND SPJG = #{spjg} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfbz)"> -->
+<!--                     AND ZFBZ = #{zfbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM AMQC_KJYWSQD 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="AmqcKjywsqd">
+        SELECT <include refid="columns" />
+        FROM AMQC_KJYWSQD 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 查询审批通过的抗菌药物 -->
+    <select id="queryApprovedInfo" resultType="java.util.HashMap">
+        select sum(SPYL) as SPYL
+		  from AMQC_KJYWSQD
+		 where JZLX = 1
+		   and JZXH = #{ZYH}
+		   and YPXH = #{YPXH}
+		   and (SPJG = 1 or SPJG = 2)
+		   and ZFBZ = 0
+		   and JGID = #{JGID}
+		 group by YPXH
+    </select>
+    
+    <!-- 抗菌药物审批列表 -->
+    <select id="queryAmqcAndMedicineInfo" resultType="com.buit.cis.dctwork.response.AmqcMedicineResp">
+       select amqc_sysq0x0_.SQDH    as sqdh,
+	       amqc_sysq0x0_.JZLX    as JZLX,
+	       amqc_sysq0x0_.JZXH    as JZXH,
+	       amqc_sysq0x0_.BRKS    as BRKS,
+	       amqc_sysq0x0_.BRBQ    as BRBQ,
+	       amqc_sysq0x0_.BRCH    as BRCH,
+	       amqc_sysq0x0_.JBBH    as JBBH,
+	       amqc_sysq0x0_.YSYKJY  as YSYKJY,
+	       amqc_sysq0x0_.MQBQ    as MQBQ,
+	       amqc_sysq0x0_.YPXH    as YPXH,
+	       amqc_sysq0x0_.RZYL    as RZYL,
+	       amqc_sysq0x0_.YYLC    as YYLC,
+	       amqc_sysq0x0_.GRBQYZZ as GRBQYZZ,
+	       amqc_sysq0x0_.MYGNDX  as MYGNDX,
+	       amqc_sysq0x0_.SQYWMG  as SQYWMG,
+	       amqc_sysq0x0_.JYBGH   as JYBGH,
+	       amqc_sysq0x0_.HZKS    as HZKS,
+	       amqc_sysq0x0_.QTYY    as QTYY,
+	       amqc_sysq0x0_.QTYYXS  as QTYYXS,
+	       amqc_sysq0x0_.SQYS    as SQYS,
+	       amqc_sysq0x0_.DJRQ    as DJRQ,
+	       amqc_sysq0x0_.SQRQ    as SQRQ,
+	       amqc_sysq0x0_.SQKZR   as SQKZR,
+	       amqc_sysq0x0_.SPYL    as SPYL,
+	       amqc_sysq0x0_.ZJYJ    as ZJYJ,
+	       amqc_sysq0x0_.ZJQM    as ZJQM,
+	       amqc_sysq0x0_.ZJSPRQ  as ZJSPRQ,
+	       amqc_sysq0x0_.YWKSHYS as YWKSHYS,
+	       amqc_sysq0x0_.YWKSHRQ as YWKSHRQ,
+	       amqc_sysq0x0_.DJZT    as DJZT,
+	       amqc_sysq0x0_.SPJG    as SPJG,
+	       amqc_sysq0x0_.ZFBZ    as ZFBZ,
+	       amqc_sysq0x0_.JGID    as JGID,
+           IM_HZRY1_.ZYHM 		 as ZYHM,
+		   IM_HZRY1_.BRXM 		 as BRXB,
+		   IM_HZRY1_.BRXB 		 as BRXB,
+		   DRUGS_TYPK2_.YPMC 		 as YPMC,
+		   round(amqc_sysq0x0_.RZYL * amqc_sysq0x0_.YYLC, 2) as HJYL				
+	  from AMQC_KJYWSQD amqc_sysq0x0_, IM_HZRY IM_HZRY1_, DRUGS_TYPK DRUGS_TYPK2_
+	 where IM_HZRY1_.ZYH = amqc_sysq0x0_.JZXH
+	   and DRUGS_TYPK2_.YPXH = amqc_sysq0x0_.YPXH
+       <if test="@sqlt.Ognl@isNotEmpty(jgid)"> 
+             and amqc_sysq0x0_.JGID = #{jgid}
+       </if>
+       <if test="@sqlt.Ognl@isNotEmpty(zfbz)"> 
+             and amqc_sysq0x0_.ZFBZ = #{zfbz}
+       </if> 
+       <if test="@sqlt.Ognl@isNotEmpty(jzlx)"> 
+             and amqc_sysq0x0_.JZLX = #{jzlx}
+       </if> 
+       <if test="@sqlt.Ognl@isNotEmpty(brks)"> 
+             and amqc_sysq0x0_.BRKS = #{brks}
+       </if> 
+       <if test="@sqlt.Ognl@isNotEmpty(djzt)"> 
+             and amqc_sysq0x0_.DJZT = #{djzt}
+       </if>
+       <if test="@sqlt.Ognl@isNotEmpty(spjg)"> 
+             and amqc_sysq0x0_.SPJG = #{spjg}
+       </if> 
+       <if test="@sqlt.Ognl@isNotEmpty(sqksrq)"> 
+             and amqc_sysq0x0_.SQRQ &gt;= #{sqksrq}
+       </if> 
+       <if test="@sqlt.Ognl@isNotEmpty(sqjsrq)"> 
+             and amqc_sysq0x0_.SQRQ &lt;= #{sqjsrq}
+       </if>
+       <if test="@sqlt.Ognl@isNotEmpty(zyhm)"> 
+             and IM_HZRY1_.ZYHM = #{zyhm}
+       </if>  
+       <if test="@sqlt.Ognl@isNotEmpty(brxm)"> 
+             and IM_HZRY1_.BRXM like concat(concat('%',#{brxm}),'%')
+       </if>  
+       <if test="@sqlt.Ognl@isNotEmpty(brxb)"> 
+             and IM_HZRY1_.BRXB = #{brxb}
+       </if>     
+       <if test="@sqlt.Ognl@isNotEmpty(brch)"> 
+             and amqc_sysq0x0_.BRCH = #{brch}
+       </if>  
+
+    </select>
+    
+</mapper>
+

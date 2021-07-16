@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.ims.dao.ImRzjzDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JZRQ as jzrq,CZGH as czgh,JGID as jgid,YJJE as yjje,SSYJJE as ssyjje,
+        TKYJJE as tkyjje,JSXJJE as jsxjje,JSZPJE as jszpje,JSPOSJE as jsposje,
+        SRJE as srje,QFJE as qfje,YHJE as yhje,JZZE as jzze,YBJZ as ybjz,SBJZ as sbjz,QTJZ as qtjz,
+        SYJJXJ as syjjxj,SYJJZP as syjjzp,SYJJPOS as syjjpos,TYJJXJ as tyjjxj,TYJJZP as tyjjzp,TYJJPOS as tyjjpos,HZRQ as hzrq,
+        JSWXJE as jswxje,JSZFBJE as jszfbje,JSGZJE as jsgzje,JSZZJE as jszzje,SYJJWX as syjjwx,
+        SYJJZFB as syjjzfb,SYJJEWM as syjjewm,SYJJZZ as syjjzz,TYJJWX as tyjjwx,TYJJZFB as tyjjzfb,
+        TYJJEWM as tyjjewm,TYJJZZ as tyjjzz
+    </sql>
+    <insert id="insert">
+        INSERT INTO IM_RZJZ (JZRQ,CZGH,JGID,YJJE,SSYJJE,TKYJJE,JSXJJE,JSZPJE,JSPOSJE,SRJE,QFJE,YHJE,JZZE,YBJZ,SBJZ,QTJZ,
+        SYJJXJ,SYJJZP,SYJJPOS,TYJJXJ,TYJJZP,TYJJPOS,HZRQ,
+        JSWXJE,JSZFBJE,JSGZJE,JSZZJE,SYJJWX,SYJJZFB,SYJJEWM,SYJJZZ,TYJJWX,TYJJZFB,TYJJEWM,TYJJZZ
+        ) VALUES (
+            #{jzrq},#{czgh},#{jgid},#{yjje},#{ssyjje},#{tkyjje},#{jsxjje},#{jszpje},#{jsposje},#{srje},
+            #{qfje},#{yhje},#{jzze},#{ybjz},#{sbjz},#{qtjz},#{syjjxj},#{syjjzp},#{syjjpos},#{tyjjxj},#{tyjjzp},#{tyjjpos},#{hzrq},
+            #{jswxje},#{jszfbje},#{jsgzje},#{jszzje},#{syjjwx},#{syjjzfb},#{syjjewm},#{syjjzz},#{tyjjwx},
+            #{tyjjzfb},#{tyjjewm},#{tyjjzz}
+        )
+    </insert>
+
+    <!--     业务sql      -->
+    <!--查询有没结账过-->
+    <select id="quertCount" resultType="java.lang.Integer">
+        select count(1) from IM_RZJZ where JZRQ &gt;=#{begin} and JZRQ &lt;#{end} and  CZGH=#{czgh}  and JGID=#{jgid}
+    </select>
+    <!--查询明细-->
+    <select id="queryMx" resultType="java.util.Map">
+    select MAX(JZRQ) as JZRQ from IM_RZJZ where CZGH=#{czgh}  and JGID= #{jgid}
+    </select>
+    <!-- 删除结账信息 -->
+    <select id="doCancelCommit">
+    delete from IM_RZJZ where JGID=#{jgid} and CZGH=#{czgh} and JZRQ=#{jzrq}
+    </select>
+
+    <select id="getById" resultType="ImRzjz">
+        SELECT <include refid="columns" />
+        FROM IM_RZJZ
+        WHERE
+        JZRQ = #{jzrq}  AND
+        CZGH = #{czgh}
+    </select>
+
+    <select id="queryJzxx" resultType="ImRzjz">
+        SELECT <include refid="columns" />
+        FROM IM_RZJZ
+        WHERE
+        JZRQ = #{adt_jzrq}  AND
+        CZGH = #{czgh}  AND
+        JGID = #{jgid}
+    </select>
+
+    <!--查询最大结账日期-->
+    <select id="queryMaxJzrq" resultType="java.util.Map">
+    select  max(JZRQ) as JZRQ from IM_RZJZ where CZGH=#{czgh}  and JGID=#{jgid}
+    </select>
+
+
+    <!--日报查询-->
+    <select id="queryCommit" resultType="java.util.Map">
+        select JZRQ as JZRQ,CZGH as CZGH from IM_RZJZ where CZGH= #{czgh} and JGID=#{jgid} and HZRQ is null order by JZRQ desc
+    </select>
+    <!--取消日报查询-->
+    <select id="queryCancelCommit" resultType="java.util.Map">
+        select JZRQ as JZRQ,CZGH as CZGH from IM_RZJZ where CZGH= #{czgh} and JGID=#{jgid} and HZRQ is null order by JZRQ desc limit 0,7
+    </select>
+
+    <!--汇总数据查询-->
+    <select id="queryHzxx" resultType="java.util.Map">
+        SELECT
+        sum( b.srhj ) AS ZJJE,
+        sum( b.yhje ) AS ZKJE,
+        sum( b.sjsr ) AS SJJE,
+        xmmc AS SFMC,
+        ( SELECT c.USER_NAME FROM sys_user c WHERE b.czgh = c.user_id ) AS YGXM
+        FROM
+        im_rzjz a
+        JOIN im_rzjz_mx b ON a.jzrq = b.jzrq
+        WHERE
+        a.hzrq IS NULL
+        AND a.jzrq &lt;#{hzrq}
+        AND a.jgid = #{jgid}
+        GROUP BY
+        b.xmlx,
+        b.czgh
+    </select>
+
+    <!--汇总数据查询-->
+    <select id="getHzxx" resultType="java.util.Map">
+        SELECT
+        sum( b.srhj ) AS ZJJE,
+        sum( b.yhje ) AS ZKJE,
+        sum( b.sjsr ) AS SJJE,
+        xmmc AS SFMC,
+        ( SELECT c.USER_NAME FROM sys_user c WHERE b.czgh = c.user_id ) AS YGXM
+        FROM
+        im_rzjz a
+        JOIN im_rzjz_mx b ON a.jzrq = b.jzrq
+        WHERE
+        a.hzrq = #{hzrq}
+        AND a.jgid = #{jgid}
+        GROUP BY
+        b.xmlx,
+        b.czgh
+    </select>
+
+    <select id="checkCollect" resultType="java.util.Map">
+        SELECT
+        count(1) as row_count
+        FROM
+        im_rzjz
+        WHERE
+        hzrq is null
+        and jzrq &lt; #{hzjsrq}
+        and jgid = #{jgid}
+    </select>
+
+    <!--查询最大汇总日期-->
+    <select id="queryMaxHzrq" resultType="java.lang.String">
+        select  max(HZRQ) as hzrq from IM_RZJZ where JGID=#{jgid}
+    </select>
+
+    <!-- 保存汇总信息 -->
+    <update id="saveHz">
+        UPDATE im_rzjz
+        SET hzrq = #{hzrq}
+        where hzrq is null
+        and jzrq &lt; #{hzrq}
+        and jgid = #{jgid}
+    </update>
+
+    <!-- 查询汇总时间内的记录 -->
+    <select id="getHzrq" resultType="java.util.Map">
+        select hzrq from im_rzjz where  jgid = #{jgid} and hzrq is not null order by hzrq desc limit 0,7
+    </select>
+    <!-- 查询汇总时间内的记录 -->
+    <update id="doCancelHz">
+        update im_rzjz set hzrq = null where hzrq = #{hzrq} and jgid = #{jgid}
+    </update>
+
+    <!--查询最小结账日期-->
+    <select id="queryMinHzrq" resultType="java.lang.String">
+    select  min(JZRQ) as jzrq from IM_RZJZ where JGID=#{jgid}
+    </select>
+
+    <!--查询最小结账日期-->
+    <select id="queryKshzrq" resultType="java.lang.String">
+        select  max(HZRQ) as hzrq from IM_RZJZ where JGID=#{jgid} and HZRQ != #{hzrq}
+    </select>
+</mapper>
+

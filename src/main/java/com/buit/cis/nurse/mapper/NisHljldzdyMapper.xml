@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 护理记录单自定义内容 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisHljldzdyDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        ZDYID as zdyid,ZYH as zyh,MBLX as mblx,XMDM as xmdm,ZDYMC as zdymc,ZDYNR as zdynr,JLXH as jlxh,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_HLJLDZDY (
+            ZDYID ,
+            ZYH ,
+            MBLX ,
+            XMDM ,
+            ZDYMC ,
+            ZDYNR ,
+            JLXH ,
+            JGID 
+        ) VALUES (
+            #{zdyid} ,
+            #{zyh} ,
+            #{mblx} ,
+            #{xmdm} ,
+            #{zdymc} ,
+            #{zdynr} ,
+            #{jlxh} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_HLJLDZDY SET
+            ZYH = #{zyh} ,
+            MBLX = #{mblx} ,
+            XMDM = #{xmdm} ,
+            ZDYMC = #{zdymc} ,
+            ZDYNR = #{zdynr} ,
+            JLXH = #{jlxh} ,
+            JGID = #{jgid} 
+        WHERE 
+            ZDYID = #{zdyid}           
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_HLJLDZDY WHERE
+        ZDYID = #{zdyid} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_HLJLDZDY <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisHljldzdy">
+        SELECT <include refid="columns" />
+            FROM NIS_HLJLDZDY 
+            WHERE 
+        ZDYID = #{zdyid} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zdyid)"> -->
+<!--                     AND ZDYID = #{zdyid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> -->
+<!--                     AND ZYH = #{zyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mblx)"> -->
+<!--                     AND MBLX = #{mblx} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(xmdm)"> 
+                     AND XMDM = #{xmdm} 
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zdymc)"> -->
+<!--                     AND ZDYMC = #{zdymc} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zdynr)"> 
+                     AND ZDYNR = #{zdynr}
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> 
+                     AND JGID = #{jgid} 
+               </if> 
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_HLJLDZDY 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisHljldzdy">
+        SELECT <include refid="columns" />
+        FROM NIS_HLJLDZDY 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 查询自定义内容 -->
+    <select id="queryZdynrByZdyId" resultType="java.util.HashMap">
+        select zdyid, xmdm, zdymc, substring_index(zdynr,'-',-1) as zdynr
+        from nis_hljldzdy 
+        where jgid = #{jgid}
+        and mblx = #{mblx}
+        <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> 
+              and jlxh = #{jlxh}
+        </if> 
+        order by xmdm, zdyid
+    </select>
+    
+    <!-- 查询自定义内容列标题 -->
+    <select id="queryZdyTitle" resultType="NisHljldzdy">
+        select xmdm, zdymc
+        from nis_hljldzdy 
+        where jgid = #{jgid}
+		and zyh = #{zyh}
+		and mblx = #{mblx}
+        group by xmdm, zdymc
+        order by xmdm
+    </select>
+    
+    <update id="updateZdymc" >
+        UPDATE NIS_HLJLDZDY SET
+            ZDYMC = #{zdymc} ,
+            JGID = #{jgid} 
+        WHERE 
+            XMDM = #{xmdm}           
+    </update>
+</mapper>
+

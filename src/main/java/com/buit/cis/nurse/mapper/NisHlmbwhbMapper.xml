@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 护理单模板维护表 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisHlmbwhbDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        ID as id,HLMBMC as hlmbmc,HLNR as hlnr,ZFPB as zfpb,JGID as jgid,KSDM as ksdm,USERID as userid,CZGH as czgh,CZSJ as czsj,BZXX as bzxx,PYDM as pydm,BQDM as bqdm
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_HLMBWHB (
+            ID ,
+            HLMBMC ,
+            HLNR ,
+            ZFPB ,
+            JGID ,
+            KSDM ,
+            USERID ,
+            CZGH ,
+            CZSJ ,
+            BZXX ,
+            PYDM ,
+            BQDM 
+        ) VALUES (
+            #{id} ,
+            #{hlmbmc} ,
+            #{hlnr} ,
+            #{zfpb} ,
+            #{jgid} ,
+            #{ksdm} ,
+            #{userid} ,
+            #{czgh} ,
+            #{czsj} ,
+            #{bzxx} ,
+            #{pydm} ,
+            #{bqdm}
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_HLMBWHB SET
+            HLMBMC = #{hlmbmc} ,
+            HLNR = #{hlnr} ,
+            ZFPB = #{zfpb} ,
+            JGID = #{jgid} ,
+            KSDM = #{ksdm} ,
+            USERID = #{userid} ,
+            CZGH = #{czgh} ,
+            CZSJ = #{czsj} ,
+            BZXX = #{bzxx} ,
+            PYDM = #{pydm} ,
+            BQDM = #{bqdm}
+        WHERE 
+            ID = #{id}             
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_HLMBWHB WHERE
+        ID = #{id} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_HLMBWHB <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisHlmbwhb">
+        SELECT <include refid="columns" />
+            FROM NIS_HLMBWHB 
+            WHERE 
+        ID = #{id} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(id)"> -->
+<!--                     AND ID = #{id} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(hlmbmc)"> 
+                     AND HLMBMC like concat('%', #{hlmbmc},'%')
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlnr)"> -->
+<!--                     AND HLNR = #{hlnr} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfpb)"> -->
+<!--                     AND ZFPB = #{zfpb} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> 
+                     AND JGID = #{jgid} 
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(ksdm)"> 
+                     AND KSDM = #{ksdm} 
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(userid)"> 
+                     AND USERID = #{userid} 
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czgh)"> -->
+<!--                     AND CZGH = #{czgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czsj)"> -->
+<!--                     AND CZSJ = #{czsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bzxx)"> -->
+<!--                     AND BZXX = #{bzxx} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(pydm)"> 
+                     AND PYDM like concat('%', #{pydm},'%')
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(bqdm)"> 
+                     AND BQDM = #{bqdm}
+                </if> 
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_HLMBWHB 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisHlmbwhb">
+        SELECT <include refid="columns" />
+        FROM NIS_HLMBWHB 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <update id="invalid" >
+        update nis_hlmbwhb set zfpb = #{zfpb} where id = #{id}             
+    </update>
+    
+</mapper>
+

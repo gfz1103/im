@@ -1,0 +1,2 @@
+ALTER TABLE `nis_zdyxmnr` 
+MODIFY COLUMN `XMDM` int(0) NULL DEFAULT NULL COMMENT 'nis_zdyxm(主键关联)' AFTER `JGID`;

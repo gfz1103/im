@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.dctwork.dao.EnrJl02Dao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        MXBH as mxbh,JLBH as jlbh,XMBH as xmbh,XMMC as xmmc,XSMC as xsmc,XMQZ as xmqz,KSLH as kslh,JSLH as jslh,HDBZ as hdbz,YMCLFS as ymclfs,HHJG as hhjg,XGBZ as xgbz,JGID as jgid,LYMXLX as lymxlx,LYMX as lymx,LYBH as lybh,LYBD as lybd
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO ENR_JL02 (
+            MXBH ,
+            JLBH ,
+            XMBH ,
+            XMMC ,
+            XSMC ,
+            XMQZ ,
+            KSLH ,
+            JSLH ,
+            HDBZ ,
+            YMCLFS ,
+            HHJG ,
+            XGBZ ,
+            JGID ,
+            LYMXLX ,
+            LYMX ,
+            LYBH ,
+            LYBD 
+        ) VALUES (
+            #{mxbh} ,
+            #{jlbh} ,
+            #{xmbh} ,
+            #{xmmc} ,
+            #{xsmc} ,
+            #{xmqz} ,
+            #{kslh} ,
+            #{jslh} ,
+            #{hdbz} ,
+            #{ymclfs} ,
+            #{hhjg} ,
+            #{xgbz} ,
+            #{jgid} ,
+            #{lymxlx} ,
+            #{lymx} ,
+            #{lybh} ,
+            #{lybd} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE ENR_JL02 SET
+            JLBH = #{jlbh} ,
+            XMBH = #{xmbh} ,
+            XMMC = #{xmmc} ,
+            XSMC = #{xsmc} ,
+            XMQZ = #{xmqz} ,
+            KSLH = #{kslh} ,
+            JSLH = #{jslh} ,
+            HDBZ = #{hdbz} ,
+            YMCLFS = #{ymclfs} ,
+            HHJG = #{hhjg} ,
+            XGBZ = #{xgbz} ,
+            JGID = #{jgid} ,
+            LYMXLX = #{lymxlx} ,
+            LYMX = #{lymx} ,
+            LYBH = #{lybh} ,
+            LYBD = #{lybd} 
+        WHERE 
+            MXBH = #{mxbh}             
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM ENR_JL02 WHERE
+        MXBH = #{mxbh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM ENR_JL02 <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="EnrJl02">
+        SELECT <include refid="columns" />
+            FROM ENR_JL02 
+            WHERE 
+        MXBH = #{mxbh} 
+    </select>
+    
+    <sql id="where">
+        <where>      
+        		<if test="@sqlt.Ognl@isNotEmpty(jlbh)"> 
+                     AND JLBH = #{jlbh} 
+                </if>      
+                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> 
+					AND JGID = #{jgid} 
+				</if>               
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mxbh)"> -->
+<!--                     AND MXBH = #{mxbh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmbh)"> -->
+<!--                     AND XMBH = #{xmbh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmmc)"> -->
+<!--                     AND XMMC = #{xmmc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xsmc)"> -->
+<!--                     AND XSMC = #{xsmc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmqz)"> -->
+<!--                     AND XMQZ = #{xmqz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kslh)"> -->
+<!--                     AND KSLH = #{kslh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jslh)"> -->
+<!--                     AND JSLH = #{jslh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hdbz)"> -->
+<!--                     AND HDBZ = #{hdbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ymclfs)"> -->
+<!--                     AND YMCLFS = #{ymclfs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hhjg)"> -->
+<!--                     AND HHJG = #{hhjg} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xgbz)"> -->
+<!--                     AND XGBZ = #{xgbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lymxlx)"> -->
+<!--                     AND LYMXLX = #{lymxlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lymx)"> -->
+<!--                     AND LYMX = #{lymx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lybh)"> -->
+<!--                     AND LYBH = #{lybh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lybd)"> -->
+<!--                     AND LYBD = #{lybd} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM ENR_JL02 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="EnrJl02">
+        SELECT <include refid="columns" />
+        FROM ENR_JL02 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 根据记录编号查询护理记录明细 -->
+    <select id="queryEnrJl02ByJlbh" resultType="com.buit.cis.dctwork.response.EnrJl02Resp">
+        SELECT ENR_JL02.MXBH as MXBH,
+		       ENR_JL02.JLBH as JLBH,
+		       ENR_JL02.XMBH as XMBH,
+		       ENR_JL02.XMMC as XMMC,      
+		       ENR_JL02.XSMC as XSMC,
+		       ENR_JL02.XMQZ as XMQZ,
+		       ENR_JL02.KSLH as KSLH,
+		       ENR_JL02.JSLH as JSLH,
+		       ENR_JL02.HDBZ   as HDBZ,
+		       ENR_JL02.YMCLFS as YMCLFS,
+		       ENR_JL02.HHJG   as HHJG,
+		       ENR_JL02.XGBZ   as XGBZ,
+		       0               as GXBZ
+		  FROM ENR_JL02
+		 WHERE ENR_JL02.JLBH = #{jlbh}
+		   AND (ENR_JL02.JGID = #{jgid})
+    </select>
+</mapper>
+

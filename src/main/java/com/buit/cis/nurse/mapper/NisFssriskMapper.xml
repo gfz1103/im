@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 肺栓塞风险因素评估表 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisFssriskDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,MBLX as mblx,BS as bs,SSGZ as ssgz,HDXZL as hdxzl,XL as xl,KX as kx,XZTT as xztt,XZSZ as xzsz,NLDY as nldy,XYGN as xygn,XZB as xzb,HLCS as hlcs,HSQM as hsqm,RQ as rq,ZF as zf,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_FSSRISK (
+            JLXH ,
+            ZYH ,
+            MBLX ,
+            BS ,
+            SSGZ ,
+            HDXZL ,
+            XL ,
+            KX ,
+            XZTT ,
+            XZSZ ,
+            NLDY ,
+            XYGN ,
+            XZB ,
+            HLCS ,
+            HSQM ,
+            RQ ,
+            ZF ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{mblx} ,
+            #{bs} ,
+            #{ssgz} ,
+            #{hdxzl} ,
+            #{xl} ,
+            #{kx} ,
+            #{xztt} ,
+            #{xzsz} ,
+            #{nldy} ,
+            #{xygn} ,
+            #{xzb} ,
+            #{hlcs} ,
+            #{hsqm} ,
+            #{rq} ,
+            #{zf} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_FSSRISK SET
+            ZYH = #{zyh} ,
+            MBLX = #{mblx} ,
+            BS = #{bs} ,
+            SSGZ = #{ssgz} ,
+            HDXZL = #{hdxzl} ,
+            XL = #{xl} ,
+            KX = #{kx} ,
+            XZTT = #{xztt} ,
+            XZSZ = #{xzsz} ,
+            NLDY = #{nldy} ,
+            XYGN = #{xygn} ,
+            XZB = #{xzb} ,
+            HLCS = #{hlcs} ,
+            HSQM = #{hsqm} ,
+            RQ = #{rq} ,
+            ZF = #{zf} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}           
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_FSSRISK WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_FSSRISK <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisFssrisk">
+        SELECT <include refid="columns" />
+            FROM NIS_FSSRISK 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                     AND ZYH = #{zyh}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mblx)"> -->
+<!--                     AND MBLX = #{mblx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bs)"> -->
+<!--                     AND BS = #{bs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ssgz)"> -->
+<!--                     AND SSGZ = #{ssgz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hdxzl)"> -->
+<!--                     AND HDXZL = #{hdxzl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xl)"> -->
+<!--                     AND XL = #{xl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kx)"> -->
+<!--                     AND KX = #{kx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xztt)"> -->
+<!--                     AND XZTT = #{xztt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xzsz)"> -->
+<!--                     AND XZSZ = #{xzsz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(nldy)"> -->
+<!--                     AND NLDY = #{nldy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xygn)"> -->
+<!--                     AND XYGN = #{xygn} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xzb)"> -->
+<!--                     AND XZB = #{xzb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlcs)"> -->
+<!--                     AND HLCS = #{hlcs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hsqm)"> -->
+<!--                     AND HSQM = #{hsqm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rq)"> -->
+<!--                     AND RQ = #{rq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zf)"> -->
+<!--                     AND ZF = #{zf} -->
+<!--                </if> -->
+               <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                    AND JGID = #{jgid}
+               </if>
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_FSSRISK 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisFssrisk">
+        SELECT <include refid="columns" />
+        FROM NIS_FSSRISK 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 肺栓塞风险因素评估表查询树结构-->
+    <select id="queryFssriskTree" resultType="com.buit.cis.nurse.response.NisHzmbResp">
+        SELECT CONCAT(a.RQ, '  ', b.MBMC ) as LABEL, a.MBLX as NAME
+			FROM ( SELECT DATE_FORMAT( RQ, '%m-%d' ) AS RQ, 
+							ZYH as ZYH,
+							MBLX as MBLX,
+							JGID as JGID
+				FROM NIS_FSSRISK 
+				GROUP BY 
+					DATE_FORMAT(RQ, '%m-%d'),
+					ZYH,
+					MBLX,
+					JGID 
+				) a, NIS_HZMB b WHERE
+				a.ZYH = b.ZYH 
+				AND a.MBLX = b.MBLX 
+				AND a.JGID = b.JGID
+				AND a.ZYH = #{zyh}
+				AND a.JGID = #{jgid}
+				order by a.RQ
+    </select>
+    
+    <!-- 根据日期查询 肺栓塞风险因素评估表 -->
+    <select id="queryFssriskByDate" resultType="com.buit.cis.nurse.response.NisFssriskResp">
+       SELECT  JLXH as jlxh,ZYH as zyh,MBLX as mblx,BS as bs,SSGZ as ssgz,HDXZL as hdxzl,XL as xl,KX as kx,XZTT as xztt,XZSZ as xzsz,NLDY as nldy,XYGN as xygn,XZB as xzb,HLCS as hlcs,HSQM as hsqm,date_format(RQ, '%Y-%m-%d %H:%i') as rq,ZF as zf,JGID as jgid
+        FROM NIS_FSSRISK 
+        WHERE ZYH = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and DATE_FORMAT(RQ, '%m-%d') = #{queryDate}
+        </if> 
+        and JGID = #{jgid}
+        order by RQ
+    </select>
+    
+    <!-- 根据日期查询肺栓塞风险因素评估表打印信息 -->
+    <select id="queryPrintFssriskByDate" resultType="java.util.HashMap">
+       select date_format(rq, '%Y-%m-%d %H:%i') as rq,
+        case bs when 'PTE或DVT病史' then '√' else '' end as bs,
+        case hdxzl when '活动性肿瘤' then '√' else '' end as hdxzl,
+        case ssgz when '1月内手术或骨折' then '√' else '' end as ssgz,
+        case when find_in_set('75~94',xl) > 0 then '√' else '' end as xl1,
+        case when find_in_set('≥95',xl) > 0 then '√' else '' end as xl2,
+        case kx when '咯血' then '√' else '' end as kx,
+        case xztt when '单侧下肢疼痛' then '√' else '' end as xztt,
+        case xzsz when '下肢深静脉触痛及单侧下肢水肿' then '√' else '' end as xzsz,
+        case nldy when '年龄>65岁' then '√' else '' end as nldy,
+        case xygn when '血液高凝' then '√' else '' end as xygn,
+        case xzb when '心脏病' then '√' else '' end as xzb,
+        zf,
+        hlcs,
+        hsqm
+        from nis_fssrisk 
+        where zyh = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and date_format(rq, '%m-%d') = #{queryDate}
+        </if> 
+        and jgid = #{jgid}
+        order by rq
+    </select>
+</mapper>
+

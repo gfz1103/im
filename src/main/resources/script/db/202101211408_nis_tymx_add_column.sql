@@ -1,0 +1,2 @@
+ALTER TABLE `nis_tymx` 
+ADD COLUMN `TYYY` varchar(255) NULL COMMENT '退药原因' AFTER `SHBZ`;

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 护理交班单记录数据表 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisHljbdsjbDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,JBDJLXH as jbdjlxh,CYS as cys,RYS as rys,YSSY as yssy,ZCS as zcs,ZRS as zrs,BWBZS as bwbzs,SWS as sws,SSS as sss,YJHLS as yjhls,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_HLJBDSJB (
+            JLXH ,
+            JBDJLXH ,
+            CYS ,
+            RYS ,
+            YSSY ,
+            ZCS ,
+            ZRS ,
+            BWBZS ,
+            SWS ,
+            SSS ,
+            YJHLS ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{jbdjlxh} ,
+            #{cys} ,
+            #{rys} ,
+            #{yssy} ,
+            #{zcs} ,
+            #{zrs} ,
+            #{bwbzs} ,
+            #{sws} ,
+            #{sss} ,
+            #{yjhls} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_HLJBDSJB SET
+            JBDJLXH = #{jbdjlxh} ,
+            CYS = #{cys} ,
+            RYS = #{rys} ,
+            YSSY = #{yssy} ,
+            ZCS = #{zcs} ,
+            ZRS = #{zrs} ,
+            BWBZS = #{bwbzs} ,
+            SWS = #{sws} ,
+            SSS = #{sss} ,
+            YJHLS = #{yjhls} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}             
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_HLJBDSJB WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_HLJBDSJB <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisHljbdsjb">
+        SELECT <include refid="columns" />
+            FROM NIS_HLJBDSJB 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(jbdjlxh)"> 
+                     AND JBDJLXH = #{jbdjlxh} 
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cys)"> -->
+<!--                     AND CYS = #{cys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rys)"> -->
+<!--                     AND RYS = #{rys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yssy)"> -->
+<!--                     AND YSSY = #{yssy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zcs)"> -->
+<!--                     AND ZCS = #{zcs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zrs)"> -->
+<!--                     AND ZRS = #{zrs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bwbzs)"> -->
+<!--                     AND BWBZS = #{bwbzs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sws)"> -->
+<!--                     AND SWS = #{sws} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sss)"> -->
+<!--                     AND SSS = #{sss} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yjhls)"> -->
+<!--                     AND YJHLS = #{yjhls} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_HLJBDSJB 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisHljbdsjb">
+        SELECT <include refid="columns" />
+        FROM NIS_HLJBDSJB 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+</mapper>
+

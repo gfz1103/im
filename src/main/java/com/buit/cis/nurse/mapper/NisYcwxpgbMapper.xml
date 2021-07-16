@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院患者压疮危险因素评估表 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisYcwxpgbDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,MBLX as mblx,GZ as gz,CS as cs,HD as hd,YD as yd,YY as yy,MCJQL as mcjql,YWDR as ywdr,ZF as zf,HSQM as hsqm,RQ as rq,HLCS as hlcs,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_YCWXPGB (
+            JLXH ,
+            ZYH ,
+            MBLX ,
+            GZ ,
+            CS ,
+            HD ,
+            YD ,
+            YY ,
+            MCJQL ,
+            YWDR ,
+            ZF ,
+            HSQM ,
+            RQ ,
+            HLCS ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{mblx} ,
+            #{gz} ,
+            #{cs} ,
+            #{hd} ,
+            #{yd} ,
+            #{yy} ,
+            #{mcjql} ,
+            #{ywdr} ,
+            #{zf} ,
+            #{hsqm} ,
+            #{rq} ,
+            #{hlcs} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_YCWXPGB SET
+            ZYH = #{zyh} ,
+            MBLX = #{mblx} ,
+            GZ = #{gz} ,
+            CS = #{cs} ,
+            HD = #{hd} ,
+            YD = #{yd} ,
+            YY = #{yy} ,
+            MCJQL = #{mcjql} ,
+            YWDR = #{ywdr} ,
+            ZF = #{zf} ,
+            HSQM = #{hsqm} ,
+            RQ = #{rq} ,
+            HLCS = #{hlcs} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}             
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_YCWXPGB WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_YCWXPGB <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisYcwxpgb">
+        SELECT <include refid="columns" />
+            FROM NIS_YCWXPGB 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                     AND ZYH = #{zyh}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mblx)"> -->
+<!--                     AND MBLX = #{mblx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(gz)"> -->
+<!--                     AND GZ = #{gz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cs)"> -->
+<!--                     AND CS = #{cs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hd)"> -->
+<!--                     AND HD = #{hd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yd)"> -->
+<!--                     AND YD = #{yd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yy)"> -->
+<!--                     AND YY = #{yy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mcjql)"> -->
+<!--                     AND MCJQL = #{mcjql} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ywdr)"> -->
+<!--                     AND YWDR = #{ywdr} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zf)"> -->
+<!--                     AND ZF = #{zf} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hsqm)"> -->
+<!--                     AND HSQM = #{hsqm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rq)"> -->
+<!--                     AND RQ = #{rq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlcs)"> -->
+<!--                     AND HLCS = #{hlcs} -->
+<!--                </if> -->
+               <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                    AND JGID = #{jgid}
+               </if>
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_YCWXPGB 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisYcwxpgb">
+        SELECT <include refid="columns" />
+        FROM NIS_YCWXPGB 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 住院患者压疮危险因素评估表查询树结构-->
+    <select id="queryYcwxpgbTree" resultType="com.buit.cis.nurse.response.NisHzmbResp">
+        SELECT CONCAT(a.RQ, '  ', b.MBMC ) as LABEL, a.MBLX as NAME
+			FROM ( SELECT DATE_FORMAT( RQ, '%m-%d' ) AS RQ, 
+							ZYH as ZYH,
+							MBLX as MBLX,
+							JGID as JGID
+				FROM NIS_YCWXPGB 
+				GROUP BY 
+					DATE_FORMAT(RQ, '%m-%d'),
+					ZYH,
+					MBLX,
+					JGID 
+				) a, NIS_HZMB b WHERE
+				a.ZYH = b.ZYH 
+				AND a.MBLX = b.MBLX 
+				AND a.JGID = b.JGID
+				AND a.ZYH = #{zyh}
+				AND a.JGID = #{jgid}
+				order by a.RQ
+    </select>
+    
+    <!-- 根据日期查询住院患者压疮危险因素评估表 -->
+    <select id="queryYcwxpgbByDate" resultType="com.buit.cis.nurse.response.NisYcwxpgbResp">
+       SELECT  JLXH as jlxh,ZYH as zyh,MBLX as mblx,GZ as gz,CS as cs,HD as hd,YD as yd,YY as yy,MCJQL as mcjql,YWDR as ywdr,ZF as zf,HSQM as hsqm,date_format(RQ, '%Y-%m-%d %H:%i') as rq,HLCS as hlcs,JGID as jgid
+        FROM NIS_YCWXPGB 
+        WHERE ZYH = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and DATE_FORMAT(RQ, '%m-%d') = #{queryDate}
+        </if> 
+        and JGID = #{jgid}
+        order by RQ
+    </select>
+    
+    <!-- 根据日期查询住院患者压疮危险因素评估表打印信息 -->
+    <select id="queryPrintYcwxpgbByDate" resultType="java.util.HashMap">
+       select date_format(RQ, '%Y-%m-%d %H:%i') as rq,
+        case gz when '完全受限' then '√' else '' end as gz1,
+        case gz when '严重受限' then '√' else '' end as gz2,
+        case gz when '轻度受限' then '√' else '' end as gz3,
+        case gz when '未受损害' then '√' else '' end as gz4,
+        case cs when '持久潮湿' then '√' else '' end as cs1,
+        case cs when '潮湿' then '√' else '' end as cs2,
+        case cs when '偶尔潮湿' then '√' else '' end as cs3,
+        case cs when '极少潮湿' then '√' else '' end as cs4,
+        case hd when '卧床不起' then '√' else '' end as hd1,
+        case hd when '局限于椅' then '√' else '' end as hd2,
+        case hd when '偶尔行走' then '√' else '' end as hd3,
+        case hd when '行走正常' then '√' else '' end as hd4,
+        case yd when '完全不能' then '√' else '' end as yd1,
+        case yd when '严重限制' then '√' else '' end as yd2,
+        case yd when '轻度限制' then '√' else '' end as yd3,
+        case yd when '不受限制' then '√' else '' end as yd4,
+        case yy when '重度摄入不足' then '√' else '' end as yy1,
+        case yy when '可能摄入不足' then '√' else '' end as yy2,
+        case yy when '摄入适当' then '√' else '' end as yy3,
+        case yy when '摄入良好' then '√' else '' end as yy4,
+        case mcjql when '有' then '√' else '' end as mcjql1,
+        case mcjql when '潜在危险' then '√' else '' end as mcjql2,
+        case mcjql when '无' then '√' else '' end as mcjql3,
+        case ywdr when 1 then '√' else '' end as ywdr,
+        zf,
+        hlcs,
+        hsqm
+        from nis_ycwxpgb 
+        where zyh = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and date_format(rq, '%m-%d') = #{queryDate}
+        </if> 
+        and jgid = #{jgid}
+        order by rq
+    </select>
+</mapper>
+

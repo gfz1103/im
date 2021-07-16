@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.bedresev.dao.ImBedresevDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        jlxh as jlxh,jgid as jgid,card_no as cardNo,brxm as brxm,id_card as idCard,csny as csny,brxz as brxz,lxdh as lxdh,xzz_s as xzzS,xzz_sqs as xzzSqs,xzz_x as xzzX,lxrm as lxrm,yyks as yyks,yyzyrq as yyzyrq,ryqk as ryqk,mzzd as mzzd,bz as bz,brbq as brbq,brch as brch,rytzsj as rytzsj,notice as notice,dczt as dczt,lxrdh as lxrdh,lxgx as lxgx,brxb as brxb,djr as djr,dcczr as dcczr,djsj as djsj,rydjsj as rydjsj,rydjczr as rydjczr,brid as brid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_BEDRESEV (
+            jlxh ,
+            jgid ,
+            card_no ,
+            brxm ,
+            id_card ,
+            csny ,
+            brxz ,
+            lxdh ,
+            xzz_s ,
+            xzz_sqs ,
+            xzz_x ,
+            lxrm ,
+            yyks ,
+            yyzyrq ,
+            ryqk ,
+            mzzd ,
+            bz ,
+            brbq ,
+            brch ,
+            rytzsj ,
+            notice ,
+            dczt ,
+            lxgx,
+            lxrdh,
+            brxb,
+            djr,
+            dcczr,
+            djsj,
+            rydjsj,
+            rydjczr,
+            brid
+        ) VALUES (
+            #{jlxh} ,
+            #{jgid} ,
+            #{cardNo} ,
+            #{brxm} ,
+            #{idCard} ,
+            #{csny} ,
+            #{brxz} ,
+            #{lxdh} ,
+            #{xzzS} ,
+            #{xzzSqs} ,
+            #{xzzX} ,
+            #{lxrm} ,
+            #{yyks} ,
+            #{yyzyrq} ,
+            #{ryqk} ,
+            #{mzzd} ,
+            #{bz} ,
+            #{brbq} ,
+            #{brch} ,
+            #{rytzsj} ,
+            #{notice} ,
+            #{dczt} ,
+             #{lxgx},
+            #{lxrdh},
+            #{brxb},
+             #{djr},
+            #{dcczr},
+            #{djsj},
+             #{rydjsj},
+            #{rydjczr},
+            #{brid}
+        )
+    </insert>
+    
+    <update id="update" >
+    UPDATE IM_BEDRESEV
+    <trim prefix="SET" suffixOverrides=",">
+                    <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                        jgid = #{jgid} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(cardNo)">
+                        card_no = #{cardNo} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(brxm)">
+                        brxm = #{brxm} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(idCard)">
+                        id_card = #{idCard} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(csny)">
+                        csny = #{csny} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(brxz)">
+                        brxz = #{brxz} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(lxdh)">
+                        lxdh = #{lxdh} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(xzzS)">
+                        xzz_s = #{xzzS} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(xzzSqs)">
+                        xzz_sqs = #{xzzSqs} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(xzzX)">
+                        xzz_x = #{xzzX} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(lxrm)">
+                        lxrm = #{lxrm} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(yyks)">
+                        yyks = #{yyks} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(yyzyrq)">
+                        yyzyrq = #{yyzyrq} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(ryqk)">
+                        ryqk = #{ryqk} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(mzzd)">
+                        mzzd = #{mzzd} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(bz)">
+                        bz = #{bz} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(brbq)">
+                        brbq = #{brbq} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(brch)">
+                        brch = #{brch} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(rytzsj)">
+                        rytzsj = #{rytzsj} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(notice)">
+                        notice = #{notice} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(dczt)">
+                        dczt = #{dczt} ,
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(lxrdh)">
+                        lxrdh = #{lxrdh},
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(lxgx)">
+                        lxgx = #{lxgx},
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(brxb)">
+                        brxb = #{brxb},
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(djr)">
+                        djr = #{djr},
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(dcczr)">
+                        dcczr = #{dcczr},
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(djsj)">
+                        djsj = #{djsj},
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(rydjsj)">
+                        rydjsj = #{rydjsj},
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(rydjczr)">
+                        rydjczr = #{rydjczr}
+                    </if>
+                    <if test="@sqlt.Ognl@isNotEmpty(brid)">
+                        brid = #{brid}
+                    </if>
+        </trim>
+            WHERE
+        jlxh = #{jlxh} 
+        </update>
+
+    <delete id="deleteById">
+        DELETE FROM IM_BEDRESEV WHERE
+        jlxh = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM IM_BEDRESEV <include refid="where"/>  
+    </delete>
+
+
+    <select id="getById" resultType="ImBedresev">
+        SELECT <include refid="columns" />
+            FROM IM_BEDRESEV 
+            WHERE 
+        jlxh = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+                <if test="@sqlt.Ognl@isNotEmpty(jlxh)">
+                     AND jlxh = #{jlxh}
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                     AND jgid = #{jgid}
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(cardNo)">
+                     AND card_no like  CONCAT(CONCAT('%',#{cardNo}),'%')
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(brxm)">
+                     AND brxm  like  CONCAT(CONCAT('%',#{brxm}),'%')
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(idCard)"> -->
+<!--                     AND id_card = #{idCard} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(csny)"> -->
+<!--                     AND csny = #{csny} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brxz)"> -->
+<!--                     AND brxz = #{brxz} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(lxdh)">
+                     AND lxdh = #{lxdh}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xzzS)"> -->
+<!--                     AND xzz_s = #{xzzS} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xzzSqs)"> -->
+<!--                     AND xzz_sqs = #{xzzSqs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xzzX)"> -->
+<!--                     AND xzz_x = #{xzzX} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lxrm)"> -->
+<!--                     AND lxrm = #{lxrm} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(yyks)">
+                     AND yyks = #{yyks}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yyzyrq)"> -->
+<!--                     AND yyzyrq = #{yyzyrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ryqk)"> -->
+<!--                     AND ryqk = #{ryqk} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mzzd)"> -->
+<!--                     AND mzzd = #{mzzd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bz)"> -->
+<!--                     AND bz = #{bz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brbq)"> -->
+<!--                     AND brbq = #{brbq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brch)"> -->
+<!--                     AND brch = #{brch} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rytzsj)"> -->
+<!--                     AND rytzsj = #{rytzsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(notice)"> -->
+<!--                     AND notice = #{notice} -->
+<!--                </if> -->
+            <if test='@sqlt.Ognl@isNotEmpty(dczt) and dczt!="2" '>
+                AND dczt = #{dczt}
+            </if>
+            <if test='@sqlt.Ognl@isNotEmpty(dczt) and dczt=="2" '>
+                AND dczt='0' and rydjsj is  null and now()>yyzyrq
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(brxb)">
+                AND brxb = #{brxb}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(brid)">
+                AND brid = #{brid}
+            </if>
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_BEDRESEV 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="ImBedresev">
+        SELECT <include refid="columns" />
+        FROM IM_BEDRESEV 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    <!--取消待床-->
+    <update id="cancelWaitBed">
+        UPDATE IM_BEDRESEV set brch=#{brch},brbq=#{brbq},rytzsj=#{rytzsj},dczt=#{dczt}
+         where jlxh=#{jlxh}
+    </update>
+
+    <!--出院预约统计分析查询-->
+    <select id="queryImBedresevCollect" resultType="com.buit.cis.bedresev.request.QueryImBedresevCollectResp">
+    SELECT
+        yyks,
+        count( 1 ) AS allCollectNum,
+        sum( CASE  WHEN dczt='0' THEN 1 ELSE 0 END ) AS waitCollectNum,
+        sum( CASE  WHEN (dczt='1' and rydjsj is  null) THEN 1 ELSE 0 END ) AS dcCollectNum,
+        sum( CASE  WHEN dczt='0' and rydjsj is  null and now()>yyzyrq THEN 1 ELSE 0 END ) AS yqCollectNum,
+        sum( CASE  WHEN (dczt='1' and rydjsj is not null) THEN 1 ELSE 0 END ) AS ryCollectNum
+
+    FROM
+        im_bedresev
+
+    where 1=1
+        <if test="@sqlt.Ognl@isNotEmpty(yyks)">
+            AND yyks=#{yyks}
+        </if>
+
+        <if test="@sqlt.Ognl@orderIsNotEmpty(endDate)">
+            AND date_format(yyzyrq, '%Y-%m-%d')  &gt;= #{startDate}
+        </if>
+
+        <if test="@sqlt.Ognl@isNotEmpty(startDate)">
+            AND date_format(yyzyrq, '%Y-%m-%d')  &lt;= #{endDate}
+        </if>
+
+        GROUP BY
+        yyks
+    </select>
+
+    <!--待床入院登记-->
+    <update id="updateRydj">
+        update im_bedresev
+        set rydjsj=#{rydjsj},
+            rydjczr=#{rydjczr},
+            dczt=#{dczt}
+        where jlxh = #{jlxh}
+    </update>
+
+    <select id="queryAllBed" resultType="com.buit.cis.bedresev.response.BedInfoResp">
+        SELECT
+        cwsz.JGID,
+        cwsz.BRCH,
+        cwsz.FJHM,
+        cwsz.CWKS,
+        cwsz.KSDM,
+        cwsz.cwxb,
+        hzry.ZYHM,
+        hzry.BRXM,
+        hzry.CYRQ,
+        case WHEN cwsz.ZYH is null THEN '0' ELSE '1' END as cwzt,
+        Exists(select jlxh from im_bedresev where jgid = cwsz.jgid and brbq = cwsz.ksdm and brch = cwsz.BRCH and dczt=1)
+        as dczt
+        FROM
+        im_cwsz cwsz
+        LEFT JOIN im_hzry hzry ON cwsz.ZYH = hzry.ZYH
+        where cwsz.jgid = #{jgid}
+        <if test="@sqlt.Ognl@isNotEmpty(cwks)">
+            AND cwsz.cwks = #{cwks}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(ksdm)">
+            AND cwsz.ksdm = #{ksdm}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(brch)">
+            AND cwsz.brch = #{brch}
+        </if>
+        order by cwsz.KSDM, cwsz.BRCH
+    </select>
+
+    <select id="isAppointedBed" resultType="java.lang.Boolean">
+        select EXISTS(select 1 from his.im_bedresev where jgid = #{jgid} and brid = #{brid} and (dczt = 0 or dczt = 1))
+    </select>
+</mapper>
+

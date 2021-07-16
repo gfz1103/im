@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 产后护理记录单 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisChhldDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,MBLX as mblx,TW as tw,MB as mb,HX as hx,XY as xy,SPO2 as spo2,YL as yl,SKQK as skqk,MR as mr,GD as gd,ZD as zd,LXL as lxl,XZ as xz,GMPQ as gmpq,PNQK as pnqk,NL as nl,PFPG as pfpg,JCHL as jchl,JKJY as jkjy,HSQM as hsqm,RQ as rq,BZXX as bzxx,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_CHHLD (
+            JLXH ,
+            ZYH ,
+            MBLX ,
+            TW ,
+            MB ,
+            HX ,
+            XY ,
+            SPO2 ,
+            YL ,
+            SKQK ,
+            MR ,
+            GD ,
+            ZD ,
+            LXL ,
+            XZ ,
+            GMPQ ,
+            PNQK ,
+            NL ,
+            PFPG ,
+            JCHL ,
+            JKJY ,
+            HSQM ,
+            RQ ,
+            BZXX ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{mblx} ,
+            #{tw} ,
+            #{mb} ,
+            #{hx} ,
+            #{xy} ,
+            #{spo2} ,
+            #{yl} ,
+            #{skqk} ,
+            #{mr} ,
+            #{gd} ,
+            #{zd} ,
+            #{lxl} ,
+            #{xz} ,
+            #{gmpq} ,
+            #{pnqk} ,
+            #{nl} ,
+            #{pfpg} ,
+            #{jchl} ,
+            #{jkjy} ,
+            #{hsqm} ,
+            #{rq} ,
+            #{bzxx} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_CHHLD SET
+            ZYH = #{zyh} ,
+            MBLX = #{mblx} ,
+            TW = #{tw} ,
+            MB = #{mb} ,
+            HX = #{hx} ,
+            XY = #{xy} ,
+            SPO2 = #{spo2} ,
+            YL = #{yl} ,
+            SKQK = #{skqk} ,
+            MR = #{mr} ,
+            GD = #{gd} ,
+            ZD = #{zd} ,
+            LXL = #{lxl} ,
+            XZ = #{xz} ,
+            GMPQ = #{gmpq} ,
+            PNQK = #{pnqk} ,
+            NL = #{nl} ,
+            PFPG = #{pfpg} ,
+            JCHL = #{jchl} ,
+            JKJY = #{jkjy} ,
+            HSQM = #{hsqm} ,
+            RQ = #{rq} ,
+            BZXX = #{bzxx} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}           
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_CHHLD WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_CHHLD <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisChhld">
+        SELECT <include refid="columns" />
+            FROM NIS_CHHLD 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                     AND ZYH = #{zyh}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mblx)"> -->
+<!--                     AND MBLX = #{mblx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tw)"> -->
+<!--                     AND TW = #{tw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mb)"> -->
+<!--                     AND MB = #{mb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hx)"> -->
+<!--                     AND HX = #{hx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xy)"> -->
+<!--                     AND XY = #{xy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(spo2)"> -->
+<!--                     AND SPO2 = #{spo2} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yl)"> -->
+<!--                     AND YL = #{yl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(skqk)"> -->
+<!--                     AND SKQK = #{skqk} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mr)"> -->
+<!--                     AND MR = #{mr} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(gd)"> -->
+<!--                     AND GD = #{gd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zd)"> -->
+<!--                     AND ZD = #{zd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lxl)"> -->
+<!--                     AND LXL = #{lxl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xz)"> -->
+<!--                     AND XZ = #{xz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(gmpq)"> -->
+<!--                     AND GMPQ = #{gmpq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pnqk)"> -->
+<!--                     AND PNQK = #{pnqk} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(nl)"> -->
+<!--                     AND NL = #{nl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pfpg)"> -->
+<!--                     AND PFPG = #{pfpg} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jchl)"> -->
+<!--                     AND JCHL = #{jchl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jkjy)"> -->
+<!--                     AND JKJY = #{jkjy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hsqm)"> -->
+<!--                     AND HSQM = #{hsqm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rq)"> -->
+<!--                     AND RQ = #{rq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bzxx)"> -->
+<!--                     AND BZXX = #{bzxx} -->
+<!--                </if> -->
+               <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                    AND JGID = #{jgid}
+               </if>
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_CHHLD 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisChhld">
+        SELECT <include refid="columns" />
+        FROM NIS_CHHLD 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 产后护理记录单查询树结构-->
+    <select id="queryChhldTree" resultType="com.buit.cis.nurse.response.NisHzmbResp">
+        SELECT CONCAT(a.RQ, '  ', b.MBMC ) as LABEL, a.MBLX as NAME
+			FROM ( SELECT DATE_FORMAT( RQ, '%m-%d' ) AS RQ, 
+							ZYH as ZYH,
+							MBLX as MBLX,
+							JGID as JGID
+				FROM NIS_CHHLD 
+				GROUP BY 
+					DATE_FORMAT(RQ, '%m-%d'),
+					ZYH,
+					MBLX,
+					JGID 
+				) a, NIS_HZMB b WHERE
+				a.ZYH = b.ZYH 
+				AND a.MBLX = b.MBLX 
+				AND a.JGID = b.JGID
+				AND a.ZYH = #{zyh}
+				AND a.JGID = #{jgid}
+				order by a.RQ
+    </select>
+    
+    <!-- 根据日期查询产后护理记录单 -->
+    <select id="queryChhldByDate" resultType="NisChhld">
+       SELECT <include refid="columns" />
+        FROM NIS_CHHLD 
+        WHERE ZYH = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and DATE_FORMAT(RQ, '%m-%d') = #{queryDate}
+        </if> 
+        and JGID = #{jgid}
+        order by RQ
+    </select>
+</mapper>
+

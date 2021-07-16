@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.dctwork.dao.CisZyHzyqdxDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        YQXH as yqxh,SQXH as sqxh,YQDX as yqdx,DXLX as dxlx,QRBZ as qrbz,QRSJ as qrsj,MSGID as msgid,BZXX as bzxx,YQFF as yqff,YQSJ as yqsj,YQYS as yqys,JGID as jgid,NYQHZKS as nyqhzks
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO CIS_ZY_HZYQDX (
+            YQXH ,
+            SQXH ,
+            YQDX ,
+            DXLX ,
+            QRBZ ,
+            QRSJ ,
+            MSGID ,
+            BZXX ,
+            YQFF ,
+            YQSJ ,
+            YQYS ,
+            JGID ,
+            NYQHZKS 
+        ) VALUES (
+            #{yqxh} ,
+            #{sqxh} ,
+            #{yqdx} ,
+            #{dxlx} ,
+            #{qrbz} ,
+            #{qrsj} ,
+            #{msgid} ,
+            #{bzxx} ,
+            #{yqff} ,
+            #{yqsj} ,
+            #{yqys} ,
+            #{jgid} ,
+            #{nyqhzks} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE CIS_ZY_HZYQDX SET
+            SQXH = #{sqxh} ,
+            YQDX = #{yqdx} ,
+            DXLX = #{dxlx} ,
+            QRBZ = #{qrbz} ,
+            QRSJ = #{qrsj} ,
+            MSGID = #{msgid} ,
+            BZXX = #{bzxx} ,
+            YQFF = #{yqff} ,
+            YQSJ = #{yqsj} ,
+            YQYS = #{yqys} ,
+            JGID = #{jgid} ,
+            NYQHZKS = #{nyqhzks} 
+        WHERE 
+            YQXH = #{yqxh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM CIS_ZY_HZYQDX WHERE
+        YQXH = #{yqxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM CIS_ZY_HZYQDX <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="CisZyHzyqdx">
+        SELECT <include refid="columns" />
+            FROM CIS_ZY_HZYQDX 
+            WHERE 
+        YQXH = #{yqxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yqxh)"> -->
+<!--                     AND YQXH = #{yqxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(sqxh)"> 
+                     AND SQXH = #{sqxh} 
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yqdx)"> -->
+<!--                     AND YQDX = #{yqdx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dxlx)"> -->
+<!--                     AND DXLX = #{dxlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qrbz)"> -->
+<!--                     AND QRBZ = #{qrbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qrsj)"> -->
+<!--                     AND QRSJ = #{qrsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(msgid)"> -->
+<!--                     AND MSGID = #{msgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bzxx)"> -->
+<!--                     AND BZXX = #{bzxx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yqff)"> -->
+<!--                     AND YQFF = #{yqff} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yqsj)"> -->
+<!--                     AND YQSJ = #{yqsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yqys)"> -->
+<!--                     AND YQYS = #{yqys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(nyqhzks)"> -->
+<!--                     AND NYQHZKS = #{nyqhzks} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM CIS_ZY_HZYQDX 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="CisZyHzyqdx">
+        SELECT <include refid="columns" />
+        FROM CIS_ZY_HZYQDX 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 根据申请序号更新邀请对象 -->
+    <update id="updateYqdxBySqxh" >
+    	update CIS_ZY_HZYQDX set YQDX = #{yqdx} where SQXH = #{sqxh}         
+    </update>
+    
+    <!-- 批量删除会诊邀请对象 -->
+    <delete id="deleteConsultationYqBySqidList">
+        delete from cis_zy_hzyqdx
+        where sqxh in
+        <foreach collection="sqidList" item="z" open="(" close=")" separator=",">
+            #{z}
+        </foreach>
+    </delete>
+</mapper>
+

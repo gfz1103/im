@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 费用明细表 -->
+<mapper namespace="com.buit.cis.ims.dao.ImFeeFymxYjDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,JGID as jgid,ZYH as zyh,FYRQ as fyrq,FYXH as fyxh,FYMC as fymc,YPCD as ypcd,FYSL as fysl,FYDJ as fydj,ZJJE as zjje,ZFJE as zfje,YSGH as ysgh,SRGH as srgh,QRGH as qrgh,FYBQ as fybq,FYKS as fyks,ZXKS as zxks,JFRQ as jfrq,XMLX as xmlx,YPLX as yplx,FYXM as fyxm,JSCS as jscs,ZFBL as zfbl,YZXH as yzxh,HZRQ as hzrq,YJRQ as yjrq,ZLJE as zlje,ZLXZ as zlxz,YEPB as yepb,DZBL as dzbl,SCBZ as scbz,XFLSH as xflsh,ZXZT as zxzt,ZXCS as zxcs,XMSL as xmsl
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_FEE_FYMX_YJ (
+            JLXH ,
+            JGID ,
+            ZYH ,
+            FYRQ ,
+            FYXH ,
+            FYMC ,
+            YPCD ,
+            FYSL ,
+            FYDJ ,
+            ZJJE ,
+            ZFJE ,
+            YSGH ,
+            SRGH ,
+            QRGH ,
+            FYBQ ,
+            FYKS ,
+            ZXKS ,
+            JFRQ ,
+            XMLX ,
+            YPLX ,
+            FYXM ,
+            JSCS ,
+            ZFBL ,
+            YZXH ,
+            HZRQ ,
+            YJRQ ,
+            ZLJE ,
+            ZLXZ ,
+            YEPB ,
+            DZBL ,
+            SCBZ ,
+            XFLSH ,
+            ZXZT,
+            ZXCS,
+            XMSL 
+        ) VALUES (
+            #{jlxh} ,
+            #{jgid} ,
+            #{zyh} ,
+            #{fyrq} ,
+            #{fyxh} ,
+            #{fymc} ,
+            #{ypcd} ,
+            #{fysl} ,
+            #{fydj} ,
+            #{zjje} ,
+            #{zfje} ,
+            #{ysgh} ,
+            #{srgh} ,
+            #{qrgh} ,
+            #{fybq} ,
+            #{fyks} ,
+            #{zxks} ,
+            #{jfrq} ,
+            #{xmlx} ,
+            #{yplx} ,
+            #{fyxm} ,
+            #{jscs} ,
+            #{zfbl} ,
+            #{yzxh} ,
+            #{hzrq} ,
+            #{yjrq} ,
+            #{zlje} ,
+            #{zlxz} ,
+            #{yepb} ,
+            #{dzbl} ,
+            #{scbz} ,
+            #{xflsh} ,
+            #{zxzt},
+            #{zxcs},
+            #{xmsl}
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE IM_FEE_FYMX_YJ SET
+            JGID = #{jgid} ,
+            ZYH = #{zyh} ,
+            FYRQ = #{fyrq} ,
+            FYXH = #{fyxh} ,
+            FYMC = #{fymc} ,
+            YPCD = #{ypcd} ,
+            FYSL = #{fysl} ,
+            FYDJ = #{fydj} ,
+            ZJJE = #{zjje} ,
+            ZFJE = #{zfje} ,
+            YSGH = #{ysgh} ,
+            SRGH = #{srgh} ,
+            QRGH = #{qrgh} ,
+            FYBQ = #{fybq} ,
+            FYKS = #{fyks} ,
+            ZXKS = #{zxks} ,
+            JFRQ = #{jfrq} ,
+            XMLX = #{xmlx} ,
+            YPLX = #{yplx} ,
+            FYXM = #{fyxm} ,
+            JSCS = #{jscs} ,
+            ZFBL = #{zfbl} ,
+            YZXH = #{yzxh} ,
+            HZRQ = #{hzrq} ,
+            YJRQ = #{yjrq} ,
+            ZLJE = #{zlje} ,
+            ZLXZ = #{zlxz} ,
+            YEPB = #{yepb} ,
+            DZBL = #{dzbl} ,
+            SCBZ = #{scbz} ,
+            XFLSH = #{xflsh} 
+        WHERE 
+            JLXH = #{jlxh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM IM_FEE_FYMX_YJ WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM IM_FEE_FYMX_YJ <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="ImFeeFymxYj">
+        SELECT <include refid="columns" />
+            FROM IM_FEE_FYMX_YJ 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> -->
+<!--                     AND ZYH = #{zyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fyrq)"> -->
+<!--                     AND FYRQ = #{fyrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fyxh)"> -->
+<!--                     AND FYXH = #{fyxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fymc)"> -->
+<!--                     AND FYMC = #{fymc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ypcd)"> -->
+<!--                     AND YPCD = #{ypcd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fysl)"> -->
+<!--                     AND FYSL = #{fysl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fydj)"> -->
+<!--                     AND FYDJ = #{fydj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zjje)"> -->
+<!--                     AND ZJJE = #{zjje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfje)"> -->
+<!--                     AND ZFJE = #{zfje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ysgh)"> -->
+<!--                     AND YSGH = #{ysgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(srgh)"> -->
+<!--                     AND SRGH = #{srgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qrgh)"> -->
+<!--                     AND QRGH = #{qrgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fybq)"> -->
+<!--                     AND FYBQ = #{fybq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fyks)"> -->
+<!--                     AND FYKS = #{fyks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zxks)"> -->
+<!--                     AND ZXKS = #{zxks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jfrq)"> -->
+<!--                     AND JFRQ = #{jfrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmlx)"> -->
+<!--                     AND XMLX = #{xmlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yplx)"> -->
+<!--                     AND YPLX = #{yplx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fyxm)"> -->
+<!--                     AND FYXM = #{fyxm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jscs)"> -->
+<!--                     AND JSCS = #{jscs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfbl)"> -->
+<!--                     AND ZFBL = #{zfbl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yzxh)"> -->
+<!--                     AND YZXH = #{yzxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hzrq)"> -->
+<!--                     AND HZRQ = #{hzrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yjrq)"> -->
+<!--                     AND YJRQ = #{yjrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zlje)"> -->
+<!--                     AND ZLJE = #{zlje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zlxz)"> -->
+<!--                     AND ZLXZ = #{zlxz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yepb)"> -->
+<!--                     AND YEPB = #{yepb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dzbl)"> -->
+<!--                     AND DZBL = #{dzbl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(scbz)"> -->
+<!--                     AND SCBZ = #{scbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xflsh)"> -->
+<!--                     AND XFLSH = #{xflsh} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_FEE_FYMX_YJ 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="ImFeeFymxYj">
+        SELECT <include refid="columns" />
+        FROM IM_FEE_FYMX_YJ 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 根据yzxh批量删除ImFeeFymxYj -->
+    <delete id="deleteByYzxh">
+        delete from IM_FEE_FYMX_YJ where YZXH in (${jlxh}) 
+    </delete>
+    
+    <select id="doQueryByYzxh" resultType="ImFeeFymxYj">
+        SELECT
+			JLXH AS jlxh,
+			JGID AS jgid,
+			ZYH AS zyh,
+			FYRQ AS fyrq,
+			FYXH AS fyxh,
+			FYMC AS fymc,
+			YPCD AS ypcd,
+			ifnull( FYSL, 0 ) AS fysl,
+			FYDJ AS fydj,
+			ZJJE AS zjje,
+			ZFJE AS zfje,
+			YSGH AS ysgh,
+			SRGH AS srgh,
+			QRGH AS qrgh,
+			FYBQ AS fybq,
+			FYKS AS fyks,
+			ZXKS AS zxks,
+			JFRQ AS jfrq,
+			XMLX AS xmlx,
+			YPLX AS yplx,
+			FYXM AS fyxm,
+			JSCS AS jscs,
+			ZFBL AS zfbl,
+			YZXH AS yzxh,
+			HZRQ AS hzrq,
+			YJRQ AS yjrq,
+			ZLJE AS zlje,
+			ZLXZ AS zlxz,
+			YEPB AS yepb,
+			DZBL AS dzbl,
+			SCBZ AS scbz,
+			XFLSH AS xflsh,
+			ifnull( ZXZT, 0 ) AS zxzt,
+			ifnull( ZXCS, 0 ) AS zxcs,
+			ifnull( XMSL, 0 ) AS xmsl 
+		FROM
+			IM_FEE_FYMX_YJ 
+		WHERE
+			yzxh = #{yzxh}
+		LIMIT 1
+    </select>
+    
+    <update id="updateZxztAndZxcs" parameterType="Map">
+		UPDATE IM_FEE_FYMX_YJ
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="@sqlt.Ognl@isNotEmpty(zxzt)">
+				ZXZT = #{zxzt} ,
+			</if>
+			<if test="@sqlt.Ognl@isNotEmpty(zxcs)">
+				ZXCS = #{zxcs} ,
+			</if>
+		</trim>
+		WHERE YZXH = #{yzxh}
+	</update>
+	
+	<!-- 查询检验组套项目 -->
+	<select id="doQueryClinicalXm" resultType="com.buit.cis.ims.response.ImFeeFymxYjJyResp">
+        select distinct
+			d.brxm,
+			d.zyhm,
+			c.brbq,
+			c.brks,
+			c.brch,
+			c.kssj,
+			c.jlxh,
+			c.yzmc,
+			ifnull(a.zxzt,0) as zxzt,
+			ifnull(a.zxcs,0) as zxcs,
+			c.ysgh,
+			c.fhgh,
+			c.ycsl,
+			c.ypdj 
+		from
+			im_fee_fymx_yj a,
+			cis_hzyz b,
+			cis_hzyz_zt c
+			left join im_hzry d on c.zyh = d.zyh 
+		where
+			a.yzxh = b.jlxh 
+			and b.ztyzjlxh = c.jlxh 
+			and c.yzlx = #{yzlx}
+			and a.jgid = #{jgid}
+			and b.jgid = #{jgid}
+			and c.jgid = #{jgid}
+			and c.brbq = #{brbq}
+			<if test="@sqlt.Ognl@isNotEmpty(beginDate) ">
+       			and date_format(c.kssj, '%Y-%m-%d') &gt;= #{beginDate}
+    		</if>
+    		<if test="@sqlt.Ognl@isNotEmpty(endDate) ">
+       			and date_format(c.kssj, '%Y-%m-%d') &lt;= #{endDate}
+    		</if>
+    		<if test="@sqlt.Ognl@isNotEmpty(comprehensive) ">
+       			 and (d.zyhm = #{comprehensive} or c.brch = #{comprehensive}
+                  or d.brxm like concat('%',#{comprehensive},'%'))
+    		</if>
+    		<if test="@sqlt.Ognl@isNotEmpty(zxzt) ">
+       			and ifnull(a.zxzt,0) = #{zxzt}
+    		</if>
+    		<if test="@sqlt.Ognl@isNotEmpty(brks) ">
+       			and c.brks = #{brks}
+    		</if>
+    </select>
+    
+    <!-- lis撤销更新状态 -->
+    <update id="cancelLisZxzt" >
+		update im_fee_fymx_yj set zxzt = 9
+		where yzxh in
+		<foreach collection="yzxhList" item="yzxh" open="(" close=")" separator="," >
+                #{yzxh}
+        </foreach>	
+	</update>
+	
+	<!-- 查询已执行项目 -->
+	<select id="queryXmPrint" resultType="com.buit.cis.ims.response.ImFeeFymxYjPrintResp">
+        select
+		<if test="@sqlt.Ognl@isNotEmpty(zyhList) ">
+        DISTINCT
+		</if>
+        * from (
+		select b.zyh,
+			d.brxm,
+			d.zyhm,
+			c.brbq,
+			c.brks,
+			c.brch,
+			a.fyrq,
+			c.kssj,
+			b.ztyzjlxh as jlxh,
+			c.yzmc,
+		    <if test="@sqlt.Ognl@isEmpty(zyhList) ">
+			b.yzmc as mxmc,
+			</if>
+			c.ysgh,
+			c.fhgh,
+			c.ycsl,
+			c.ypdj,
+			c.yzlx 
+		from
+			im_fee_fymx_yj a,
+			cis_hzyz b,
+			cis_hzyz_zt c
+			left join im_hzry d on c.zyh = d.zyh 
+		where
+			a.yzxh = b.jlxh 
+			and b.ztyzjlxh = c.jlxh 
+			and b.ztbz = 1
+			and a.jgid = #{jgid}
+			and c.brbq = #{brbq}
+		union all
+	select 	b.zyh,
+			c.brxm,
+			c.zyhm,
+			b.brbq,
+			b.brks,
+			b.brch,
+			a.fyrq,
+			b.kssj,
+			b.jlxh,
+			b.yzmc,
+			<if test="@sqlt.Ognl@isEmpty(zyhList) ">
+			'',
+			</if>
+			b.ysgh,
+			b.fhgh,
+			b.ycsl,
+			b.ypdj,
+			b.yzlx  
+		from 	
+			im_fee_fymx a,
+			cis_hzyz b
+			left join im_hzry c on b.zyh = c.zyh 
+		where a.yzxh = b.jlxh 
+		and (b.ztbz = 0 or b.ztbz is null)
+		and b.yplx = 0 
+		and a.jgid = #{jgid} 
+		and b.brbq = #{brbq}) m 
+		where 1 = 1
+		<if test="@sqlt.Ognl@isNotEmpty(comprehensive) ">
+      		and (m.zyhm = #{comprehensive} or m.brch = #{comprehensive}
+               or m.brxm like concat('%',#{comprehensive},'%'))
+   		</if>
+   		<if test="@sqlt.Ognl@isNotEmpty(jlxhList) ">
+   			and m.jlxh in 
+      		<foreach collection="jlxhList" item="jlxh" open="(" close=")" separator="," >
+                #{jlxh}
+        	</foreach>	
+   		</if>
+   		<if test="@sqlt.Ognl@isNotEmpty(zyhList) ">
+   			and m.zyh in 
+      		<foreach collection="zyhList" item="zyh" open="(" close=")" separator="," >
+                #{zyh}
+        	</foreach>	
+   		</if>
+   		<if test="@sqlt.Ognl@isNotEmpty(beginDate) ">
+       			and date_format(m.fyrq, '%Y-%m-%d') &gt;= #{beginDate}
+   		</if>
+   		<if test="@sqlt.Ognl@isNotEmpty(endDate) ">
+      			and date_format(m.fyrq, '%Y-%m-%d') &lt;= #{endDate}
+   		</if>
+   		<if test="@sqlt.Ognl@isNotEmpty(brks) ">
+       			and m.brks = #{brks}
+   		</if>
+   		<if test="@sqlt.Ognl@isNotEmpty(yzlx) ">
+       			and m.yzlx = #{yzlx}
+   		</if>
+		order by m.brch,m.zyhm,m.jlxh desc 
+    </select>
+</mapper>
+

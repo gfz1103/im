@@ -1,0 +1,3898 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院_病区医嘱 -->
+<mapper namespace="com.buit.cis.dctwork.dao.CisHzyzDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,JGID as jgid,ZYH as zyh,YZMC as yzmc,YPXH as ypxh,YPCD as ypcd,XMLX as xmlx,YPLX as yplx,MRCS as mrcs,YCJL as ycjl,YCSL as ycsl,MZCS as mzcs,KSSJ as kssj,QRSJ as qrsj,TZSJ as tzsj,YPDJ as ypdj,YPYF as ypyf,YSGH as ysgh,TZYS as tzys,CZGH as czgh,FHGH as fhgh,SYBZ as sybz,SRKS as srks,ZFPB as zfpb,YJZX as yjzx,YJXH as yjxh,TJHM as tjhm,ZXKS as zxks,APRQ as aprq,YZZH as yzzh,SYPC as sypc,FYSX as fysx,YEPB as yepb,YFSB as yfsb,LSYZ as lsyz,LSBZ as lsbz,YZPB as yzpb,JFBZ as jfbz,BZXX as bzxx,HYXM as hyxm,FYFS as fyfs,TPN as tpn,YSBZ as ysbz,YSTJ as ystj,FYTX as fytx,YZPX as yzpx,SQWH as sqwh,YSYZBH as ysyzbh,SQID as sqid,ZFBZ as zfbz,XML as xml,SQDMC as sqdmc,SSBH as ssbh,YEWYH as yewyh,SRCS as srcs,PZPC as pzpc,SFJG as sfjg,YYTS as yyts,YFGG as yfgg,YFDW as yfdw,YFBZ as yfbz,BRKS as brks,BRBQ as brbq,BRCH as brch,YZZXSJ as yzzxsj,FHBZ as fhbz,FHSJ as fhsj,TZFHBZ as tzfhbz,TZFHR as tzfhr,TZFHSJ as tzfhsj,SFGH as sfgh,SFYJ as sfyj,PSPB as pspb,PSJG as psjg,PSSJ as pssj,PSGH as psgh,YYPS as yyps,PSGL as psgl,PSFH as psfh,CFTS as cfts,YPZS as ypzs,JZ as jz,YQSY as yqsy,DYZT as dyzt,YDLB as ydlb,YWID as ywid,ZFYP as zfyp,SCBZ as scbz,YZZF as yzzf,ZFGH as zfgh,ZXPB as zxpb,ZTBZ as ztbz,ZTYZJLXH as ztyzjlxh,YZLX as yzlx,KJYWSP as kjywsp,TZZT as tzzt,TZTIME as tztime,TZGH as tzgh,ZFSJ as zfsj,DS as ds,ZTYCJL as ztycjl,ZTMRCS as ztmrcs,ZTYCSL as ztycsl
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO CIS_HZYZ (
+            JLXH ,
+            JGID ,
+            ZYH ,
+            YZMC ,
+            YPXH ,
+            YPCD ,
+            XMLX ,
+            YPLX ,
+            MRCS ,
+            YCJL ,
+            YCSL ,
+            MZCS ,
+            KSSJ ,
+            QRSJ ,
+            TZSJ ,
+            YPDJ ,
+            YPYF ,
+            YSGH ,
+            TZYS ,
+            CZGH ,
+            FHGH ,
+            SYBZ ,
+            SRKS ,
+            ZFPB ,
+            YJZX ,
+            YJXH ,
+            TJHM ,
+            ZXKS ,
+            APRQ ,
+            YZZH ,
+            SYPC ,
+            FYSX ,
+            YEPB ,
+            YFSB ,
+            LSYZ ,
+            LSBZ ,
+            YZPB ,
+            JFBZ ,
+            BZXX ,
+            HYXM ,
+            FYFS ,
+            TPN ,
+            YSBZ ,
+            YSTJ ,
+            FYTX ,
+            YZPX ,
+            SQWH ,
+            YSYZBH ,
+            SQID ,
+            ZFBZ ,
+            XML ,
+            SQDMC ,
+            SSBH ,
+            YEWYH ,
+            SRCS ,
+            PZPC ,
+            SFJG ,
+            YYTS ,
+            YFGG ,
+            YFDW ,
+            YFBZ ,
+            BRKS ,
+            BRBQ ,
+            BRCH ,
+            YZZXSJ ,
+            FHBZ ,
+            FHSJ ,
+            TZFHBZ ,
+            TZFHR ,
+            TZFHSJ ,
+            SFGH ,
+            SFYJ ,
+            PSPB ,
+            PSJG ,
+            PSSJ ,
+            PSGH ,
+            YYPS ,
+            PSGL ,
+            PSFH ,
+            CFTS ,
+            YPZS ,
+            JZ ,
+            YQSY ,
+            DYZT ,
+            YDLB ,
+            YWID ,
+            ZFYP ,
+            SCBZ ,
+            YZZF ,
+            ZFGH ,
+            ZXPB ,
+            ZTBZ ,
+            ZTYZJLXH,
+            YZLX,
+            KJYWSP, 
+            TZZT,
+           	TZTIME,
+           	TZGH,
+           	ZFSJ ,
+           	DS ,
+            ZTYCJL ,
+            ZTMRCS ,
+            ZTYCSL
+        ) VALUES (
+            #{jlxh} ,
+            #{jgid} ,
+            #{zyh} ,
+            #{yzmc} ,
+            #{ypxh} ,
+            #{ypcd} ,
+            #{xmlx} ,
+            #{yplx} ,
+            #{mrcs} ,
+            #{ycjl} ,
+            #{ycsl} ,
+            #{mzcs} ,
+            #{kssj} ,
+            #{qrsj} ,
+            #{tzsj} ,
+            #{ypdj} ,
+            #{ypyf} ,
+            #{ysgh} ,
+            #{tzys} ,
+            #{czgh} ,
+            #{fhgh} ,
+            #{sybz} ,
+            #{srks} ,
+            #{zfpb} ,
+            #{yjzx} ,
+            #{yjxh} ,
+            #{tjhm} ,
+            #{zxks} ,
+            #{aprq} ,
+            #{yzzh} ,
+            #{sypc} ,
+            #{fysx} ,
+            #{yepb} ,
+            #{yfsb} ,
+            #{lsyz} ,
+            #{lsbz} ,
+            #{yzpb} ,
+            #{jfbz} ,
+            #{bzxx} ,
+            #{hyxm} ,
+            #{fyfs} ,
+            #{tpn} ,
+            #{ysbz} ,
+            #{ystj} ,
+            #{fytx} ,
+            #{yzpx} ,
+            #{sqwh} ,
+            #{ysyzbh} ,
+            #{sqid} ,
+            #{zfbz} ,
+            #{xml} ,
+            #{sqdmc} ,
+            #{ssbh} ,
+            #{yewyh} ,
+            #{srcs} ,
+            #{pzpc} ,
+            #{sfjg} ,
+            #{yyts} ,
+            #{yfgg} ,
+            #{yfdw} ,
+            #{yfbz} ,
+            #{brks} ,
+            #{brbq} ,
+            #{brch} ,
+            #{yzzxsj} ,
+            #{fhbz} ,
+            #{fhsj} ,
+            #{tzfhbz} ,
+            #{tzfhr} ,
+            #{tzfhsj} ,
+            #{sfgh} ,
+            #{sfyj} ,
+            #{pspb} ,
+            #{psjg} ,
+            #{pssj} ,
+            #{psgh} ,
+            #{yyps} ,
+            #{psgl} ,
+            #{psfh} ,
+            #{cfts} ,
+            #{ypzs} ,
+            #{jz} ,
+            #{yqsy} ,
+            #{dyzt} ,
+            #{ydlb} ,
+            #{ywid} ,
+            #{zfyp} ,
+            #{scbz} ,
+            #{yzzf} ,
+            #{zfgh} ,
+            #{zxpb} ,
+            #{ztbz} ,
+            #{ztyzjlxh} ,
+            #{yzlx} ,
+            #{kjywsp} ,
+            #{tzzt} ,
+            #{tztime} ,
+            #{tzgh} ,
+            #{zfsj} ,
+            #{ds} ,
+            #{ztycjl} ,
+            #{ztmrcs} ,
+            #{ztycsl}
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE CIS_HZYZ SET
+            JGID = #{jgid} ,
+            ZYH = #{zyh} ,
+            YZMC = #{yzmc} ,
+            YPXH = #{ypxh} ,
+            YPCD = #{ypcd} ,
+            XMLX = #{xmlx} ,
+            YPLX = #{yplx} ,
+            MRCS = #{mrcs} ,
+            YCJL = #{ycjl} ,
+            YCSL = #{ycsl} ,
+            MZCS = #{mzcs} ,
+            KSSJ = #{kssj} ,
+            QRSJ = #{qrsj} ,
+            TZSJ = #{tzsj} ,
+            YPDJ = #{ypdj} ,
+            YPYF = #{ypyf} ,
+            YSGH = #{ysgh} ,
+            TZYS = #{tzys} ,
+            CZGH = #{czgh} ,
+            FHGH = #{fhgh} ,
+            SYBZ = #{sybz} ,
+            SRKS = #{srks} ,
+            ZFPB = #{zfpb} ,
+            YJZX = #{yjzx} ,
+            YJXH = #{yjxh} ,
+            TJHM = #{tjhm} ,
+            ZXKS = #{zxks} ,
+            APRQ = #{aprq} ,
+            YZZH = #{yzzh} ,
+            SYPC = #{sypc} ,
+            FYSX = #{fysx} ,
+            YEPB = #{yepb} ,
+            YFSB = #{yfsb} ,
+            LSYZ = #{lsyz} ,
+            LSBZ = #{lsbz} ,
+            YZPB = #{yzpb} ,
+            JFBZ = #{jfbz} ,
+            BZXX = #{bzxx} ,
+            HYXM = #{hyxm} ,
+            FYFS = #{fyfs} ,
+            TPN = #{tpn} ,
+            YSBZ = #{ysbz} ,
+            YSTJ = #{ystj} ,
+            FYTX = #{fytx} ,
+            YZPX = #{yzpx} ,
+            SQWH = #{sqwh} ,
+            YSYZBH = #{ysyzbh} ,
+            SQID = #{sqid} ,
+            ZFBZ = #{zfbz} ,
+            XML = #{xml} ,
+            SQDMC = #{sqdmc} ,
+            SSBH = #{ssbh} ,
+            YEWYH = #{yewyh} ,
+            SRCS = #{srcs} ,
+            PZPC = #{pzpc} ,
+            SFJG = #{sfjg} ,
+            YYTS = #{yyts} ,
+            YFGG = #{yfgg} ,
+            YFDW = #{yfdw} ,
+            YFBZ = #{yfbz} ,
+            BRKS = #{brks} ,
+            BRBQ = #{brbq} ,
+            BRCH = #{brch} ,
+            YZZXSJ = #{yzzxsj} ,
+            FHBZ = #{fhbz} ,
+            FHSJ = #{fhsj} ,
+            TZFHBZ = #{tzfhbz} ,
+            TZFHR = #{tzfhr} ,
+            TZFHSJ = #{tzfhsj} ,
+            SFGH = #{sfgh} ,
+            SFYJ = #{sfyj} ,
+            PSPB = #{pspb} ,
+            PSJG = #{psjg} ,
+            PSSJ = #{pssj} ,
+            PSGH = #{psgh} ,
+            YYPS = #{yyps} ,
+            PSGL = #{psgl} ,
+            PSFH = #{psfh} ,
+            CFTS = #{cfts} ,
+            YPZS = #{ypzs} ,
+            JZ = #{jz} ,
+            YQSY = #{yqsy} ,
+            DYZT = #{dyzt} ,
+            YDLB = #{ydlb} ,
+            YWID = #{ywid} ,
+            ZFYP = #{zfyp} ,
+            SCBZ = #{scbz} ,
+            YZZF = #{yzzf} ,
+            ZFGH = #{zfgh} ,
+            ZXPB = #{zxpb} ,
+            ZTBZ = #{ztbz} ,
+            ZTYZJLXH = #{ztyzjlxh} ,
+            DS = #{ds} ,
+            ZTYCJL = #{ztycjl} ,
+            ZTMRCS = #{ztmrcs} ,
+            ZTYCSL = #{ztycsl}
+        WHERE 
+            JLXH = #{jlxh} 
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM CIS_HZYZ WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM CIS_HZYZ <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="CisHzyz">
+        SELECT <include refid="columns" />
+            FROM CIS_HZYZ 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> 
+                     AND JGID = #{jgid} 
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(ywid)"> 
+                     AND YWID = #{ywid} 
+                </if> 
+				<if test="@sqlt.Ognl@isNotEmpty(ydlb)"> 
+                     AND YDLB = #{ydlb}
+                </if>
+				<if test="@sqlt.Ognl@isNotEmpty(ztyzjlxh)"> 
+                     AND ZTYZJLXH = #{ztyzjlxh} 
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+                     AND ZYH = #{zyh} 
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(ystj)">
+                    AND YSTJ = #{ystj}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yzmc)"> -->
+<!--                     AND YZMC = #{yzmc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ypxh)"> -->
+<!--                     AND YPXH = #{ypxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ypcd)"> -->
+<!--                     AND YPCD = #{ypcd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmlx)"> -->
+<!--                     AND XMLX = #{xmlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yplx)"> -->
+<!--                     AND YPLX = #{yplx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mrcs)"> -->
+<!--                     AND MRCS = #{mrcs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ycjl)"> -->
+<!--                     AND YCJL = #{ycjl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ycsl)"> -->
+<!--                     AND YCSL = #{ycsl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mzcs)"> -->
+<!--                     AND MZCS = #{mzcs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kssj)"> -->
+<!--                     AND KSSJ = #{kssj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qrsj)"> -->
+<!--                     AND QRSJ = #{qrsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tzsj)"> -->
+<!--                     AND TZSJ = #{tzsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ypdj)"> -->
+<!--                     AND YPDJ = #{ypdj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ypyf)"> -->
+<!--                     AND YPYF = #{ypyf} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ysgh)"> -->
+<!--                     AND YSGH = #{ysgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tzys)"> -->
+<!--                     AND TZYS = #{tzys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czgh)"> -->
+<!--                     AND CZGH = #{czgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fhgh)"> -->
+<!--                     AND FHGH = #{fhgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sybz)"> -->
+<!--                     AND SYBZ = #{sybz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(srks)"> -->
+<!--                     AND SRKS = #{srks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfpb)"> -->
+<!--                     AND ZFPB = #{zfpb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yjzx)"> -->
+<!--                     AND YJZX = #{yjzx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yjxh)"> -->
+<!--                     AND YJXH = #{yjxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tjhm)"> -->
+<!--                     AND TJHM = #{tjhm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zxks)"> -->
+<!--                     AND ZXKS = #{zxks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(aprq)"> -->
+<!--                     AND APRQ = #{aprq} -->
+<!--                </if> -->
+               <if test="@sqlt.Ognl@isNotEmpty(yzzh)">
+                    AND YZZH = #{yzzh}
+               </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sypc)"> -->
+<!--                     AND SYPC = #{sypc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fysx)"> -->
+<!--                     AND FYSX = #{fysx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yepb)"> -->
+<!--                     AND YEPB = #{yepb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yfsb)"> -->
+<!--                     AND YFSB = #{yfsb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lsyz)"> -->
+<!--                     AND LSYZ = #{lsyz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lsbz)"> -->
+<!--                     AND LSBZ = #{lsbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yzpb)"> -->
+<!--                     AND YZPB = #{yzpb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jfbz)"> -->
+<!--                     AND JFBZ = #{jfbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bzxx)"> -->
+<!--                     AND BZXX = #{bzxx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hyxm)"> -->
+<!--                     AND HYXM = #{hyxm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fyfs)"> -->
+<!--                     AND FYFS = #{fyfs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tpn)"> -->
+<!--                     AND TPN = #{tpn} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ysbz)"> -->
+<!--                     AND YSBZ = #{ysbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fytx)"> -->
+<!--                     AND FYTX = #{fytx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yzpx)"> -->
+<!--                     AND YZPX = #{yzpx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqwh)"> -->
+<!--                     AND SQWH = #{sqwh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ysyzbh)"> -->
+<!--                     AND YSYZBH = #{ysyzbh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqid)"> -->
+<!--                     AND SQID = #{sqid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfbz)"> -->
+<!--                     AND ZFBZ = #{zfbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xml)"> -->
+<!--                     AND XML = #{xml} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqdmc)"> -->
+<!--                     AND SQDMC = #{sqdmc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ssbh)"> -->
+<!--                     AND SSBH = #{ssbh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yewyh)"> -->
+<!--                     AND YEWYH = #{yewyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(srcs)"> -->
+<!--                     AND SRCS = #{srcs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pzpc)"> -->
+<!--                     AND PZPC = #{pzpc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sfjg)"> -->
+<!--                     AND SFJG = #{sfjg} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yyts)"> -->
+<!--                     AND YYTS = #{yyts} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yfgg)"> -->
+<!--                     AND YFGG = #{yfgg} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yfdw)"> -->
+<!--                     AND YFDW = #{yfdw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yfbz)"> -->
+<!--                     AND YFBZ = #{yfbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brks)"> -->
+<!--                     AND BRKS = #{brks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brbq)"> -->
+<!--                     AND BRBQ = #{brbq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brch)"> -->
+<!--                     AND BRCH = #{brch} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yzzxsj)"> -->
+<!--                     AND YZZXSJ = #{yzzxsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fhbz)"> -->
+<!--                     AND FHBZ = #{fhbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fhsj)"> -->
+<!--                     AND FHSJ = #{fhsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tzfhbz)"> -->
+<!--                     AND TZFHBZ = #{tzfhbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tzfhr)"> -->
+<!--                     AND TZFHR = #{tzfhr} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tzfhsj)"> -->
+<!--                     AND TZFHSJ = #{tzfhsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sfgh)"> -->
+<!--                     AND SFGH = #{sfgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sfyj)"> -->
+<!--                     AND SFYJ = #{sfyj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pspb)"> -->
+<!--                     AND PSPB = #{pspb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(psjg)"> -->
+<!--                     AND PSJG = #{psjg} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pssj)"> -->
+<!--                     AND PSSJ = #{pssj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(psgh)"> -->
+<!--                     AND PSGH = #{psgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yyps)"> -->
+<!--                     AND YYPS = #{yyps} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(psgl)"> -->
+<!--                     AND PSGL = #{psgl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(psfh)"> -->
+<!--                     AND PSFH = #{psfh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cfts)"> -->
+<!--                     AND CFTS = #{cfts} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ypzs)"> -->
+<!--                     AND YPZS = #{ypzs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jz)"> -->
+<!--                     AND JZ = #{jz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yqsy)"> -->
+<!--                     AND YQSY = #{yqsy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dyzt)"> -->
+<!--                     AND DYZT = #{dyzt} -->
+<!--                </if> -->
+
+
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfyp)"> -->
+<!--                     AND ZFYP = #{zfyp} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(scbz)"> -->
+<!--                     AND SCBZ = #{scbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yzzf)"> -->
+<!--                     AND YZZF = #{yzzf} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfgh)"> -->
+<!--                     AND ZFGH = #{zfgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zxpb)"> -->
+<!--                     AND ZXPB = #{zxpb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ztbz)"> -->
+<!--                     AND ZTBZ = #{ztbz} -->
+<!--                </if> -->
+
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM CIS_HZYZ 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="CisHzyz">
+        SELECT <include refid="columns" />
+        FROM CIS_HZYZ 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 根据记录序号集合查询病区医嘱 -->
+    <select id="queryBqyzInfo" resultType="java.util.HashMap">
+    	select JLXH as JLXH,FHBZ,LSBZ,SYBZ from CIS_HZYZ where JLXH in
+		<foreach collection="jlxhlist" item="jlxh" open="(" close=")" separator="," >
+                #{jlxh}
+        </foreach>		
+    </select>
+	
+	<!-- 医嘱删除 -->
+	<delete id="deleteOrdersByJlxh">
+        delete from CIS_HZYZ where SQID in (
+        select a.SQID from (
+         select SQID from CIS_HZYZ where ZTYZJLXH = #{jlxh} ) a
+        ) and YZLX = #{yzlx}   
+    </delete>
+
+    
+    <!-- 查询病区医嘱有关物质信息 -->
+    <select id="queryWardMaterialsInfo" resultType="java.util.HashMap">
+		        select a.JLXH as SBXH,
+		       a.YPXH as FYXH,
+		       (a.YCSL * a.MRCS) as CZSL,
+		       b.BRID as BRID,
+		       c.BRXM as BRXM,
+		       b.JGID as JGID,
+		       d.BZJG as BZJG,
+		       f.JGBZ as JGBZ,
+		       a.ZYH as ZYH
+		  from CIS_HZYZ a, IM_HZRY b, MPI_BRDA c, FEE_YLSFXM d, FEE_YLSFXMDJ f
+		 where a.ZYH = b.ZYH
+		   and a.JGID = b.JGID
+		   and b.BRID = c.BRID
+		   and a.YPXH = d.FYXH
+		   and d.FYXH = f.FYXH
+		   and f.JGID = #{JGID}
+		   and a.JLXH = #{JLXH}
+		   and a.QRSJ is null
+    </select>
+    
+    <!-- 查询护理级别名称 -->
+    <select id="queryLevelOfCare" resultType="java.util.HashMap">
+        select a.YZMC as YZMC
+		  from CIS_HZYZ a
+			 where a.kssj = (select MAX(b.kssj)
+           from CIS_HZYZ b
+          where b.zyh = #{ZYH}
+            and b.yzmc like concat('%', '级护理') 
+            and b.tzsj is null and b.zfbz = 0
+            and (b.ysbz = 0 or (b.ysbz = 1 and b.ystj = 1)))
+		   and a.zyh = #{ZYH}
+		   and a.zfbz = 0
+           and (a.ysbz = 0 or (a.ysbz = 1 and a.ystj = 1))
+		   and a.yzmc like concat('%', '级护理') 
+    </select>
+    
+    <!-- 医生提交更新提交状态 -->
+	<update id="updateBqyzSubmitStatus">
+		update CIS_HZYZ
+		   SET YSTJ = 1,
+		   TJSJ = sysdate()
+		 where YSGH = #{YSGH}
+		   and YSTJ = 0
+		   and YSBZ = 1
+		   and LSYZ = #{LSYZ}
+		   and ZYH = #{ZYH}
+		   and JGID = #{JGID}
+		   and (ZFBZ = 0 OR YZZF IS NULL)
+		   <if test="@sqlt.Ognl@isNotEmpty(yzzhList)"> 
+           	 and YZZH not in 
+	        <foreach collection="yzzhList" item="z" open="(" close=")" separator=",">
+	            #{z}
+	        </foreach>
+	       </if>   
+	</update>
+	
+	<!-- 查询医嘱中所有需要审批的抗菌药物的数量 -->
+    <select id="queryAntibacterialsCount" resultType="java.util.HashMap">
+        select b.YPXH as YPXH, b.YPMC as YPMC, sum(a.YCSL) as TOTALSL
+			  from CIS_HZYZ a, DRUGS_TYPK b, AMQC_KJYWSQD c
+			 where a.YPXH = b.YPXH
+			   and a.ypxh = c.ypxh
+			   and a.zyh = c.jzxh
+			   and c.jzlx = 1
+			   and c.spjg = 0
+			   and c.ZFBZ = 0
+			   and b.KSBZ = 1
+			   and b.SFSP = 1
+			   and a.LSBZ = 0
+			   and a.LSYZ = #{LSYZ}
+			   and a.ZYH = #{ZYH}
+			   and a.JGID = #{JGID}
+			 group by b.YPXH, b.YPMC
+    </select>
+    
+    <!-- 根据组套号取消医生提交状态 -->
+	<update id="cancelSubmitStatusByZtxh">
+		UPDATE CIS_HZYZ 
+		SET YSTJ = #{ystjnew},
+		BZXX = #{bzxx} 
+		WHERE YZZH in 
+		<foreach collection="yzzhList" item="z" open="(" close=")" separator=",">
+            #{z}
+       </foreach>  
+	</update>
+
+	
+	<!-- 根据记录序号取消医生提交状态 -->
+	<update id="cancelSubmitStatusByJlxh">
+		UPDATE CIS_HZYZ 
+		SET YSTJ = #{ystjnew},
+		BZXX = #{bzxx} 
+		where YZZH in (select a.YZZH from (select yzzh from CIS_HZYZ
+		where JLXH = #{jlxh}
+		<if test="@sqlt.Ognl@isNotEmpty(ystj)">
+           AND YSTJ = #{ystj}
+       	</if>
+		) a )
+	</update>
+	
+	<!-- 取消医嘱停嘱 -->
+	<update id="cancelStopOrder">
+		UPDATE CIS_HZYZ 
+		SET LSBZ = 0,
+		TZSJ = NULL,
+		TZYS = NULL 
+		WHERE ZYH = #{zyh} AND YZZH = #{yzzh}
+	</update>
+	
+	<!-- 取消医嘱停嘱(多记录序号) -->
+	<update id="cancelStopOrderM">
+		UPDATE CIS_HZYZ 
+		SET LSBZ = 0,
+		TZSJ = NULL,
+		TZYS = NULL 
+		WHERE ZYH = #{zyh} AND YZZH = #{yzzh} AND JLXH = #{jlxh}
+	</update>
+	
+	<!-- 医嘱作废或取消作废根据组套记录序号 -->
+	<update id="invalidByZtJlxh">
+		update CIS_HZYZ set YZZF = #{yzzf}, ZFBZ = #{yzzf}, ZFGH = #{zfgh}, ZFSJ = #{zfsj}
+		where ZTYZJLXH in
+        <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+            #{z}
+        </foreach>
+    </update>
+	
+	<!-- 医嘱作废或取消作废根据记录序号 -->
+	<update id="invalidByJlxh">
+		update CIS_HZYZ set YZZF = #{yzzf}, ZFBZ = #{yzzf}, ZFGH = #{zfgh}, ZFSJ = #{zfsj}
+		where JLXH in
+        <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+            #{z}
+        </foreach>
+	</update>
+	
+	<!-- 查询执行过的医嘱和组套 -->
+    <select id="queryBqyzExecuted" resultType="com.buit.cis.dctwork.response.CisHzyzResp">
+        SELECT t.YSGH as YSGH,
+		       t.YZMC as YZMC,
+		       t.YPDJ as YPDJ,
+		       t.MRCS as MRCS,
+		       t.YCSL as YCSL,
+		       ' ' AS JE,
+		       '0' AS OK,
+		       t.SYBZ as SYBZ,
+		       t.YPCD as YPCD,
+		       t.SRKS as SRKS,
+		       t.QRSJ as QRSJ,
+		       t.YPXH as YPXH,
+		       t.YPLX as YPLX,
+		       t.ZYH as ZYH,
+		       t.JLXH as JLXH,
+		       t.KSSJ as KSSJ,
+		       t.YZZH as YZXH,
+		       t.TZSJ as TZSJ,
+		       t.MZCS MZCS,
+		       t.XMLX as XMLX,
+		       t.CZGH as CZGH,
+		       t.ZXKS as ZXKS,
+		       t.YEPB as YEPB,
+		       t.LSBZ as LSBZ,
+		       t.LSYZ as LSYZ,
+		       t.YZZH as YZZH,
+		       t.ZFPB as ZFPB,
+		       t1.BRCH as BRCH,
+		       t1.BRXZ as BRXZ,
+		       t1.GZDW as GZDW,
+		       t.BRKS as BRKS,
+		       t.SYPC as SYPC,
+		       t1.ZLXZ as ZLXZ,
+		       0 AS TS,
+		       0 AS FYCS,
+		       t1.DJID as DJID,
+		       t.YSTJ as YSTJ,
+		       t.SRCS as SRCS,
+		       t.YZZXSJ as YZZXSJ,
+		       t.ZTBZ as ZTBZ,
+		       t.ZTYZJLXH as ZTYZJLXH
+		  FROM CIS_HZYZ t, IM_HZRY t1
+		 WHERE t.ZYH = t1.ZYH
+		   and t.ZTYZJLXH = #{jlxh}
+    </select>
+    
+    <!-- 已执行医嘱取消更新 -->
+	<update id="updateBqyzExecuted">
+    	update CIS_HZYZ set QRSJ = null, LSBZ = 0 where JLXH  in (${jlxh})
+	</update>
+	
+	<!-- 查询自备药条数 -->
+	<select id="queryPreparedMedicineCount" resultType="long">
+		select count(1)
+		  from CIS_HZYZ
+		 where LSBZ = 0
+		   and ((YSBZ = 1 and YSTJ = 1))
+		   and (FHBZ = 1)
+		   and ZFYP = 1
+		   and ZYH = #{zyh}
+		   and JGID = #{jgid}
+	</select>
+	
+	<!-- 更新自备药医嘱状态 -->
+	<update id="updatePreparedMedicine">
+			update CIS_HZYZ
+		   SET LSBZ = 1
+		 where LSBZ = 0
+		   and ((YSBZ = 1 and YSTJ = 1))
+		   and (FHBZ = 1)
+		   and ZFYP = 1
+		   and ZYH = #{zyh}
+		   and JGID = #{jgid}
+   </update>
+   
+   <!-- 查询最大的医嘱组号 -->
+   <select id="queryMaxYzzh" resultType="java.util.HashMap">
+  	select max(YZZH) as YZZH from CIS_HZYZ where ZYH = #{zyh}
+   </select>
+   
+   <!-- 更新医嘱名称和开始时间 -->
+   <update id="updateOrdersAndTime">
+    	update CIS_HZYZ set YZMC = #{YZMC}, KSSJ = #{KSSJ} 
+    	where YWID = #{YWID} and ZYH = #{ZYH}
+   </update>
+   
+   <!-- 查询是否存在皮试记录 -->
+   <select id="queryIsExistPs" resultType="long">
+  	select count(1) from CIS_HZYZ where PSPB = 1 and 
+  	( PSJG IS NULL or PSJG = 0 ) and zyh = #{zyh} and JGID = #{jgid} and ZFBZ = 0
+   </select>
+   	
+   <!-- 查询历史标志不等于1的医嘱  -->
+   <select id="queryHistoricalOrders" resultType="java.util.HashMap">
+	   	select JLXH   as JLXH,
+	       YPLX   as al_ypbz,
+	       KSSJ   as ldt_kssj,
+	       QRSJ   as ldt_qrsj,
+	       TZSJ   as ldt_tzsj,
+	       LSYZ   as ll_lsyz,
+	       SYPC   as ls_sypc,
+	       YZZXSJ as ls_yzzxsj_str
+	  from CIS_HZYZ
+	 where ZYH = #{zyh}
+	   and LSBZ &lt;&gt; 1
+   </select>
+   
+   <!-- 更新医嘱为历史医嘱 -->
+   <update id="updateToHistoricalOrders">
+   		update CIS_HZYZ set LSBZ = 1 where JLXH= #{jlxh}
+   </update>
+   
+   <!-- 未停未提交医嘱表单检索数据  -->
+   <select id="queryNotStopOrNotSubmitYz" resultType="CisHzyz">
+   		SELECT <include refid="columns" />
+		  FROM CIS_HZYZ
+		 WHERE (ZYH = #{zyh})
+		   and (CIS_HZYZ.YSBZ = 0 OR (CIS_HZYZ.YSBZ = 1 AND CIS_HZYZ.YSTJ = 1))
+		   AND (LSBZ = 0 OR (LSBZ = 2 AND SYBZ = 0))
+		   AND (JFBZ &lt; 3 OR JFBZ = 9)
+		   AND FYSX &lt;&gt; 2
+		   and JGID = #{jgid}
+		   and ZFBZ = 0
+   </select>
+   
+   <!-- 药品医嘱未提交未发药 -->
+   <select id="queryNotSubmitOrNotSendYz" resultType="CisHzyz">
+	   SELECT <include refid="columns" />
+	  FROM CIS_HZYZ
+	 WHERE (ZYH = #{zyh})
+	   and (CIS_HZYZ.YPLX &lt;&gt; 0)
+	   and (CIS_HZYZ.YSBZ = 0 OR (CIS_HZYZ.YSBZ = 1 AND CIS_HZYZ.YSTJ = 1))
+	   AND (LSBZ = 0 OR (LSBZ = 2 AND SYBZ = 0))
+	   AND (JFBZ &lt; 3 OR JFBZ = 9)
+	   AND FYSX &lt;&gt; 2
+	   and JGID = #{jgid}
+	   AND ZFBZ = 0
+   </select>
+   
+   <!-- 项目医嘱未提交或未执行 -->
+   <select id="queryNotSubmitOrNotExcuteXm" resultType="CisHzyz">
+	   SELECT CIS_HZYZ.JLXH as JLXH,
+	       CIS_HZYZ.YCSL as YCSL,
+	       CIS_HZYZ.KSSJ as KSSJ,
+	       CIS_HZYZ.YPDJ as YPDJ,
+	       CIS_HZYZ.YSGH as YSGH,
+	       CIS_HZYZ.YZMC as YZMC
+	  FROM CIS_HZYZ
+	 WHERE ZYH = #{zyh}
+	   and CIS_HZYZ.YPLX = 0
+	   and (CIS_HZYZ.YSBZ = 0 OR (CIS_HZYZ.YSBZ = 1 AND CIS_HZYZ.YSTJ = 1))
+	   AND (LSBZ = 0 OR (LSBZ = 2 AND SYBZ = 0))
+	   AND (JFBZ &lt; 3 OR JFBZ = 9)
+	   AND FYSX &lt;&gt; 2
+	   and JGID = #{jgid}
+	   AND ZFBZ = 0
+   </select>
+   
+   
+   <!-- 查询已提交医嘱 -->
+   <select id="queryBqyzSubmit" resultType="java.util.HashMap">
+		   SELECT IM_HZRY.BRCH as BRCH,
+	       IM_HZRY.BRXM as BRXM,
+	       IM_HZRY.BRXZ as BRXZ,
+	       CIS_HZYZ.YZMC as YZMC,
+	       CIS_HZYZ.MZCS as MZCS,
+	       CIS_HZYZ.KSSJ as KSSJ,
+	       CIS_HZYZ.TZSJ as TZSJ,
+	       CIS_HZYZ.YPYF as YPYF,
+	       CIS_HZYZ.MRCS as MRCS,
+	       CIS_HZYZ.YCSL as YCSL,
+	       CIS_HZYZ.YPDJ as YPDJ,
+	       CIS_HZYZ.SYBZ as SYBZ,
+	       CIS_HZYZ.SRKS as SRKS,
+	       CIS_HZYZ.QRSJ as QRSJ,
+	       CIS_HZYZ.YPXH as YPXH,
+	       CIS_HZYZ.YPLX as YPLX,
+	       CIS_HZYZ.JLXH as JLXH,
+	       CIS_HZYZ.FYFS as FYFS,
+	       CIS_HZYZ.SYPC as SYPC,
+	       CIS_HZYZ.ZYH as ZYH,
+	       CIS_HZYZ.BZXX as BZXX,
+	       CIS_HZYZ.XMLX as XMLX,
+	       CIS_HZYZ.YZZH as YZZH,
+	       CIS_HZYZ.FYSX as FYSX,
+	       CIS_HZYZ.LSYZ as LSYZ,
+	       DRUGS_TYPK.SFSP as SFSP,
+       	   DRUGS_TYPK.YCYL as YCYL,
+	       CIS_HZYZ.YFSB as YFSB,
+	       0 as FYTS,
+	       0 as FYCS,
+	       0.00 as YPSL,
+	       DRUGS_TYPK.YPSX as YPSX,
+     	   DRUGS_TYPK.KSBZ as KSBZ,     
+	       CIS_HZYZ.YPCD as YPCD,
+	       IM_HZRY.DJID as DJID,
+	       CIS_HZYZ.YZPB as YZPB,
+	       CIS_HZYZ.YSTJ as YSTJ,
+	       CIS_HZYZ.YEPB as YEPB,
+	       CIS_HZYZ.SRCS as SRCS,
+	       CIS_HZYZ.ZXKS as ZXKS,
+	       CIS_HZYZ.YFGG as YFGG,
+	       CIS_HZYZ.YFDW as YFDW,
+	       CIS_HZYZ.YFBZ as YFBZ,
+	       CIS_HZYZ.YYTS as YYTS,
+	       CIS_HZYZ.BRKS as BRKS,
+	       CIS_HZYZ.BRBQ as BRBQ,
+	       CIS_HZYZ.YZZXSJ as YZZXSJ,
+	       CIS_HZYZ.SQID as SQID,
+	       CIS_HZYZ.KJYWSP as KJYWSP,
+	       CIS_HZYZ.ZTYZJLXH as ZTYZJLXH,
+	       CIS_HZYZ.ZTBZ as ZTBZ
+	  FROM CIS_HZYZ CIS_HZYZ, IM_HZRY IM_HZRY, DRUGS_TYPK DRUGS_TYPK
+	 WHERE (CIS_HZYZ.ZYH = IM_HZRY.ZYH and IM_HZRY.CYPB = 0)
+	   and (CIS_HZYZ.YPXH = DRUGS_TYPK.YPXH)
+	   and (CIS_HZYZ.BRBQ = #{SRKS} OR CIS_HZYZ.BRKS = #{SRKS})
+	   and (CIS_HZYZ.LSBZ = 0)
+	   and (CIS_HZYZ.SYBZ = 0)
+	   and (CIS_HZYZ.XMLX &lt; 4)
+	   and (CIS_HZYZ.FYSX &lt;&gt; 2)
+	   and (CIS_HZYZ.JFBZ &lt; 2)
+	   and (CIS_HZYZ.JGID = #{JGID})
+	   and (CIS_HZYZ.YSBZ = 0 or (CIS_HZYZ.YSBZ = 1 AND CIS_HZYZ.YSTJ = 1))
+	   and ZFBZ = 0
+	   and ((CIS_HZYZ.PSPB IS NULL) or (CIS_HZYZ.PSPB = 0) or (CIS_HZYZ.PSPB = 1))
+	   <if test="@sqlt.Ognl@isNotEmpty(ZFYP)"> 
+             and  CIS_HZYZ.ZFYP != #{ZFYP}
+       </if>
+	  
+	   <if test="@sqlt.Ognl@isNotEmpty(ZYHS)"> 
+             and CIS_HZYZ.ZYH in 
+             <foreach collection="ZYHS" item="ZYHM" open="(" close=")" separator="," >
+                #{ZYHM}
+       		 </foreach>	
+       </if>
+	   <if test="@sqlt.Ognl@isNotEmpty(ZYH)"> 
+             and (CIS_HZYZ.ZYH = #{ZYH} or CIS_HZYZ.ZYH = 0)
+       </if>
+	   <if test="@sqlt.Ognl@isNotEmpty(YFSB)"> 
+             and CIS_HZYZ.YFSB = #{YFSB} 
+       </if>
+       <if test="@sqlt.Ognl@isNotEmpty(LSYZ) and (LSYZ == 0 or LSYZ == 1)"> 
+             and CIS_HZYZ.LSYZ = #{LSYZ} and XMLX &lt;&gt; 2 and XMLX &lt;&gt; 3
+       </if> 
+       <if test="@sqlt.Ognl@isNotEmpty(LSYZ) and (LSYZ == 2 or LSYZ == 3)"> 
+             and CIS_HZYZ.XMLX = #{LSYZ}
+       </if> 
+       <if test="@sqlt.Ognl@isNotEmpty(FYFS)"> 
+             and CIS_HZYZ.FYFS = #{FYFS}
+       </if>
+       <if test="@sqlt.Ognl@isNotEmpty(FHBZ)"> 
+             and CIS_HZYZ.FHBZ = #{FHBZ}
+       </if>  
+       <if test="@sqlt.Ognl@isNotEmpty(JLXHS)"> 
+             and CIS_HZYZ.JLXH in 
+             <foreach collection="JLXHS" item="JLXH" open="(" close=")" separator="," >
+                #{JLXH}
+       		 </foreach>	
+       </if> 
+       <if test="@sqlt.Ognl@isNotEmpty(TYPE) and TYPE == 1"> 
+             ORDER BY CIS_HZYZ.ZYH,CIS_HZYZ.XMLX,CIS_HZYZ.YZZH ASC,CIS_HZYZ.YFSB DESC,CIS_HZYZ.FYFS,CIS_HZYZ.LSYZ ASC  
+       </if>       
+       <if test="@sqlt.Ognl@isNotEmpty(TYPE) and TYPE == 2"> 
+             ORDER BY IM_HZRY.BRCH ASC,CIS_HZYZ.JLXH ASC
+       </if>
+   </select>
+   
+   <!-- 将指定医嘱修改为历史医嘱 -->
+   <update id="modifyToHistoricalAppointOrders">
+   	update CIS_HZYZ set LSBZ = 1 where JLXH = #{JLXH} and JGID = #{JGID} and YZPB &lt;&gt; 4
+   </update>
+   
+   <!-- 更新医嘱使用标志 -->
+   <update id="updateUseLogoStatus">
+   	 update CIS_HZYZ set SYBZ = 1 where JLXH = #{JLXH}
+   </update>
+   
+   <!-- 查询医嘱总的使用数量 -->
+   <select id="queryBqUseSum" resultType="java.util.HashMap">
+	   select sum(YCSL) as SYSL
+		  from CIS_HZYZ
+		 where JGID = #{JGID}
+		   and ZYH = #{ZYH}
+		   and YPXH = #{YPXH}
+		   and SYBZ = 1
+   </select>
+   
+   <!-- 数据盒会诊报告列表 -->
+   <select id="queryBqyzByDataBox" resultType="CisHzyz">
+	  select <include refid="columns" />
+        from CIS_HZYZ where 
+        kssj &gt;= #{kssj} and kssj &lt;= #{jssj}
+        <if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+             and zyh = #{zyh}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(lsyz) and (lsyz == 0 or lsyz == 1)"> 
+             and lsyz = #{lsyz}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(lsyz) and lsyz == 2"> 
+            or ( tzsj &gt;= #{kssj} and tzsj &lt;= #{jssj} )
+        </if>
+   </select>
+   
+   <!-- 查询其他医生需要复核的医嘱 -->
+   <select id="queryReviewByOther" resultType="long">
+	 	select count(1) 
+		  from CIS_HZYZ
+		 where ((YSBZ = 1 and YSTJ = 1) or YSBZ = 0)
+		   and (FHBZ = 0 or FHBZ is null)
+		   and LSYZ = #{lsyz}   
+		   and JGID = #{jgid}
+		   and CZGH = #{czgh}
+		<if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+            and ZYH = #{zyh}
+        </if>    
+	    <if test="@sqlt.Ognl@isNotEmpty(ztyzjlxh)"> 
+            and ZTYZJLXH = #{ztyzjlxh}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(yzzh)"> 
+            and YZZH = #{yzzh}
+        </if>  
+   </select> 
+   
+   <!-- 更新复核状态(非同一个工号) -->
+   <update id="updateReviewStatusByOther">
+	   	 update CIS_HZYZ
+	   SET FHBZ = 1, FHGH = #{fhgh}, FHSJ = #{fhsj}
+	 where ((YSBZ = 1 and YSTJ = 1) or YSBZ = 0)
+	   and (FHBZ = 0 or FHBZ is null)
+	   and JGID = #{jgid}
+	   and (ZFBZ = 0 OR YZZF IS NULL)
+	   <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> 
+            and JLXH = #{jlxh}
+       </if>
+	   <if test="@sqlt.Ognl@isNotEmpty(lsyz)"> 
+            and LSYZ = #{lsyz}
+       </if>
+	   <if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+           and ZYH = #{zyh}
+       </if>
+	   <if test="@sqlt.Ognl@isNotEmpty(czgh)"> 
+           and CZGH != #{czgh}
+       </if>
+       <if test="@sqlt.Ognl@isNotEmpty(ztyzjlxh)"> 
+            and ZTYZJLXH = #{ztyzjlxh}
+       </if>
+       <if test="@sqlt.Ognl@isNotEmpty(yzzh)"> 
+            and YZZH = #{yzzh}
+       </if>      
+   </update>
+   
+   <!-- 批量取消医嘱复核 -->
+   <update id="cancelYzReviewStatus">
+	   	 update cis_hzyz
+		   set fhbz = 0, fhgh = null, fhsj = null
+		 where fhbz = 1
+		   and sybz &lt;&gt; 1
+		   and qrsj is null
+		   and jgid = #{jgid}	 
+		   and jlxh in
+	       <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+	           #{z}
+	       </foreach>   
+   </update>
+   
+   <!-- 查询复核需执行医嘱记录条数 -->
+   <select id="queryBqyzExcutedAndReviewCount" resultType="long">
+			 	SELECT count(*)
+		  FROM CIS_HZYZ t, IM_HZRY t1
+		 WHERE t.ZYH = t1.ZYH
+		   and t1.CYPB = 0
+		   and (t.JFBZ = 2 or t.JFBZ = 9)
+		   and t.XMLX &gt; 3
+		   and t.LSBZ = 0
+		   and t.YZPB = 0
+		   and (t.SYBZ &lt;&gt; 1)
+		   and (t.YSBZ = 0 or (t.YSBZ = 1 and t.YSTJ = 1))
+		   and ZFBZ = 0   
+		   and (t.BRBQ = #{brbq} or t.BRKS = #{brbq})
+		   and (t.QRSJ &lt;= #{qrsj} or t.QRSJ IS NULL)
+		   and t.JGID = #{jgid}    
+		   <if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+            	and (t.ZYH = #{zyh})
+       	   </if>
+       	   <if test="@sqlt.Ognl@isNotEmpty(zyhs)"> 
+            	and (t.ZYH in
+            	<foreach collection="zyhs" item="zyhm" open="(" close=")" separator="," >
+                	#{zyhm}
+        		</foreach>	
+            	)
+       	   </if>
+       	   <if test="@sqlt.Ognl@isNotEmpty(xmxhs)"> 
+            	and (t.YPXH in
+            	<foreach collection="xmxhs" item="ypxh" open="(" close=")" separator="," >
+                	#{ypxh}
+        		</foreach>	
+            	)
+       	   </if> 
+       	   <if test="@sqlt.Ognl@isNotEmpty(fhbz)"> 
+            	and t.FHBZ = #{fhbz}
+       	   </if> 
+       	   <if test="@sqlt.Ognl@isNotEmpty(lsyz)"> 
+            	and t.LSYZ = #{lsyz}
+       	   </if>  
+		 ORDER BY t.ZYH ASC 
+   </select> 
+   
+    <!-- 查询附加医嘱信息 -->
+   <select id="queryFjBqyzInfo" resultType="java.util.HashMap">
+		   select MAX(QRSJ) as LDT_QRSJ,
+		       min(FYSX) as LL_FYSX,
+		       min(JFBZ) as LL_JFBZ,
+		       min(YJXH) as LL_YJXH
+		  FROM CIS_HZYZ
+		 WHERE YZZH = #{YZZH}
+		   and YZPB = 0
+   </select> 
+   
+   <!-- 查询复核需执行医嘱 -->
+   <select id="queryBqyzExcutedAndReview" resultType="com.buit.cis.nurse.response.CisHzyzOrztResp">
+		   SELECT t.YSGH as YSGH,
+                  t.YZMC as YZMC,
+                  t.YPDJ as YPDJ,
+                  t.MRCS as MRCS,
+                  t.YCSL as YCSL,
+                  null AS JE,
+                  '0' AS OK,
+                  t.SYBZ as SYBZ,
+                  t.YPCD as YPCD,
+                  t.SRKS as SRKS,
+                  t.QRSJ as QRSJ,
+                  t.YPXH as YPXH,
+                  t.YPLX as YPLX,
+                  t.ZYH as ZYH,
+                  t.JLXH as JLXH,
+                  t.KSSJ as KSSJ,
+                  t.YZZH as YZXH,
+                  t.TZSJ as TZSJ,
+                  t.MZCS MZCS,
+                  t.XMLX as XMLX,
+                  t.CZGH as CZGH,
+                  t.ZXKS as ZXKS,
+                  t.YEPB as YEPB,
+                  t.LSBZ as LSBZ,
+                  t.LSYZ as LSYZ,
+                  t.YZZH as YZZH,
+                  t.ZFPB as ZFPB,
+                  t1.BRCH as BRCH,
+                  t1.BRXM as BRXM,
+                  t1.BRXZ as BRXZ,
+                  t1.GZDW as GZDW,
+                  t.BRKS as BRKS,
+                  t.SYPC as SYPC,
+                  t1.ZLXZ as ZLXZ,
+                  0 AS TS,
+                  0 AS FYCS,
+                  t1.DJID as DJID,
+                  t.YSTJ as YSTJ,
+                  t.SRCS as SRCS,
+                  t.YZZXSJ as YZZXSJ,
+                  t1.ZYHM as ZYHM,
+                  t.ZTBZ as ZTBZ,
+                  t.ZTYZJLXH as ZTYZJLXH,
+                  t.YZLX as YZLX
+             FROM CIS_HZYZ t, IM_HZRY t1
+            WHERE t.ZYH = t1.ZYH
+              and t1.CYPB = 0
+              and (t.JFBZ = 2 or t.JFBZ = 9)
+              and t.XMLX &gt; 3
+              and t.LSBZ = 0
+              and t.YZPB = 0
+              and (t.SYBZ &lt;&gt; 1)
+              and (t.YSBZ = 0 or (t.YSBZ = 1 and t.YSTJ = 1))
+              and ZFBZ = 0
+              and (t.BRBQ = #{brbq} or t.BRKS = #{brbq})
+              and (t.QRSJ &lt;= #{qrsj} or t.QRSJ IS NULL)
+              and t.JGID = #{jgid} 
+              <if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+            		and (t.ZYH = #{zyh})
+	       	  </if>
+	       	  <if test="@sqlt.Ognl@isNotEmpty(zyhs)"> 
+	            	and (t.ZYH in
+	            	<foreach collection="zyhs" item="zyhm" open="(" close=")" separator="," >
+	                	#{zyhm}
+	        		</foreach>	
+	            	)
+	       	  </if>
+	       	  <if test="@sqlt.Ognl@isNotEmpty(xmxhs)"> 
+	            	and (t.YPXH in
+	            	<foreach collection="xmxhs" item="ypxh" open="(" close=")" separator="," >
+	                	#{ypxh}
+	        		</foreach>	
+	            	)
+	       	  </if>
+	       	  <if test="@sqlt.Ognl@isNotEmpty(jlxhs)"> 
+	            	and (t.JLXH in
+	            	<foreach collection="jlxhs" item="jlxh" open="(" close=")" separator="," >
+	                	#{jlxh}
+	        		</foreach>	
+	            	)
+	       	  </if>  
+	       	  <if test="@sqlt.Ognl@isNotEmpty(fhbz)"> 
+	            	and t.FHBZ = #{fhbz}
+	       	  </if>
+	       	  <if test="@sqlt.Ognl@isNotEmpty(lsyz)"> 
+	            	and t.LSYZ = #{lsyz}
+	       	  </if>
+		ORDER BY #{orderBy} ASC
+   </select> 
+   
+   <!-- 查询费用医嘱附加计费单列表 -->
+   <select id="queryBqyzBillingSheet" resultType="java.util.HashMap">   		
+		SELECT t1.BRCH as BRCH,
+		       t1.BRXM as BRXM,
+		       t1.BRXZ as BRXZ,
+		       t.BRKS as BRKS,
+		       t.YZMC as YZMC,
+		       t.YEPB as YEPB,
+		       t.MZCS as MZCS,
+		       t.KSSJ as KSSJ,
+		       t.TZSJ as TZSJ,
+		       t.YPYF as YPYF,
+		       t.MRCS as MRCS,
+		       t.YCSL as YCSL,
+		       t.YPDJ as YPDJ,
+		       t.SYBZ as SYBZ,
+		       t.SRKS as SRKS,
+		       t.QRSJ as QRSJ,
+		       t.YPXH as FYXH,
+		       t.YPLX as YPLX,
+		       t.JLXH as JLXH,
+		       t.SYPC as SYPC,
+		       t.ZYH as ZYH,
+		       t.BZXX as BZXX,
+		       t.XMLX as XMLX,
+		       t.YZZH as YZZH,
+		       t.LSBZ as LSBZ,
+		       t.CZGH as CZGH,
+		       t.ZXKS as ZXKS,
+		       t.YSGH as YSGH,
+		       t.LSYZ as LSYZ,
+		       t.ZFPB as ZFPB,
+		       t.YZPB as YZPB,
+		       t.FYSX as FYSX,
+		       t1.ZLXZ as ZLXZ,
+		       0 as TS,
+		       0 as FYCS,
+		       t1.DJID as DJID,
+		       t.SRCS as SRCS,
+		       t.YZZXSJ as YZZXSJ
+		  FROM CIS_HZYZ t, IM_HZRY t1
+		 WHERE (t.ZYH = t1.ZYH AND t1.CYPB = 0)
+		   AND (t.BRBQ = #{SRKS} OR t.BRKS = #{SRKS})
+		   AND (t.YPLX = 0)
+		   AND (t.LSBZ = 0)
+		   AND (t.YZPB &gt; 3)
+		   AND (t.SYBZ &lt;&gt; 1)
+		   AND (t.YSBZ = 0 OR (t.YSBZ = 1 AND t.YSTJ = 1))
+		   AND (t.JGID = #{JGID})
+		   AND (t.JGID = t1.JGID)
+		   AND (ZFBZ = 0)
+		   AND (t.QRSJ &gt;= #{ADTODAY} or t.QRSJ IS NULL)
+		   <if test="@sqlt.Ognl@isNotEmpty(ZYH)"> 
+            		AND (t.ZYH = #{ZYH})
+       	   </if>
+		 ORDER BY t1.BRCH ASC, t.YZZH ASC
+   </select>
+   
+   <!-- 更新确认时间和历史标志 -->
+   <update id="updateTimeAndLsByJlxh">
+   		update CIS_HZYZ set QRSJ = #{QRSJ} 
+   		<if test="@sqlt.Ognl@isNotEmpty(LSBZ)"> 
+   			, LSBZ = #{LSBZ} 
+   		</if>
+   		where JLXH = #{JLXH}
+   </update>
+   
+   <!-- 查询已确认的医嘱 -->
+   <select id="queryCountByZtjlxh" resultType="long">
+        SELECT count(*) FROM CIS_HZYZ 
+        where ZTYZJLXH = #{ztyzjlxh}  
+        and QRSJ is not null
+    </select>
+   
+   <!-- 判断是否有药品医嘱未停或未发药或是否有项目医嘱未停或未执行 -->
+   <select id="queryYzXmNotSureOrExcuted" resultType="long">
+        SELECT count(*) FROM CIS_HZYZ 
+        where LSBZ = 0 and JFBZ &lt;&gt; 3 
+        and ZFBZ = 0    
+        and ZYH = #{zyh} and JGID = #{jgid}
+        <choose>
+            <when test="@sqlt.Ognl@isNotEmpty(yplx) and yplx == 0 ">
+                and YPLX = #{yplx}
+            </when>
+            <otherwise>
+            	 and YPLX &gt; 0 
+            </otherwise>
+        </choose>
+   </select>
+   
+   <!-- 查询是否存在费用明细 -->
+   <select id="queryCostDetail" resultType="java.util.HashMap">
+        select A.JLXH AS JLXH, A.YZMC AS YZMC, B.JLXH AS FYMX_JLXH
+		  from CIS_HZYZ a
+		  left join IM_FEE_FYMX b
+		    on a.jlxh = b.yzxh
+		 where a.zyh = #{zyh}
+		   and a.sqid in (select JCXH from CIS_JCSQ01 where ZYH = #{zyh})
+		   and (a.ZFBZ = 0 OR a.YZZF IS NULL) and a.yzlx = 0
+   </select>
+
+    <select id="queryCostDetailCnt" resultType="long">
+        select count(*)
+        from CIS_HZYZ a
+        left join IM_FEE_FYMX b
+        on a.jlxh = b.yzxh
+        where a.zyh = #{zyh}
+        and a.sqid in (select JCXH from CIS_JCSQ01 where ZYH = #{zyh})
+        and (a.ZFBZ = 0 OR a.YZZF IS NULL) and a.yzlx = 0 and B.JLXH IS NULL
+    </select>
+
+    <select id="queryCostDetailInfo" resultType="CisHzyz">
+        select a.JLXH as JLXH,
+        a.SRKS as SRKS,
+        a.SYBZ as SYBZ,
+        a.YFSB as YFSB,
+        a.YZMC as YZMC,
+        a.KSSJ as KSSJ,
+        a.TZSJ as TZSJ,
+        a.YCSL as YCSL,
+        a.YPYF as YPYF,
+        a.SYPC as SYPC,
+        a.YSGH as YSGH,
+        a.YPDJ as YPDJ
+        from CIS_HZYZ a
+        left join IM_FEE_FYMX b
+        on a.jlxh = b.yzxh
+        where a.zyh = #{zyh}
+        and a.sqid in (select JCXH from CIS_JCSQ01 where ZYH = #{zyh})
+        and (a.ZFBZ = 0 OR a.YZZF IS NULL) and a.yzlx = 0 and B.JLXH IS NULL
+    </select>
+
+   <!-- 项目执行按病人列表查询 -->
+   <select id="queryPatientInfoByProject" resultType="java.util.HashMap">
+        SELECT DISTINCT t.ZYH   as ZYH,
+                t1.BRCH as BRCH,
+                t1.ZYHM as ZYHM,
+                t1.BRXM as BRXM,
+                t1.BRXZ as BRXZ,
+                t1.ZLXZ as ZLXZ
+		  FROM CIS_HZYZ t, IM_HZRY t1
+		 WHERE t.ZYH = t1.ZYH
+		   and (t.BRBQ = #{brbq} or t.BRKS = #{brbq})
+		   and (t.JFBZ = 2 OR t.JFBZ = 9)
+		   and (t.XMLX &gt; 3)
+		   and t.LSBZ = 0
+		   and t.YZPB = 0
+		   and (t.SYBZ &lt;&gt; 1)
+		   and (t.QRSJ &lt;= #{qrsj} or t.QRSJ IS NULL)
+		   and (t.JGID = #{jgid}) 
+	   	   <if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+            	and (t.ZYH = #{zyh})
+       	   </if>
+		   <if test="@sqlt.Ognl@isNotEmpty(fhbz)"> 
+	            and t.FHBZ = #{fhbz}
+	       </if>
+	       <if test="@sqlt.Ognl@isNotEmpty(lsyz)"> 
+	            and t.LSYZ = #{lsyz}
+	       </if>
+		ORDER BY t1.BRCH
+   </select>
+   
+   <!-- 附加计价医嘱明细列表 -->
+   <select id="queryAdditionalPriced" resultType="java.util.HashMap">
+		   SELECT t1.BRCH as BRCH,
+		       t1.BRXM as BRXM,
+		       t1.BRXZ as BRXZ,
+		       t.BRKS as BRKS,
+		       t.YJXH as YJXH,
+		       t.YZMC as YZMC,
+		       t.YEPB as YEPB,
+		       t.MZCS as MZCS,
+		       t.KSSJ as KSSJ,
+		       t.TZSJ as TZSJ,
+		       t.YPYF as YPYF,
+		       t.MRCS as MRCS,
+		       t.YCSL as YCSL,
+		       t.YPDJ as YPDJ,
+		       t.SYBZ as SYBZ,
+		       t.SRKS as SRKS,
+		       t.QRSJ as QRSJ,
+		       t.YPXH as YPXH,
+		       t.YPLX as YPLX,
+		       t.JLXH as JLXH,
+		       t.SYPC as SYPC,
+		       t.ZYH as ZYH,
+		       t.BZXX as BZXX,
+		       t.XMLX as XMLX,
+		       t.YZZH as YZZH,
+		       t.LSBZ as LSBZ,
+		       t.CZGH as CZGH,
+		       t.ZXKS as ZXKS,
+		       t.YSGH as YSGH,
+		       t.LSYZ as LSYZ,
+		       t.ZFPB as ZFPB,
+		       t.YZPB as YZPB,
+		       t.FYSX as FYSX,
+		       t1.ZLXZ as ZLXZ,
+		       0 as TS,
+		       0 as FYCS,
+		       t1.DJID as DJID,
+		       t.SRCS as SRCS,
+		       t.YZZXSJ as YZZXSJ
+		  FROM CIS_HZYZ t, IM_HZRY t1
+		 WHERE t.ZYH = t1.ZYH AND t1.CYPB = 0
+		   AND (t.BRKS = #{brbq} or t.BRBQ = #{brbq})
+		   AND t.LSBZ = 0
+		   AND (t.YZPB &gt; 0 and t.YZPB &lt; 4) AND t.JFBZ = 2
+		   AND (t.YSBZ = 0 OR (t.YSBZ = 1 AND t.YSTJ = 1))
+		   AND t.JGID = #{jgid}
+		   AND t.JGID = t1.JGID
+		   	  <if test="@sqlt.Ognl@isNotEmpty(zyhs)"> 
+	            	and t.ZYH in
+	            	<foreach collection="zyhs" item="zyhm" open="(" close=")" separator="," >
+	                	#{zyhm}
+	        		</foreach>	
+	       	  </if>
+	       	  <if test="@sqlt.Ognl@isNotEmpty(xmxhs)"> 
+	            	and t.YPXH in
+	            	<foreach collection="xmxhs" item="ypxh" open="(" close=")" separator="," >
+	                	#{ypxh}
+	        		</foreach>	
+	       	  </if>
+		   ORDER BY t1.BRCH ASC, t.YZZH ASC 
+   </select>
+   
+   <!-- 医嘱批量复核开医嘱列表 -->
+   <select id="queryBatchReviewOpen" resultType="com.buit.cis.nurse.response.CisHzyzReviewInfoResp">
+        SELECT * FROM (
+        	SELECT c.ZYHM as ZYHM,
+               c.BRXM as BRXM,
+               c.BRCH as BRCH,
+               a.YZMC as YZMC,
+               a.YCJL as YCJL,
+               a.YCSL as YCSL,
+               a.SYPC as SYPC,
+               b.XMMC as XMMC,
+               a.YPDJ as YPDJ,
+               a.YSGH as YSGH,
+               a.TZSJ as TZSJ,
+               a.TZYS as TZYS,
+               a.MZCS as MZCS,
+               a.KSSJ as KSSJ,
+               a.MRCS as MRCS,
+               a.CZGH as CZGH,
+               a.QRSJ as QRSJ,
+               a.YPXH as YPXH,
+               a.ZYH as ZYH,
+               a.JLXH as JLXH,
+               a.YJZX as YJZX,
+               a.ZXKS as ZXKS,
+               a.FHGH as FHGH,
+               a.YPYF as YPYF,
+               a.YZZH as YZZH,
+               a.YEPB as YEPB,
+               a.BZXX as BZXX,
+               a.FYSX as FYSX,
+               a.YFSB as YFSB,
+               a.LSYZ as LSYZ,
+               a.YZPB as YZPB,
+               a.LSBZ as LSBZ,
+               a.JFBZ as JFBZ,
+               a.YPLX as YPLX,
+               d.JLDW as JLDW,
+               ifnull(a.ZTBZ,0) as ZTBZ,
+               a.CFTS as CFTS,
+               a.YFDW as YFDW
+          FROM CIS_HZYZ a
+          left outer join IM_DIC_YPYF b
+            on a.YPYF = b.YPYF
+          left outer join DRUGS_TYPK d
+            on a.YPXH = d.YPXH and a.YPLX = 1, IM_HZRY c
+         WHERE ((a.YSBZ = 1 and a.YSTJ = 1) or a.YSBZ = 0)
+           and (a.ZYH = c.ZYH)
+           AND (a.JGID = #{jgid})
+           AND (a.ZTBZ = 0 OR a.ZTBZ is NULL)
+           AND (a.BRKS = #{srks} or a.BRBQ = #{srks})
+           AND (a.FHGH IS NULL or a.FHGH = '')
+           AND (a.YZPB = 0)
+           AND (c.CYPB = 0)
+           AND (a.ZFBZ = 0 OR a.YZZF IS NULL)
+        UNION ALL
+        SELECT c.ZYHM as ZYHM,
+               c.BRXM as BRXM,
+               c.BRCH as BRCH,
+               a.YZMC as YZMC,
+               a.YCJL as YCJL,
+               a.YCSL as YCSL,
+               a.SYPC as SYPC,
+               b.XMMC as XMMC,
+               a.YPDJ as YPDJ,
+               a.YSGH as YSGH,
+               a.TZSJ as TZSJ,
+               a.TZYS as TZYS,
+               a.MZCS as MZCS,
+               a.KSSJ as KSSJ,
+               a.MRCS as MRCS,
+               a.CZGH as CZGH,
+               a.QRSJ as QRSJ,
+               a.YPXH as YPXH,
+               a.ZYH as ZYH,
+               a.JLXH as JLXH,
+               a.YJZX as YJZX,
+               a.ZXKS as ZXKS,
+               a.FHGH as FHGH,
+               a.YPYF as YPYF,
+               a.YZZH as YZZH,
+               a.YEPB as YEPB,
+               a.BZXX as BZXX,
+               a.FYSX as FYSX,
+               a.YFSB as YFSB,
+               a.LSYZ as LSYZ,
+               a.YZPB as YZPB,
+               a.LSBZ as LSBZ,
+               a.JFBZ as JFBZ,
+               a.YPLX as YPLX,
+               d.JLDW as JLDW,
+               ifnull(a.ZTBZ,0) as ZTBZ,
+               a.CFTS as CFTS,
+               a.YFDW as YFDW
+          FROM CIS_HZYZ_ZT a
+          left outer join IM_DIC_YPYF b
+            on a.YPYF = b.YPYF
+          left outer join DRUGS_TYPK d
+            on a.YPXH = d.YPXH and a.YPLX = 1, IM_HZRY c
+         WHERE ((a.YSBZ = 1 and a.YSTJ = 1) or a.YSBZ = 0)
+           and (a.ZYH = c.ZYH)
+           AND (a.JGID = #{jgid})
+           AND a.ZTBZ = 1
+           AND (a.BRKS = #{srks} or a.BRBQ = #{srks})
+           AND (a.FHGH IS NULL or a.FHGH = '')
+           AND (a.YZPB = 0)
+           AND (a.ZFBZ = 0 OR a.YZZF IS NULL)
+           AND (c.CYPB = 0)) c
+ 		where 1 = 1 
+ 		<if test="@sqlt.Ognl@isNotEmpty(zyhm)"> 
+           	and (c.BRXM like CONCAT('%',#{zyhm},'%')
+           	or c.ZYHM = #{zyhm} or c.BRCH = #{zyhm})
+   	    </if>
+   	    <if test="@sqlt.Ognl@isNotEmpty(lsyz)"> 
+           	and c.LSYZ = #{lsyz}
+   	    </if>
+   	    <if test="@sqlt.Ognl@isNotEmpty(zyhList)"> 
+           	and c.ZYH in
+           	<foreach collection="zyhList" item="z" open="(" close=")" separator=",">
+      			#{z}
+ 			</foreach> 
+   	    </if>
+ 		ORDER BY c.BRCH, c.YZZH
+   </select>
+   
+    <!-- 医嘱批量复核停医嘱列表 -->
+   <select id="queryBatchReviewStop" resultType="com.buit.cis.nurse.response.CisHzyzReviewInfoResp">
+        SELECT * FROM (
+        	SELECT c.ZYHM as ZYHM,
+               c.BRXM as BRXM,
+               c.BRCH as BRCH,
+               a.YZMC as YZMC,
+               a.YCJL as YCJL,
+               a.YCSL as YCSL,
+               a.SYPC as SYPC,
+               b.XMMC as XMMC,
+               a.YPDJ as YPDJ,
+               a.YSGH as YSGH,
+               a.TZSJ as TZSJ,
+               a.TZYS as TZYS,
+               a.MZCS as MZCS,
+               a.KSSJ as KSSJ,
+               a.MRCS as MRCS,
+               a.CZGH as CZGH,
+               a.QRSJ as QRSJ,
+               a.YPXH as YPXH,
+               a.ZYH as ZYH,
+               a.JLXH as JLXH,
+               a.YJZX as YJZX,
+               a.ZXKS as ZXKS,
+               a.FHGH as FHGH,
+               a.YPYF as YPYF,
+               a.YZZH as YZZH,
+               a.YEPB as YEPB,
+               a.BZXX as BZXX,
+               a.FYSX as FYSX,
+               a.YFSB as YFSB,
+               a.LSYZ as LSYZ,
+               a.YZPB as YZPB,
+               a.LSBZ as LSBZ,
+               a.JFBZ as JFBZ,
+               a.YPLX as YPLX,
+               d.JLDW as JLDW,
+               ifnull(a.ZTBZ, 0) as ZTBZ,
+               a.CFTS as CFTS,
+               a.YFDW as YFDW
+          FROM CIS_HZYZ a
+          left outer join IM_DIC_YPYF b
+            on a.YPYF = b.YPYF
+          left outer join DRUGS_TYPK d
+            on a.YPXH = d.YPXH and a.YPLX = 1, IM_HZRY c
+         WHERE ((a.YSBZ = 1 and a.YSTJ = 1) or a.YSBZ = 0)
+           and (a.ZYH = c.ZYH)
+           AND (a.JGID = #{jgid})
+           AND (a.ZTBZ = 0 OR a.ZTBZ is NULL)
+           AND (a.BRKS = #{srks} or a.BRBQ = #{srks})
+           AND (a.TZSJ IS NOT NULL ) AND ( a.TZFHR IS NULL) 
+           AND (a.YZPB = 0)
+           AND (c.CYPB = 0)
+           AND (a.ZFBZ = 0 OR a.YZZF IS NULL)
+        UNION ALL
+        SELECT c.ZYHM as ZYHM,
+               c.BRXM as BRXM,
+               c.BRCH as BRCH,
+               a.YZMC as YZMC,
+               a.YCJL as YCJL,
+               a.YCSL as YCSL,
+               a.SYPC as SYPC,
+               b.XMMC as XMMC,
+               a.YPDJ as YPDJ,
+               a.YSGH as YSGH,
+               a.TZSJ as TZSJ,
+               a.TZYS as TZYS,
+               a.MZCS as MZCS,
+               a.KSSJ as KSSJ,
+               a.MRCS as MRCS,
+               a.CZGH as CZGH,
+               a.QRSJ as QRSJ,
+               a.YPXH as YPXH,
+               a.ZYH as ZYH,
+               a.JLXH as JLXH,
+               a.YJZX as YJZX,
+               a.ZXKS as ZXKS,
+               a.FHGH as FHGH,
+               a.YPYF as YPYF,
+               a.YZZH as YZZH,
+               a.YEPB as YEPB,
+               a.BZXX as BZXX,
+               a.FYSX as FYSX,
+               a.YFSB as YFSB,
+               a.LSYZ as LSYZ,
+               a.YZPB as YZPB,
+               a.LSBZ as LSBZ,
+               a.JFBZ as JFBZ,
+               a.YPLX as YPLX,
+               d.JLDW as JLDW,
+               ifnull(a.ZTBZ, 0) as ZTBZ,
+               a.CFTS as CFTS,
+               a.YFDW as YFDW
+          FROM CIS_HZYZ_ZT a
+          left outer join IM_DIC_YPYF b
+            on a.YPYF = b.YPYF
+          left outer join DRUGS_TYPK d
+            on a.YPXH = d.YPXH and a.YPLX = 1, IM_HZRY c
+         WHERE ((a.YSBZ = 1 and a.YSTJ = 1) or a.YSBZ = 0)
+           and (a.ZYH = c.ZYH)
+           AND (a.JGID = #{jgid})
+           AND a.ZTBZ = 1
+           AND (a.BRKS = #{srks} or a.BRBQ = #{srks})
+           AND (a.TZSJ IS NOT NULL ) AND ( a.TZFHR IS NULL) 
+           AND (a.YZPB = 0)
+           AND (a.ZFBZ = 0 OR a.YZZF IS NULL)
+           AND (c.CYPB = 0)) c
+ 		where 1 = 1 
+ 		<if test="@sqlt.Ognl@isNotEmpty(zyhm)"> 
+           	and (c.BRXM like CONCAT('%',#{zyhm},'%')
+           	or c.ZYHM = #{zyhm} or c.BRCH = #{zyhm})
+   	    </if>
+   	    <if test="@sqlt.Ognl@isNotEmpty(lsyz)"> 
+           	and c.LSYZ = #{lsyz}
+   	    </if>
+   	    <if test="@sqlt.Ognl@isNotEmpty(zyhList)"> 
+           	and c.ZYH in
+           	<foreach collection="zyhList" item="z" open="(" close=")" separator=",">
+      			#{z}
+ 			</foreach> 
+   	    </if>
+ 		ORDER BY c.BRCH, c.YZZH
+   </select>
+   
+   <!-- 医嘱复核前开医嘱查询 -->
+   <select id="queryBeforeBatchReviewOpen" resultType="java.util.HashMap">
+        SELECT *
+  			FROM (SELECT 0 AS SFZT,
+  			   c.ZYHM as ZYHM,
+               c.BRXM as BRXM,
+               c.BRCH as BRCH,
+               a.YZMC as YZMC,
+               a.YCJL as YCJL,
+               a.YCSL as YCSL,
+               a.SYPC as SYPC,
+               '' as XMMC,
+               a.YPDJ as YPDJ,
+               a.YSGH as YSGH,
+               a.TZSJ as TZSJ,
+               a.TZYS as TZYS,
+               a.MZCS as MZCS,
+               a.KSSJ as KSSJ,
+               a.MRCS as MRCS,
+               a.CZGH as CZGH,
+               a.QRSJ as QRSJ,
+               a.YPXH as YPXH,
+               a.ZYH as ZYH,
+               a.JLXH as JLXH,
+               a.YJZX as YJZX,
+               a.ZXKS as ZXKS,
+               a.FHGH as FHGH,
+               a.YPYF as YPYF,
+               a.YZZH as YZZH,
+               a.YEPB as YEPB,
+               a.BZXX as BZXX,
+               a.FYSX as FYSX,
+               a.YFSB as YFSB,
+               a.LSYZ as LSYZ,
+               a.YZPB as YZPB,
+               a.LSBZ as LSBZ,
+               a.JFBZ as JFBZ,
+               a.YPLX as YPLX,
+               '' as JLDW
+          FROM CIS_HZYZ a, IM_HZRY c
+         WHERE ((a.YSBZ = 1 and a.YSTJ = 1) or a.YSBZ = 0)
+           and (a.ZYH = c.ZYH)
+           AND (a.JGID = #{jgid})
+           AND (a.BRKS = #{srks} or a.BRBQ = #{srks})
+           AND (a.ZTBZ = 0 OR a.ZTBZ is NULL)
+           AND (a.FHGH IS NULL or a.FHGH = '')
+           AND (a.YZPB = 0)
+           AND (c.CYPB = 0)
+           AND (a.ZFBZ = 0 OR a.YZZF IS NULL)
+        UNION ALL
+        SELECT 1 AS SFZT,
+        	   c.ZYHM as ZYHM,
+               c.BRXM as BRXM,
+               c.BRCH as BRCH,
+               a.YZMC as YZMC,
+               a.YCJL as YCJL,
+               a.YCSL as YCSL,
+               a.SYPC as SYPC,
+               '' as XMMC,
+               a.YPDJ as YPDJ,
+               a.YSGH as YSGH,
+               a.TZSJ as TZSJ,
+               a.TZYS as TZYS,
+               a.MZCS as MZCS,
+               a.KSSJ as KSSJ,
+               a.MRCS as MRCS,
+               a.CZGH as CZGH,
+               a.QRSJ as QRSJ,
+               a.YPXH as YPXH,
+               a.ZYH as ZYH,
+               a.JLXH as JLXH,
+               a.YJZX as YJZX,
+               a.ZXKS as ZXKS,
+               a.FHGH as FHGH,
+               a.YPYF as YPYF,
+               a.YZZH as YZZH,
+               a.YEPB as YEPB,
+               a.BZXX as BZXX,
+               a.FYSX as FYSX,
+               a.YFSB as YFSB,
+               a.LSYZ as LSYZ,
+               a.YZPB as YZPB,
+               a.LSBZ as LSBZ,
+               a.JFBZ as JFBZ,
+               a.YPLX as YPLX,
+               '' as JLDW
+          FROM  CIS_HZYZ_ZT a, IM_HZRY c
+         WHERE ((a.YSBZ = 1 and a.YSTJ = 1) or a.YSBZ = 0)
+           and (a.ZYH = c.ZYH)
+           AND (a.JGID = #{jgid})
+           AND (a.BRKS = #{srks} or a.BRBQ = #{srks})
+           AND a.ZTBZ = 1
+           AND (a.FHGH IS NULL or a.FHGH = '')
+           AND (a.YZPB = 0)
+           AND (a.ZFBZ = 0 OR a.YZZF IS NULL)
+           AND (c.CYPB = 0)) C
+           where 1 = 1
+           <if test="@sqlt.Ognl@isNotEmpty(lsyz)">
+              and C.LSYZ = #{lsyz}
+       	   </if>
+       	   <if test="@sqlt.Ognl@isNotEmpty(zyhm)"> 
+           		and (C.BRXM like CONCAT('%',#{zyhm},'%')
+           		or c.ZYHM = #{zyhm} or c.BRCH = #{zyhm})
+   	       </if>
+ 	ORDER BY C.BRCH, C.YZZH
+   </select>
+   
+   <!-- 医嘱复核前停医嘱查询 -->
+   <select id="queryBeforeBatchReviewStop" resultType="java.util.HashMap">
+        SELECT *
+  			FROM (SELECT 0 AS SFZT,
+  			   c.ZYHM as ZYHM,
+               c.BRXM as BRXM,
+               c.BRCH as BRCH,
+               a.YZMC as YZMC,
+               a.YCJL as YCJL,
+               a.YCSL as YCSL,
+               a.SYPC as SYPC,
+               '' as XMMC,
+               a.YPDJ as YPDJ,
+               a.YSGH as YSGH,
+               a.TZSJ as TZSJ,
+               a.TZYS as TZYS,
+               a.MZCS as MZCS,
+               a.KSSJ as KSSJ,
+               a.MRCS as MRCS,
+               a.CZGH as CZGH,
+               a.QRSJ as QRSJ,
+               a.YPXH as YPXH,
+               a.ZYH as ZYH,
+               a.JLXH as JLXH,
+               a.YJZX as YJZX,
+               a.ZXKS as ZXKS,
+               a.FHGH as FHGH,
+               a.YPYF as YPYF,
+               a.YZZH as YZZH,
+               a.YEPB as YEPB,
+               a.BZXX as BZXX,
+               a.FYSX as FYSX,
+               a.YFSB as YFSB,
+               a.LSYZ as LSYZ,
+               a.YZPB as YZPB,
+               a.LSBZ as LSBZ,
+               a.JFBZ as JFBZ,
+               a.YPLX as YPLX,
+               '' as JLDW
+          FROM CIS_HZYZ a, IM_HZRY c
+         WHERE ((a.YSBZ = 1 and a.YSTJ = 1) or a.YSBZ = 0)
+           and (a.ZYH = c.ZYH)
+           AND (a.JGID = #{jgid})
+           AND (a.BRKS = #{srks} or a.BRBQ = #{srks})
+           AND (a.ZTBZ = 0 OR a.ZTBZ is NULL)
+           AND (a.TZSJ IS NOT NULL ) AND ( a.TZFHR IS NULL)
+           AND (a.YZPB = 0)
+           AND (c.CYPB = 0)
+           AND (a.ZFBZ = 0 OR a.YZZF IS NULL)
+        UNION ALL
+        SELECT 1 AS SFZT,
+        	   c.ZYHM as ZYHM,
+               c.BRXM as BRXM,
+               c.BRCH as BRCH,
+               a.YZMC as YZMC,
+               a.YCJL as YCJL,
+               a.YCSL as YCSL,
+               a.SYPC as SYPC,
+               '' as XMMC,
+               a.YPDJ as YPDJ,
+               a.YSGH as YSGH,
+               a.TZSJ as TZSJ,
+               a.TZYS as TZYS,
+               a.MZCS as MZCS,
+               a.KSSJ as KSSJ,
+               a.MRCS as MRCS,
+               a.CZGH as CZGH,
+               a.QRSJ as QRSJ,
+               a.YPXH as YPXH,
+               a.ZYH as ZYH,
+               a.JLXH as JLXH,
+               a.YJZX as YJZX,
+               a.ZXKS as ZXKS,
+               a.FHGH as FHGH,
+               a.YPYF as YPYF,
+               a.YZZH as YZZH,
+               a.YEPB as YEPB,
+               a.BZXX as BZXX,
+               a.FYSX as FYSX,
+               a.YFSB as YFSB,
+               a.LSYZ as LSYZ,
+               a.YZPB as YZPB,
+               a.LSBZ as LSBZ,
+               a.JFBZ as JFBZ,
+               a.YPLX as YPLX,
+               '' as JLDW
+          FROM CIS_HZYZ_ZT a, IM_HZRY c
+         WHERE ((a.YSBZ = 1 and a.YSTJ = 1) or a.YSBZ = 0)
+           and (a.ZYH = c.ZYH)
+           AND (a.JGID = #{jgid})
+           AND (a.BRKS = #{srks} or a.BRBQ = #{srks})
+           AND a.ZTBZ = 1
+           AND (a.TZSJ IS NOT NULL ) AND ( a.TZFHR IS NULL)
+           AND (a.YZPB = 0)
+           AND (a.ZFBZ = 0 OR a.YZZF IS NULL)
+           AND (c.CYPB = 0)) C
+           where 1 = 1
+           <if test="@sqlt.Ognl@isNotEmpty(lsyz)">
+              and C.LSYZ = #{lsyz}
+       	   </if>
+       	   <if test="@sqlt.Ognl@isNotEmpty(zyhm)"> 
+           		and (C.BRXM like CONCAT('%',#{zyhm},'%')
+           		or c.ZYHM = #{zyhm} or c.BRCH = #{zyhm})
+   	       </if>
+ 	ORDER BY C.BRCH, C.YZZH
+   </select>
+   
+   <!-- 更新医嘱停嘱复核状态 -->
+   <update id="updateBqyzStopOrderReview">
+	   UPDATE CIS_HZYZ
+	   SET TZFHBZ = 1, TZFHR = #{fhgh}, TZFHSJ = #{fhsj}
+	 WHERE ((YSBZ = 1 and YSTJ = 1) or YSBZ = 0)
+	   and (TZFHBZ = 0 or TZFHBZ is null)
+	   AND JGID = #{jgid}
+	   and (ZFBZ = 0 OR YZZF IS NULL)
+	   <if test="@sqlt.Ognl@isNotEmpty(jlxh)">
+              and JLXH = #{jlxh}
+       </if>
+	   <if test="@sqlt.Ognl@isNotEmpty(ztyzjlxh)">
+              and ZTYZJLXH = #{ztyzjlxh}
+       </if>
+   </update>
+
+    <select id="queryByYzxh" resultType="CisHzyz">
+        SELECT <include refid="columns" />
+        FROM CIS_HZYZ
+        where JLXH in (
+        <foreach collection="list" item="k" separator=",">
+            #{k}
+        </foreach>
+        )
+    </select>
+   <!-- 病区医嘱列表查询 -->
+   <select id="queryWardOrderList" resultType="com.buit.cis.dctwork.response.CisHzyzQueryResp">
+	        select a.YZZF   as YZZF,
+	       a.SQWH as SQWH,
+	       a.ZFYP,
+	       b.ZFYP as ZBY,
+	       a.YFDW,
+	       b.YPJL,
+	       b.JLDW,
+	       a.JLXH as JLXH,
+	       a.JGID,
+	       a.ZYH,
+	       a.YPXH,
+	       a.YZZH,
+	       a.YFBZ,
+	       a.CFTS,
+	       a.YPZS,
+	       a.JZ,
+	       a.KSSJ as KSSJ,
+	       a.YZMC,
+	       a.YCJL,
+	       a.YCSL,
+	       a.SYPC,
+	       a.MRCS,
+	       a.YZZXSJ,
+	       a.SRCS,
+	       a.YPYF,
+	       a.YPDJ,
+	       a.YSGH,
+	       a.FHGH,
+	       a.TZSJ as TZSJ,
+	       a.QRSJ as QRSJ,
+	       a.YFGG,
+	       a.TZYS,
+	       a.FYFS,
+	       a.BZXX,
+	       a.YPCD,
+	       a.YFSB,
+	       a.CZGH,
+	       a.ZFPB,
+	       a.YPLX,
+	       a.SYBZ,
+	       a.MZCS,
+	       a.YJZX,
+	       a.ZXKS,
+	       a.YJXH,
+	       a.XMLX,
+	       a.JFBZ,
+	       a.ZFBZ,
+	       a.SFJG,
+	       a.FHBZ,
+	       a.TZFHBZ,
+	       a.PSPB,
+	       a.PSJG,
+	       a.YZPB,
+	       a.LSBZ,
+	       a.YEPB,
+	       a.FYSX,
+	       a.YSBZ,
+	       a.YSTJ,
+	       a.LSYZ,
+	       a.YWID,
+	       a.YYTS,
+	       a.ZFGH,
+	       a.ZTBZ,
+	       a.ZTYZJLXH,
+	       a.YZLX,
+	       a.YZPX,
+	       a.SQID,
+	       a.TPN,
+	       c.CDMC,
+	       a.KJYWSP,
+	       a.DS,
+	       a.FHSJ
+	  from CIS_HZYZ a
+	  left join DRUGS_TYPK b
+	    on (a.YPXH = b.YPXH)
+	  left join DRUGS_CDDZ c
+	  	on a.YPCD = c.YPCD
+	    where a.ZYH = #{zyh} and a.YZPB = 0 and a.JGID = #{jgid}
+        <choose>
+            <when test="@sqlt.Ognl@isNotEmpty(lsyz)">
+                and a.LSYZ = #{lsyz}
+            </when>
+            <otherwise>
+            	and (a.LSYZ = 0 or a.LSYZ = 1)
+            </otherwise>
+        </choose>
+        <if test="@sqlt.Ognl@isNotEmpty(yplx) and yplx == 1">
+                  and a.YPLX &gt;= 0
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(yplx) and yplx == 2">
+                  and a.YPLX = 0
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(yplx) and yplx == 3">
+                  and a.YPLX &gt; 0
+        </if>
+	    <if test="@sqlt.Ognl@isNotEmpty(openBy) and openBy == 'doctor'.toString()">
+                  and a.YSBZ = 1
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(openBy) and openBy == 'nurse'.toString()">
+                  and ((a.YSBZ = 1 and a.YSTJ  = 1) or a.YSBZ = 0)
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(isStop) and isStop == 'false'.toString() ">
+                  and ((a.LSBZ = 0 and (a.TZSJ is null and a.TZYS is null or a.TZYS = '')) 
+                  or (a.TZSJ is not null and a.TZFHSJ is null))
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(isYzzf) and isYzzf == 'false'.toString() ">
+                  and a.ZFBZ = 0
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(xmlx)">
+                    and a.XMLX = #{xmlx}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(isTime) and isTime == 'true'.toString() ">
+                    and date_format(a.KSSJ, '%Y-%m-%d') &gt;= date_format(date_sub(now(),interval #{days} day),'%Y-%m-%d')
+        </if>
+	    <choose>
+            <when test="@sqlt.Ognl@isNotEmpty(type) and type == 1 ">
+                and (a.XMLX = 1 or a.XMLX &gt;= 2) and a.XMLX &lt;&gt; 3
+            </when>
+            <when test="@sqlt.Ognl@isNotEmpty(type) and type == 2 ">
+                and a.XMLX = 2
+            </when>
+            <when test="@sqlt.Ognl@isNotEmpty(type) and type == 3 ">
+               	and (a.XMLX = 1 or a.XMLX &gt;= 3)
+            </when>
+            <when test="@sqlt.Ognl@isNotEmpty(type) and type == 4 ">
+               	and a.XMLX = 3
+            </when>
+            <when test="@sqlt.Ognl@isNotEmpty(type) and type == 5 ">
+               	and (a.XMLX = 1 or a.XMLX &gt;= 2)
+            </when>
+            <when test="@sqlt.Ognl@isNotEmpty(type) and type == 6 ">
+               	and (a.XMLX = 2 or a.XMLX = 3)
+            </when>
+            <when test="@sqlt.Ognl@isNotEmpty(type) and type == 7 ">
+               	 	and (a.XMLX = 1 or a.XMLX &gt;= 4)
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+        order by a.KSSJ asc,a.YZZH asc,a.YJZX desc,a.JLXH asc
+   </select>
+    <!--查询病人未停医嘱的数量-->
+    <select id="findwtyzCount" resultType="java.lang.Integer">
+        select count(1) from CIS_HZYZ where ( ZYH = #{zyh}) AND ( LSBZ = 0 OR (LSBZ= 2 AND QRSJ IS NULL) OR SYBZ = 1 ) AND ( JFBZ &lt; 3 OR JFBZ = 9 )
+
+    </select>
+
+   <!-- 查询药品用法序号 -->
+   <select id="queryDrugUsage" resultType="java.util.HashMap">
+        select b.FYXH as FYXH from CIS_HZYZ a,IM_DIC_YPYF b where a.YPYF = b.YPYF and a.JLXH= #{jlxh}
+   </select>
+   
+   <!-- 查询药品当天使用数量总和 -->
+   <select id="queryDrugSumSameDay" resultType="java.util.HashMap">
+        select sum(YCSL) as SYSL from CIS_HZYZ where ZYH = #{zyh} and YPXH = #{ypxh} and 
+        date_format(kssj, '%Y-%m-%d') = #{kssj}
+   </select>
+   
+   <!-- 判断是否有药品医嘱未停或未发药或是否有项目医嘱未停或未执行列表 -->
+   <select id="queryYzXmNotSureOrExcutedInfo" resultType="CisHzyz">
+        select JLXH as JLXH,
+	       SRKS as SRKS,
+	       SYBZ as SYBZ,
+	       YFSB as YFSB,
+	       YZMC as YZMC,
+	       KSSJ as KSSJ,
+	       TZSJ as TZSJ,
+	       YCSL as YCSL,
+	       YPYF as YPYF,
+	       SYPC as SYPC,
+	       YSGH as YSGH,
+	       YPDJ as YPDJ
+        FROM CIS_HZYZ 
+        where LSBZ = 0 and JFBZ &lt;&gt; 3 
+        and ZFBZ = 0    
+        and ZYH = #{zyh} and JGID = #{jgid}
+        <choose>
+            <when test="@sqlt.Ognl@isNotEmpty(yplx) and yplx == 0 ">
+                and YPLX = #{yplx}
+            </when>
+            <otherwise>
+            	 and YPLX &gt; 0 
+            </otherwise>
+        </choose>
+   </select>
+
+    
+    <!-- 根据医嘱组号查询对应附加项目 -->
+    <select id="queryAdditionalAdvice" resultType="CisHzyz">
+        select * from CIS_HZYZ CIS_HZYZ0_ 
+		where CIS_HZYZ0_.ZYH = #{zyh}
+		and CIS_HZYZ0_.LSYZ = #{lsyz}
+		and CIS_HZYZ0_.YZPB &lt;&gt; 0 
+		and CIS_HZYZ0_.JGID = #{jgid}
+    </select>
+
+    
+    <!-- 更新皮试结果 -->
+   <update id="updateSkinTestByJlxh">
+	   UPDATE CIS_HZYZ
+	   SET PSJG = #{psjg} where JLXH = #{jlxh}
+	   AND JGID = #{jgid}
+   </update>
+   
+   <!-- 检查项目医嘱删除 -->
+   <delete id="deleteOrdersBySqid">
+       delete from CIS_HZYZ where SQID = #{sqid} and YZLX = #{yzlx}
+   </delete>
+   
+   <!-- 备血申请医嘱删除 -->
+   <delete id="deleteSxsqByJlxh">
+        delete from CIS_HZYZ where SQID = (
+        select a.SQID from (
+         select SQID from CIS_HZYZ where JLXH = #{jlxh} ) a
+        ) and YZLX = #{yzlx}   
+   </delete>
+   
+   <!-- 组套删除 -->
+   <delete id="deleteBatchByJlxhList">
+        delete from cis_hzyz
+        where ztyzjlxh in
+       <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+           #{z}
+       </foreach>
+   </delete>
+
+   <!-- 查询需要皮试医嘱 -->
+   <select id="queryIsNeedSkinTest" resultType="CisHzyz">
+	  select <include refid="columns" />
+	  from CIS_HZYZ
+	 where ((YSBZ = 1 and YSTJ = 1) or YSBZ = 0)
+	   and (FHBZ = 0 or FHBZ is null)
+	   and JGID = #{jgid}
+	   and PSPB &gt; 0 and PSPB &lt; 3
+	   and (PSJG is null or PSJG = 3)
+	   and (ZFBZ = 0 OR YZZF IS NULL)
+	   <if test="@sqlt.Ognl@isNotEmpty(lsyz)"> 
+            and ZYH = #{zyh}
+       </if>
+	   <if test="@sqlt.Ognl@isNotEmpty(lsyz)"> 
+            and LSYZ = #{lsyz}
+       </if>
+   </select>
+   
+   <!-- 更新复核状态(除去未做皮试结果医嘱) -->
+   <update id="updateReviewNotExtisSkinTest">
+	   	 update CIS_HZYZ
+	   SET FHBZ = 1, FHGH = #{req.fhgh}, FHSJ = #{req.fhsj}
+	 where ((YSBZ = 1 and YSTJ = 1) or YSBZ = 0)
+	   and (FHBZ = 0 or FHBZ is null)
+	   and JGID = #{req.jgid}
+	   and (ZFBZ = 0 OR YZZF IS NULL)
+	   <if test="@sqlt.Ognl@isNotEmpty(req.lsyz)"> 
+            and LSYZ = #{req.lsyz}
+       </if>
+	   <if test="@sqlt.Ognl@isNotEmpty(req.zyh)"> 
+           and ZYH = #{req.zyh}
+       </if>
+	   <if test="@sqlt.Ognl@isNotEmpty(req.czgh)"> 
+           and CZGH != #{req.czgh}
+       </if>
+       <if test="@sqlt.Ognl@isNotEmpty(req.jlxh)"> 
+           and JLXH = #{req.jlxh}
+       </if>
+       <if test="@sqlt.Ognl@isNotEmpty(yzzhList)"> 
+            and YZZH not in 
+        <foreach collection="yzzhList" item="z" open="(" close=")" separator=",">
+            #{z}
+        </foreach>
+       </if>      
+   </update>
+   
+   <!-- 批量查询查询需要皮试医嘱 -->
+   <select id="queryIsNeedSkinTestBatch" resultType="java.util.HashMap">
+   		SELECT c.BRXM as BRXM,
+               c.BRCH as BRCH,
+               a.YZMC as YZMC,
+               a.YCJL as YCJL,
+               a.YCSL as YCSL,
+               a.SYPC as SYPC,
+               '' as XMMC,
+               a.YPDJ as YPDJ,
+               a.YSGH as YSGH,
+               a.TZSJ as TZSJ,
+               a.TZYS as TZYS,
+               a.MZCS as MZCS,
+               a.KSSJ as KSSJ,
+               a.MRCS as MRCS,
+               a.CZGH as CZGH,
+               a.QRSJ as QRSJ,
+               a.YPXH as YPXH,
+               a.ZYH as ZYH,
+               a.JLXH as JLXH,
+               a.YJZX as YJZX,
+               a.ZXKS as ZXKS,
+               a.FHGH as FHGH,
+               a.YPYF as YPYF,
+               a.YZZH as YZZH,
+               a.YEPB as YEPB,
+               a.BZXX as BZXX,
+               a.FYSX as FYSX,
+               a.YFSB as YFSB,
+               a.LSYZ as LSYZ,
+               a.YZPB as YZPB,
+               a.LSBZ as LSBZ,
+               a.JFBZ as JFBZ,
+               a.YPLX as YPLX,
+               '' as JLDW
+          FROM CIS_HZYZ a, IM_HZRY c
+         WHERE ((a.YSBZ = 1 and a.YSTJ = 1) or a.YSBZ = 0)
+           and (a.ZYH = c.ZYH)
+           AND (a.JGID = #{jgid})
+           AND (a.ZTBZ = 0 OR a.ZTBZ is NULL)
+           AND (a.FHGH IS NULL)
+           AND (a.YZPB = 0)
+           AND (c.CYPB = 0)
+           AND PSPB &gt; 0 and PSPB &lt; 3
+	   	   AND (PSJG is null or PSJG = 3)
+	   	   <if test="@sqlt.Ognl@isNotEmpty(srks)"> 
+            	AND (a.BRKS = #{srks} or a.BRBQ = #{srks})
+       	   </if> 
+	   	   <if test="@sqlt.Ognl@isNotEmpty(jlxhList)"> 
+            	AND	a.JLXH in 
+		        <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+		            #{z}
+		        </foreach>
+       	   </if> 
+   </select>
+   
+   <!-- 查询草药方医嘱信息 -->
+   <select id="queryHerbInfo" resultType="com.buit.cis.dctwork.response.CisHzyzHerbResp">
+   		select a.JLXH   as JLXH,
+		       a.YPXH   as YPXH,
+		       a.YZMC   as YZMC,
+		       a.YCJL   as YCJL,
+		       a.JZ     as JZ,
+		       a.YCSL   as YCSL,
+		       a.YFDW   as YFDW,
+		       a.YFBZ   as YFBZ,
+		       a.YPDJ   as YPDJ,
+		       a.YPLX   as YPLX,
+		       a.YPCD   as YPCD,
+		       a.MRCS   as MRCS,
+		       a.YZZXSJ as YZZXSJ,
+		       a.SRCS   as SRCS,
+		       a.FYFS   as FYFS,
+		       a.SYPC   as SYPC,
+		       a.XMLX   as XMLX,
+		       a.YFSB   as YFSB,
+		       b.JLDW   as JLDW,
+		       b.YPJL   as YPJL,
+		       a.ZYH    as ZYH
+		  from CIS_HZYZ a, DRUGS_TYPK b
+		 where a.YPXH = b.YPXH
+		   and a.ZYH = #{zyh}
+		   and a.YZZH = #{yzzh}
+   </select>
+   
+   <!-- 查询医嘱本打印医嘱信息 -->
+   <select id="queryMedicalOrderInfo" resultType="com.buit.cis.dctwork.response.CisHzyzOrderBookResp">
+   		select a.JLXH   as JLXH,
+   			   a.ZTBZ as ZTBZ,
+   			   a.ZTYZJLXH as ZTYZJLXH,
+   			   a.KSSJ   as KSSJ,
+		       a.YZMC   as YZMC,
+		       a.XMLX as XMLX,
+		       a.JFBZ as JFBZ,
+		       a.LSYZ as LSYZ,
+		       a.ZFYP as ZFYP,
+		       a.YCSL as YCSL,
+		       a.YFDW as YFDW,
+		       a.YDLB as YDLB,
+		       a.YZZH as YZZH,
+       		   b.JLDW as JLDW,
+       		   a.YCJL as YCJL,
+		       e.PCMC as SYPCMC,
+		       f.XMMC as YPYFMC,
+		       a.BZXX as BZXX,
+       		  (select JFYZ from FEE_YLSFXMDJ where FYXH = a.YPXH and a.YPLX = 0 and JGID = #{jgid}) as JFYZ,
+		       <if test="yzlx == 1"> 
+          	     (select QRGH from IM_FEE_FYMX c where a.ZYH = c.ZYH and a.JLXH= c.YZXH and c.FYSL > 0 LIMIT 1) as ZXGH,
+          	     (select FYGB from FEE_YLSFXM d where a.YPXH = d.FYXH  and a.YPCD = 0 LIMIT 1) as YJFYGB,
+          	     (select FYDW FROM FEE_YLSFXM d where a.YPXH = d.FYXH  and a.YPCD = 0 LIMIT 1) as YJFYDW,
+          	      a.YPLX  as YPLX,
+          	      (select m.PERSONNAME from IM_FEE_FYMX c, HR_PERSONNEL m where a.ZYH = c.ZYH 
+ 				 and a.JLXH = c.YZXH and c.QRGH = m.PERSONID and c.FYSL > 0 LIMIT 1) as ZXFHGHMC,
+       	  	   </if>
+		       a.YSGH   as YSGH,
+		       a.TZSJ   as TZSJ,
+		       a.TZYS   as TZYS,
+		       a.FHGH   as FHGH,
+		       a.FHSJ   as FHSJ,
+		       a.ZYH    as ZYH,
+		       a.YZLX 	as YZLX,
+		       (select PERSONNAME from HR_PERSONNEL where PERSONID = a.YSGH) as YSGHMC,
+		       (select PERSONNAME from HR_PERSONNEL where PERSONID = a.FHGH) as FHGHMC,
+		       (select PERSONNAME from HR_PERSONNEL where PERSONID = a.TZYS) as TZYSMC,
+		       (select PERSONNAME from HR_PERSONNEL where PERSONID = a.TZFHR) as TZFHRMC,
+		       a.CFTS as CFTS,
+		       a.ZFBZ as ZFBZ
+		  from CIS_HZYZ a left outer join DRUGS_TYPK b on a.YPXH = b.YPXH
+		  left outer join DIC_SYPC e on a.SYPC = e.PCBM
+		   left outer join IM_DIC_YPYF f on a.YPYF = f.YPYF
+		  where a.ZYH = #{zyh}
+		  and a.YZPB = 0
+		  <if test="@sqlt.Ognl@isNotEmpty(sftj) and sftj == 1"> 
+          	 and a.YSBZ = 1 and a.YSTJ = 1
+       	  </if>
+       	  <if test="@sqlt.Ognl@isNotEmpty(sftj) and sftj == 2"> 
+          	 and a.FHBZ = 1 and a.YSBZ = 1
+       	  </if>
+		  <if test="@sqlt.Ognl@isNotEmpty(yzlx)"> 
+          	 and a.LSYZ = #{yzlx}
+          	 <if test="@sqlt.Ognl@isNotEmpty(yzzt) and yzzt == 2"> 
+          	 	 and a.TZSJ is not null and (a.DYZT &lt;&gt; 2 or a.DYZT is null)
+       	  	</if>
+       	  </if>
+       	  <if test="@sqlt.Ognl@isNotEmpty(type) and type == 1"> 
+          	 and a.JLXH not in (select YZBXH from NIS_YZDY where ZYH = #{zyh})
+       	  </if>
+       	  order by a.KSSJ,a.YZZH
+   </select>
+   
+   <!-- 更新重复医嘱打印状态  -->
+   <update id="updateDyztFilter">
+		update CIS_HZYZ
+		  set DYZT = #{dyzt} where JLXH in 
+		<foreach collection="jlxhlist" item="jlxh" open="(" close=")" separator="," >
+                #{jlxh}
+        </foreach>	
+   </update>
+   
+   <!-- 更新医嘱打印状态  -->
+   <update id="updateDyzt">
+		update CIS_HZYZ
+		  set DYZT = 2 where JLXH in 
+		<foreach collection="jlxhlist" item="jlxh" open="(" close=")" separator="," >
+                #{jlxh}
+        </foreach>	
+   </update>
+   
+   <!-- 根据记录序号更新医嘱打印状态 -->
+   <update id="updateDyztByJlxh">
+		update CIS_HZYZ
+		  set DYZT = #{dyzt} where JLXH  = #{jlxh}
+   </update>
+   
+   <!-- 查询需打印的重整医嘱信息 -->
+   <select id="queryRenewOrderInfo" resultType="com.buit.cis.dctwork.response.CisHzyzOrderBookResp">
+   		select a.JLXH   as JLXH,
+   			   a.ZTBZ as ZTBZ,
+   			   a.ZTYZJLXH as ZTYZJLXH,
+   			   a.KSSJ   as KSSJ,
+		       a.YZMC   as YZMC,
+		       a.XMLX as XMLX,
+		       a.JFBZ as JFBZ,
+		       a.LSYZ as LSYZ,
+		       a.ZFYP as ZFYP,
+		       a.YCSL as YCSL,
+		       a.YFDW as YFDW,
+		       a.YDLB as YDLB,
+		       a.YZZH as YZZH,
+       		   b.JLDW as JLDW,
+       		   a.YCJL as YCJL,
+		       e.PCMC as SYPCMC,
+		       f.XMMC as YPYFMC,
+		       a.BZXX as BZXX,
+       		  (select JFYZ from FEE_YLSFXMDJ where FYXH = a.YPXH and a.YPLX = 0 and JGID = #{jgid}) as JFYZ,
+		       a.YSGH   as YSGH,
+		       a.TZSJ   as TZSJ,
+		       a.TZYS   as TZYS,
+		       a.FHGH   as FHGH,
+		       a.FHSJ   as FHSJ,
+		       a.ZYH    as ZYH
+		  from CIS_HZYZ a left outer join DRUGS_TYPK b on a.YPXH = b.YPXH
+		  left outer join DIC_SYPC e on a.SYPC = e.PCBM
+		   left outer join IM_DIC_YPYF f on a.YPYF = f.YPYF
+		  where a.ZYH = #{zyh} and TZSJ is null
+		  <if test="@sqlt.Ognl@isNotEmpty(sftj) and sftj == 1"> 
+          	 and a.YSBZ = 1 and a.YSTJ = 1
+       	  </if>
+       	  <if test="@sqlt.Ognl@isNotEmpty(sftj) and sftj == 2"> 
+          	 and a.FHBZ = 1 and a.YSBZ = 1
+       	  </if>
+		  <if test="@sqlt.Ognl@isNotEmpty(yzlx)"> 
+          	 and a.LSYZ = #{yzlx}
+       	  </if>
+       	  and ((a.YPLX = 0 and
+       a.YPXH not in (select FYXH
+                          from FEE_YLSFXMDJ
+                         where JGID = a.JGID
+                           and JFYZ = 1)) or a.YPLX &lt;&gt; 0)
+       	  order by a.YZZH
+   </select>
+   
+   <!-- 查询需要打印的组套数据 -->
+   <select id="queryZtOrderPrintInfo" resultType="java.util.HashMap">
+   		select a.YZZH as YZZH,
+		       a.KSSJ as KSSJ,
+		       a.YSGH as YSGH,
+		       (select d.PERSONNAME from HR_PERSONNEL d where d.PERSONID = a.YSGH) as YSGHMC,
+		       a.FHGH as FHGH,
+		       (select e.PERSONNAME from HR_PERSONNEL e where e.PERSONID = a.FHGH) as FHGHMC,
+		       a.TZSJ as TZSJ,
+		       a.TZYS as TZYS,
+		       (select f.PERSONNAME from HR_PERSONNEL f where f.PERSONID = a.TZYS) as TZYSMC,
+		       a.TZFHR as TZFHR,
+		       (select g.PERSONNAME from HR_PERSONNEL g where g.PERSONID = a.TZFHR) as TZFHRMC,
+		       a.FHSJ as ZXSJ,
+		       a.YZZF as YZZF,
+		       a.JLXH as JLXH,
+		       (select m.PERSONNAME from IM_FEE_FYMX c, HR_PERSONNEL m , CIS_HZYZ b where b.ZYH = c.ZYH 
+		        and a.ZYH = b.ZYH and b.JLXH = c.YZXH and c.QRGH = m.PERSONID 
+		        and c.FYSL > 0 and b.ZTYZJLXH = #{ztyzjlxh} LIMIT 1) as ZXFHGHMC,
+ 			   a.LSYZ as LSYZ
+		  from CIS_HZYZ_ZT a
+		 where a.JLXH = #{ztyzjlxh}
+   </select>
+   
+   <select id="doQueryByJlxhOrZtjlxh" resultType="CisHzyz">
+   		SELECT <include refid="columns" /> FROM CIS_HZYZ 
+   		WHERE 
+		<choose>
+            <when test="@sqlt.Ognl@isNotEmpty(ztbz) and ztbz == 0 ">
+                JLXH = #{sbxh}
+            </when>
+            <otherwise>
+            	ZTYZJLXH = #{sbxh}
+            </otherwise>
+        </choose>
+   </select>
+   
+    <!-- 会诊申请更新医嘱提交状态 -->
+	<update id="updateHzsqSubmitStatus">
+		update CIS_HZYZ
+		   SET YSTJ = 1
+		 where YSTJ = 0
+		   and YSBZ = 1
+		   and LSYZ = #{lsyz}
+		   and JGID = #{jgid}
+		   and SQID = #{sqid}
+		   and FHBZ = 0
+		   and YZLX = #{yzlx}
+	</update>
+	
+	<!-- 根据申请id取消会诊医嘱提交状态 -->
+	<update id="cancelHzSubmitStatusBySqid">
+		UPDATE CIS_HZYZ 
+		SET YSTJ = 0
+		WHERE SQID = #{sqid}
+		and ystj = 1
+		and yzlx = #{yzlx}
+	</update>
+	
+	<!-- 根据记录序号更新抗菌药物状态 -->
+	<update id="updateAntibioticsStatus">
+		UPDATE CIS_HZYZ 
+		SET KJYWSP = #{kjywsp},
+		YSTJ = 1
+		<if test="@sqlt.Ognl@isNotEmpty(syly)"> 
+          	, BZXX = #{syly}
+   	    </if>
+		WHERE JLXH = #{jlxh}
+	</update>
+	
+	<!-- 提交查询是否存在未审批或刚开的抗菌药物  -->
+	<select id="queryIsExistAntimicrobial"  resultType="java.util.HashMap">
+		select a.JLXH as JLXH, 
+			   a.YZZH as YZZH, 
+			   a.KJYWSP as KJYWSP,
+			   a.YPLX as YPLX,
+			   a.YPCD as YPCD,
+			   b.KSSDJ as KSSDJ,
+			   a.YZMC as YZMC
+		 from cis_hzyz a, drugs_typk b, drugs_cdxx c, drugs_ypcd d
+			where a.ypxh = d.ypxh
+			and a.ypcd = d.ypcd
+			and a.ypxh = b.ypxh
+			and a.ypxh = c.ypxh
+			and b.ksbz = 1
+		 	and a.ysgh = #{YSGH}
+			and a.ystj = 0
+			and a.ysbz = 1
+			and a.lsyz = #{LSYZ}
+			and a.zyh = #{ZYH}
+			and a.jgid = #{JGID}   
+			and (a.zfbz = 0 or a.yzzf is null)
+			and (a.kjywsp &lt;&gt; 1 or a.kjywsp is null)
+			order by a.yzzh
+	</select>
+	
+	<!-- 根据申请id更新抗菌药物医嘱 -->
+	<update id="updateYzAntibiotics">
+		UPDATE CIS_HZYZ 
+		SET KJYWSP = #{kjywsp}
+		WHERE SQID = #{sqid}
+		and YZLX is null
+	</update>
+	
+	<!-- 抗菌药物申请单更新到医嘱 -->
+	<update id="updateAntibioticsSqidByJlxh">
+		UPDATE CIS_HZYZ 
+		SET SQID = #{sqid},
+		KJYWSP = 0
+		WHERE JLXH = #{jlxh}
+	</update>
+	
+	<!-- 更新医嘱的抗菌药物状态和申请id -->
+	<update id="removeAntibioticsStatus">
+		UPDATE CIS_HZYZ 
+		SET KJYWSP = null,
+		SQID = null
+		WHERE SQID = #{sqid}
+		and YZLX is null
+	</update>
+	
+	<!-- 查询医嘱口服固定卡片打印信息  -->
+	<select id="queryMedicalCardInfo"  resultType="java.util.HashMap">
+		SELECT e.BFDW as SLDW,
+		       b.YJZX AS YJZX,
+		       IFNULL(b.BRBQ, 0) as BRBQ,
+		       b.YPYF as YPYF,
+		       d.ZYHM AS ZYHM,
+		       b.ZYH as ZYH,
+		       b.ZFYP as ZFYP,
+		       e.YPMC as YZMC,
+		       b.YPLX as YPLX,
+		       b.YPXH as YPXH,
+		       b.KSSJ as KSSJ,
+		       b.TZSJ as TZSJ,
+		       b.YCSL as YCSL,
+		       b.YCJL as YCJL,
+		       b.YZZH as YZZH,
+		       b.SYPC as SYPC,
+		       d.BRCH as BRCH,
+		       d.BRXM as BRXM,
+		       d.BRXB as BRXB,
+		       d.CSNY as CSNY,
+		       b.MRCS as MRCS,
+		       <choose>
+	            <when test="@sqlt.Ognl@isNotEmpty(yzlb) and yzlb == 4 ">
+	                case when b.LSYZ = 1 then 1 else b.SRCS end as SRCS,
+	            </when>
+	            <otherwise>
+	            	 b.SRCS as SRCS,
+	            </otherwise>
+           	   </choose>
+		       a.PCMC as PCMC,
+		       c.XMMC as XMMC,
+		       b.BZXX as BZXX,
+		       b.JLXH as JLXH,
+		       e.JLDW as JLDW,
+		       d.ZYHM as ZYHM,
+		       b.LSYZ as LSYZ,
+		       b.SRKS as SRKS,
+		       b.YEPB as YEPB,
+		       b.YZZXSJ as YZZXSJ,
+		       b.DS as DS
+		  FROM dic_sypc a, cis_hzyz b, im_dic_ypyf c, im_hzry d, drugs_typk e
+		 WHERE b.YPXH = e.YPXH
+		   and a.PCBM = b.SYPC
+		   <choose>
+	            <when test="@sqlt.Ognl@isNotEmpty(lsyz) and lsyz == 0">
+	                and b.LSYZ = 0
+	                AND b.LSBZ = 0
+	            </when>
+	            <when test="@sqlt.Ognl@isNotEmpty(lsyz) and lsyz == 1">
+	                and b.LSYZ = 1 and date_format(b.KSSJ, '%Y-%m-%d') = #{yysj}
+	            </when>
+	            <otherwise>
+	            	and ( b.LSYZ = 0 or (b.LSYZ = 1 and date_format(b.KSSJ, '%Y-%m-%d') = #{yysj}))
+	            </otherwise>
+           </choose>
+		   and b.ZYH = d.ZYH
+		   and c.YPYF = b.YPYF
+		   and d.CYPB = 0
+		   AND (b.ZYH in 
+				<foreach collection="zyhList" item="zyh" open="(" close=")" separator="," >
+                	#{zyh}
+        		</foreach>	
+			)
+		   AND (b.BRBQ = #{bqdm})
+		   AND (b.YCSL > 0)
+		   <choose>
+	            <when test="@sqlt.Ognl@isNotEmpty(xmlb)">
+	                AND ((((#{yzlb} = 2 OR #{yzlb} = 3 OR #{yzlb} = 4 OR #{yzlb} = 7) AND b.YPLX > 0 
+		   			AND b.XMLX = 1) OR #{yzlb} = 5 OR #{yzlb} = 9) AND c.XMLB = #{yzlb})
+	            </when>
+	            <otherwise>
+	            	AND c.XMLB = #{yzlb}
+	            </otherwise>
+           </choose>
+		   AND (b.YSBZ = 0 OR (b.YSBZ = 1 AND b.YSTJ = 1))
+		   AND (b.YZPB = 0)
+		   and b.ZFBZ = 0
+		   and b.JGID = #{jgid}
+		   and b.YPLX &gt; 0
+		   and (#{fhbz} = 0 or b.FHBZ = 1)
+		   and not exists
+		 (select 1
+		          from cis_yzkpdyjl dyjl
+		         where b.JLXH = dyjl.YZXH
+		           and dyjl.DYBZ = 1
+		           and date_format(dyjl.YYSJ, '%Y-%m-%d') &gt;= #{yysj}
+		           and date_format(dyjl.YYSJ, '%Y-%m-%d') &lt; date_add(#{yysj}, interval 1 day))
+		 ORDER BY d.BRCH ASC, b.YZZH ASC
+	</select>
+	
+	<!-- 查询医嘱口服执行单打印信息  -->
+	<select id="queryOralCardZxInfo"  resultType="java.util.HashMap">
+		SELECT b.ZFYP   as ZFYP,
+        (case when e.YPMC is null then b.YZMC
+        when b.YPCD = 0 then b.YZMC
+        else e.YPMC end) as YZMC,
+		       b.YPLX   as YPLX,
+		       b.YPXH   as YPXH,
+		       b.KSSJ   as KSSJ,
+		       b.TZSJ   as TZSJ,
+		       b.YCSL   as YCSL,
+		       b.YCJL   as YCJL,
+		       b.YZZH   as YZZH,
+		       b.SYPC   as SYPC,
+		       d.BRCH   as BRCH,
+		       d.BRXM   as BRXM,
+		       d.RYNL   as RYNL,
+		       case d.BRXB when 1 then '男'
+	           when 2 then '女'
+	           else '未知' end  XB,
+		       d.CSNY   as CSNY,
+		       b.MRCS   as MRCS,
+		       a.PCMC   as PCMC,
+		       c.XMMC   as XMMC,
+		       b.BZXX   as BZXX,
+		       b.JLXH   as JLXH,
+		       e.JLDW   as JLDW,
+		       d.ZYHM   as ZYHM,
+		       b.SRKS   as SRKS,
+		       b.YEPB   as YEPB,
+		       b.YZZXSJ as YZZXSJ,
+		       b.YFGG as YFGG,
+		       b.LSYZ as LSYZ,
+		       (select OFFICENAME from dic_kszd where id = d.brks) as KSMC,
+	           (select OFFICENAME from dic_kszd where id = d.brbq) as BQMC,
+	           b.DS as DS
+		  FROM cis_hzyz b left join drugs_typk e on b.YPXH = e.YPXH, dic_sypc a, im_dic_ypyf c, im_hzry d
+		 WHERE (b.YZZF is null or b.YZZF != 1)
+		   and (b.ZFBZ is null or b.ZFBZ != 1)
+           <if test="@sqlt.Ognl@isNotEmpty(lsyz) and lsyz == 0">
+                and b.LSYZ = 0
+           </if>
+           <if test="@sqlt.Ognl@isNotEmpty(lsyz) and lsyz == 1">
+                and b.LSYZ = 1 and date_format(b.KSSJ, '%Y-%m-%d') = #{yysj}
+           </if>
+<!--        	   <if test="@sqlt.Ognl@isNotEmpty(yzlb) and (yzlb == 4 or yzlb == 6)">  -->
+<!--           	 and b.LSYZ = 0 -->
+<!--        	   </if> -->
+		   and a.PCBM = b.SYPC
+		   and b.ZYH = d.ZYH
+		   and c.YPYF = b.YPYF
+		   and d.CYPB = 0
+		   <if test="@sqlt.Ognl@isNotEmpty(zyhList)"> 
+			 	and b.ZYH in 
+	   			<foreach collection="zyhList" item="zyh" open="(" close=")" separator="," >
+               		#{zyh}
+       			</foreach>	
+		   </if>
+		   <if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+				and b.ZYH = #{zyh}
+		   </if>
+		   and b.BRBQ = #{bqdm}
+		   and b.LSBZ = 0
+		   <if test="@sqlt.Ognl@isNotEmpty(yzlb)"> 
+          	   and c.XMLB = #{yzlb}
+       	   </if>
+       	   <if test="@sqlt.Ognl@isNotEmpty(xmlb) and xmlb == 0"> 
+          	   and c.XMLB = 4 and c.KPDY = 1
+       	   </if>
+       	   <if test="@sqlt.Ognl@isNotEmpty(xmlb) and xmlb == 1"> 
+          	   and c.XMLB = 4
+       	   </if>
+       	   <if test="@sqlt.Ognl@isNotEmpty(yzlb) and yzlb != 2"> 
+          	   and b.YPLX &gt; 0
+       	   </if>
+
+<!-- 		   <if test="@sqlt.Ognl@isNotEmpty(xmlb) and xmlb == 0">  -->
+<!--           	   AND ((((#{yzlb} = 2 OR #{yzlb} = 3 OR #{yzlb} = 4 OR #{yzlb} = 6) AND b.YPLX > 0 AND -->
+<!-- 		       b.XMLX = 1) OR #{yzlb} = 5 OR #{yzlb} = 9) AND c.XMLB = #{yzlb}) -->
+<!--        	   </if> -->
+<!--        	   <if test="@sqlt.Ognl@isNotEmpty(xmlb) and xmlb == 1">  -->
+<!--           	   <if test="@sqlt.Ognl@isNotEmpty(yzlb) and (yzlb == 4 or yzlb == 11)">  -->
+<!-- 					AND c.XMLB = 4 -->
+<!--        	   	   </if> -->
+<!--        	   	   <if test="@sqlt.Ognl@isNotEmpty(yzlb) and yzlb == 6">  -->
+<!-- 					AND c.XMLB in (4,10) -->
+<!--        	   	   </if> -->
+<!--        	   	   <if test="@sqlt.Ognl@isNotEmpty(yzlb) and yzlb == 14">  -->
+<!-- 					AND B.XMLX = 1 and c.XMLB NOT IN (2,4,8,9,10) -->
+<!--        	   	   </if> -->
+<!--        	   </if> -->
+		  
+		   and (b.YSBZ = 0 OR (b.YSBZ = 1 AND b.YSTJ = 1))
+		   and b.YZPB = 0
+		   and b.ZFBZ = 0
+		   and b.JGID = #{jgid}
+		   and (#{fhbz} = 0 or b.FHBZ = 1)
+		   <if test="@sqlt.Ognl@isNotEmpty(sfyyk) and sfyyk == 0">
+                and b.ypxh not in
+                <foreach collection="yykList" item="z" open="(" close=")" separator="," >
+               		#{z}
+       	   		</foreach>	
+           </if>
+           <if test="@sqlt.Ognl@isNotEmpty(sfyyk) and sfyyk == 1">
+                and b.ypxh in
+                <foreach collection="yykList" item="z" open="(" close=")" separator="," >
+               		#{z}
+       	   		</foreach>	
+           </if>
+		 ORDER BY d.BRCH ASC, b.YZZH ASC
+	</select>
+	
+	<!-- 查询取消打印数据  -->
+	<select id="queryCancelPrintList"  resultType="com.buit.cis.nurse.response.CisHzyzCancelPrintResp">
+		SELECT RY.ZYHM as ZYHM,
+		       RY.BRXM as BRXM,
+		       A.JLXH as JLXH,
+		       A.KSSJ as KSSJ,
+		       A.YZMC as YZMC,
+		       A.YCJL as YCJL,
+		       A.YCSL as YCSL,
+		       A.SYPC as SYPC,
+		       A.YZZXSJ as YZZXSJ,
+		       A.SRCS as SRCS,
+		       A.YPYF as YPYF,
+		       A.YPDJ as YPDJ,
+		       A.YSGH as YSGH,
+		       A.TZSJ as TZSJ,
+		       A.TZYS as TZYS,
+		       A.CZGH as CZGH,
+		       A.FHGH as FHGH,
+		       A.FYFS as FYFS,
+		       A.BZXX as BZXX,
+		       A.YPCD as YPCD,
+		       A.YFSB as YFSB,
+		       B.DYSJ as DYSJ,
+		       B.YYSJ as YYSJ,
+		       A.YZZH as YZZH
+		  FROM CIS_HZYZ A
+		  JOIN CIS_YZKPDYJL B
+		    ON A.JLXH = B.YZXH
+		  JOIN IM_HZRY RY
+		    ON A.ZYH = RY.ZYH
+		 WHERE B.DYBZ = '1'
+		   AND A.ZYH = B.ZYH
+		   AND B.ZYH in 
+		   <foreach collection="zyhList" item="zyh" open="(" close=")" separator="," >
+                	#{zyh}
+           </foreach>	
+		   and date_format(B.YYSJ, '%Y-%m-%d') &gt;= #{yysj}
+		 order by B.YYSJ desc, A.YZZH asc
+	</select>
+	
+	<!-- 查询医嘱会诊申请单号 -->
+	<select id="queryHzSqId"  resultType="java.util.HashMap">
+		select SQID as SQID from CIS_HZYZ where YSGH = #{YSGH}
+		   and YSTJ = 0
+		   and YSBZ = 1
+		   and LSYZ = #{LSYZ}
+		   and ZYH = #{ZYH}
+		   and JGID = #{JGID}
+		   and YZLX = 4
+    </select>   
+    
+    <!-- 查询皮试类别 -->
+	<select id="queryPslb"  resultType="java.util.HashMap">
+		select case when a.psjg = 2 and b.gmywlb = 1 then 4
+				 when a.psjg = 3 and b.gmywlb = 1 then 5
+				 when a.psjg = 2 and b.gmywlb = 3 then 12
+				 when a.psjg = 3 and b.gmywlb = 3 then 13
+				 when a.psjg = 2 and b.gmywlb = 4 then 2
+				 when a.psjg = 3 and b.gmywlb = 4 then 3
+				 when a.psjg = 2 and b.gmywlb = 5 then 14
+				 when a.psjg = 3 and b.gmywlb = 5 then 15
+				 when a.psjg = 2 and b.gmywlb = 6 then 16
+				 when a.psjg = 3 and b.gmywlb = 6 then 17
+				 when a.psjg = 2 and b.gmywlb = 7 then 18
+				 when a.psjg = 3 and b.gmywlb = 7 then 19
+				 when a.psjg = 2 and b.gmywlb = 8 then 20
+				 when a.psjg = 3 and b.gmywlb = 8 then 21
+				 when a.psjg = 2 and b.gmywlb = 9 then 22
+				 when a.psjg = 3 and b.gmywlb = 9 then 23
+				 when a.psjg = 2 and b.gmywlb = 10 then 24
+				 when a.psjg = 3 and b.gmywlb = 10 then 25
+				 when a.psjg = 2 and b.gmywlb = 11 then 26
+				 when a.psjg = 3 and b.gmywlb = 11 then 27
+				 when a.psjg = 2 and b.gmywlb = 12 then 10
+				 when a.psjg = 3 and b.gmywlb = 12 then 11
+				 when a.psjg = 2 and b.gmywlb = 13 then 28
+				 when a.psjg = 3 and b.gmywlb = 13 then 29
+				 when a.psjg = 2 and b.gmywlb = 14 then 6
+				 when a.psjg = 3 and b.gmywlb = 14 then 7
+				 when a.psjg = 2 and b.gmywlb = 15 then 8
+				 when a.psjg = 3 and b.gmywlb = 15 then 9
+				else 1 end as pslb
+			from cis_hzyz a, drugs_typk b 
+			where a.psjg is not null 
+			and a.ypxh = b.ypxh 
+			and b.pspb = 1
+			and a.zyh = #{zyh}
+			order by a.kssj desc 
+    </select>  
+    
+    <!-- 问题医嘱通知更新 -->
+	<update id="updateYzProblemStatus">
+		update cis_hzyz 
+		set tzzt = 1, tztime = sysdate(), tzgh = #{tzgh}
+		where zyh = #{zyh}
+		and ystj = 2
+		and (tztime is null or tzgh is null)
+		and (yzzf is null or yzzf = 0)
+		and (zfbz is null or zfbz = 0)
+	</update>
+	
+	<!-- 查询变动医嘱  -->
+	<select id="queryChangeOrders"  resultType="com.buit.cis.nurse.response.CisHzyzChangeResp">
+		select b.brch,
+			b.brxm,
+			a.kssj,
+			a.ysgh,
+			a.yzmc, 
+			a.ycsl,
+			a.sypc,
+			a.ypyf,
+			a.tzsj,
+			a.tzys,
+			a.fyfs,
+			(select personname from hr_personnel where personid = a.ysgh) as ysghmc,
+			(select pcmc from dic_sypc where pcbm = a.sypc) as sypcmc,
+			(select xmmc from im_dic_ypyf where ypyf = a.ypyf) as ypyfmc,
+			(select fsmc from im_fyfs where fyfs = a.fyfs) as fyfsmc,
+			(select personname from hr_personnel where personid = a.tzys) as tzysmc
+			from cis_hzyz a, im_hzry b
+		where a.zyh = b.zyh
+		<if test="@sqlt.Ognl@isNotEmpty(beginDate) and @sqlt.Ognl@isNotEmpty(endDate)"> 
+			and ((a.kssj &gt;= #{beginDate} and a.kssj &lt;= #{endDate})
+			or (a.tzsj &gt;= #{beginDate} and a.tzsj &lt;= #{endDate})) 
+     	</if>
+		<if test="@sqlt.Ognl@isNotEmpty(brbq)"> 
+			and a.brbq = #{brbq}
+     	</if>
+     	<if test="@sqlt.Ognl@isNotEmpty(brks)"> 
+			and a.brks = #{brks}
+     	</if>
+     	<if test="@sqlt.Ognl@isNotEmpty(yzlx) and yzlx == 2"> 
+			and a.kssj = a.tzsj
+     	</if>
+     	<if test="@sqlt.Ognl@isNotEmpty(yzlx) and yzlx == 3"> 
+			and a.tzsj is null
+     	</if>
+     	<if test="@sqlt.Ognl@isNotEmpty(yzlx) and yzlx == 4"> 
+			and a.kssj &lt; a.tzsj
+     	</if>
+     	<if test="@sqlt.Ognl@isNotEmpty(fyfs)"> 
+			and a.fyfs = #{fyfs}
+     	</if>
+		and a.jgid = #{jgid}
+		and a.yplx &gt;=0
+		and a.yzpb = 0
+		order by a.brch ,a.yzzh asc,a.yjzx desc,a.jlxh asc
+    </select>  
+    
+    <!-- 查询未审批或审批不通过的抗菌药物 -->
+   <select id="queryNotApprovedKjyw" resultType="CisHzyz">
+	  select <include refid="columns" />
+	  from CIS_HZYZ
+	 where ((YSBZ = 1 and YSTJ = 1) or YSBZ = 0)
+	   and (FHBZ = 0 or FHBZ is null)
+	   and JGID = #{jgid}
+	   and (ZFBZ = 0 OR YZZF is null)
+	   and KJYWSP &lt;&gt; 1
+	   <if test="@sqlt.Ognl@isNotEmpty(lsyz)"> 
+            and ZYH = #{zyh}
+       </if>
+	   <if test="@sqlt.Ognl@isNotEmpty(lsyz)"> 
+            and LSYZ = #{lsyz}
+       </if>
+   </select>
+   
+    <!-- 批量查询抗菌药物未审批或审批不通过 -->
+   <select id="queryNotApprovedKjywBatch" resultType="java.util.HashMap">
+   		SELECT c.BRXM as BRXM,
+               c.BRCH as BRCH,
+               a.YZMC as YZMC,
+               a.YCJL as YCJL,
+               a.YCSL as YCSL,
+               a.SYPC as SYPC,
+               '' as XMMC,
+               a.YPDJ as YPDJ,
+               a.YSGH as YSGH,
+               a.TZSJ as TZSJ,
+               a.TZYS as TZYS,
+               a.MZCS as MZCS,
+               a.KSSJ as KSSJ,
+               a.MRCS as MRCS,
+               a.CZGH as CZGH,
+               a.QRSJ as QRSJ,
+               a.YPXH as YPXH,
+               a.ZYH as ZYH,
+               a.JLXH as JLXH,
+               a.YJZX as YJZX,
+               a.ZXKS as ZXKS,
+               a.FHGH as FHGH,
+               a.YPYF as YPYF,
+               a.YZZH as YZZH,
+               a.YEPB as YEPB,
+               a.BZXX as BZXX,
+               a.FYSX as FYSX,
+               a.YFSB as YFSB,
+               a.LSYZ as LSYZ,
+               a.YZPB as YZPB,
+               a.LSBZ as LSBZ,
+               a.JFBZ as JFBZ,
+               a.YPLX as YPLX,
+               '' as JLDW
+          FROM CIS_HZYZ a, IM_HZRY c
+         WHERE ((a.YSBZ = 1 and a.YSTJ = 1) or a.YSBZ = 0)
+           and (a.ZYH = c.ZYH)
+           AND (a.JGID = #{jgid})      
+           AND (a.ZTBZ = 0 OR a.ZTBZ is NULL)
+           AND (a.FHGH IS NULL)
+           AND (a.YZPB = 0)
+           AND (c.CYPB = 0)
+           AND a.KJYWSP &lt;&gt; 1
+           <if test="@sqlt.Ognl@isNotEmpty(srks)"> 
+            	AND (a.BRKS = #{srks} or a.BRBQ = #{srks})
+       	   </if> 
+           <if test="@sqlt.Ognl@isNotEmpty(jlxhList)"> 
+            	AND	a.JLXH in 
+		        <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+		            #{z}
+		        </foreach>
+       	   </if> 
+   </select>
+   
+   <!-- 更新抗菌药物医嘱提交状态 -->
+   <update id="updateAntibioticsTjByJlxh">
+		update cis_hzyz set
+		ystj = 1
+		where yzzh = (select t.yzzh from (select yzzh from cis_hzyz where jlxh = #{jlxh}) t)
+   </update>
+   
+   <!-- 根据住院号查询药品用法  -->
+   <select id="queryYpyfByZyh" resultType="java.util.HashMap">
+   		select a.ypyf, b.xmmc 
+   			from cis_hzyz a, im_dic_ypyf b 
+		where a.ypyf = b.ypyf
+			and (a.zfbz = 0 or a.yzzf is null)
+			and a.zyh = #{zyh}
+			and a.lsyz = #{lsyz}
+			and a.jgid = #{jgid}
+			and a.fhbz = 1
+			and a.lsbz = 0
+		group by a.ypyf,b.xmmc
+   </select>
+   
+   <!-- 查询给药记录单药品信息 -->
+   <select id="queryAdministrationRecord" resultType="java.util.HashMap">
+   		select ifnull(c.ypmc, a.yzmc) as yzmc,
+   			a.ycjl,
+   			a.yfdw,
+   			b.xmmc,
+   			a.yzzxsj,
+   			a.sypc as pcmc,
+   			a.bzxx,
+   			a.yzzh,
+   			a.tzsj
+   			from cis_hzyz a left join drugs_typk c on a.ypxh = c.ypxh, im_dic_ypyf b 
+		where a.ypyf = b.ypyf
+			and (a.zfbz = 0 or a.yzzf is null)
+			and a.zyh = #{zyh}
+			and a.lsyz = #{lsyz}
+			and a.ypyf = #{ypyf}
+			and a.jgid = #{jgid}
+			and a.fhbz = 1
+			and a.lsbz = 0
+		order by a.kssj, a.yzzh
+   </select>
+   
+   <!-- 根据住院号查询历史医嘱信息 -->
+   <select id="queryMedicalAdviceInfoByZyh" resultType="CisHzyz">
+   		select <include refid="columns" />
+   			from cis_hzyz 
+		where jgid = #{jgid}
+		and zyh = #{zyh}
+		and (ztbz = 0 or ztbz is null)
+		and zfbz = 0
+		and yzlx is null
+		order by kssj, yzzh
+   </select>
+   
+   <!-- 查询饮食医嘱信息 -->
+   <select id="queryDietList" resultType="java.util.HashMap">
+   		select b.brch,
+   			b.brxm,
+   			date_format(b.csny,'%Y-%m-%d') as csrq,
+   			a.yzmc,
+   			a.tzsj
+		from cis_hzyz a, im_hzry b, fee_ylsfxm c
+		where a.jgid = #{jgid}
+		and a.ypxh = c.fyxh
+		and a.yplx = 0
+		and a.jfbz &lt;&gt; 3
+		<if test="@sqlt.Ognl@isNotEmpty(zyhList)"> 
+           	and a.zyh in 
+   			<foreach collection="zyhList" item="zyh" open="(" close=")" separator="," >
+             	#{zyh}
+   			</foreach>	
+    	</if>
+		<if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+           	and a.zyh = #{zyh}
+    	</if>
+		and a.zyh = b.zyh
+		and a.lsyz = #{lsyz}
+		and c.xmlx = 9
+		and a.zfbz = 0
+		and a.fhbz = 1
+		and a.lsbz = 0
+		order by b.brch, a.kssj, a.yzzh
+   </select>
+
+   <!-- 判断是否有手术未安排 -->
+   <select id="queryOperationNotArrangeCount" resultType="long">
+   		select count(*) from cis_hzyz a 
+		 	inner join opt_sssq b on a.sqid = b.sqdh 
+		 	left join ss_ssap c on a.sqid = c.sqdh 
+		where a.zfbz = 0
+		 and a.yzlx = 3
+		 and a.fhbz = 1
+		 and (c.zt is null or c.zt &lt;&gt; 2)
+		 and a.zyh = #{zyh}
+ 		 and a.jgid = #{jgid}
+   </select>
+   
+   <!-- 查询未安排手术信息 -->
+   <select id="queryOperationNotArrange" resultType="com.buit.cis.dctwork.response.CisHzyzOperationResp">
+   		select a.srks,
+   			c.zt,
+   			b.ssks,
+   			a.yzmc,
+   			a.kssj,
+   			b.ssrq,
+   			b.ssjb,
+   			b.ssbz
+   			from cis_hzyz a 
+		 	inner join opt_sssq b on a.sqid = b.sqdh 
+		 	left join ss_ssap c on a.sqid = c.sqdh 
+		where a.zfbz = 0
+		 and a.yzlx = 3
+		 and a.fhbz = 1
+		 and (c.zt is null or c.zt &lt;&gt; 2)
+		 and a.zyh = #{zyh}
+ 		 and a.jgid = #{jgid}
+   </select>
+   
+   <!-- 查询医嘱治疗单打印信息  -->
+   <select id="queryTreatmentZxInfo"  resultType="java.util.HashMap">
+		SELECT b.ZFYP   as ZFYP,
+		       b.YZMC   as YZMC,
+		       b.YPLX   as YPLX,
+		       b.YPXH   as YPXH,
+		       b.KSSJ   as KSSJ,
+		       b.TZSJ   as TZSJ,
+		       b.YCSL   as YCSL,
+		       b.YCJL   as YCJL,
+		       b.YZZH   as YZZH,
+		       b.SYPC   as SYPC,
+		       d.BRCH   as BRCH,
+		       d.BRXM   as BRXM,
+		       d.RYNL   as RYNL,
+		       case d.BRXB when 1 then '男'
+	           when 2 then '女'
+	           else '未知' end  XB,
+		       d.CSNY   as CSNY,
+		       b.MRCS   as MRCS,
+		       a.PCMC   as PCMC,
+		       (select c.XMMC from im_dic_ypyf c where c.YPYF = b.YPYF ) as XMMC,
+		       b.BZXX   as BZXX,
+		       b.JLXH   as JLXH,
+		       b.YFDW   as JLDW,
+		       d.ZYHM   as ZYHM,
+		       b.SRKS   as SRKS,
+		       b.YEPB   as YEPB,
+		       b.YZZXSJ as YZZXSJ,
+		       b.YFGG as YFGG,
+		       (select OFFICENAME from dic_kszd where id = d.brks) as KSMC,
+	           (select OFFICENAME from dic_kszd where id = d.brbq) as BQMC,
+	           b.LSYZ as LSYZ
+		  FROM dic_sypc a, cis_hzyz b, im_hzry d
+		 WHERE (b.YZZF is null or b.YZZF != 1)
+		   and (b.ZFBZ is null or b.ZFBZ != 1)
+		   <if test="@sqlt.Ognl@isNotEmpty(lsyz)"> 
+          	 and b.LSYZ = #{lsyz}
+       	   </if>
+		   and a.PCBM = b.SYPC
+		   and b.ZYH = d.ZYH
+		   and d.CYPB = 0
+		   <if test="@sqlt.Ognl@isNotEmpty(zyhList)"> 
+             	and b.ZYH in 
+	   			<foreach collection="zyhList" item="zyh" open="(" close=")" separator="," >
+               		#{zyh}
+       			</foreach>
+       	   </if>
+		   <if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+             	and b.ZYH = #{zyh}
+       	   </if>
+       	   <if test="@sqlt.Ognl@isNotEmpty(zxksList)"> 
+             	and b.ZXKS not in 
+	   			<foreach collection="zxksList" item="zxks" open="(" close=")" separator="," >
+               		#{zxks}
+       			</foreach>
+       	   </if>
+		   and b.BRBQ = #{bqdm}
+		   and b.LSBZ = 0
+		   and b.YCSL > 0
+           and b.YPLX = 0
+		   and (b.YSBZ = 0 OR (b.YSBZ = 1 AND b.YSTJ = 1))
+		   and b.YZPB = 0
+		   and b.ZFBZ = 0
+		   and b.JGID = #{jgid}
+		   and (#{fhbz} = 0 or b.FHBZ = 1)
+		 ORDER BY d.BRCH ASC, b.YZZH ASC
+	</select>
+	
+	<!-- 查询治疗项目医嘱 -->
+	<select id="queryTreatmentProject" resultType="com.buit.his.treatment.model.ZlRwfpUpdateReq">
+   		select a.jgid, 
+   		    a.zyh,
+   			a.jlxh as yzJlxh,
+   			a.zxks as zlksdm,
+   			a.ypxh as sfxmdm,
+   			b.fymc as sfxmmc,
+   			a.ycsl as sl,
+   			a.ycsl * a.ypdj as je
+   		from cis_hzyz a, fee_ylsfxm b, dic_kszd c where a.ypxh = b.fyxh
+		and a.yplx = 0
+		and b.xmlx = 7
+		and ((a.ysbz = 1 and a.ystj = 1) or a.ysbz = 0)
+	    and a.jgid = #{jgid}
+	    and a.zxks = c.id 
+	    and c.zlks = 1
+	    and b.yjsy = 1
+	    and a.zfbz = 0
+	   <choose>
+            <when test="@sqlt.Ognl@isNotEmpty(fhbz)">
+                and a.fhbz = 1
+            </when>
+            <otherwise>
+            	and (a.fhbz = 0 or a.fhbz is null)
+            </otherwise>
+       </choose>
+	   <if test="@sqlt.Ognl@isNotEmpty(lsyz) and lsyz == 0"> 
+            and a.lsyz = #{lsyz} and a.tzsj is null
+       </if>
+       <if test="@sqlt.Ognl@isNotEmpty(lsyz) and lsyz == 1"> 
+            and a.lsyz = #{lsyz}
+       </if>
+	   <if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+            and a.zyh = #{zyh}
+       </if>
+	   <if test="@sqlt.Ognl@isNotEmpty(czgh)"> 
+            and a.czgh != #{czgh}
+       </if>
+       <if test="@sqlt.Ognl@isNotEmpty(yzzh)"> 
+            and a.yzzh = #{yzzh}
+       </if>
+       <if test="@sqlt.Ognl@isNotEmpty(yzlx)"> 
+            and a.yzlx = #{yzlx}
+       </if>
+   </select>
+   
+   <!-- 更新治疗项目医嘱类型 -->
+   <update id="updateTreatmentProjectByJlxh" >
+     update cis_hzyz set yzlx = 6 where jlxh in
+		<foreach collection="yzjlxhList" item="jlxh" open="(" close=")" separator="," >
+                #{jlxh}
+        </foreach>	
+   </update>     
+   
+    <!-- 查询护理级别名称 -->
+    <select id="queryCareInfo" resultType="java.util.HashMap">
+        select a.yzmc,
+        	a.tzsj
+        	from cis_hzyz a
+		   where a.zyh = #{zyh}
+		   and a.zfbz = 0
+		   and a.lsyz = #{lsyz}
+           and (a.ysbz = 0 or (a.ysbz = 1 and a.ystj = 1))
+		   and a.yzmc like concat('%', '级护理') 
+		   and a.jgid = #{jgid}
+		   and (#{fhbz} = 0 or a.fhbz = 1) 
+    </select>
+    
+    <!-- 查询文字医嘱最大序号 -->
+    <select id="queryWrittenOrdersMaxXh" resultType="long">
+       select ifnull(max(ypxh), 0) + 1 from cis_hzyz a left join fee_ylsfxm b on a.ypxh  = b.fyxh and a.ypcd = 0 
+		where  a.yzlx is null 
+		and a.yplx = 0
+		and a.jfbz = 3
+		and a.jgid = #{jgid}
+    </select>
+    
+    <!-- 病区组套医嘱列表查询 -->
+   <select id="queryOrderSetList" resultType="com.buit.cis.dctwork.response.CisHzyzQueryResp">
+	        select a.YZZF,
+	       a.SQWH,
+	       a.ZFYP,
+	       b.ZFYP as ZBY,
+	       a.YFDW,
+	       b.YPJL,
+	       b.JLDW,
+	       a.JLXH,
+	       a.JGID,
+	       a.ZYH,
+	       a.YPXH,
+	       a.YZZH,
+	       a.YFBZ,
+	       a.CFTS,
+	       a.YPZS,
+	       a.JZ,
+	       a.KSSJ,
+	       a.YZMC,
+	       a.YCJL,
+	       a.YCSL,
+	       a.SYPC,
+	       a.MRCS,
+	       a.YZZXSJ,
+	       a.SRCS,
+	       a.YPYF,
+	       a.YPDJ,
+	       a.YSGH,
+	       a.FHGH,
+	       a.TZSJ,
+	       a.QRSJ,
+	       a.YFGG,
+	       a.TZYS,
+	       a.FYFS,
+	       a.BZXX,
+	       a.YPCD,
+	       a.YFSB,
+	       a.CZGH,
+	       a.ZFPB,
+	       a.YPLX,
+	       a.SYBZ,
+	       a.MZCS,
+	       a.YJZX,
+	       a.ZXKS,
+	       a.YJXH,
+	       a.XMLX,
+	       a.JFBZ,
+	       a.ZFBZ,
+	       a.SFJG,
+	       a.FHBZ,
+	       a.TZFHBZ,
+	       a.PSPB,
+	       a.PSJG,
+	       a.YZPB,
+	       a.LSBZ,
+	       a.YEPB,
+	       a.FYSX,
+	       a.YSBZ,
+	       a.YSTJ,
+	       a.LSYZ,
+	       a.YWID,
+	       a.YYTS,
+	       a.ZFGH,
+	       a.ZTBZ,
+	       a.ZTYZJLXH,
+	       a.YZLX,
+	       a.YZPX,
+	       a.SQID,
+	       a.TPN,
+	       c.CDMC,
+	       a.KJYWSP,
+	       a.DS,
+           a.ZTYCJL,
+           a.ZTMRCS,
+           a.ZTYCSL
+	  from CIS_HZYZ a
+	  left join DRUGS_TYPK b
+	    on (a.YPXH = b.YPXH)
+	  left join DRUGS_CDDZ c
+	  	on a.YPCD = c.YPCD
+	    where a.ZYH = #{zyh} and a.YZPB = 0 and a.JGID = #{jgid} and 
+	    ((a.ZTBZ = 0 or a.ZTBZ is null) or a.YZLX = 5)
+        <choose>
+            <when test="@sqlt.Ognl@isNotEmpty(lsyz)">
+                and a.LSYZ = #{lsyz}
+            </when>
+            <otherwise>
+            	and (a.LSYZ = 0 or a.LSYZ = 1)
+            </otherwise>
+        </choose>
+        <if test="@sqlt.Ognl@isNotEmpty(xmlx)"> 
+            and a.XMLX = #{xmlx}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(yplx) and yplx == 0"> 
+            and a.YPLX = #{yplx} and (a.YZLX is null or a.YZLX = 6)
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(yplx) and yplx == 1"> 
+            and a.YPLX in (1,2)
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(yplx) and yplx == 2"> 
+            and a.YPLX = 3
+        </if>
+        order by a.KSSJ desc,a.YZZH asc,a.YJZX desc,a.JLXH asc
+   </select>
+   
+   <!-- 作废附加项目 -->
+   <update id="invalidAdditionalByJlxh">
+	   update cis_hzyz set 
+	   yzzf = #{yzzf}, zfbz = #{yzzf}, zfgh = #{zfgh}, zfsj = sysdate() 
+	   where yzzh in (
+			 select a.yzzh from (select yzzh from cis_hzyz where jlxh = #{jlxh}) a ) 
+	   and yzpb != 0
+   </update>
+   
+   <!-- 作废组套附加项目 -->
+   <update id="invalidAdditionalZtByJlxh">
+	   update cis_hzyz set 
+	   yzzf = #{yzzf}, zfbz = #{yzzf}, zfgh = #{zfgh}, zfsj = sysdate() 
+	   where yzzh in (
+			 select a.yzzh from (select distinct yzzh from cis_hzyz where ztyzjlxh = #{jlxh}) a ) 
+	   and yzpb != 0
+   </update>
+   
+    <!-- 根据记录序号查询治疗项目医嘱 -->
+	<select id="queryTreatmentProjectByJlxh" resultType="com.buit.his.treatment.model.ZlRwfpUpdateReq">
+   		select a.jgid, 
+   		    a.zyh,
+   			a.jlxh as yzJlxh,
+   			a.zxks as zlksdm,
+   			a.ypxh as sfxmdm,
+   			b.fymc as sfxmmc,
+   			a.ycsl as sl,
+   			a.ycsl * a.ypdj as je
+   		from cis_hzyz a, fee_ylsfxm b, dic_kszd c where a.ypxh = b.fyxh
+		and a.yplx = 0
+		and b.xmlx = 7
+		and ((a.ysbz = 1 and a.ystj = 1) or a.ysbz = 0)
+	    and a.jgid = #{jgid}
+	    and a.zxks = c.id
+	    and c.zlks = 1
+	    and b.yjsy = 1
+	    and a.zfbz = 0
+	    <if test="@sqlt.Ognl@isNotEmpty(jlxhList)"> 
+           	and	a.jlxh in 
+	        <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+	            #{z}
+	        </foreach>
+       	</if>
+       	<if test="@sqlt.Ognl@isNotEmpty(yzlx)"> 
+           	and	a.yzlx = #{yzlx} 
+       	</if>
+       	<if test="@sqlt.Ognl@isNotEmpty(fhbz)"> 
+           	and	a.fhbz = #{fhbz} 
+       	</if>  
+   </select>
+   
+   <!-- 查询医嘱口服固定卡片打印信息  -->
+   <select id="queryOralCardInfo"  resultType="java.util.HashMap">
+		select e.BFDW as SLDW,
+		       b.YJZX as YJZX,
+		       b.BRBQ as BRBQ,
+		       b.YPYF as YPYF,
+		       d.ZYHM as ZYHM,
+		       b.ZYH as ZYH,
+		       b.ZFYP as ZFYP,
+       (case when e.YPMC is null then b.YZMC
+       when b.YPCD = 0 then b.YZMC
+       else e.YPMC end) as YZMC,
+		       b.YPLX as YPLX,
+		       b.YPXH as YPXH,
+		       b.KSSJ as KSSJ,
+		       b.TZSJ as TZSJ,
+		       b.YCSL as YCSL,
+		       b.YCJL as YCJL,
+		       b.YZZH as YZZH,
+		       b.SYPC as SYPC,
+		       d.BRCH as BRCH,
+		       d.BRXM as BRXM,
+		       d.BRXB as BRXB,
+		       d.CSNY as CSNY,
+		       b.MRCS as MRCS,
+           	   b.SRCS as SRCS,
+		       a.PCMC as PCMC,
+		       c.XMMC as XMMC,
+		       b.BZXX as BZXX,
+		       b.JLXH as JLXH,
+		       e.JLDW as JLDW,
+		       d.ZYHM as ZYHM,
+		       b.LSYZ as LSYZ,
+		       b.SRKS as SRKS,
+		       b.YEPB as YEPB,
+		       b.YZZXSJ as YZZXSJ,
+		       b.DS as DS
+		  from cis_hzyz b left join drugs_typk e on b.ypxh = e.ypxh ,dic_sypc a, im_dic_ypyf c, im_hzry d
+		 where a.pcbm = b.sypc
+           <if test="@sqlt.Ognl@isNotEmpty(lsyz) and lsyz == 0">
+                and b.lsyz = 0 and b.lsbz = 0
+           </if>
+      	   <if test="@sqlt.Ognl@isNotEmpty(lsyz) and lsyz == 1">
+                and b.lsyz = 1 and date_format(b.kssj, '%Y-%m-%d') = #{yysj}
+           </if>
+		   and b.zyh = d.zyh
+		   and c.ypyf = b.ypyf
+		   and d.cypb = 0
+		   and b.ZYH in 
+		   <foreach collection="zyhList" item="zyh" open="(" close=")" separator="," >
+               	#{zyh}
+       	   </foreach>	
+		   and b.brbq = #{bqdm}
+	       and c.xmlb = #{yzlb}
+		   and (b.ysbz = 0 or (b.ysbz = 1 and b.ystj = 1))
+		   and b.yzpb = 0
+		   and b.zfbz = 0
+		   and b.jgid = #{jgid}
+		   and (#{fhbz} = 0 or b.fhbz = 1)
+		   <if test="@sqlt.Ognl@isNotEmpty(sfyyk) and sfyyk == 0">
+                and b.ypxh not in
+                <foreach collection="yykList" item="z" open="(" close=")" separator="," >
+               		#{z}
+       	   		</foreach>	
+           </if>
+           <if test="@sqlt.Ognl@isNotEmpty(sfyyk) and sfyyk == 1">
+                and b.ypxh in
+                <foreach collection="yykList" item="z" open="(" close=")" separator="," >
+               		#{z}
+       	   		</foreach>	
+           </if>
+		   and not exists
+		 (select 1
+		          from cis_yzkpdyjl dyjl
+		         where b.jlxh = dyjl.yzxh
+		           and dyjl.dybz = 1
+		           and date_format(dyjl.YYSJ, '%Y-%m-%d') &gt;= #{yysj}
+		           and date_format(dyjl.YYSJ, '%Y-%m-%d') &lt; date_add(#{yysj}, interval 1 day))
+		 order by d.brch, b.yzzh
+	</select>
+   
+   
+   <!-- 更新复停嘱核状态(非同一个工号) -->
+   <update id="updateStopOrderReview">
+	   	 update cis_hzyz
+	   set tzfhbz = #{tzfhbz}, tzfhr = #{fhgh}, tzfhsj = #{fhsj}
+	 where ((ysbz = 1 and ystj = 1) or ysbz = 0)
+	   and jgid = #{jgid}
+	   and tzsj is not null 
+	   and (zfbz = 0 or yzzf is null)
+	   <if test="@sqlt.Ognl@isNotEmpty(jlxhList)"> 
+            and jlxh in
+            <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+      			#{z}
+ 			</foreach> 
+       </if>
+	   <if test="@sqlt.Ognl@isNotEmpty(czgh)"> 
+           and czgh != #{czgh}
+       </if>
+       <if test="@sqlt.Ognl@isNotEmpty(ztjlxhList)"> 
+            and ztyzjlxh in 
+            <foreach collection="ztjlxhList" item="z" open="(" close=")" separator=",">
+      			#{z}
+ 			</foreach> 
+       </if>
+   </update>
+   
+   <!-- 根据记录序号更新药品使用标志 -->
+   <update id="updateSybzByJlxh">
+        update cis_hzyz set sybz = 0
+        where jgid = #{jgid}
+        and jlxh in
+        <foreach collection="yzxhList" item="z" open="(" close=")" separator=",">
+      		#{z}
+ 		</foreach> 
+   </update>
+   
+   <!-- 根据记录序号更新停嘱医生和时间 -->
+   <update id="updateStopOrdersByJlxh">
+        update cis_hzyz set tzys = #{tzys}, tzsj = #{tzsj}
+        where jlxh in
+        <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+      		#{z}
+ 		</foreach> 
+   </update>
+
+   <!-- 根据记录序号取消停嘱医生和时间 -->
+   <update id="cancelStopOrdersByJlxh">
+        update cis_hzyz set tzys = null, tzsj = null, lsbz = 0
+        where jlxh in
+        <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+            #{z}
+        </foreach>
+   </update>
+
+   <!-- 根据主键批量删除 -->
+   <update id="deleteBatchById">
+        delete from cis_hzyz
+        where jlxh in
+        <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+            #{z}
+        </foreach>
+   </update>
+
+   <!-- 查询存在的会诊申请 -->
+   <select id="queryYzHzsq" resultType="java.lang.Integer"> 
+    	select SQID from CIS_HZYZ where YSGH = #{YSGH}
+		   and YSTJ = 0
+		   and YSBZ = 1
+		   and LSYZ = #{LSYZ}
+		   and ZYH = #{ZYH}
+		   and JGID = #{JGID}
+		   and YZLX = 4
+   </select>
+
+   
+   <!-- 附加项目医嘱费用明细列表 -->
+   <select id="queryAdditionalItemsFymx" resultType="java.util.HashMap">
+		select * from (
+  			select  a.*, 
+		       		b.JFFS,
+		       		b.JFSL,
+		       		b.FYXH,
+		       		1 as FJBZ,
+		       		0 as FYCS,
+		       		c.BRKS,
+		       		c.BRBQ,
+		       		c.BRXZ,
+		       		c.ZLXZ
+		       from (
+			 		select ZYH,
+			 			YPYF, 
+			 			SYPC,
+			 			YZPB,
+		 				JFBZ,
+		 				ZFBZ,
+		 				LSBZ,
+		 				YSBZ,
+		 				YSTJ,
+		 				JGID,
+		 				SRCS,
+		 				YZZXSJ,
+		 				KSSJ,
+		 				TZSJ,
+		 				QRSJ,
+		 				JLXH,
+		 				LSYZ,
+		 				YZMC,
+				        MZCS,
+				        MRCS,
+				        YCSL,
+				        YPDJ,
+				        ZFPB,
+				        YPLX,
+				        YPXH,
+				        ifnull(ZXKS,BRKS) as ZXKS,
+				        CZGH,
+				        YEPB,
+				        YSGH,
+				        YZZH
+			 		from cis_hzyz where YZZH in 
+			 		<foreach collection="yzzhList" item="z" open="(" close=")" separator="," >
+	                	#{z}
+	        		</foreach> 
+	           ) a left join im_dic_ypyf_fjjf b on a.YPYF = b.YPYF and a.YPXH = b.FYXH and  a.sypc = b.pcbm
+	           inner join im_hzry c on a.ZYH = c.ZYH
+			where c.CYPB = 0
+			   and a.YZPB &gt; 0 
+			   and a.YZPB &lt; 4
+			   and a.JFBZ = 2
+			   and a.ZFBZ = 0 
+			   and a.LSBZ = 0
+			   and b.JFFS = 3
+			   and a.YPLX = 0
+		       and (a.YSBZ = 0 or (a.YSBZ = 1 and a.YSTJ = 1))
+			   and a.JGID = #{jgid}
+			union all
+			select distinct a.*, 
+		       		b.JFFS,
+		       		b.JFSL,
+		       		b.FYXH,
+		       		1 as FJBZ,
+		       		0 as FYCS,
+		       		c.BRKS,
+		       		c.BRBQ,
+		       		c.BRXZ,
+		       		c.ZLXZ
+		       from (
+			 		select ZYH,
+			 			YPYF, 
+			 			SYPC,
+			 			YZPB,
+		 				JFBZ,
+		 				ZFBZ,
+		 				LSBZ,
+		 				YSBZ,
+		 				YSTJ,
+		 				JGID,
+		 				SRCS,
+		 				YZZXSJ,
+		 				KSSJ,
+		 				TZSJ,
+		 				QRSJ,
+		 				JLXH,
+		 				LSYZ,
+		 				YZMC,
+				        MZCS,
+				        MRCS,
+				        YCSL,
+				        YPDJ,
+				        ZFPB,
+				        YPLX,
+				        YPXH,
+				        ifnull(ZXKS,BRKS) as ZXKS,
+				        CZGH,
+				        YEPB,
+				        YSGH,
+				        YZZH
+			 		from cis_hzyz where YZZH in 
+			 		<foreach collection="yzzhList" item="z" open="(" close=")" separator="," >
+	                	#{z}
+	        		</foreach> 
+	           ) a left join im_dic_ypyf_fjjf b on a.YPYF = b.YPYF and a.YPXH = b.FYXH 
+	           inner join im_hzry c on a.ZYH = c.ZYH
+			where c.CYPB = 0
+			   and a.YZPB &gt; 0 
+			   and a.YZPB &lt; 4
+			   and a.JFBZ = 2
+			   and a.ZFBZ = 0 
+			   and a.LSBZ = 0
+			   and b.JFFS in (1,2)
+			   and a.YPLX = 0
+		       and (a.YSBZ = 0 or (a.YSBZ = 1 and a.YSTJ = 1)) 
+			   and a.JGID = #{jgid}
+					 ) m
+		    order by m.JFSL desc, m.YZZH 
+   </select>
+   
+   <!-- 查询发药明细记录 -->
+   <select id="queryFyjlFymx" resultType="com.buit.cis.dctwork.response.CisHzyzFyjlResp">
+		select distinct a.jgid, c.yzzh from phar_fyjl a, phar_zyfymx b, cis_hzyz c
+		where a.jlid = b.jlid 
+		and b.yzxh = c.jlxh
+		and a.jlid = #{jlid}
+   </select>
+
+
+   <!-- 批量取消已提交医嘱 -->
+   <update id="cancelSubmitStatusByZtJlxhList">
+       update cis_hzyz
+       set ystj = 0
+       where ztyzjlxh in
+       <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+           #{z}
+       </foreach>
+   </update>
+
+   <!-- 查询非组套未复核医嘱 -->
+   <select id="queryPtNotReview" resultType="java.lang.Integer">
+       select jlxh from cis_hzyz
+       where jlxh in
+       <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+           #{z}
+       </foreach>
+   </select>
+
+   <!-- 非组套批量取消已提交医嘱 -->
+   <update id="cancelSubmitStatusByJlxhList">
+       update cis_hzyz
+       set ystj = 0
+       where jlxh in
+       <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+           #{z}
+       </foreach>
+   </update>
+   
+   <!-- 批量取消组套医嘱复核 -->
+   <update id="cancelYzZtReviewStatus">
+	   	 update cis_hzyz
+		   set fhbz = 0, fhgh = null, fhsj = null
+		 where fhbz = 1
+		   and sybz &lt;&gt; 1
+		   and qrsj is null
+		   and jgid = #{jgid}	 
+		   and ztyzjlxh in
+	       <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+	           #{z}
+	       </foreach>   
+   </update>
+   
+   <!-- 批量更新复核状态 -->
+   <update id="updateReviewStatusBatch">
+	   	 update cis_hzyz
+	   set fhbz = 1, fhgh = #{fhgh}, fhsj = #{fhsj}
+	 where ((ysbz = 1 and ystj = 1) or ysbz = 0)
+	   and (fhbz = 0 or fhbz is null)
+	   and jgid = #{jgid}
+	   and (zfbz = 0 or yzzf is null)
+	   <if test="@sqlt.Ognl@isNotEmpty(jlxhList)"> 
+            and jlxh in 
+            <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+	           #{z}
+	        </foreach>  
+       </if>
+       <if test="@sqlt.Ognl@isNotEmpty(ztjlxhList)"> 
+            and ztyzjlxh in 
+            <foreach collection="ztjlxhList" item="z" open="(" close=")" separator=",">
+	           #{z}
+	        </foreach>  
+       </if>    
+   </update>
+   
+   <!-- 批量更新复核状态(除去未做皮试结果医嘱) -->
+   <update id="updateNotExtisSkinTestBatch">
+	   	 update cis_hzyz
+	   set fhbz = 1, fhgh = #{req.fhgh}, fhsj = #{req.fhsj}
+	 where ((ysbz = 1 and ystj = 1) or ysbz = 0)
+	   and (fhbz = 0 or fhbz is null)
+	   and jgid = #{req.jgid}
+	   and (zfbz = 0 or yzzf is null)
+       and jlxh in 
+       <foreach collection="req.jlxhList" item="jlxh" open="(" close=")" separator=",">
+            #{jlxh}
+       </foreach>    
+       and yzzh not in 
+       <foreach collection="yzzhList" item="z" open="(" close=")" separator=",">
+            #{z}
+       </foreach>    
+   </update>
+   
+   <!-- 查询药品库存冻结信息 -->
+   <select id="queryYpKcdjInfo" resultType="com.buit.cis.dctwork.response.CisHzyzKcdjResp">
+		select jgid,
+			3 as ywlb,
+			jlxh,
+			ypxh,
+			ypcd,
+			ycsl as ypsl,
+			now() as djsj,
+			yfsb,
+			yzzh,
+			yzmc,
+			ztbz,
+			ztyzjlxh,
+			yplx
+			from cis_hzyz
+		where ysgh = #{YSGH}
+		   and ystj = 0
+		   and ysbz = 1
+		   and yplx &gt; 0
+		   and lsyz = #{LSYZ}
+		   and zyh = #{ZYH}
+		   and jgid = #{JGID}
+		   and (zfbz = 0 or yzzf is null)
+		   <if test="@sqlt.Ognl@isNotEmpty(yzzhList)"> 
+           	 and yzzh not in 
+	        	<foreach collection="yzzhList" item="z" open="(" close=")" separator=",">
+	           	 	#{z}
+	        	</foreach>
+	       </if>   
+   </select>
+
+</mapper>
+

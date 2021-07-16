@@ -1,0 +1,2 @@
+ALTER TABLE `nis_hljldzdy` 
+MODIFY COLUMN `XMDM` varchar(50) NULL DEFAULT NULL COMMENT '自定义项目内容序号' AFTER `MBLX`;

@@ -1,0 +1,2615 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 费用明细表 -->
+<mapper namespace="com.buit.cis.ims.dao.ImFeeFymxDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,JGID as jgid,ZYH as zyh,FYRQ as fyrq,FYXH as fyxh,FYMC as fymc,YPCD as ypcd,FYSL as fysl,FYDJ as
+        fydj,ZJJE as zjje,ZFJE as zfje,YSGH as ysgh,SRGH as srgh,QRGH as qrgh,FYBQ as fybq,FYKS as fyks,ZXKS as
+        zxks,JFRQ as jfrq,XMLX as xmlx,YPLX as yplx,FYXM as fyxm,JSCS as jscs,ZFBL as zfbl,YZXH as yzxh,HZRQ as
+        hzrq,YJRQ as yjrq,ZLJE as zlje,ZLXZ as zlxz,YEPB as yepb,DZBL as dzbl,SCBZ as scbz,XFLSH as xflsh,ZKBL as
+        zkbl,ZKJE as zkje,ZHJE as zhje,GJYBZ as gjybz,ZFGH as zfgh,ZFGLXH as zfglxh,DBJFBZ as dbjfbz,CLDYM as cldym,
+        ZFPB AS ZFPB, ZFRQ AS ZFRQ
+    </sql>
+    <!--住院管理-结算管理-明细项目(按日期查询)-->
+    <resultMap id="patientBalanceAccountsDateMap" type="PatientBalanceAccountsDetailDateResp">
+        <id column="fyrq" property="fyrq"/>
+        <result column="qrgh" property="qrgh"/>
+        <result column="fymc" property="fymc"/>
+        <result column="fyks" property="fyks"/>
+        <result column="zxks" property="zxks"/>
+        <result column="zjje" property="zjje"/>
+        <result column="zfje" property="zfje"/>
+        <result column="zyh" property="zyh"/>
+        <result column="jgid" property="jgid"/>
+        <result column="fyxm" property="fyxm"/>
+        <result column="zxks" property="zxks"/>
+        <collection property="detailDateMxResps" column="{zyh=zyh,jgid=jgid,fyxm=fyxm,fyrq=fyrq,qrgh=qrgh,zxks=zxks}"
+                    ofType="PatientBalanceAccountsDetailDateMxResp" select="queryFymxByDate">
+            <!-- <id column="fymc" property="fymc"/>
+             <result column="fysl" property="fysl"/>
+             <result column="fydj" property="fydj"/>
+             <result column="zjje" property="zjje"/>
+             <result column="zfje" property="zfje"/>
+             <result column="zfbl" property="zfbl"/>-->
+        </collection>
+    </resultMap>
+
+    <!--住院管理-结算管理-明细项目(按明细查询)-->
+    <resultMap id="patientBalanceAccountsMxMap" type="PatientBalanceAccountsDetailMxResp">
+        <id column="fyxh" property="fyxh"/>
+        <result column="zjje" property="zjje"/>
+        <result column="zfje" property="zfje"/>
+        <result column="zyh" property="zyh"/>
+        <result column="jgid" property="jgid"/>
+        <result column="fyxm" property="fyxm"/>
+        <result column="zkbl" property="zkbl"/>
+        <result column="zhje" property="zhje"/>
+        <result column="zkje" property="zkje"/>
+        <result column="fymc" property="fymc"/>
+        <result column="ksrq"/>
+        <result column="zzrq"/>
+        <collection property="detailMxDeteResps" column="{zyh=zyh,jgid=jgid,fyxh=fyxh,fyxm=fyxm,ksrq=ksrq,zzrq=zzrq}"
+                    ofType="PatientBalanceAccountsDetailMxDateResp" select="queryFymxByFymc">
+            <!--<id column="fyxh" property="fyxh"/>
+            <result column="fyrq" property="fyrq"/>
+            <result column="fysl" property="fysl"/>
+            <result column="fydj" property="fydj"/>
+            <result column="zfbl" property="zfbl"/>
+            <result column="zfje" property="zfje"/>
+            <result column="fyks" property="fyks"/>
+            <result column="zxks" property="zxks"/>
+            <result column="zfbl" property="zfbl"/>
+            <result column="qrgh" property="qrgh"/>
+            <result column="zjje" property="zjje"/>
+            <result column="zkbl" property="zkbl"/>
+            <result column="zhje" property="zhje"/>
+            <result column="zkje" property="zkje"/>
+            <result column="zyh" property="zyh"/>-->
+        </collection>
+    </resultMap>
+
+    <insert id="insert">
+        INSERT INTO IM_FEE_FYMX (JLXH,
+                                 JGID,
+                                 ZYH,
+                                 FYRQ,
+                                 FYXH,
+                                 FYMC,
+                                 YPCD,
+                                 FYSL,
+                                 FYDJ,
+                                 ZJJE,
+                                 ZFJE,
+                                 YSGH,
+                                 SRGH,
+                                 QRGH,
+                                 FYBQ,
+                                 FYKS,
+                                 ZXKS,
+                                 JFRQ,
+                                 XMLX,
+                                 YPLX,
+                                 FYXM,
+                                 JSCS,
+                                 ZFBL,
+                                 YZXH,
+                                 HZRQ,
+                                 YJRQ,
+                                 ZLJE,
+                                 ZLXZ,
+                                 YEPB,
+                                 DZBL,
+                                 SCBZ,
+                                 XFLSH,
+                                 ZKBL,
+                                 ZKJE,
+                                 ZHJE,
+                                 GJYBZ,
+                                 ZFGH,
+                                 ZFGLXH,
+                                 DBJFBZ,
+                                 CLDYM,
+                                 ZFPB,
+                                 ZFRQ)
+        VALUES (#{jlxh},
+                #{jgid},
+                #{zyh},
+                #{fyrq},
+                #{fyxh},
+                #{fymc},
+                #{ypcd},
+                #{fysl},
+                #{fydj},
+                #{zjje},
+                #{zfje},
+                #{ysgh},
+                #{srgh},
+                #{qrgh},
+                #{fybq},
+                #{fyks},
+                #{zxks},
+                #{jfrq},
+                #{xmlx},
+                #{yplx},
+                #{fyxm},
+                #{jscs},
+                #{zfbl},
+                #{yzxh},
+                #{hzrq},
+                #{yjrq},
+                #{zlje},
+                #{zlxz},
+                #{yepb},
+                #{dzbl},
+                #{scbz},
+                #{xflsh},
+                #{zkbl},
+                #{zkje},
+                #{zhje},
+                #{gjybz},
+                #{zfgh},
+                #{zfglxh},
+                #{dbjfbz},
+                #{cldym},
+                #{zfpb},
+                #{zfrq})
+    </insert>
+
+    <update id="update">
+        UPDATE IM_FEE_FYMX
+        <set>
+
+            <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                JGID = #{jgid} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                ZYH = #{zyh} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(fyrq)">
+                FYRQ = #{fyrq} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(fyxh)">
+                FYXH = #{fyxh} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(fymc)">
+                FYMC = #{fymc} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(ypcd)">
+                YPCD = #{ypcd} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(fysl)">
+                FYSL = #{fysl} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(fydj)">
+                FYDJ = #{fydj} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(zjje)">
+                ZJJE = #{zjje} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(zfje)">
+                ZFJE = #{zfje} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(ysgh)">
+                YSGH = #{ysgh} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(srgh)">
+                SRGH = #{srgh} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(qrgh)">
+                QRGH = #{qrgh} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(fybq)">
+                FYBQ = #{fybq} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(fyks)">
+                FYKS = #{fyks} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(zxks)">
+                ZXKS = #{zxks} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(jfrq)">
+                JFRQ = #{jfrq} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(xmlx)">
+                XMLX = #{xmlx} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(yplx)">
+                YPLX = #{yplx} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(fyxm)">
+                FYXM = #{fyxm} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(jscs)">
+                JSCS = #{jscs} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(zfbl)">
+                ZFBL = #{zfbl} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(yzxh)">
+                YZXH = #{yzxh} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(hzrq)">
+                HZRQ = #{hzrq} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(yjrq)">
+                YJRQ = #{yjrq} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(zlje)">
+                ZLJE = #{zlje} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(zlxz)">
+                ZLXZ = #{zlxz} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(yepb)">
+                YEPB = #{yepb} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(dzbl)">
+                DZBL = #{dzbl} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(scbz)">
+                SCBZ = #{scbz} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(xflsh)">
+                XFLSH = #{xflsh} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(zkbl)">
+                ZKBL = #{zkbl} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(zkje)">
+                ZKJE = #{zkje} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(zhje)">
+                ZHJE = #{zhje} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(gjybz)">
+                GJYBZ = #{gjybz} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(zfgh)">
+                ZFGH = #{zfgh} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(zfglxh)">
+                ZFGLXH = #{zfglxh} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(dbjfbz)">
+                DBJFBZ = #{dbjfbz} ,
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(cldym)">
+                CLDYM = #{cldym},
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(zfpb)">
+                ZFPB = #{zfpb},
+            </if>
+
+            <if test="@sqlt.Ognl@isNotEmpty(zfrq)">
+                ZFRQ = #{zfrq}
+            </if>
+        </set>
+        WHERE
+        JLXH = #{jlxh}
+    </update>
+
+
+    <delete id="deleteById">
+        DELETE FROM IM_FEE_FYMX WHERE
+        JLXH = #{jlxh}
+    </delete>
+
+    <delete id="removeByEntity">
+        DELETE FROM IM_FEE_FYMX
+        <include refid="where"/>
+    </delete>
+
+    <select id="getById" resultType="ImFeeFymx">
+        SELECT
+        <include refid="columns"/>
+        FROM IM_FEE_FYMX
+        WHERE
+        JLXH = #{jlxh}
+    </select>
+
+    <sql id="where">
+        <where>
+            <if test="@sqlt.Ognl@isNotEmpty(jlxh)">
+                AND JLXH = #{jlxh}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                AND JGID = #{jgid}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                AND ZYH = #{zyh}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(fyrq)">
+                AND FYRQ = #{fyrq}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(fyxh)">
+                AND FYXH = #{fyxh}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(fymc)">
+                AND FYMC = #{fymc}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(ypcd)">
+                AND YPCD = #{ypcd}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(fysl)">
+                AND FYSL = #{fysl}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(fydj)">
+                AND FYDJ = #{fydj}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zjje)">
+                AND ZJJE = #{zjje}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zfje)">
+                AND ZFJE = #{zfje}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(ysgh)">
+                AND YSGH = #{ysgh}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(srgh)">
+                AND SRGH = #{srgh}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(qrgh)">
+                AND QRGH = #{qrgh}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(fybq)">
+                AND FYBQ = #{fybq}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(fyks)">
+                AND FYKS = #{fyks}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zxks)">
+                AND ZXKS = #{zxks}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(jfrq)">
+                AND JFRQ = #{jfrq}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(xmlx)">
+                AND XMLX = #{xmlx}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(yplx)">
+                AND YPLX = #{yplx}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(fyxm)">
+                AND FYXM = #{fyxm}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(jscs)">
+                AND JSCS = #{jscs}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zfbl)">
+                AND ZFBL = #{zfbl}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(yzxh)">
+                AND YZXH = #{yzxh}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(hzrq)">
+                AND HZRQ = #{hzrq}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(yjrq)">
+                AND YJRQ = #{yjrq}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zlje)">
+                AND ZLJE = #{zlje}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zlxz)">
+                AND ZLXZ = #{zlxz}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(yepb)">
+                AND YEPB = #{yepb}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(dzbl)">
+                AND DZBL = #{dzbl}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(scbz)">
+                AND SCBZ = #{scbz}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(xflsh)">
+                AND XFLSH = #{xflsh}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zkbl)">
+                AND ZKBL = #{zkbl}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zkje)">
+                AND ZKJE = #{zkje}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zhje)">
+                AND ZHJE = #{zhje}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(gjybz)">
+                AND GJYBZ = #{gjybz}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zfgh)">
+                AND ZFGH = #{zfgh}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zfglxh)">
+                AND ZFGLXH = #{zfglxh}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(dbjfbz)">
+                AND DBJFBZ = #{dbjfbz}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(cldym)">
+                AND CLDYM = #{cldym}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zfpb)">
+                AND ZFPB = #{zfpb}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zfrq)">
+                AND ZFRQ = #{zfrq}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_FEE_FYMX
+        <include refid="where"/>
+    </select>
+
+    <select id="findByEntity" resultType="ImFeeFymx">
+        SELECT
+        <include refid="columns"/>
+        FROM IM_FEE_FYMX
+        <include refid="where"/>
+
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    <!-- 病人管理-帐卡-费用帐卡(vip帐卡费用列表)-->
+    <select id="queryVipCardPatientInfoCost" resultType="com.buit.cis.ims.response.CardPatientInfoCostResp">
+        select distinct max(ZYH) as zyh, JSCS as jscs, ZYGB as zygb,sum(ZFJE) as zjje,sum(ZFJE) as zfje,sum(ZLJE) as
+        zlje from (SELECT b.ZYH as ZYH,b.JSCS as JSCS,a.ZYGB as ZYGB,sum(b.ZJJE) as ZJJE,sum(b.ZFJE) as ZFJE,sum(b.ZLJE)
+        as ZLJE FROM
+        DIC_SFXMLB a,IM_FEE_FYMX b WHERE a.SFXM = b.FYXM AND b.ZYH = #{zyh}
+        <if test="@sqlt.Ognl@isNotEmpty(jscs)">
+            AND b.JSCS = #{jscs}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(ksrq)">
+            and b.fyrq &gt;= #{ksrq}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(zzrq)">
+            and b.fyrq &lt;= #{zzrq}
+        </if>
+        GROUP BY a.ZYGB,b.ZYH,b.JSCS union select 0 as ZYH,0 as JSCS,ZYGB as ZYGB,0 as ZJJE,0 as ZFJE,0 as ZLJE from
+        DIC_SFXMLB a where a.ZYSY = 1 and a.sfxm not in (SELECT FYXM from IM_FEE_FYMX b where ZYH = #{zyh}
+        <if test="@sqlt.Ognl@isNotEmpty(jscs)">
+            AND b.JSCS = #{jscs} and b.FYRQ &lt;= #{jsrq}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(ksrq)">
+            and b.fyrq &gt;= #{ksrq}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(zzrq)">
+            and b.fyrq &lt;= #{zzrq}
+        </if>
+        )) GROUP BY ZYGB ,JSCS order by ZYGB
+
+    </select>
+    <!-- 病人管理-帐卡-费用帐卡(普通帐卡费用列表)-->
+    <select id="queryCardPatientInfoCost" resultType="com.buit.cis.ims.response.CardPatientInfoCostResp">
+
+        SELECT
+        b.ZYH AS ZYH,
+        a.ZYGB AS ZYGB,
+        a.SFMC AS sfmc,
+        sum( b.ZJJE ) AS ZJJE,
+        sum( b.ZFJE ) AS ZFJE,
+        sum( b.ZLJE ) AS ZLJE
+        FROM
+        DIC_SFXMLB a left join IM_FEE_FYMX b on (
+        a.SFXM = b.FYXM
+        and b.ZYH=${zyh}
+        <!--<if test="@sqlt.Ognl@isNotEmpty(jscs)">
+            AND b.JSCS = #{jscs}
+        </if>-->
+        <if test="@sqlt.Ognl@isNotEmpty(ksrq)">
+            and b.fyrq &gt;= #{ksrq}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(zzrq)">
+            and b.fyrq &lt;= #{zzrq}
+        </if>
+        )
+        where a.ZYSY = 1
+        GROUP BY a.ZYGB
+    </select>
+    <select id="findAll"
+            resultType="com.buit.cis.ims.model.ImFeeFymx">
+        select
+        <include refid="columns"/>
+        from IM_FEE_FYMX where ZYH=#{zyh}
+        <!--按医疗查询-->
+        <if test="queryType==1">
+            AND YPLX=0
+        </if>
+        <!--按药品查询-->
+        <if test="queryType==2">
+            AND YPLX in (1 , 2 , 3)
+        </if>
+    </select>
+    <select id="findList"
+            resultType="com.buit.cis.ims.model.ImFeeFymx">
+        select
+        <include refid="columns"/>
+        from IM_FEE_FYMX where ZYH=#{zyh}
+        <!--按医疗查询-->
+        <if test="queryType==1">
+            AND YPLX=0
+        </if>
+        <!--按药品查询-->
+        <if test="queryType==2">
+            AND YPLX in (1 , 2 , 3)
+        </if>
+        <!--按开始时间结束时间查询-->
+        <if test="@sqlt.Ognl@isNotEmpty(startDate)">
+            AND FYRQ &gt;= #{startDate}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(endDate)">
+            AND FYRQ &lt;= #{endDate}
+        </if>
+    </select>
+    <!--病人管理-帐卡-费用帐卡(费用清单-明细格式)分页查询-->
+    <select id="queryCardPatientCostDetail" resultType="com.buit.cis.ims.model.ImFeeFymx">
+        SELECT *,b.PERSONNAME as czgh FROM IM_FEE_FYMX a left join hr_personnel b on a.SRGH=b.PERSONID
+        where ZYH=#{zyh}
+        <if test="@sqlt.Ognl@isNotEmpty(jscs)">
+            AND a.JSCS = #{jscs}
+        </if>
+        <!--按医疗查询-->
+        <if test="queryType==1">
+            AND a.YPLX=0
+        </if>
+        <!--按药品查询-->
+        <if test="queryType==2">
+            AND a.YPLX in (1 , 2 , 3)
+        </if>
+        <!--按开始时间结束时间查询-->
+        <if test="@sqlt.Ognl@isNotEmpty(startDate)">
+            AND a.FYRQ &gt;= #{startDate}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(endDate)">
+            AND a.FYRQ &lt;= #{endDate}
+        </if>
+        order by a.fyrq desc
+    </select>
+
+    <!--病人管理-帐卡-费用帐卡(费用清单-医嘱格式)分页查询-->
+    <select id="queryCardPatientCostAdvice"
+            resultType="com.buit.cis.ims.response.CardPatientCostAdviceResp">
+        SELECT temp.* from
+        (select
+        a.FYMC AS fymc,
+        sum( a.FYSL ) AS fysl,
+        a.FYDJ AS fydj,
+        sum( a.ZJJE ) AS zjje,
+        a.ZFBL AS zfbl,
+        a.FYKS AS fyks,
+        date_format(min(a.fyrq),'%Y-%m-%d') as startDate,
+        date_format(max(a.fyrq),'%Y-%m-%d') as endDate
+        FROM
+        IM_FEE_FYMX a,
+        DIC_SFXMLB b
+        WHERE
+        a.FYXM = b.SFXM
+        AND a.ZYH = #{zyh}
+        <if test="@sqlt.Ognl@isNotEmpty(jscs)">
+            AND a.JSCS = #{jscs}
+        </if>
+        <!--按医疗查询-->
+        <if test="queryType==1">
+            and a.YPLX=0
+        </if>
+        <!--按药品查询-->
+        <if test="queryType==2">
+            AND a.YPLX in (1 , 2 , 3)
+        </if>
+        <!--按开始时间结束时间查询-->
+        <if test="@sqlt.Ognl@isNotEmpty(startDate)">
+            AND a.fyrq &gt;= #{startDate}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(endDate)">
+            AND a.fyrq &lt;= #{endDate}
+        </if>
+        GROUP BY
+        ZYH,
+        YPLX,
+        FYXH,
+        FYMC,
+        FYDJ,
+        ZFBL,
+        FYKS,
+        SFMC)temp
+        ORDER BY
+        temp.startDate DESC
+
+
+    </select>
+    <!--病人管理-帐卡-费用帐卡(费用清单-汇总新格式)分页查询-->
+    <select id="queryCardPatientCostCollectNew"
+            resultType="com.buit.cis.ims.response.CardPatientCostCollectNewResp">
+
+        SELECT
+        b.SFMC AS sfmc,
+        a.FYMC AS fymc,
+        sum( a.FYSL ) AS fysl,
+        a.FYDJ AS fydj,
+        sum( a.ZJJE ) AS zjje,
+        sum( a.ZFJE ) AS zfje,
+        a.ZFBL AS zfbl
+        FROM
+        IM_FEE_FYMX a,
+        DIC_SFXMLB b
+        WHERE
+        a.FYXM = b.SFXM
+        AND a.ZYH = #{zyh} and JGID=#{jgid}
+        <if test="@sqlt.Ognl@isNotEmpty(jscs)">
+            AND a.JSCS = #{jscs}
+        </if>
+        <!--按医疗查询-->
+        <if test="queryType==1">
+            and a.YPLX=0
+        </if>
+        <!--按药品查询-->
+        <if test="queryType==2">
+            AND a.YPLX in (1 , 2 , 3)
+        </if>
+        <!--按开始时间结束时间查询-->
+        <if test="@sqlt.Ognl@isNotEmpty(startDate)">
+            AND a.fyrq &gt;= #{startDate}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(endDate)">
+            AND a.fyrq &lt;= #{endDate}
+        </if>
+        GROUP BY
+        FYMC,
+        FYDJ,
+        ZFBL,
+        SFMC
+        ORDER BY
+        b.zypl+0
+
+    </select>
+
+    <!-- 根据医嘱序号查询住院发要明细 -->
+    <select id="queryZyfymxByYzxh" resultType="com.buit.cis.ims.model.ImFeeFymx">
+        SELECT
+        <include refid="columns"/>
+        FROM IM_FEE_FYMX
+        WHERE YZXH in (${jlxh})
+    </select>
+
+    <select id="queryPatientCost" resultType="com.buit.cis.ims.response.CardPatientCostBaseInfoJe">
+        SELECT IFNULL(sum(b.ZFJE), 0.0) AS zfhj, IFNULL(sum(b.ZJJE), 0.0) AS fyhj, IFNULL(sum(b.ZKJE), 0.0) as zkje
+        FROM IM_HZRY a,
+             IM_FEE_FYMX b
+        WHERE (a.ZYH = b.ZYH)
+          and a.JGID = #{hospitalId}
+          and a.ZYH = #{zyh}
+          AND (b.JSCS = 0)
+
+
+    </select>
+    <!--    &lt;!&ndash;出院结算病人是否使用高价药查询&ndash;&gt;
+        <select id="findCyjsGjyByZyh" resultType="java.lang.Integer">
+           SELECT
+               IFNULL(count(A.ZYH),0)
+            FROM
+                IM_FEE_FYMX A,
+                DRUGS_TYPK B
+            WHERE
+                A.FYXH = B.YPXH
+                AND B.TSYP = 15
+                AND A.ZYH=#{zyh}
+
+        </select>
+        &lt;!&ndash;中途结算病人是否使用高价药&ndash;&gt;
+        <select id="findZtjsGjyByZyh" resultType="java.lang.Integer">
+            SELECT
+               IFNULL(count(A.ZYH),0)
+                     FROM IM_HZRY A , IM_FEE_FYMX B , DRUGS_TYPK C WHERE A.ZYH = B.ZYH AND B.FYXH = C.YPXH   AND A.CYPB = 1 AND B.FYXM IN (2,3,4) AND C.TSYP = 15 AND  A.ZYH=#{zyh}
+        </select>-->
+
+    <!-- 根据住院号查询发药明细自负金额  -->
+    <select id="queryTotalSelf" resultType="java.math.BigDecimal">
+        SELECT ifnull(sum(ZFJE),0) as ZFHJ FROM IM_FEE_FYMX WHERE ZYH = #{zyh}
+        <choose>
+            <when test="@sqlt.Ognl@isNotEmpty(jscs)">
+                AND JSCS = #{jscs}
+            </when>
+            <otherwise>
+                AND JSCS = 0
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 根据住院号查询发药明细费用自负金额  -->
+    <select id="queryTotalSelfCost" resultType="java.math.BigDecimal">
+        SELECT ifnull(sum(ZFJE),0) as ZFHJ FROM IM_FEE_FYMX WHERE ZYH = #{zyh}
+        <choose>
+            <when test="@sqlt.Ognl@isNotEmpty(jscs)">
+                AND JSCS = #{jscs}
+            </when>
+            <otherwise>
+                AND JSCS = 0
+            </otherwise>
+        </choose>
+        and YPLX = 0
+    </select>
+
+    <!-- 根据住院号查询发药明细不是费用自负金额  -->
+    <select id="queryTotalSelfNotCost" resultType="java.math.BigDecimal">
+        SELECT ifnull(sum(ZFJE),0) as ZFHJ FROM IM_FEE_FYMX WHERE ZYH = #{zyh}
+        <choose>
+            <when test="@sqlt.Ognl@isNotEmpty(jscs)">
+                AND JSCS = #{jscs}
+            </when>
+            <otherwise>
+                AND JSCS = 0
+            </otherwise>
+        </choose>
+        and YPLX &lt;&gt; 0
+    </select>
+    <!--清除IM_FEE_FYMX中结算次数-->
+    <update id="updatZyjszf">
+        UPDATE IM_FEE_FYMX Set JSCS = 0   ,mxjsbz = NULL <!--, GJYBZ = NULL-->  Where ZYH = #{zyh} AND JSCS = #{jscs} and JGID =
+        #{jgid} <!--AND GJYBZ = #{gjybz}-->
+
+    </update>
+
+
+    <!-- 查询血透减负list -->
+    <select id="queryHemodialysis" resultType="com.buit.cis.ims.response.ImFeeFymxXtResp">
+        SELECT A.JLXH       AS JLXH,
+               A.ZYH        AS ZYH,
+               A.FYRQ       AS FYRQ,
+               A.FYXH       AS FYXH,
+               A.FYMC       AS FYMC,
+               A.YPCD       AS YPCD,
+               A.FYSL       AS FYSL,
+               A.FYDJ       AS FYDJ,
+               A.ZJJE       AS ZJJE,
+               A.ZFJE       AS ZFJE,
+               A.YSGH       AS YSGH,
+               A.JFRQ       AS JFRQ,
+               A.XMLX       AS XMLX,
+               A.YPLX       AS YPLX,
+               A.FYXM       AS FYXM,
+               A.ZFBL       AS ZFBL,
+               A.ZLJE       AS ZLJE,
+               A.JSCS       AS JSCS,
+               A.YZXH       AS YZXH,
+               A.DBJFBZ     AS DBJFBZ,
+               A.FYKS       AS FYKS,
+               B.PERSONNAME AS YSXM,
+               C.SFMC       AS XMMC,
+               CASE
+                   WHEN A.DBJFBZ = 1 THEN
+                       '是'
+                   ELSE
+                       '否'
+                   END      AS DBJFBZ_TEXT
+        FROM IM_FEE_FYMX A
+                 left join HR_PERSONNEL B
+                           ON A.YSGH = B.PERSONID
+                 left join DIC_SFXMLB c
+                           ON A.FYXM = C.SFXM
+        WHERE A.JSCS = 0
+          AND A.JGID = #{jgid}
+          AND A.ZYH = #{zyh}
+          AND A.YSGH = #{ysgh}
+          AND A.FYMC NOT LIKE concat(concat('%', '住院诊查费'), '%')
+          AND A.FYMC NOT LIKE concat(concat('%', '床位'), '%')
+    </select>
+
+    <!-- 查询费用明细自负比例 -->
+    <select id="querySelfSufficiency" resultType="ImFeeFymx">
+        SELECT ZFBL AS ZFBL FROM IM_FEE_FYMX WHERE ZYH = #{zyh} AND JSCS = 0 AND JLXH IN
+        <foreach collection="jlxhlist" item="jlxh" open="(" close=")" separator=",">
+            #{jlxh}
+        </foreach>
+    </select>
+
+
+    <!-- 更新是大病计费标志和自负比列 -->
+    <update id="updateIsSeriousIllness">
+        update IM_FEE_FYMX
+        set DBJFBZ = null, ZFJE = ROUND(ZJJE * ZFBL, 2)
+        WHERE ZYH = #{zyh}
+        AND JSCS = 0
+        AND JLXH IN
+        <foreach collection="jlxhlist" item="jlxh" open="(" close=")" separator=",">
+            #{jlxh}
+        </foreach>
+    </update>
+
+    <!-- 更新不是大病计费标志和自费金额 -->
+    <update id="updateNotIsSeriousIllness">
+        update IM_FEE_FYMX set DBJFBZ = 1, ZFJE = 0
+        WHERE ZYH = #{zyh}
+        AND JSCS = 0
+        AND JLXH IN
+        <foreach collection="jlxhlist" item="jlxh" open="(" close=")" separator=",">
+            #{jlxh}
+        </foreach>
+    </update>
+
+    <!--结算管理-明细项目(按日期) 查询汇总信息-->
+    <select id="queryPatientBalanceAccountsDetailDate"
+            resultMap="patientBalanceAccountsDateMap">
+        select a.zyh                           as zyh,
+               a.jgid                          as jgid,
+               a.fyxm                          as fyxm,
+               date_format(a.fyrq, '%Y-%m-%d') as fyrq,
+               b.sfmc                          as fymc,
+               sum(a.zjje)                     as zjje,
+               sum(a.zfje)                     as zfje,
+        a.ysgh as qrgh,
+        a.fyks as fyks,
+        a.zxks as zxks
+        from IM_FEE_FYMX a,
+        DIC_SFXMLB b
+        where a.fyxm = b.zygb
+        and a.zyh = #{zyh}
+        and a.fyxm = #{zygb}
+        and a.jgid = #{jgid}
+        <if test="@sqlt.Ognl@isNotEmpty(ksrq)">
+            and a.FYRQ &gt;= #{ksrq}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(zzrq)">
+            and a.FYRQ &lt;= #{zzrq}
+        </if>
+        group by a.zyh,
+        a.jgid,
+        a.fyxm,
+        date_format(a.fyrq, '%Y-%m-%d'),
+        b.sfmc,
+        a.ysgh,
+        a.fyks,
+        a.zxks
+        order by date_format(a.fyrq, '%Y-%m-%d')
+    </select>
+    <!--查询费用明细(按日期)-->
+    <select id="queryFymxByDate" parameterType="hashmap" resultType="PatientBalanceAccountsDetailDateMxResp">
+        select zyh,
+               jgid,
+               fyrq,
+               fyxm,
+               fymc,
+               fysl,
+               fydj,
+               zjje,
+               zfje,
+               zfbl,
+               ysgh as qrgh
+        from IM_FEE_FYMX
+        where zyh = #{zyh}
+          and jgid = #{jgid}
+          and date_format(fyrq, '%Y-%m-%d') = #{fyrq}
+          and fyxm = #{fyxm}
+          and ysgh = #{qrgh}
+          and zxks = #{zxks}
+    </select>
+    <!--结算管理-明细项目(按明细)-->
+    <select id="queryPatientBalanceAccountsDetailMx"
+            resultMap="patientBalanceAccountsMxMap">
+        select a.fyxh as fyxh,
+        a.fymc as fymc,
+        ifnull(sum(a.fysl), 0.0) as fysl,
+        ifnull(sum(a.zjje), 0.0) as zjje,
+        ifnull(sum(a.zfje), 0.0) as zfje,
+        ifnull(a.zkbl, 0.0) as zkbl,
+        <if test="@sqlt.Ognl@isNotEmpty(ksrq)">
+            #{ksrq} as ksrq,
+        </if>
+        <if test="@sqlt.Ognl@isEmpty(ksrq)">
+            '' as ksrq,
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(zzrq)">
+            #{zzrq} as zzrq,
+        </if>
+        <if test="@sqlt.Ognl@isEmpty(zzrq)">
+            '' as zzrq,
+        </if>
+        ifnull(sum(a.zhje), 0.0) as zhje,
+        ifnull(sum(a.zkje), 0.0) as zkje,
+        a.jgid as jgid,
+        a.zyh as zyh,
+        a.fyxm as fyxm
+
+        from IM_FEE_FYMX a
+        where a.zyh = #{zyh}
+        and a.fyxm = #{zygb}
+        and a.jgid = #{jgid}
+        <if test="@sqlt.Ognl@isNotEmpty(ksrq)">
+            and a.FYRQ &gt;= #{ksrq}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(zzrq)">
+            and a.FYRQ &lt;= #{zzrq}
+        </if>
+        group by a.fyxh,
+        a.fymc,
+        a.zkbl,
+        a.jgid,
+        a.zyh
+    </select>
+    <select id="queryFymxByFymc" parameterType="hashmap" resultType="PatientBalanceAccountsDetailMxDateResp">
+        select date_format(a.fyrq, '%Y-%m-%d') as fyrq,
+               a.FYSL                          as fysl,
+               a.FYDJ                          as fydj,
+               a.ZFBL                          as zfbl,
+               a.ZJJE                          as zjje,
+               a.ZFJE                          as zfje,
+               a.ZKBL                          as zkbl,
+               a.ZHJE                          as zhje,
+               a.ZKJE                          as zkje,
+        a.FYKS as fyks,
+        a.ZXKS as zxks,
+        b.PERSONNAME as qrgh,
+        a.JGID as jgid,
+        a.ZYH as zyh,
+        a.FYXH as fyxh
+        from IM_FEE_FYMX a
+        left join hr_personnel b on a.srgh = b.PERSONID
+        where a.zyh = #{zyh}
+        and a.fyxh = #{fyxh}
+        and a.fyxm = #{fyxm}
+        and a.jgid = #{jgid}
+        <if test="@sqlt.Ognl@isNotEmpty(ksrq)">
+            and a.FYRQ &gt;= #{ksrq}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(zzrq)">
+            and a.FYRQ &lt;= #{zzrq}
+        </if>
+    </select>
+    <!--结算时更新结算次数-->
+    <update id="updateJscs">
+        UPDATE IM_FEE_FYMX
+        SET JSCS = #{jscs},mxjsbz = 1
+        WHERE ZYH = #{zyh}
+          AND JSCS = 0
+          And JGID = #{jgid}
+          and FYRQ &gt; #{ksrq}
+          and FYRQ &lt;= #{zzrq}
+    </update>
+    <!--结算时更新结算次数(添加时间判断条件)-->
+    <!--<update id="updateRealTimeJscs">
+        UPDATE IM_FEE_FYMX SET JSCS =#{ujscs} WHERE ZYH = #{zyh} AND JSCS = 0 And JGID = #{jgid} and FYRQ &lt;#{fyrq}
+    </update>-->
+
+
+    <!-- 查询发药明细总计金额和自负总计金额 -->
+    <!--    <select id="querySumAndConceit" resultType="java.util.HashMap">-->
+    <!--   		Select sum(ZJJE) as ld_fyhj,sum(ZFJE) as ld_zfhj from IM_FEE_FYMX-->
+    <!--   		where JGID= #{jgid} and ZYH = #{zyh} and JSCS = 0-->
+    <!--    </select>-->
+    <!--查询结算费用明细-->
+    <!--<select id="queryRealTimeFyhj" resultType="java.util.Map">
+        select IFNULL(sum(ZJJE),0) FYHJ,IFNULL(sum(ZFJE),0) ZFHJ from IM_FEE_FYMX where ZYH = #{zyh} AND JSCS = 0 And JGID = #{jgid} and FYRQ &lt;  #{fyrq}
+    </select>-->
+    <!--查询结算费用合计-->
+    <!--    <select id="queryFyhj" resultType="java.util.Map">-->
+    <!--        select IFNULL(sum(ZJJE),0) FYHJ,IFNULL(sum(ZFJE),0) ZFHJ from IM_FEE_FYMX where ZYH = #{zyh} AND JSCS = 0 And JGID = #{jgid}-->
+
+    <!--    </select>-->
+
+    <!--更新高价药的费用结算明细-->
+    <!--    <update id="updateJsGjy">-->
+    <!--        UPDATE IM_FEE_FYMX SET JSCS = #{ujscs} ,GJYBZ = 15   WHERE  JGID = #{jgid} and date_format (FYRQ, '%y-%m-%d') &lt;= #{fyrq} AND GJYBZ=1 AND  ZYH = #{zyh}-->
+
+    <!--    </update>-->
+    <!--查询住院费用明细列表-->
+    <select id="queryZyfymx" resultType="java.util.Map">
+        select jlxh as jlxh,
+               zyh  as zyh,
+               fyrq as fyrq,
+               fyxh as fyxh,
+               fymc as fymc,
+               ypcd as ypcd,
+               fysl as fysl,
+               fydj as
+                       fydj,
+               zjje as zjje,
+               zfje as zfje,
+               zlje as zlje,
+               ysgh as ysgh,
+               srgh as srgh,
+               qrgh as qrgh,
+               fybq as fybq,
+               fyks as
+                       fyks,
+               zxks as zxks,
+               jfrq as jfrq,
+               xmlx as xmlx,
+               yplx as yplx,
+               fyxm as fyxm,
+               jscs as jscs,
+               zfbl as zfbl,
+               yzxh as
+                       yzxh,
+               hzrq as hzrq,
+               yjrq as yjrq,
+               zlxz as zlxz,
+               jgid as jgid
+        from IM_FEE_FYMX
+        where (zyh = #{zyh})
+          and (jscs = 0)
+          and (jgid = #{jgid})
+    </select>
+
+    <!--查询退药数量-->
+    <select id="queryTysl" resultType="java.util.HashMap">
+        select sum(FYSL) as YPSL
+        from IM_FEE_FYMX
+        where JGID = #{jgid}
+          and ZYH = #{zyh}
+          and FYXH = #{ypxh}
+          and YPCD = #{ypcd}
+          and YZXH = #{yzxh}
+          and FYSL &lt; 0
+    </select>
+
+    <!-- 根据材料项目分组合并和住院号查询费用明细 -->
+    <select id="queryFymxByCldymAndZyh" resultType="java.util.HashMap">
+        SELECT ZJJE AS ZJJE, ZFJE AS ZFJE, FYMC AS FYMC, ZFBL AS ZFBL, JLXH AS JLXH
+        FROM IM_FEE_FYMX
+        WHERE YPLX = 0
+          AND ZFBL &lt; 1
+          AND JSCS = 0
+          AND CLDYM = #{cldym}
+          AND ZYH = #{zyh}
+    </select>
+
+    <!-- 费用记账作废更新  -->
+    <update id="invalidExpenseBookkeeping">
+        UPDATE IM_FEE_FYMX
+        SET ZFGH = #{zfgh},
+            ZFPB = #{zfpb},
+            ZFRQ = #{zfrq}
+        WHERE ZYH = #{zyh}
+          AND JSCS = 0
+          AND FYXH = #{fyxh}
+          AND JLXH = #{jlxh}
+    </update>
+    <!--病人管理-帐卡-明细项目(按明细)-修改折扣比例-->
+    <update id="updateZkbl">
+        update IM_FEE_FYMX mx
+        set mx.ZKBL=#{zkbl},
+            mx.ZKJE =mx.ZFJE - ROUND(mx.ZFJE * #{zkbl}, 2),
+            mx.ZHJE =
+                ROUND(mx.ZFJE * #{zkbl}, 2)
+        where mx.ZYH = #{zyh}
+          and mx.FYXH = #{fyxh}
+          and mx.JSCS = #{jscs}
+    </update>
+    <!--住院管理-日终汇总（取消汇总）-->
+    <update id="doCancelCollectCommit">
+        update IM_FEE_FYMX set HZRQ=null where HZRQ =#{hzrq} and JGID=#{jgid}
+    </update>
+    <!--修改汇总日期-->
+    <update id="updateHzrq">
+        UPDATE IM_FEE_FYMX
+        Set HZRQ=#{ldt_GatherDate}
+        Where HZRQ IS Null
+          AND JFRQ &lt; #{idt_End}
+          and JGID = #{gl_jgid}
+    </update>
+
+    <insert id="batchInsert">
+        INSERT INTO IM_FEE_FYMX (
+        JLXH ,
+        JGID ,
+        ZYH ,
+        FYRQ ,
+        FYXH ,
+        FYMC ,
+        YPCD ,
+        FYSL ,
+        FYDJ ,
+        ZJJE ,
+        ZFJE ,
+        YSGH ,
+        SRGH ,
+        QRGH ,
+        FYBQ ,
+        FYKS ,
+        ZXKS ,
+        JFRQ ,
+        XMLX ,
+        YPLX ,
+        FYXM ,
+        JSCS ,
+        ZFBL ,
+        YZXH ,
+        HZRQ ,
+        YJRQ ,
+        ZLJE ,
+        ZLXZ ,
+        YEPB ,
+        DZBL ,
+        SCBZ ,
+        XFLSH ,
+        ZKBL ,
+        ZKJE ,
+        ZHJE ,
+        GJYBZ ,
+        ZFGH ,
+        ZFGLXH ,
+        DBJFBZ ,
+        CLDYM
+        ) VALUES
+        <foreach collection="list" item="z" separator=",">
+            (
+            #{z.jlxh} ,
+            #{z.jgid} ,
+            #{z.zyh} ,
+            #{z.fyrq} ,
+            #{z.fyxh} ,
+            #{z.fymc} ,
+            #{z.ypcd} ,
+            #{z.fysl} ,
+            #{z.fydj} ,
+            #{z.zjje} ,
+            #{z.zfje} ,
+            #{z.ysgh} ,
+            #{z.srgh} ,
+            #{z.qrgh} ,
+            #{z.fybq} ,
+            #{z.fyks} ,
+            #{z.zxks} ,
+            #{z.jfrq} ,
+            #{z.xmlx} ,
+            #{z.yplx} ,
+            #{z.fyxm} ,
+            #{z.jscs} ,
+            #{z.zfbl} ,
+            #{z.yzxh} ,
+            #{z.hzrq} ,
+            #{z.yjrq} ,
+            #{z.zlje} ,
+            #{z.zlxz} ,
+            #{z.yepb} ,
+            #{z.dzbl} ,
+            #{z.scbz} ,
+            #{z.xflsh} ,
+            #{z.zkbl} ,
+            #{z.zkje} ,
+            #{z.zhje} ,
+            #{z.gjybz} ,
+            #{z.zfgh} ,
+            #{z.zfglxh} ,
+            #{z.dbjfbz} ,
+            #{z.cldym}
+            )
+        </foreach>
+
+    </insert>
+    <select id="sumFyslByZyhAndFyxhAndYpcdAndJgid" resultType="java.math.BigDecimal">
+        select sum(FYSL) as KTSL
+        from IM_FEE_FYMX
+        where ZYH = #{zyh}
+          and FYXH = #{ypxh}
+          and YPCD = #{ypcd}
+          and JGID = #{jgid}
+    </select>
+    <!---->
+    <select id="queryCardPatientCostCollect"
+            resultType="com.buit.cis.ims.response.CardPatientCostCollectResp">
+        SELECT
+        temp.*
+        FROM
+        (
+        SELECT
+        date_format ( fyrq, '%Y-%m-%d' ) AS fyrq,
+        fymc,
+        IFNULL( sum( fysl ), 0 ) AS fysl,
+        fydj,
+        IFNULL( sum( zjje ), 0 ) AS zjje,
+        IFNULL( sum( zfje ), 0 ) AS zfje,
+        fyks,
+        zfbl
+        FROM
+        IM_FEE_FYMX
+        WHERE
+        ZYH=#{zyh}
+        <if test="@sqlt.Ognl@isNotEmpty(jscs)">
+            AND JSCS = #{jscs}
+        </if>
+        <!--按医疗查询-->
+        <if test="queryType==1">
+            and YPLX=0
+        </if>
+        <!--按药品查询-->
+        <if test="queryType==2">
+            AND YPLX in (1 , 2 , 3)
+        </if>
+        <!--按开始时间结束时间查询-->
+        <if test="@sqlt.Ognl@isNotEmpty(startDate)">
+            AND fyrq &gt;= #{startDate}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(endDate)">
+            AND fyrq &lt;= #{endDate}
+        </if>
+
+        GROUP BY
+        date_format ( fyrq, '%Y-%m-%d' ),
+        fymc,
+        fydj,
+        fyks,
+        zfbl
+        ) temp
+        ORDER BY
+        temp.fyrq desc
+    </select>
+    <!--病人性质统计-->
+    <select id="queryIdsBrxz" resultType="java.util.Map">
+        select sum(c.FYHJ) as FYHJ, sum(c.ZFHJ) as ZFHJ, c.BRXZ as BRXZ, d.XZMC as XZMC, d.DBPB as DBPB
+        from (
+                 SELECT a.FYHJ as FYHJ, a.ZFHJ as ZFHJ, a.BRXZ as BRXZ
+                 FROM IM_ZYJS a
+                 WHERE a.JSLX != 4
+                   and a.CZGH = #{czgh}
+                   AND a.JGID = #{jgid}
+                   AND a.JZRQ IS NULL
+                   AND a.JSRQ &lt; #{adt_jzrq}
+                   and a.FYHJ != a.ZFHJ
+                 union all
+                 SELECT (-1 * a.FYHJ) as FYHJ, (-1 * a.ZFHJ) as ZFHJ, a.BRXZ as BRXZ
+                 FROM IM_ZYJS a,
+                      IM_JSZF b
+                 WHERE a.JSLX != 4
+                   and (
+                     a.ZYH = b.ZYH)
+                   AND (a.JSCS = b.JSCS)
+                   AND b.ZFGH = #{czgh}
+                   AND b.JGID = #{jgid}
+                   AND b.JZRQ IS NULL
+                   AND b.ZFRQ
+                     &lt; #{adt_jzrq}
+                   and a.FYHJ != a.ZFHJ
+             ) c
+                 left outer join PUB_BRXZ d on c.BRXZ = d.BRXZ
+        group by c.BRXZ, d.XZMC, d.DBPB
+    </select>
+    <!--付款方式统计-->
+    <select id="queryIdsFkfs" resultType="java.util.Map">
+        select c.FKFS as FKFS, sum(c.FKJE) as FKJE, d.FKMC as FKMC
+        from (
+                 select a.FKFS as FKFS, (-1 * a.FKJE) as FKJE
+                 from IM_FKXX a,
+                      IM_JSZF b
+                 where a.ZYH = b.ZYH
+                   and a.JSCS = b.JSCS
+                   AND b.ZFGH = #{czgh}
+                   AND b.JGID = #{jgid}
+                   AND b.JZRQ IS NULL
+                   AND b.ZFRQ &lt; #{adt_jzrq}
+                 union all
+                 select a.FKFS as FKFS, a.FKJE as FKJE
+                 from IM_FKXX a,
+                      IM_ZYJS b
+                 where b.JSLX != 4
+                   and a.ZYH = b.ZYH
+                   and a.JSCS =
+                       b.JSCS
+                   AND b.CZGH = #{czgh}
+                   AND b.JGID = #{jgid}
+                   AND b.JZRQ IS NULL
+                   AND b.JSRQ &lt; #{adt_jzrq}
+                 union all
+                 SELECT a.JKFS as FKFS, a.JKJE as FKJE
+                 FROM IM_TBKK a
+                 WHERE a.CZGH = #{czgh}
+                   AND a.JGID = #{jgid}
+                   AND a.JZRQ IS NULL
+                   AND a.JKRQ &lt; #{adt_jzrq}
+                 union all
+                 SELECT a.JKFS as FKFS, (-1 * a.JKJE) as FKJE
+                 FROM IM_TBKK a,
+                      IM_JKZF b
+                 WHERE (b.JKXH = a.JKXH)
+                   AND b.ZFGH =
+                       #{czgh}
+                   AND b.JGID = #{jgid}
+                   AND b.JZRQ IS NULL
+                   AND b.ZFRQ &lt; #{adt_jzrq}
+             ) c
+                 left outer join PUB_FKFS d on c.FKFS = d.FKFS
+        group by c.FKFS, d.FKMC
+    </select>
+    <!--结束发票统计-->
+    <select id="queryIdsJsfp" resultType="java.util.Map">
+        SELECT a.ZYH         as ZYH,
+               a.JSCS        as JSCS,
+               a.JSLX        as JSLX,
+               a.FYHJ        as FYHJ,
+               (-1 * a.JMJE) as JMJE,
+               a.ZFHJ        as ZFHJ,
+               a.JKHJ        as
+                                JKHJ,
+               a.FPHM        as FPHM,
+               a.ZFPB        as ZFPB,
+               a.TPHM        as TPHM
+        FROM IM_ZYJS a,
+             IM_HZRY b
+        WHERE a.JSLX != 4
+          and a.ZYH = b.ZYH
+          and a.CZGH = #{czgh}
+          AND a.JGID = #{jgid}
+          AND a.JZRQ IS NULL
+          AND a.JSRQ &lt; #{adt_jzrq}
+    </select>
+    <!--住院交款表单-->
+    <select id="queryIdsJksj" resultType="java.util.Map">
+        SELECT a.JKXH as JKXH, a.JKJE as JKJE, a.JKFS as JKFS, a.SJHM as SJHM, a.ZFPB as ZFPB, a.CZGH as CZGH
+        FROM IM_TBKK a
+        WHERE a.CZGH = #{czgh}
+          AND a.JGID = #{jgid}
+          AND a.JZRQ IS NULL
+          AND a.JKRQ &lt; #{adt_jzrq}
+          AND a.JKLX = 0
+          AND a.FPHM is null
+    </select>
+    <!--住院结算作废表单-->
+    <select id="queryIdsJszf" resultType="java.util.Map">
+        SELECT a.ZYH         as ZYH,
+               a.JSCS        as JSCS,
+               a.JSLX        as JSLX,
+               (-1 * a.FYHJ) as FYHJ,
+               a.JMJE        as JMJE,
+               (-1 * a.ZFHJ) as
+                                ZFHJ,
+               (-1 * a.JKHJ) as JKHJ,
+               a.FPHM        as FPHM,
+               a.ZFPB        as ZFPB,
+               a.TPHM        as TPHM
+        FROM IM_ZYJS a,
+             IM_JSZF b,
+             IM_HZRY d
+        WHERE a.JSLX != 4
+          and (a.ZYH = d.ZYH)
+          and (a.ZYH = b.ZYH)
+          AND (a.JSCS = b.JSCS)
+          AND b.ZFGH = #{czgh}
+          AND b.JGID
+            = #{jgid}
+          AND b.JZRQ IS NULL
+          AND b.ZFRQ &lt; #{adt_jzrq}
+    </select>
+    <!--住院缴款作废表单-->
+    <select id="queryIdsJkzf" resultType="java.util.Map">
+        SELECT a.JKXH as JKXH, (-1 * a.JKJE) as JKJE, a.JKFS as JKFS, a.SJHM as SJHM, a.ZFPB as ZFPB, a.CZGH as CZGH
+        FROM IM_TBKK a,
+             IM_JKZF b
+        WHERE (b.JKXH = a.JKXH)
+          AND b.ZFGH = #{czgh}
+          AND b.JGID = #{jgid}
+          AND b.JZRQ IS NULL
+          AND b.ZFRQ &lt; #{adt_jzrq}
+    </select>
+
+    <!--住院缴款作废表单（新统计方式）收据作废-->
+    <select id="queryIdsJkzx" resultType="java.util.Map">
+        SELECT a.JKXH as JKXH,  a.JKJE as JKJE, a.JKFS as JKFS, a.SJHM as SJHM, a.ZFPB as ZFPB, a.CZGH as CZGH
+        FROM IM_TBKK a
+        WHERE a.CZGH = #{czgh}
+          AND a.JGID = #{jgid}
+          AND a.JZRQ IS NULL
+          AND a.JKRQ&lt; #{adt_jzrq}
+          AND a.jklx = 3
+    </select>
+
+    <!--住院预交金找退-->
+    <select id="queryIdsJkzt" resultType="java.util.Map">
+	    SELECT JKXH as JKXH,(-1 * JKJE) as JKJE, JKFS as JKFS, SJHM as SJHM, ZFPB as ZFPB, CZGH as CZGH
+        FROM IM_TBKK
+        WHERE CZGH = #{czgh}
+          AND JGID = #{jgid}
+          AND JZRQ IS NULL
+          AND JKLX = 3
+          AND JKRQ &lt; #{adt_jzrq}
+    </select>
+    <!--住院付款表单-->
+    <select id="queryIdsJsfpFk" resultType="java.util.Map">
+        select a.ZYH as ZYH, a.JSCS as JSCS, a.FKFS as FKFS, a.FKJE as FKJE, a.FKHM as FKHM
+        from IM_FKXX a,
+             IM_ZYJS b
+        where b.JSLX != 4
+          and a.ZYH = b.ZYH
+          and a.JSCS = b.JSCS
+          AND b.CZGH = #{czgh}
+          AND b.JGID = #{jgid}
+          AND b.JZRQ IS NULL
+          AND b.JSRQ &lt; #{adt_jzrq}
+    </select>
+    <!--住院付款作废表单-->
+    <select id="queryIdsJszfFk" resultType="java.util.Map">
+        select a.ZYH as ZYH, a.JSCS as JSCS, a.FKFS as FKFS, a.FKJE as FKJE, a.FKHM as FKHM
+        from IM_FKXX a,
+             IM_JSZF b
+        where a.ZYH = b.ZYH
+          and a.JSCS = b.JSCS
+          AND b.ZFGH = #{czgh}
+          AND b.JGID = #{jgid}
+          AND b.JZRQ IS NULL
+          AND b.ZFRQ
+            &lt; #{adt_jzrq}
+    </select>
+    <!--费用明细结算归并-->
+    <select id="queryIdsJsxmgb" resultType="java.util.Map">
+        SELECT
+        t.XMMC AS XMMC,
+        t.XMLX AS XMLX,
+        sum( t.ZJJE ) AS SRHJ,
+        sum( t.ZKJE ) AS YHJE,
+        sum( t.SSJE ) AS SJSR
+        FROM
+        (
+        SELECT
+        c.sfmc AS XMMC,
+        c.sfxm AS XMLX,
+        sum( CASE WHEN b.ZJJE IS NULL THEN 0 ELSE b.zjje END ) AS ZJJE,
+        sum( CASE WHEN b.ZKJE IS NULL THEN 0 ELSE b.zkje END ) AS ZKJE,
+        sum( CASE WHEN b.ZJJE IS NULL THEN 0 ELSE b.zjje END ) - sum( CASE WHEN b.zkje IS NULL THEN 0 ELSE b.zkje END ) AS SSJE
+        FROM
+        dic_sfxmlb c
+        LEFT JOIN im_fee_fymx b ON c.sfxm = b.fyxm
+        JOIN im_zyjs a ON a.zyh = b.zyh
+        WHERE
+        a.ksrq &lt; b.fyrq AND a.zzrq  &gt; b.fyrq
+        AND a.jzrq IS NULL
+        AND a.jsrq &lt; #{adt_jzrq}
+        AND a.CZGH = #{czgh}
+        AND a.jgid = #{jgid}
+        AND a.jsrq > b.jfrq
+        GROUP BY
+        b.fyxm UNION ALL
+        SELECT
+        d.sfmc AS XMMC,
+        d.SFXM AS XMLX,
+        sum( CASE WHEN c.zjje IS NULL THEN 0 ELSE - c.zjje END ) AS ZJJE,
+        sum( CASE WHEN c.zkje IS NULL THEN 0 ELSE - c.zkje END ) AS ZKJE,
+        sum( CASE WHEN c.zjje IS NULL THEN 0 ELSE - c.zjje END ) - sum( CASE WHEN c.zkje IS NULL THEN 0 ELSE - c.zkje END ) AS SSJE
+        FROM
+        im_zyjs a
+        JOIN im_jszf b ON a.zyh = b.zyh
+        AND a.jscs = b.jscs
+        JOIN im_fee_fymx c ON a.zyh = c.zyh
+        JOIN dic_sfxmlb d ON c.fyxm = d.SFXM
+        WHERE
+        b.jzrq IS NULL
+        AND a.ksrq &lt; c.fyrq AND a.zzrq &gt; c.fyrq
+        AND b.zfrq &lt; #{adt_jzrq}
+        AND b.ZFGH = #{czgh}
+        AND b.jgid = #{jgid}
+        AND a.jsrq > c.jfrq
+        GROUP BY
+        c.fyxm
+        ) t
+        GROUP BY
+        t.xmlx
+    </select>
+    <!--住院收费项目-->
+    <select id="queryIdsZyxm" resultType="com.buit.cis.ims.response.InHospitalPatientSfxmResp">
+        SELECT SFXM as sfxm , SFMC as sfmc from
+        dic_sfxmlb where ZYSY = 1
+    </select>
+
+    <!--取退预缴款收据张数-->
+    <select id="queryTjks" resultType="java.util.Map">
+        SELECT COUNT(*) as TJZS
+        FROM IM_TBKK a,
+             IM_ZYJS b
+        WHERE b.JSLX != 4
+          and (a.ZYH = b.ZYH)
+          AND (a.JSCS =
+               b.JSCS)
+          AND (a.ZFPB = 0)
+          AND (b.ZFPB = 0)
+          AND (b.CZGH = #{czgh})
+          AND (b.JZRQ IS NULL)
+          AND (b.JSRQ &lt; #{ldt_End})
+          AND (a.JGID = b.JGID)
+          AND (a.JGID = #{jgid})
+    </select>
+    <!--算结算票据和缴款收据 票据序列-->
+    <select id="queryIdsJsfpWithOrderBy" resultType="java.util.Map">
+        SELECT a.ZYH         as ZYH,
+               a.JSCS        as JSCS,
+               a.JSLX        as JSLX,
+               a.FYHJ        as FYHJ,
+               (-1 * a.JMJE) as JMJE,
+               a.ZFHJ        as ZFHJ,
+               a.JKHJ        as
+                                JKHJ,
+               a.FPHM        as FPHM,
+               a.ZFPB        as ZFPB,
+               a.TPHM        as TPHM
+        FROM IM_ZYJS a,
+             IM_HZRY b
+        WHERE a.JSLX != 4
+          and a.ZYH = b.ZYH
+          and a.CZGH = #{czgh}
+          AND a.JGID = #{jgid}
+          AND a.JZRQ IS NULL
+          AND a.JSRQ &lt; #{adt_jzrq}
+          and a.FPHM is not null
+        order by a.FPHM asc
+
+    </select>
+    <!--住院结算表单 排序-->
+    <select id="queryIdsJksjWithOrderBy" resultType="java.util.Map">
+        SELECT a.JKXH as JKXH, a.JKJE as JKJE, a.JKFS as JKFS, a.SJHM as SJHM, a.ZFPB as ZFPB, a.CZGH as CZGH
+        FROM IM_TBKK a
+        WHERE a.CZGH = #{czgh}
+          AND a.JGID = #{jgid}
+          AND a.JZRQ IS NULL
+          AND a.JKRQ &lt; #{adt_jzrq}
+          and a.SJHM is not null
+        order by a.SJHM asc
+
+    </select>
+    <!--查询汇总数量-->
+    <select id="queryHzCount" resultType="java.lang.Integer">
+        select count(1)
+        from IM_FEE_FYMX
+        where HZRQ IS Null
+          AND JFRQ &lt; #{idt_End}
+          and JGID = #{gl_jgid}
+    </select>
+    <!--查询汇总记录-->
+    <select id="queryHz" resultType="java.lang.Integer">
+        select count(1)
+        from IM_FEE_FYMX
+        where HZRQ = #{ldt_GatherDate}
+          and JGID = #{gl_jgid}
+    </select>
+    <!--查询费用明细IM_FEE_FYMX汇总到IM_SRHZ所需数据-->
+    <select id="queryImSrhzList1" resultType="java.util.Map">
+        SELECT IM_FEE_FYMX.HZRQ      as HZRQ,
+               1                     as KSLB,
+               IM_FEE_FYMX.FYKS      as FYKS,
+               IM_FEE_FYMX.FYXM      as
+                                        FYXM,
+               sum(IM_FEE_FYMX.ZJJE) as ZJJE,
+               sum(IM_FEE_FYMX.ZFJE) as ZFJE,
+               IM_FEE_FYMX.JGID      as JGID
+        FROM IM_FEE_FYMX IM_FEE_FYMX
+        WHERE IM_FEE_FYMX.HZRQ = #{ldt_GatherDate}
+          and IM_FEE_FYMX.JGID = #{gl_jgid}
+        GROUP BY IM_FEE_FYMX.HZRQ, IM_FEE_FYMX.FYKS, IM_FEE_FYMX.FYXM, IM_FEE_FYMX.JGID
+    </select>
+    <select id="queryImSrhzList2" resultType="java.util.Map">
+        SELECT IM_FEE_FYMX.HZRQ      as HZRQ,
+               2                     as KSLB,
+               IM_FEE_FYMX.ZXKS      as ZXKS,
+               IM_FEE_FYMX.FYXM      as
+                                        FYXM,
+               sum(IM_FEE_FYMX.ZJJE) as ZJJE,
+               sum(IM_FEE_FYMX.ZFJE) as ZFJE,
+               IM_FEE_FYMX.JGID      as JGID
+        FROM IM_FEE_FYMX IM_FEE_FYMX
+        WHERE IM_FEE_FYMX.HZRQ = #{ldt_GatherDate}
+          and IM_FEE_FYMX.JGID = #{gl_jgid}
+        GROUP BY IM_FEE_FYMX.HZRQ, IM_FEE_FYMX.ZXKS, IM_FEE_FYMX.FYXM, IM_FEE_FYMX.JGID
+    </select>
+    <!--统计汇总金额-->
+    <select id="queryHzZjje" resultType="java.util.Map">
+        SELECT IFNULL(sum(ZJJE),0) as BQFS FROM IM_FEE_FYMX WHERE HZRQ=#{adt_hzrq} and JGID= #{gl_jgid}
+    </select>
+    <!--查询汇总本期发生-->
+    <select id="queryHzBqfs" resultType="java.util.Map">
+        SELECT IM_FEE_FYMX.FYXM as FYXM, IFNULL(sum(IM_FEE_FYMX.ZJJE), 0) AS FYJE
+        FROM IM_FEE_FYMX IM_FEE_FYMX
+        WHERE IM_FEE_FYMX.HZRQ = #{adt_hzrq}
+          and IM_FEE_FYMX.JGID = #{al_jgid}
+        GROUP BY IM_FEE_FYMX.FYXM
+    </select>
+    <!--查询汇总的实际结存-->
+    <select id="queryHzSjjc" resultType="java.util.Map">
+        SELECT IM_FEE_FYMX.FYXM as FYXM, IFNULL(sum(IM_FEE_FYMX.ZJJE), 0) AS FYJE
+        FROM IM_FEE_FYMX IM_FEE_FYMX
+        WHERE IM_FEE_FYMX.HZRQ &lt;= #{adt_hzrq}
+          AND IM_FEE_FYMX.JSCS = 0
+          and IM_FEE_FYMX.JGID = #{al_jgid}
+        GROUP BY IM_FEE_FYMX.FYXM
+    </select>
+    <!--终汇总(四) 查询总费用-->
+    <select id="queryHzFour" resultType="java.util.Map">
+        select IFNULL(sum(s.ZJJE), 0) as ZJJE
+        from (SELECT c.ZJJE as ZJJE
+              FROM IM_ZYJS a,
+                   DIC_SFXMLB b,
+                   IM_FEE_FYMX_js c
+              WHERE (c.FYXM = b.SFXM)
+                AND (a.ZYH = c.ZYH)
+                AND (a.JSCS = c.JSCS)
+                AND (a.JGID = c.JGID)
+                AND (a.HZRQ
+                  &gt;= #{adt_hzrq})
+                and (a.HZRQ &lt;= #{adt_hzrq_end})
+                AND a.JGID = #{al_jgid}
+              union all
+              select -(c.ZJJE) as ZJJE
+              FROM IM_ZYJS a,
+                   DIC_SFXMLB b,
+                   IM_FEE_FYMX_js c,
+                   IM_JSZF d
+              WHERE (c.FYXM = b.SFXM)
+                AND (a.ZYH = c.ZYH)
+                AND (
+                  a.JSCS = c.JSCS)
+                AND (a.JGID = c.JGID)
+                AND (a.ZYH = d.ZYH)
+                AND (a.JSCS = d.JSCS)
+                AND (a.JGID = d.JGID)
+                AND (d.hzrq &gt;= #{adt_hzrq})
+                and (d.hzrq &lt; #{adt_hzrq_end})
+                AND a.JGID = #{al_jgid}) s
+    </select>
+    <!--日终汇总(四) 查询总费用列表-->
+    <select id="queryHzFourList" resultType="java.util.Map">
+        select s.ZYGB as ZYGB,s.SFMC as SFMC,sum(s.ZJJE) as ZJJE
+        from (SELECT b.ZYGB as ZYGB,b.SFMC as SFMC,c.ZJJE as ZJJE FROM IM_ZYJS a,DIC_SFXMLB b,IM_FEE_FYMX_js c
+        WHERE ( c.FYXM = b.SFXM ) AND ( a.ZYH = c.ZYH ) AND ( a.JSCS = c.JSCS ) AND ( a.JGID = c.JGID )
+        AND ( a.HZRQ &gt;=#{adt_hzrq} ) and ( a.HZRQ &lt;=#{adt_hzrq_end} ) AND a.JGID =#{al_jgid}
+        union all
+        select b.ZYGB as ZYGB,b.SFMC as SFMC,-(c.ZJJE) as ZJJE FROM IM_ZYJS a,DIC_SFXMLB b,IM_FEE_FYMX_js c,IM_JSZF d
+        WHERE ( c.FYXM = b.SFXM ) AND ( a.ZYH = c.ZYH ) AND ( a.JSCS = c.JSCS ) AND ( a.JGID = c.JGID )
+        AND ( a.ZYH = d.ZYH ) AND ( a.JSCS = d.JSCS ) AND ( a.JGID = d.JGID ) AND ( d.hzrq &gt;=#{adt_hzrq} )
+        and ( d.hzrq &lt;=#{adt_hzrq_end} ) AND a.JGID = #{al_jgid}) s
+        group by s.ZYGB,s.SFMC
+    </select>
+    <!--日终汇总(四) 查询总费用列表 追加西药基药/中药基药-->
+    <select id="queryHzFourZxyList" resultType="java.util.Map">
+        select s.ZYGB                                                              as ZYGB,
+               (case when s.ZYGB = 2 then '西药基药' when s.ZYGB = 1 then '中成药基药' end) as SFMC,
+               sum(s.ZJJE)                                                         as
+                                                                                      ZJJE
+        from (SELECT b.ZYGB as ZYGB, b.SFMC as SFMC, c.ZJJE as ZJJE
+              FROM IM_ZYJS a
+                 , DIC_SFXMLB b
+                 , IM_FEE_FYMX_js c
+                 , DRUGS_TYPK d
+              WHERE (c.FYXM = b.SFXM)
+                AND (a.ZYH = c.ZYH)
+                AND (a.JSCS = c.JSCS)
+                AND (a.JGID = c.JGID)
+                AND c.YPLX
+                  IN (1, 2)
+
+                AND (c.FYXH = d.YPXH)
+                AND d.JYLX &gt; 1
+                AND (a.HZRQ &gt;= #{adt_hzrq})
+                and (a.HZRQ &lt;= #{adt_hzrq_end})
+                AND a.JGID = #{al_jgid}
+              union all
+              select b.ZYGB as ZYGB, b.SFMC as SFMC, -(c.ZJJE) as ZJJE
+              FROM IM_ZYJS a,
+                   DIC_SFXMLB b,
+                   IM_FEE_FYMX_js c,
+                   IM_JSZF d,
+                   DRUGS_TYPK f
+              WHERE (c.FYXM = b.SFXM)
+                AND (a.ZYH = c.ZYH)
+                AND (a.JSCS = c.JSCS)
+                AND (a.JGID = c.JGID)
+                AND (a.ZYH = d.ZYH)
+                AND (a.JSCS = d.JSCS)
+                AND (a.JGID = d.JGID)
+                AND (c.FYXH = f.YPXH)
+                AND c.YPLX IN (1, 2)
+                AND f.JYLX &gt; 1
+                AND (d.hzrq &gt;= #{adt_hzrq})
+                and (d.hzrq &lt;= #{adt_hzrq_end})
+                AND a.JGID = #{al_jgid}) s
+        group by s.ZYGB, s.SFMC
+    </select>
+    <!--日终汇总(五) 查询费用列表-->
+    <select id="queryHzFiveList" resultType="java.util.Map">
+        SELECT b.ZYGB as ZYGB, b.SFMC as SFMC, sum(a.ZJJE) as ZJJE FROM IM_FEE_FYMX a, DIC_SFXMLB b WHERE (a.FYXM =
+        b.SFXM) AND (a.HZRQ &gt;= #{adt_hzrq} and a.HZRQ &lt;= #{adt_hzrq_end}) AND a.JGID = #{al_jgid} and a.JLXH in
+        (select d.JLXH from IM_FEE_FYMX_JS d,IM_ZYJS c
+        left outer join IM_JSZF e on c.zyh = e.zyh and c.jscs = e.jscs and c.hzrq = e.hzrq and e.HZRQ &gt;= #{adt_hzrq}
+        and e.HZRQ &lt;= #{adt_hzrq_end} where c.ZYH = d.ZYH and d.JSCS = c.JSCS
+        and c.HZRQ &gt;= #{adt_hzrq} and c.HZRQ &lt;= #{adt_hzrq_end} AND c.JGID = #{al_jgid} and e.ZYH is null )
+
+        <if test="FYBQ!=0">
+            and a.FYBQ=#{FYBQ}
+        </if>
+        GROUP BY b.ZYGB,b.SFMC
+    </select>
+    <!--终汇总(五) 查询费用汇总-->
+    <select id="queryHzFive" resultType="java.util.Map">
+        SELECT IFNULL(sum(a.ZJJE),0) as ZJJE FROM IM_FEE_FYMX a, DIC_SFXMLB b WHERE (a.FYXM = b.SFXM) AND (a.HZRQ &gt;=
+        #{adt_hzrq} and a.HZRQ &lt;= #{adt_hzrq_end}) AND a.JGID =#{al_jgid} and a.JLXH
+        in (select d.JLXH from IM_FEE_FYMX_JS d,IM_ZYJS c
+        left outer join IM_JSZF e on c.zyh = e.zyh and c.jscs = e.jscs
+        and c.hzrq = e.hzrq and e.HZRQ &gt;=#{adt_hzrq} and e.HZRQ &lt;= #{adt_hzrq_end} where c.ZYH = d.ZYH and d.JSCS
+        = c.JSCS and c.HZRQ &gt;= #{adt_hzrq} and c.HZRQ &lt;= #{adt_hzrq_end} AND c.JGID = #{al_jgid} and e.ZYH is
+        null)
+        <if test="FYBQ!=0">
+            and a.FYBQ=#{FYBQ}
+        </if>
+    </select>
+
+    <!-- 查询可退项目医嘱 -->
+    <select id="queryRefundableProject" resultType="com.buit.cis.ims.response.ImFeeFymxProjectResp">
+        select a.ZYH                           as ZYH,
+               date_format(a.FYRQ, '%Y-%m-%d') as FYRQ,
+               a.FYXH                          as FYXH,
+               min(a.FYMC)                     as FYMC,
+               sum(a.FYSL)                     as FYSL,
+               a.FYDJ                          as FYDJ,
+               a.YSGH                          as YSGH,
+               b.personName                    as YSXM
+        from IM_FEE_FYMX a
+                 left join HR_PERSONNEL b
+                           on a.YSGH = b.personId
+        where a.ZYH = #{zyh}
+          <if test="@sqlt.Ognl@isNotEmpty(startTime)">
+             and  a.FYRQ BETWEEN date_format(#{startTime}, '%Y-%m-%d 00:00:00') AND date_format(#{endTime}, '%Y-%m-%d 23:59:59')
+          </if>
+          <if test="@sqlt.Ognl@isNotEmpty(fyxh)">
+             and  a.FYXH = #{fyxh}
+          </if>
+          and a.YPLX = 0
+          and a.JSCS = 0
+          and (a.YZXH > 0 or a.XMLX = 9)
+        group by a.ZYH,
+                 a.FYXH,
+                 a.FYMC,
+                 a.FYDJ,
+                 a.YSGH,
+                 date_format(a.FYRQ, '%Y-%m-%d'),
+                 b.personName
+        having sum(a.FYSL) > 0
+        order by date_format(a.FYRQ, '%Y-%m-%d') desc
+    </select>
+
+    <!-- 查询执行可退项目 -->
+    <select id="queryExecuteRefundableProject" resultType="com.buit.cis.ims.model.ImFeeFymx">
+        select
+        <include refid="columns"/>
+        from IM_FEE_FYMX
+        where ZYH = #{zyh}
+        and FYXH = #{fyxh}
+        and FYDJ = #{fydj}
+        and date_format(FYRQ, '%Y-%m-%d') = #{fyrq}
+        and (YZXH > 0 or XMLX = 9)
+        order by FYRQ desc
+    </select>
+
+    <!-- 查询已作废列表 -->
+    <!--    <select id="queryVoidedList" resultType="com.buit.cis.ims.model.ImFeeFymx">-->
+    <!--        select-->
+    <!--        <include refid="columns"/>-->
+    <!--        from IM_FEE_FYMX-->
+    <!--        where ZYH = #{zyh}-->
+    <!--        and JGID = #{jgid}-->
+    <!--        and (JSCS = 999 or ZFGH is not null)-->
+    <!--    </select>-->
+
+    <!-- 费用记账查询 -->
+    <select id="inquiryBookkeeping" resultType="com.buit.cis.ims.response.ImFeeFymxAccountingResp">
+        SELECT b.ZYHM as ZYHM,
+        b.BRXM as BRXM,
+        a.JFRQ as JFRQ,
+        a.FYRQ as FYRQ,
+        a.YPLX as YPLX,
+        a.FYXH as FYXH,
+        a.FYMC as FYMC,
+        a.FYSL as FYSL,
+        a.FYDJ as FYDJ,
+        a.ZFBL as ZFBL,
+        a.FYKS as FYKS,
+        c.PERSONNAME as YGXM,
+        a.JGID as JGID,
+        a.ZJJE as ZJJE,
+        (SELECT h.XZMC FROM PUB_BRXZ h where b.BRXZ = h.BRXZ) as XZMC,
+        a.ZFJE AS ZFJE,
+        a.ZFPB AS ZFPB,
+        a.ZFRQ AS ZFRQ
+        FROM IM_FEE_FYMX a, IM_HZRY b, HR_PERSONNEL c
+        WHERE (a.SRGH = c.PERSONID)
+        AND (a.XMLX = 4)
+        AND (a.ZYH = b.ZYH)
+        AND (a.JGID = b.JGID)
+        AND (a.JGID = #{jgid})
+        AND (date_format(a.JFRQ, '%Y-%m-%d') &gt;= #{beginDate} and date_format(a.JFRQ, '%Y-%m-%d') &lt;= #{endDate})
+        <if test="@sqlt.Ognl@isNotEmpty(srgh)">
+            and a.SRGH = #{srgh}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(fyks)">
+            and a.FYKS = #{fyks}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(zyhm)">
+            and b.ZYHM = #{zyhm}
+        </if>
+        order by a.JFRQ desc
+    </select>
+    <!--收费项目的发票-->
+    <select id="queryqueryDyfp" resultType="java.util.Map">
+        SELECT DISTINCT c.ZYH       AS ZYH,
+                        c.JSCS      AS JSCS,
+                        c.ZYGB      AS ZYGB,
+                        min(c.ZYPL) AS ZYPL,
+                        sum(c.ZJJE) AS ZJJE,
+                        sum(c.ZFJE) AS ZFJE,
+                        sum(c.ZLJE) AS ZLJE,
+                        c.SFMC      as SFMC
+        FROM (
+                 SELECT b.ZYH       AS ZYH,
+                        b.JSCS      AS JSCS,
+                        a.ZYGB      AS ZYGB,
+                        min(a.ZYPL) AS ZYPL,
+                        a.SFMC      as SFMC,
+                        CASE
+                            #{VIP}
+                            WHEN 1 THEN
+                                SUM(B.ZFJE)
+                            ELSE SUM(B.ZJJE)
+                            END     AS ZJJE,
+                        sum(b.ZFJE) AS ZFJE,
+                        sum(b.ZLJE) AS ZLJE
+                 FROM DIC_SFXMLB a,
+                      IM_FEE_FYMX b
+                 WHERE a.SFXM = b.FYXM
+                   AND b.ZYH = #{ZYH}
+
+                   AND b.JSCS = #{JSCS}
+
+                 GROUP BY a.ZYGB,
+                          b.ZYH,
+                          b.JSCS,
+                          a.SFMC
+             ) c
+        GROUP BY c.ZYH,
+                 c.ZYGB,
+                 c.JSCS,
+                 c.SFMC
+        ORDER BY c.ZYGB
+    </select>
+    <!--在院病人费用报表-->
+    <select id="queryInHospitalPatientReport" resultType="java.util.Map">
+        SELECT
+        a.brxm AS brxm,
+        a.zyhm AS zyhm,
+        a.brch AS brch,
+        a.ryrq AS ryrq,
+        a.cyrq as cyrq,
+        c.PERSONNAME AS zyys,
+        b.zjje as zjje,
+        b.zfje as zfje,
+        b.fyxm as fyxm,
+        b.yplx as yplx,
+        a.brxz as brxz
+        FROM
+        IM_HZRY a inner join IM_FEE_FYMX b on a.ZYH = b.zyh
+        left join hr_personnel c on a.zyys=c.PERSONID
+        WHERE
+        a.jscs = b.jscs
+        and a.cypb &lt; 8
+        <if test="@sqlt.Ognl@isNotEmpty(startDate)">
+            and date_format(a.ryrq, '%Y-%m-%d') &gt;= #{startDate}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(endDate)">
+            and date_format(a.ryrq, '%Y-%m-%d') &lt;= #{endDate}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(brbq)">
+            and a.brbq= #{brbq}
+        </if>
+
+    </select>
+    <!--查询出院病人基本信息-->
+    <select id="queryDischargedPatientReport" resultType="java.util.Map">
+        SELECT
+        a.brxm AS brxm,
+        a.zyhm AS zyhm,
+        a.brch AS brch,
+        a.ryrq AS ryrq,
+        a.cyrq as cyrq,
+        c.PERSONNAME AS zyys,
+        b.zjje as zjje,
+        b.zfje as zfje,
+        b.fyxm as fyxm,
+        b.yplx as yplx,
+        b.zfbl as zfbl,
+        a.brxz as brxz
+        FROM
+        IM_HZRY a inner join IM_FEE_FYMX b on a.ZYH = b.zyh
+        left join hr_personnel c on a.zyys=c.PERSONID
+        WHERE
+        a.jscs = b.jscs
+        and a.cypb = 8
+        <if test="@sqlt.Ognl@isNotEmpty(startDate)">
+            and date_format(a.ryrq, '%Y-%m-%d') &gt;= #{startDate}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(endDate)">
+            and date_format(a.ryrq, '%Y-%m-%d') &lt;= #{endDate}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(brbq)">
+            and a.brbq= #{brbq}
+        </if>
+    </select>
+    <!--查询病区患者费用-->
+    <select id="queryBqPatientReport" resultType="java.util.Map">
+        SELECT
+        a.brxm AS brxm,
+        a.zyhm AS zyhm,
+        a.brch AS brch,
+        a.ryrq AS ryrq,
+        a.cyrq as cyrq,
+        c.PERSONNAME AS zyys,
+        b.zjje as zjje,
+        b.zfje as zfje,
+        b.fyxm as fyxm,
+        b.yplx as yplx,
+        b.zfbl as zfbl,
+        a.brxz as brxz
+        FROM
+        IM_HZRY a inner join IM_FEE_FYMX b on a.ZYH = b.zyh
+        left join hr_personnel c on a.zyys=c.PERSONID
+        WHERE
+        a.jscs = b.jscs
+        <if test="@sqlt.Ognl@isNotEmpty(startDate)">
+            and date_format(a.ryrq, '%Y-%m-%d') &gt;= #{startDate}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(endDate)">
+            and date_format(a.ryrq, '%Y-%m-%d') &lt;= #{endDate}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(brbq)">
+            and a.brbq= #{brbq}
+        </if>
+    </select>
+
+    <!-- 查询医嘱费用总计 -->
+    <select id="queryYzSumPrice" resultType="java.util.HashMap">
+        SELECT IFNULL(SUM(FYDJ * FYSL), 0) as FYDJ
+        FROM IM_FEE_FYMX
+        WHERE ZYH = #{zyh}
+          AND FYXH = #{fyxh}
+          AND FYRQ = #{fyrq}
+    </select>
+
+    <!-- 病区收入核算 -->
+    <select id="queryRevenueAccounting" resultType="java.util.HashMap">
+        SELECT b.SFMC as SFMC,
+        b.PYDM as PYDM,
+        b.SFXM as SFXM,
+        b.ZYGB as ZYGB,
+        sum(a.ZJJE) as ZJJE,
+        sum(a.ZFJE) as ZFJE,
+        0 as Sort_Num
+        FROM im_fee_fymx a, dic_sfxmlb b
+        WHERE a.FYXM = b.SFXM
+        and a.JGID = #{jgid}
+        <if test="@sqlt.Ognl@isNotEmpty(beginDate)">
+            and a.FYRQ &gt;= #{beginDate}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(endDate)">
+            and a.FYRQ &lt;= #{endDate}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(bqdm)">
+            and a.FYBQ = #{bqdm}
+        </if>
+        group by b.SFMC, b.PYDM, b.SFXM, b.ZYGB
+    </select>
+
+    <!-- 病区一日清单医嘱格式 -->
+    <select id="queryListByYz" resultType="java.util.HashMap">
+        select date_format(min(a.FYRQ),'%Y-%m-%d') as KSRQ,
+        date_format(max(a.FYRQ),'%Y-%m-%d') as ZZRQ,
+        a.YPLX as YPLX,
+        a.FYXH as FYXH,
+        a.FYMC as FYMC,
+        sum(a.FYSL) as FYSL,
+        a.FYDJ as FYDJ,
+        sum(a.ZJJE) as FYJE,
+        sum(a.ZFJE) as ZFJE,
+        sum(a.ZLJE) as ZLJE,
+        a.ZFBL as ZFBL,
+        b.OFFICENAME as FYKS
+        from im_fee_fymx a left join dic_kszd b on a.fyks = b.id
+        WHERE a.ZYH = #{zyh}
+        <if test="@sqlt.Ognl@isNotEmpty(beginDate)">
+            and a.FYRQ &gt;= #{beginDate}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(endDate)">
+            and a.FYRQ &lt; #{endDate}
+        </if>
+        group by YPLX, FYXH, FYMC, FYDJ, ZFBL, FYKS
+        order by KSRQ desc, YPLX, FYXH, FYSL, FYDJ, ZFBL, FYKS desc
+    </select>
+
+    <!-- 查询总计金额和自负金额 -->
+    <select id="queryYzCost" resultType="java.util.HashMap">
+        select ifnull(sum(ZJJE),0) as ZJJE, ifnull(sum(ZFJE),0) as ZFJE
+        from im_fee_fymx a
+        WHERE a.ZYH = #{zyh}
+        <if test="@sqlt.Ognl@isNotEmpty(beginDate)">
+            and a.FYRQ &gt;= #{beginDate}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(endDate)">
+            and a.FYRQ &lt; #{endDate}
+        </if>
+    </select>
+    <select id="queryImFeeFymxByIds" resultType="com.buit.cis.im.request.ImFeeFymxReq">
+        select
+        <include refid="columns"/>
+        from IM_FEE_FYMX
+        <where>
+            1=1
+            <if test="ids != null">
+                and jlxh in
+                <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+
+            </if>
+        </where>
+
+    </select>
+
+    <select id="queryRzjzJsmx" resultType="java.util.HashMap">
+        SELECT
+        a.zyh AS ZYH,
+        a.jscs AS JSCS,
+        (CASE
+			WHEN a.jslx = 1 THEN
+			'中途结算'
+			WHEN a.jslx = 3 THEN
+			'预结后出院结算'
+			WHEN a.jslx = 5 THEN
+			'正常出院结算'
+			WHEN a.jslx = 6 THEN
+			'合并结算'
+			WHEN a.jslx = 9 THEN
+			'退费' ELSE ''
+		END
+		) AS JSLX,
+        b.zyhm AS ZYHM,
+        b.brxm AS BRXM,
+        a.fphm AS FPHM,
+        a.fyhj AS FYHJ,
+        a.zfhj AS ZFHJ,
+        a.jkhj AS JKHJ
+        FROM
+        im_zyjs a
+        JOIN im_hzry b ON a.zyh = b.zyh
+        WHERE
+        a.jzrq IS NULL
+        AND a.jsrq &lt; #{adt_jzrq}
+        AND a.jgid = #{jgid}
+        AND a.czgh = #{czgh}
+        AND a.JSLX != 4
+        AND a.zfpb != 1
+    </select>
+
+    <select id="getRzjzJsmx" resultType="java.util.HashMap">
+        SELECT
+        a.zyh AS ZYH,
+        a.jscs AS JSCS,
+        (CASE
+			WHEN a.jslx = 1 THEN
+			'中途结算'
+			WHEN a.jslx = 3 THEN
+			'预结后出院结算'
+			WHEN a.jslx = 5 THEN
+			'正常出院结算'
+			WHEN a.jslx = 6 THEN
+			'合并结算'
+			WHEN a.jslx = 9 THEN
+			'退费' ELSE ''
+		END
+		) AS JSLX,
+        b.zyhm AS ZYHM,
+        b.brxm AS BRXM,
+        a.fphm AS FPHM,
+        a.fyhj AS FYHJ,
+        zfhj AS ZFHJ,
+        jkhj AS JKHJ
+        FROM
+        im_zyjs a
+        JOIN im_hzry b ON a.zyh = b.zyh
+        WHERE
+        a.jzrq =  #{adt_jzrq}
+        AND a.jgid = #{jgid}
+        AND a.czgh = #{czgh}
+        AND a.JSLX != 4
+        AND a.zfpb != 1
+    </select>
+
+    <!--住院已结账付款方式-->
+    <select id="getIdsJsfpFk" resultType="java.util.Map">
+        select a.ZYH as ZYH, a.JSCS as JSCS, a.FKFS as FKFS, a.FKJE as FKJE, a.FKHM as FKHM
+        from IM_FKXX a,
+             IM_ZYJS b
+        where b.JSLX != 4
+          and a.ZYH = b.ZYH
+          and a.JSCS = b.JSCS
+          AND b.CZGH = #{czgh}
+          AND b.JGID = #{jgid}
+          AND b.JZRQ = #{adt_jzrq}
+    </select>
+
+    <!--住院未结账收预交金-->
+    <select id="queryIdsTbkk" resultType="java.util.Map">
+        SELECT
+        a.JKJE AS JKJE,
+        (select c.fkmc from pub_fkfs c where c.fkfs = a.jkfs) AS JKFS,
+        a.SJHM AS SJHM,
+        b.BRXM AS BRXM,
+        b.zyhm AS ZYHM,
+        '收金额' AS BZ
+        FROM
+        im_tbkk a
+        JOIN im_hzry b ON a.zyh = b.zyh
+        WHERE
+        a.zfgh IS NULL
+        AND a.ZFRQ IS NULL
+        AND a.jkrq &lt; #{adt_jzrq}
+        AND a.jzrq IS NULL
+        AND a.czgh = #{czgh}
+        AND a.jgid = #{jgid}
+        AND a.JKLX = 0
+        AND a.FPHM is null
+    </select>
+
+    <!--住院结账收预交金-->
+    <select id="getIdsTbkk" resultType="java.util.Map">
+        SELECT
+        a.JKJE AS JKJE,
+        (select c.fkmc from pub_fkfs c where c.fkfs = a.jkfs) AS JKFS,
+        a.SJHM AS SJHM,
+        b.BRXM AS BRXM,
+        b.zyhm AS ZYHM,
+        '收金额' AS BZ
+        FROM
+        im_tbkk a
+        JOIN im_hzry b ON a.zyh = b.zyh
+        WHERE
+        a.zfgh IS NULL
+        AND a.ZFRQ IS NULL
+        AND a.jzrq = #{adt_jzrq}
+        AND a.czgh = #{czgh}
+        AND a.jgid = #{jgid}
+        AND a.JKLX = 0
+        AND a.FPHM is null
+    </select>
+
+
+
+    <!--更新住院病人费用明细就诊单元号-->
+    <update id="updateFeeJzdyh">
+        UPDATE
+         im_fee_fymx set jzdyh= #{jzdyh} where zyh= #{zyh} and jscs=0 and ifnull(mxjsbz,'0')!=1
+    </update>
+
+    <!--更新住院病人费用明细明细账单号-->
+    <update id="updateFeeMxzdh">
+        UPDATE
+         im_fee_fymx set mxzdh = null , mxscbz = null where zyh= #{zyh} and jscs=0 and ifnull(mxjsbz,'0')!=1
+    </update>
+
+    <select id="findExpensesListByTemplate1" resultType="com.buit.cis.ims.response.ExpensesPrintDataResp">
+        SELECT
+        date_format(fymx.FYRQ, '%Y-%m-%d') as fyrq,
+        fymx.FYMC as fymc,
+        fymx.FYSL as sl,
+        fymx.FYDJ as dj,
+        fymx.ZJJE as je,
+        fymx.ZFBL as zfbl,
+        kszd.OFFICENAME as fyks
+        FROM
+        im_fee_fymx fymx
+        LEFT JOIN dic_kszd kszd ON fymx.FYKS = kszd.ID
+        where fymx.ZYH=#{zyh} AND fymx.FYRQ &gt;= #{startDate} AND fymx.FYRQ &lt;= #{endDate}
+        <!--按医疗查询-->
+        <if test="queryType==1">
+            AND fymx.YPLX=0
+        </if>
+        <!--按药品查询-->
+        <if test="queryType==2">
+            AND fymx.YPLX in (1 , 2 , 3)
+        </if>
+        order by fymx.fyrq desc
+    </select>
+    <select id="findExpensesListByTemplate2" resultType="com.buit.cis.ims.response.ExpensesPrintDataResp">
+        SELECT
+        c.sfmc As fygb,
+        c.ybbm,
+        c.fymc,
+        c.fydw as dw,
+        c.fydj as dj,
+        sum( c.FYSL ) as sl,
+        sum( c.ZJJE ) as je,
+        sum( c.flzf ) as zfje,
+        sum( c.ybfw ) as bxje,
+        sum( c.zfje ) as zfje2
+        FROM
+        (
+        <if test="queryType==0 or queryType==1">
+            (
+            SELECT
+            sfxm.SFMC,
+            xm.YBBM,
+            fy1.FYMC,
+            xm.FYDW,
+            fy1.FYDJ,
+            fy1.FYSL,
+            fy1.ZJJE,
+            IF( fy1.ZFBL = 1, 0.00, fy1.ZFJE ) flzf,
+            (fy1.ZJJE - fy1.ZFJE) AS ybfw,
+            IF( fy1.ZFBL = 1, fy1.ZJJE, 0.00 ) zfje
+            FROM
+            im_fee_fymx fy1
+            INNER JOIN fee_ylsfxm xm ON ( fy1.FYXH = xm.FYXH AND fy1.YPLX = 0 )
+            INNER JOIN dic_sfxmlb sfxm ON ( fy1.fyxm = sfxm.SFXM AND sfxm.zysy = 1 )
+            WHERE fy1.ZYH=#{zyh} AND fy1.FYRQ &gt;= #{startDate} AND fy1.FYRQ &lt;= #{endDate}
+            )
+        </if>
+        <if test="queryType==0">
+            UNION ALL
+        </if>
+        <if test="queryType==0 or queryType==2">
+            (
+            SELECT
+            sfxm.SFMC,
+            (
+                SELECT
+                    ybyp.ybbm
+                FROM
+                    drugs_ybyp ybyp
+                WHERE
+                    ybyp.ypxh = fy2.fyxh
+                    AND ybyp.ypcd = fy2.ypcd
+                    AND ybyp.qybz = 1
+            ) AS ybbm,
+            fy2.fymc,
+            (select t.YFDW from phar_zyfymx t where t.jfid = fy2.jlxh) AS FYDW,
+            fy2.FYDJ,
+            fy2.FYSL,
+            fy2.ZJJE,
+            IF
+            ( fy2.ZFBL = 1, 0.00, fy2.ZFJE ) flzf,
+            (fy2.ZJJE - fy2.ZFJE) AS ybfw,
+            IF
+            ( fy2.ZFBL = 1, fy2.ZJJE, 0.00 ) zfje
+            FROM
+            im_fee_fymx fy2
+            INNER JOIN dic_sfxmlb sfxm ON (fy2.fyxm = sfxm.SFXM AND sfxm.zysy = 1 AND fy2.YPLX != 0 )
+            WHERE fy2.ZYH=#{zyh} AND fy2.FYRQ &gt;= #{startDate} AND fy2.FYRQ &lt;= #{endDate}
+            )
+        </if>
+        ) c
+        GROUP BY
+        c.SFMC,
+        c.YBBM,
+        c.FYDW,
+        c.FYDJ
+    </select>
+    <select id="findExpensesListByTemplate3" resultType="com.buit.cis.ims.response.ExpensesPrintDataResp">
+        SELECT
+        date_format( min( fymx.fyrq ), '%Y-%m-%d' ) AS ksrq,
+        fymx.FYMC AS fymc,
+        date_format( max( fymx.fyrq ), '%Y-%m-%d' ) AS jsrq,
+        sum( fymx.FYSL ) AS sl,
+        fymx.FYDJ AS dj,
+        sum( fymx.ZJJE ) AS je,
+        fymx.ZFBL AS zfbl,
+        kszd.OFFICENAME AS fyks
+        FROM
+        IM_FEE_FYMX fymx
+        LEFT JOIN dic_kszd kszd ON fymx.FYKS = kszd.ID
+        where fymx.ZYH=#{zyh} AND fymx.FYRQ &gt;= #{startDate} AND fymx.FYRQ &lt;= #{endDate}
+        <!--按医疗查询-->
+        <if test="queryType==1">
+            AND fymx.YPLX=0
+        </if>
+        <!--按药品查询-->
+        <if test="queryType==2">
+            AND fymx.YPLX in (1 , 2 , 3)
+        </if>
+        GROUP BY
+        fymx.FYMC,
+        fymx.FYDJ,
+        kszd.ID,
+        fymx.ZFBL
+        ORDER BY
+        ksrq DESC
+    </select>
+    <select id="findExpensesListByTemplate4" resultType="com.buit.cis.ims.response.ExpensesPrintDataResp">
+        SELECT
+        t.fyrq,
+        t.fymc,
+        sum( t.FYSL ) AS sl,
+        t.fydj as dj,
+        sum( t.ZJJE ) AS je,
+        t.zfbl,
+        t.fyks
+        FROM
+        (
+        SELECT
+        DATE_FORMAT( fymx.FYRQ, '%Y-%m-%d' ) fyrq,
+        fymx.FYMC,
+        fymx.FYSL,
+        fymx.FYDJ,
+        fymx.ZJJE,
+        fymx.ZFBL,
+        kszd.OFFICENAME fyks
+        FROM
+        im_fee_fymx fymx
+        LEFT JOIN dic_kszd kszd ON fymx.FYKS = kszd.ID
+        where fymx.ZYH=#{zyh} AND fymx.FYRQ &gt;= #{startDate} AND fymx.FYRQ &lt;= #{endDate}
+        <!--按医疗查询-->
+        <if test="queryType==1">
+            AND fymx.YPLX=0
+        </if>
+        <!--按药品查询-->
+        <if test="queryType==2">
+            AND fymx.YPLX in (1 , 2 , 3)
+        </if>
+        ) t
+        GROUP BY
+        t.fyrq,
+        t.fymc,
+        t.fyks,
+        t.fydj,
+        t.zfbl
+        ORDER BY
+        fyrq DESC
+    </select>
+    
+    <!-- 判断出院后是否存在费用 -->
+    <select id="queryAfterCyIsExistCostCount" resultType="long">
+       select count(1) from (
+       select fyrq,
+       		fymc,
+       		sum(fysl) as fysl,
+       		sum(zjje) zjje,
+       		fybq,
+       		fyks,
+       		ysgh
+      		from im_fee_fymx where jgid = #{jgid}
+			and zyh = #{zyh}
+			and fyrq &gt; #{fyrq} 
+			group by 
+			fyrq,
+       		fymc,
+       		fybq,
+       		fyks,
+       		ysgh) a where a.zjje > 0
+    </select>
+    
+    <select id="queryAfterCyIsExistCost" resultType="com.buit.cis.ims.response.ImFeeFymxCostResp">
+       select * from (
+       select fyrq,
+       		fymc,
+       		sum(fysl) as fysl,
+       		sum(zjje) as zjje,
+       		fybq,
+       		fyks,
+       		ysgh
+      		from im_fee_fymx 
+      		where jgid = #{jgid}
+			and zyh = #{zyh}
+			and fyrq &gt; #{fyrq}
+			group by 
+			fyrq,
+       		fymc,
+       		fybq,
+       		fyks,
+       		ysgh ) a where a.zjje > 0
+    </select>
+
+    <select id="queryYbxx" resultType="java.util.Map">
+        SELECT
+		    t.qfdxjzfs + t.tcdxjzfs + t.fjdxjzfs + t.fybjsfwfyze + t.ybjsfwfyze - t.totalexpense as XJZF,
+            t.qfdzhzfs + t.tcdzhzfs + t.fjdzhzfs                                                 as GRZHZF,
+            t.tczfs                                                                              as TCZF,
+            t.fjzfs                                                                              as FJZF,
+            t.ybjsfwfyze - t.totalexpense                                                        as FLZF,
+            t.qfdxjzfs + t.tcdxjzfs + t.fjdxjzfs                                                 as ZF,
+            t.fybjsfwfyze                                                                        as FYBZF,
+            t.curaccountamt                                                                      as DNZHYE,
+            t.hisaccountamt                                                                      as LNZHYE,
+            t.lsh                                                                                as ZXLSH,
+            t.cardid                                                                             as SHBZK
+        FROM shyb_si52 t
+        where t.zfpb = 0
+          and t.zyhm = #{ZYH}
+          and t.ZYSFFSSJ like #{JSRQ}
+        order by t.jscs desc
+    </select>
+
+    <select id="getOutRangeList" resultType="com.buit.cis.ims.model.ImFeeFymx">
+        select *
+        from im_fee_fymx
+        where zyh = #{zyh}
+          and fyrq &gt; #{cyrq}
+    </select>
+
+    <update id="updateFyrq">
+        update im_fee_fymx
+        set fyrq = #{fyrq}
+        where jlxh = #{jlxh}
+    </update>
+
+    <select id="queryZyfymxSumByYzxh" resultType="java.math.BigDecimal">
+        SELECT
+        SUM(ZJJE)
+        FROM IM_FEE_FYMX
+        WHERE YZXH in (${jlxh})
+    </select>
+
+    <select id="isOutOfRange" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM IM_FEE_FYMX WHERE ZYH = #{zyh} AND JFRQ &gt; #{czsj} AND fyrq &lt;#{zzrq}) FROM DUAL
+    </select>
+    
+
+    <!-- 查询医嘱费用总和为0数量 -->
+    <select id="queryTotalCostCount" resultType="long">
+        select count(1) from (
+		select ifnull(sum(zjje),0) as zjje from im_fee_fymx where yzxh in (
+		select jlxh from cis_hzyz where yzzh = #{yzzh})
+		and jgid = #{jgid} and yplx &gt; 0) a
+		where a.zjje = 0
+	</select>
+	
+    <!-- 查询医嘱费用总大于0的医嘱序号 -->
+    <select id="queryTotalCost" resultType="java.lang.Integer">
+        select yzxh from (
+		select ifnull(sum(zjje),0) as zjje, yzxh from im_fee_fymx where yplx > 0 
+		and yzxh in 
+		<foreach collection="yzxhList" item="z" open="(" close=")" separator=",">
+      		#{z}
+ 		</foreach> 
+ 		and jgid = #{jgid}
+		group by yzxh) a where a.zjje > 0 
+    </select>
+
+
+    <select id="queryVerifyRecord"
+            resultType="com.buit.cis.ims.response.VerifyRecordResp">
+        SELECT
+        b.SFMC AS sfmc,
+        a.FYMC AS fymc,
+        sum( a.FYSL ) AS fysl,
+        a.FYDJ AS fydj,
+        sum( a.ZJJE ) AS zjje,
+        sum( a.ZFJE ) AS zfje,
+        a.ZFBL AS zfbl,
+        a.YZXH AS yzxh,
+        c.KSSJ AS kssj,
+        c.YZMC AS yzmc,
+        c.TZSJ AS tzsj,
+        (select PERSONNAME from hr_personnel WHERE PERSONID = c.YSGH) AS ysgh,
+        (select PERSONNAME from hr_personnel WHERE PERSONID = c.TZYS) AS tzys
+        FROM
+        IM_FEE_FYMX a
+        INNER JOIN DIC_SFXMLB b on a.FYXM = b.SFXM
+        left join CIS_HZYZ c on a.yzxh = c.jlxh
+        WHERE a.ZYH = #{zyh} and a.JGID=#{jgid}
+        <if test="@sqlt.Ognl@isNotEmpty(jscs)">
+            AND a.JSCS = #{jscs}
+        </if>
+        <!--按医疗查询-->
+        <if test="queryType==1">
+            and a.YPLX=0
+        </if>
+        <!--按药品查询-->
+        <if test="queryType==2">
+            AND a.YPLX in (1 , 2 , 3)
+        </if>
+        <!--按开始时间结束时间查询-->
+        <if test="@sqlt.Ognl@isNotEmpty(startDate)">
+            AND a.fyrq &gt;= #{startDate}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(endDate)">
+            AND a.fyrq &lt;= #{endDate}
+        </if>
+        GROUP BY
+        a.FYMC,
+        a.FYDJ,
+        a.ZFBL,
+        b.SFMC,
+        a.YZXH,
+        c.KSSJ,
+        c.YZMC,
+        c.TZSJ,
+        c.YSGH,
+        c.TZYS
+        ORDER BY
+        b.zypl+0
+    </select>
+    
+    <!-- 查询当天患者附加项目计费数量 -->
+    <select id="queryAdditionalItemsNowDayNum" resultType="java.math.BigDecimal">
+		select ifnull(sum(fysl), 0) as fysl from im_fee_fymx 
+		where zyh = #{zyh}
+		and yplx = 0
+		and fyxh = #{fyxh}
+		and date_format(fyrq,'%Y-%m-%d') = #{fyrq}
+    </select>
+
+    <delete id="updateSnzy">
+       delete from shyb_sn01_zy
+          where jssqxh is null and
+                    fymxjlxh in (select jlxh  from im_fee_fymx  where zyh=#{zyh} and jscs=0 and ifnull(mxjsbz,0)!=1 )
+    </delete>
+
+    <update  id="updateImfymx">
+      update im_fee_fymx set mxscbz=null,mxzdh=null,jzdyh=null where zyh=#{zyh} and jscs=0 and ifnull(mxjsbz,0)!=1
+    </update>
+
+    <select id="getMxts" resultType="java.util.Map">
+        select * from im_fee_fymx where jscs=0 and mxscbz is null and zyh=#{zyh}
+                  and fyrq &gt;= #{ksrq}  and fyrq &lt;= #{zzrq} group by fyxh
+    </select>
+    
+    <select id="queryFeeDetails" resultType="ImFeeFymx">
+       	select jfrq, 
+       		fyrq,
+       		fymc,
+       		fysl,
+       		fydj,
+       		zjje,
+       		zfbl,
+       		fyks
+       		from im_fee_fymx 
+		where yzxh = #{yzxh}
+		union all
+		select a.jfrq, 
+       		a.fyrq,
+       		a.fymc,
+       		a.fysl,
+       		a.fydj,
+       		a.zjje,
+       		a.zfbl,
+       		a.fyks
+       		from im_fee_fymx a, cis_hzyz b 
+		where a.yzxh = b.jlxh
+		and b.ztbz = 1
+		and b.ztyzjlxh = #{yzxh}
+    </select>
+
+</mapper>
+

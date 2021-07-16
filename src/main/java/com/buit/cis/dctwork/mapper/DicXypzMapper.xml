@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.dctwork.dao.DicXypzDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        YLJGD as yljgd,SXPZDM as sxpzdm,SXPZMC as sxpzmc,DW as dw,DJ as dj,ZT as zt
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO DIC_XYPZ (
+            YLJGD ,
+            SXPZDM ,
+            SXPZMC ,
+            DW ,
+            DJ ,
+            ZT 
+        ) VALUES (
+            #{yljgd} ,
+            #{sxpzdm} ,
+            #{sxpzmc} ,
+            #{dw} ,
+            #{dj} ,
+            #{zt} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE DIC_XYPZ SET
+            SXPZMC = #{sxpzmc} ,
+            DW = #{dw} ,
+            DJ = #{dj} ,
+            ZT = #{zt} 
+        WHERE 
+            YLJGD = #{yljgd}  AND 
+                        SXPZDM = #{sxpzdm} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM DIC_XYPZ WHERE
+        YLJGD = #{yljgd}  AND 
+        SXPZDM = #{sxpzdm} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM DIC_XYPZ <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="cisBxxypz">
+        SELECT <include refid="columns" />
+            FROM DIC_XYPZ 
+            WHERE 
+        YLJGD = #{yljgd}  AND 
+        SXPZDM = #{sxpzdm} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+                <if test="@sqlt.Ognl@isNotEmpty(yljgd)"> 
+                     AND YLJGD = #{yljgd} 
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sxpzdm)"> -->
+<!--                     AND SXPZDM = #{sxpzdm} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(sxpzmc)"> 
+                     AND SXPZMC like CONCAT(CONCAT('%',#{sxpzmc}),'%')
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dw)"> -->
+<!--                     AND DW = #{dw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dj)"> -->
+<!--                     AND DJ = #{dj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zt)"> -->
+<!--                     AND ZT = #{zt} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM DIC_XYPZ 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="cisBxxypz">
+        SELECT <include refid="columns" />
+        FROM DIC_XYPZ 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+</mapper>
+

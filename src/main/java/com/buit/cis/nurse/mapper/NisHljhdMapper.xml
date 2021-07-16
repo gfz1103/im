@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 护理计划单主表 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisHljhdDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,RQ as rq,HLWT as hlwt,HLMB as hlmb,JGID as jgid,XGPJ as xgpj,HSQM as hsqm
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_HLJHD (
+            JLXH ,
+            ZYH ,
+            RQ ,
+            HLWT ,
+            HLMB ,
+            JGID ,
+            XGPJ ,
+            HSQM 
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{rq} ,
+            #{hlwt} ,
+            #{hlmb} ,
+            #{jgid} ,
+            #{xgpj} ,
+            #{hsqm} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_HLJHD SET
+            ZYH = #{zyh} ,
+            RQ = #{rq} ,
+            HLWT = #{hlwt} ,
+            HLMB = #{hlmb} ,
+            JGID = #{jgid} ,
+            XGPJ = #{xgpj} ,
+            HSQM = #{hsqm} 
+        WHERE 
+            JLXH = #{jlxh}          
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_HLJHD WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_HLJHD <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisHljhd">
+        SELECT <include refid="columns" />
+            FROM NIS_HLJHD 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> -->
+<!--                     AND ZYH = #{zyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rq)"> -->
+<!--                     AND RQ = #{rq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlwt)"> -->
+<!--                     AND HLWT = #{hlwt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlmb)"> -->
+<!--                     AND HLMB = #{hlmb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xgpj)"> -->
+<!--                     AND XGPJ = #{xgpj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hsqm)"> -->
+<!--                     AND HSQM = #{hsqm} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_HLJHD 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisHljhd">
+        SELECT <include refid="columns" />
+        FROM NIS_HLJHD 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 根据日期查询护理计划单 -->
+    <select id="queryHljhdByDate" resultType="com.buit.cis.nurse.response.NisHljhdResp">
+       SELECT JLXH as jlxh,ZYH as zyh,date_format(RQ, '%Y-%m-%d %H:%i') as rq,HLWT as hlwt,HLMB as hlmb,JGID as jgid,XGPJ as xgpj,HSQM as hsqm
+        FROM NIS_HLJHD 
+        WHERE ZYH = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and DATE_FORMAT(RQ, '%m-%d') = #{queryDate}
+        </if> 
+        and JGID = #{jgid}
+        order by RQ
+    </select>
+    
+    <!-- 查询计划单时间树 -->
+    <select id="queryHljhdDateTree" resultType="java.lang.String">
+		 select date_format(rq, '%m-%d') as rq
+		 from nis_hljhd 
+		 where zyh = #{zyh}
+		 and jgid = #{jgid}
+		 group by date_format(rq, '%m-%d')
+         order by rq
+    </select>
+</mapper>
+

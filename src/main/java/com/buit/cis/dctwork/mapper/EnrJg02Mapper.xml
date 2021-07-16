@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.dctwork.dao.EnrJg02Dao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        XMBH as xmbh,JGBH as jgbh,YSBH as ysbh,XMMC as xmmc,XSMC as xsmc,XMQZ as xmqz,KSLH as kslh,JSLH as jslh,HDBZ as hdbz,YSKZ as yskz,SJGS as sjgs,ZCZSX as zczsx,ZCZXX as zczxx,YXZSX as yxzsx,YXZXX as yxzxx,SFBT as sfbt,JZBJ as jzbj,FZYT as fzyt,XMDC as xmdc,YMCLFS as ymclfs,HHJG as hhjg,XMKD as xmkd,ZDYXM as zdyxm
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO ENR_JG02 (
+            XMBH ,
+            JGBH ,
+            YSBH ,
+            XMMC ,
+            XSMC ,
+            XMQZ ,
+            KSLH ,
+            JSLH ,
+            HDBZ ,
+            YSKZ ,
+            SJGS ,
+            ZCZSX ,
+            ZCZXX ,
+            YXZSX ,
+            YXZXX ,
+            SFBT ,
+            JZBJ ,
+            FZYT ,
+            XMDC ,
+            YMCLFS ,
+            HHJG ,
+            XMKD ,
+            ZDYXM 
+        ) VALUES (
+            #{xmbh} ,
+            #{jgbh} ,
+            #{ysbh} ,
+            #{xmmc} ,
+            #{xsmc} ,
+            #{xmqz} ,
+            #{kslh} ,
+            #{jslh} ,
+            #{hdbz} ,
+            #{yskz} ,
+            #{sjgs} ,
+            #{zczsx} ,
+            #{zczxx} ,
+            #{yxzsx} ,
+            #{yxzxx} ,
+            #{sfbt} ,
+            #{jzbj} ,
+            #{fzyt} ,
+            #{xmdc} ,
+            #{ymclfs} ,
+            #{hhjg} ,
+            #{xmkd} ,
+            #{zdyxm} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE ENR_JG02 SET
+            JGBH = #{jgbh} ,
+            YSBH = #{ysbh} ,
+            XMMC = #{xmmc} ,
+            XSMC = #{xsmc} ,
+            XMQZ = #{xmqz} ,
+            KSLH = #{kslh} ,
+            JSLH = #{jslh} ,
+            HDBZ = #{hdbz} ,
+            YSKZ = #{yskz} ,
+            SJGS = #{sjgs} ,
+            ZCZSX = #{zczsx} ,
+            ZCZXX = #{zczxx} ,
+            YXZSX = #{yxzsx} ,
+            YXZXX = #{yxzxx} ,
+            SFBT = #{sfbt} ,
+            JZBJ = #{jzbj} ,
+            FZYT = #{fzyt} ,
+            XMDC = #{xmdc} ,
+            YMCLFS = #{ymclfs} ,
+            HHJG = #{hhjg} ,
+            XMKD = #{xmkd} ,
+            ZDYXM = #{zdyxm} 
+        WHERE 
+            XMBH = #{xmbh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM ENR_JG02 WHERE
+        XMBH = #{xmbh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM ENR_JG02 <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="EnrJg02">
+        SELECT <include refid="columns" />
+            FROM ENR_JG02 
+            WHERE 
+        XMBH = #{xmbh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmbh)"> -->
+<!--                     AND XMBH = #{xmbh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgbh)"> -->
+<!--                     AND JGBH = #{jgbh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ysbh)"> -->
+<!--                     AND YSBH = #{ysbh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmmc)"> -->
+<!--                     AND XMMC = #{xmmc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xsmc)"> -->
+<!--                     AND XSMC = #{xsmc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmqz)"> -->
+<!--                     AND XMQZ = #{xmqz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kslh)"> -->
+<!--                     AND KSLH = #{kslh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jslh)"> -->
+<!--                     AND JSLH = #{jslh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hdbz)"> -->
+<!--                     AND HDBZ = #{hdbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yskz)"> -->
+<!--                     AND YSKZ = #{yskz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sjgs)"> -->
+<!--                     AND SJGS = #{sjgs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zczsx)"> -->
+<!--                     AND ZCZSX = #{zczsx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zczxx)"> -->
+<!--                     AND ZCZXX = #{zczxx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yxzsx)"> -->
+<!--                     AND YXZSX = #{yxzsx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yxzxx)"> -->
+<!--                     AND YXZXX = #{yxzxx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sfbt)"> -->
+<!--                     AND SFBT = #{sfbt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jzbj)"> -->
+<!--                     AND JZBJ = #{jzbj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fzyt)"> -->
+<!--                     AND FZYT = #{fzyt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmdc)"> -->
+<!--                     AND XMDC = #{xmdc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ymclfs)"> -->
+<!--                     AND YMCLFS = #{ymclfs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hhjg)"> -->
+<!--                     AND HHJG = #{hhjg} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmkd)"> -->
+<!--                     AND XMKD = #{xmkd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zdyxm)"> -->
+<!--                     AND ZDYXM = #{zdyxm} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM ENR_JG02 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="EnrJg02">
+        SELECT <include refid="columns" />
+        FROM ENR_JG02 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 根据机构编号查询Jg02 -->
+    <select id="queryEnrJg02ByJgbh" resultType="com.buit.cis.dctwork.response.EnrJg02Resp">
+        SELECT ENR_JG02.XMBH,
+	       ENR_JG02.JGBH,
+	       ENR_JG02.YSBH,
+	       ENR_JG02.XMMC,
+	       ENR_JG02.XSMC,
+	       ENR_JG02.XMQZ,
+	       ENR_JG02.KSLH,
+	       ENR_JG02.JSLH,
+	       ENR_JG02.HDBZ,
+	       ENR_JG02.YSKZ,
+	       ENR_JG02.SJGS,
+	       ENR_JG02.ZCZSX,
+	       ENR_JG02.ZCZXX,
+	       ENR_JG02.YXZSX,
+	       ENR_JG02.YXZXX,
+	       ENR_JG02.SFBT,
+	       ENR_JG02.JZBJ,
+	       ENR_JG02.FZYT,
+	       ENR_JG02.XMDC,
+	       ENR_JG02.YMCLFS,
+	       ENR_JG02.HHJG,
+	       '' as YSKZ_BNT,
+	       ENR_JBYS.YSLX,
+	       ENR_JBYS.SJLX,
+	       ENR_JG02.XMKD,
+	       ENR_JG02.ZDYXM
+	  FROM ENR_JBYS
+	 RIGHT OUTER JOIN ENR_JG02
+	    ON ENR_JBYS.YSBH = ENR_JG02.YSBH
+	 WHERE ENR_JG02.JGBH = #{jgbh}
+	 order by ENR_JG02.KSLH
+    </select>
+    
+</mapper>
+

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 压力性损伤预报、传报单 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisYlxsscbdDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,MBLX as mblx,FSQK as fsqk,BMI as bmi,DDBXZ as ddbxz,JS as js,TLB as tlb,PGZ as pgz,RQ as rq,JGID as jgid,BGSJ as bgsj,SSSJ as sssj,SSSZY as ssszy
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_YLXSSCBD (
+            JLXH ,
+            ZYH ,
+            MBLX ,
+            FSQK ,
+            BMI ,
+            DDBXZ ,
+            JS ,
+            TLB ,
+            PGZ ,
+            RQ ,
+            JGID ,
+            BGSJ ,
+            SSSJ ,
+            SSSZY 
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{mblx} ,
+            #{fsqk} ,
+            #{bmi} ,
+            #{ddbxz} ,
+            #{js} ,
+            #{tlb} ,
+            #{pgz} ,
+            #{rq} ,
+            #{jgid} ,
+            #{bgsj} ,
+            #{sssj} ,
+            #{ssszy} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_YLXSSCBD SET
+            ZYH = #{zyh} ,
+            MBLX = #{mblx} ,
+            FSQK = #{fsqk} ,
+            BMI = #{bmi} ,
+            DDBXZ = #{ddbxz} ,
+            JS = #{js} ,
+            TLB = #{tlb} ,
+            PGZ = #{pgz} ,
+            RQ = #{rq} ,
+            JGID = #{jgid} ,
+            BGSJ = #{bgsj} ,
+            SSSJ = #{sssj} ,
+            SSSZY = #{ssszy} 
+        WHERE 
+            JLXH = #{jlxh}           
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_YLXSSCBD WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_YLXSSCBD <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisYlxsscbd">
+        SELECT <include refid="columns" />
+            FROM NIS_YLXSSCBD 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+               <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                    AND ZYH = #{zyh}
+               </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mblx)"> -->
+<!--                     AND MBLX = #{mblx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fsqk)"> -->
+<!--                     AND FSQK = #{fsqk} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bmi)"> -->
+<!--                     AND BMI = #{bmi} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ddbxz)"> -->
+<!--                     AND DDBXZ = #{ddbxz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(js)"> -->
+<!--                     AND JS = #{js} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tlb)"> -->
+<!--                     AND TLB = #{tlb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pgz)"> -->
+<!--                     AND PGZ = #{pgz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rq)"> -->
+<!--                     AND RQ = #{rq} -->
+<!--                </if> -->
+               <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                    AND JGID = #{jgid}
+               </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bgsj)"> -->
+<!--                     AND BGSJ = #{bgsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sssj)"> -->
+<!--                     AND SSSJ = #{sssj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ssszy)"> -->
+<!--                     AND SSSZY = #{ssszy} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_YLXSSCBD 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisYlxsscbd">
+        SELECT <include refid="columns" />
+        FROM NIS_YLXSSCBD 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+     <!-- 压力性损伤预报、传报单查询树结构-->
+    <select id="queryYlxsscbdTree" resultType="com.buit.cis.nurse.response.NisHzmbResp">
+        SELECT CONCAT(a.RQ, '  ', b.MBMC ) as LABEL, a.MBLX as NAME
+			FROM ( SELECT DATE_FORMAT( RQ, '%m-%d %H:%i' ) AS RQ, 
+							ZYH as ZYH,
+							MBLX as MBLX,
+							JGID as JGID
+				FROM NIS_YLXSSCBD 
+				GROUP BY 
+					DATE_FORMAT(RQ, '%m-%d %H:%i'),
+					ZYH,
+					MBLX,
+					JGID 
+				) a, NIS_HZMB b WHERE
+				a.ZYH = b.ZYH 
+				AND a.MBLX = b.MBLX 
+				AND a.JGID = b.JGID
+				AND a.ZYH = #{zyh}
+				AND a.JGID = #{jgid}
+				order by a.RQ
+    </select>
+    
+    <!-- 根据日期查询压力性损伤预报、传报单 -->
+    <select id="queryYlxsscbdByDate" resultType="NisYlxsscbd">
+       SELECT <include refid="columns" />
+        FROM NIS_YLXSSCBD 
+        WHERE ZYH = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and DATE_FORMAT(RQ, '%m-%d %H:%i') = #{queryDate}
+        </if> 
+        and JGID = #{jgid}
+        order by RQ
+    </select>
+    
+    <!-- 根据日期查询压力性损伤预报、传报单打印信息 -->
+    <select id="queryPrintYlxsscbdByDate" resultType="java.util.HashMap">
+       select a.jlxh,
+        b.brxm as xm,
+        date_format(b.csny, '%Y-%m-%d') as csrq,
+        case b.brxb when 1 then '男'
+        			when 2 then '女'
+        else '未知' end as xb,
+        b.rynl as nl,
+        (select officename from dic_kszd where id = b.brks) as ks,
+        (select officename from dic_kszd where id = b.brbq) as bq,
+        b.brch as ch,
+        b.zyhm,
+        (select bm.jbmc from im_ryzd zd, dic_jbbm bm where zd.zdxh = bm.jbxh and zd.zyh = a.zyh and zd.zdlb = 2 ) as zd,
+        date_format(b.ryrq, '%Y.%m.%d') as ryrq,
+        a.bgsj,
+        case fsqk when '自动体位' then '√' else '' end as fsqk1,
+        case fsqk when '被动体位' then '√' else '' end as fsqk2,
+        case fsqk when '强迫体位' then '√' else '' end as fsqk3,
+        case bmi when '正常(18.5-23.9)' then '√' else '' end as bmi1,
+        case bmi when '异常' then '√' else '' end as bmi2,
+        case bmi when '过轻&lt;18.5' then '√' else '' end as bmi3,
+        case bmi when '超重24-26.9' then '√' else '' end as bmi4,
+        case bmi when '肥胖27-29.9' then '√' else '' end as bmi5,
+        case bmi when '重度肥胖≥30' then '√' else '' end as bmi6,
+        case bmi when '卧床' then '√' else '' end as bmi7,
+        case ddbxz when '是' then '√' else '' end as ddbxz1,
+        case ddbxz when '否' then '√' else '' end as ddbxz2,
+        case js when '可' then '√' else '' end as js1,
+        case js when '否' then '√' else '' end as js2,
+        case tlb when '有' then '√' else '' end as tnb1,
+        case tlb when '无' then '√' else '' end as tnb2,
+        case sssj when '有' then '√' else '' end as sssj1,
+        case sssj when '无' then '√' else '' end as sssj2,
+        case ssszy when '有' then '√' else '' end as sszszy1,
+        case ssszy when '无' then '√' else '' end as sszszy2,
+        pgz
+        from nis_ylxsscbd a, im_hzry b
+        where a.zyh = #{zyh}
+        and a.zyh = b.zyh
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and date_format(a.rq, '%m-%d %H:%i') = #{queryDate}
+        </if> 
+        and a.jgid = #{jgid}
+        order by a.rq
+    </select>
+</mapper>
+

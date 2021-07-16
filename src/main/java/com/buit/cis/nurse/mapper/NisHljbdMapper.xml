@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 护理交班单主表 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisHljbdDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,JBSJ as jbsj,BCLX as bclx,HLZH as hlzh,BQDM as bqdm,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_HLJBD (
+            JLXH ,
+            JBSJ ,
+            BCLX ,
+            HLZH ,
+            BQDM ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{jbsj} ,
+            #{bclx} ,
+            #{hlzh} ,
+            #{bqdm} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_HLJBD SET
+            JBSJ = #{jbsj} ,
+            BCLX = #{bclx} ,
+            HLZH = #{hlzh} ,
+            BQDM = #{bqdm} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}           
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_HLJBD WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_HLJBD <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisHljbd">
+        SELECT <include refid="columns" />
+            FROM NIS_HLJBD 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jbsj)"> -->
+<!--                     AND JBSJ = #{jbsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bclx)"> -->
+<!--                     AND BCLX = #{bclx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlzh)"> -->
+<!--                     AND HLZH = #{hlzh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bqdm)"> -->
+<!--                     AND BQDM = #{bqdm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_HLJBD 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisHljbd">
+        SELECT <include refid="columns" />
+        FROM NIS_HLJBD 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 分页查询护理交班单 -->
+    <select id="queryPageHljbd" resultType="NisHljbd">
+        select <include refid="columns" />
+        	from nis_hljbd 
+		where jgid = #{jgid}
+		and bqdm = #{bqdm}
+        <if test="@sqlt.Ognl@isNotEmpty(kssj)">
+            and date_format(jbsj,'%Y-%m-%d') &gt;= #{kssj}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(jssj)">
+            and date_format(jbsj,'%Y-%m-%d') &lt;= #{jssj}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(bclx)">
+            and bclx = #{bclx}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(hlzh)">
+            and hlzh = #{hlzh}
+        </if>
+    </select>
+    
+    <!-- 查询是否存在同时间班次护理组交班单 -->
+    <select id="queryIsExistSameTimeInfo" resultType="long">
+        select count(1) from nis_hljbd 
+        where jgid = #{jgid}
+        and hlzh = #{hlzh}
+        and date_format(jbsj,'%Y-%m-%d') = date_format(#{jbsj},'%Y-%m-%d')
+        and bclx = #{bclx}
+    </select>
+</mapper>
+

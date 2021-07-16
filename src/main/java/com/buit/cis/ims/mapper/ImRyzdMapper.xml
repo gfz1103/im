@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院_入院诊断 -->
+<mapper namespace="com.buit.cis.ims.dao.ImRyzdDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        ZYH as zyh,ZDXH as zdxh,ZDLB as zdlb,JGID as jgid,ZGQK as zgqk,TXBZ as txbz,SCBZ as scbz,ZDRQ as zdrq,RYBQDM as rybqdm,ZXLB as zxlb,PXH as pxh
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_RYZD (ZYH ,
+                             ZDXH,
+                             ZDLB,
+                             JGID,
+                             ZGQK ,
+                             TXBZ ,
+                             SCBZ ,
+                             ZDRQ ,
+                             RYBQDM ,
+                             ZXLB,PXH) VALUES (#{zyh} ,
+                                           #{zdxh},
+                                           #{zdlb} ,
+                                           #{jgid},
+                                           #{zgqk},
+                                           #{txbz} ,
+                                           #{scbz},
+                                           #{zdrq},
+                                           #{rybqdm} ,
+                                           #{zxlb} ,
+                                           #{pxh}
+        )
+    </insert>
+
+    <update id="update"><!--
+        UPDATE IM_RYZD SET
+            JGID = #{jgid} ,
+            ZGQK = #{zgqk} ,
+            TXBZ = #{txbz} ,
+            SCBZ = #{scbz} ,
+            ZDRQ = #{zdrq} ,
+            RYBQDM = #{rybqdm} ,
+            ZXLB = #{zxlb}
+        WHERE
+            ZYH = #{zyh}  AND
+                        ZDXH = #{zdxh}  AND
+                        ZDLB = #{zdlb}
+            -->
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM IM_RYZD WHERE
+        ZYH = #{zyh}  AND
+        ZDXH = #{zdxh}  AND
+        ZDLB = #{zdlb}
+    </delete>
+
+    <delete id="removeByEntity">
+        DELETE FROM IM_RYZD <include refid="where"/>
+    </delete>
+
+    <select id="getById" resultType="ImRyzd">
+        SELECT <include refid="columns" />
+            FROM IM_RYZD
+            WHERE
+        ZYH = #{zyh}  AND
+        ZDXH = #{zdxh}  AND
+        ZDLB = #{zdlb}
+    </select>
+
+    <sql id="where">
+        <where>
+                <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                    AND ZYH = #{zyh}
+               </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zdxh)"> -->
+<!--                     AND ZDXH = #{zdxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zdlb)"> -->
+<!--                     AND ZDLB = #{zdlb} -->
+<!--                </if> -->
+               <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                     AND JGID = #{jgid}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zgqk)"> -->
+<!--                     AND ZGQK = #{zgqk} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(txbz)"> -->
+<!--                     AND TXBZ = #{txbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(scbz)"> -->
+<!--                     AND SCBZ = #{scbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zdrq)"> -->
+<!--                     AND ZDRQ = #{zdrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rybqdm)"> -->
+<!--                     AND RYBQDM = #{rybqdm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zxlb)"> -->
+<!--                     AND ZXLB = #{zxlb} -->
+<!--                </if> -->
+        </where>
+    </sql>
+
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_RYZD
+        <include refid="where"/>
+    </select>
+
+    <select id="findByEntity" resultType="ImRyzd">
+        SELECT <include refid="columns" />
+        FROM IM_RYZD
+        <include refid="where"/>
+
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+
+    <!-- 根据住院查询入院诊断和诊断名称等 -->
+    <select id="getDiagnosisByEntity" resultType="com.buit.cis.ims.response.ImRyzdResp">
+        select a.zyh    as zyh,
+               a.zdlb   as zdlb,
+               a.zxlb   as zxlb,
+               a.zdxh   as zdxh,
+               b.jbmc   as jbmc,
+               b.icd10  as icd10,
+               b.icd9   as icd9,
+               a.jgid   as jgid,
+               a.rybqdm as rybqdm,
+               a.zgqk   as zgqk,
+               a.txbz   as txbz
+          from IM_RYZD a, DIC_JBBM b
+         where b.jbxh = a.zdxh
+           <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+			and a.zyh = #{zyh}
+		   </if>
+		   <if test="@sqlt.Ognl@isNotEmpty(zdlb)">
+			and a.zdlb = #{zdlb}
+		   </if>
+		   <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+			and a.jgid = #{jgid}
+		   </if>
+		   <if test="@sqlt.Ognl@isNotEmpty(jbmc)">
+			and (b.jbmc = #{jbmc} or b.icd10 like CONCAT(CONCAT('%',UPPER(#{jbmc})),'%'))
+		   </if>
+         order by a.zdlb,a.pxh
+    </select>
+    <select id="queryZdmcByZyh" resultType="java.lang.String">
+        SELECT
+            b.JBMC AS ZDMC
+        FROM
+            IM_RYZD a
+            LEFT JOIN DIC_JBBM b ON a.ZDXH = b.JBXH
+        WHERE
+            a.zyh=#{zyh}
+    </select>
+
+    <!-- 根据联合主键删除入院诊断 -->
+    <delete id="deleteByCompositeKeys">
+        delete from IM_RYZD where
+        zyh = #{zyh}  and
+        zdxh = #{zdxh}  and
+        zdlb = #{zdlb}
+    </delete>
+
+    <update id="updateDiagnosis" >
+    	UPDATE IM_RYZD SET
+    		ZDXH = #{zdxhnew} ,
+            ZDLB = #{zdlbnew} ,
+            ZGQK = #{zgqk} ,
+            RYBQDM = #{rybqdm} ,
+            ZXLB = #{zxlb}
+        WHERE
+            ZYH = #{zyh} AND
+            ZDXH = #{zdxh} AND
+            ZDLB = #{zdlb} AND
+            JGID = #{jgid}
+    </update>
+
+    <!-- 查询病案首页诊断信息 -->
+    <select id="queryZdInfoMedicalRecord" resultType="com.buit.cis.im.response.ImRyzdMedicalRecord">
+        select a.zyh as zyh,
+        	a.zdxh as zdxh,
+        	a.zdlb as zdlb,
+        	a.jgid as jgid,
+        	a.rybqdm as rybqdm,
+        	a.zxlb as zxlb,
+        	b.jbmc as jbmc,
+        	b.icd_code as icd_code,
+        	case when a.zgqk = 1 then 1
+        	     when a.zgqk = 2 then 2
+        	     when a.zgqk = 3 then 3
+        	     when a.zgqk = 4 then 3
+        	     when a.zgqk = 5 then 4
+        	     when a.zgqk = 7 then 2
+        	     else 5 end as cyqk
+			from
+				im_ryzd a,
+				dic_jbbm b
+			where
+				a.zdxh = b.jbxh
+			and a.zyh = #{zyh}
+			order by a.zdlb,a.pxh
+    </select>
+
+     <!-- 出院证打印获取出院诊断名称 -->
+    <select id="getDischargeDiagnosis" resultType="com.buit.cis.ims.response.ImRyzdResp">
+        select a.zyh    as zyh,
+               a.zdlb   as zdlb,
+               a.zxlb   as zxlb,
+               a.zdxh   as zdxh,
+               b.jbmc   as jbmc,
+               b.icd10  as icd10,
+               b.icd9   as icd9,
+               a.jgid   as jgid,
+               a.rybqdm as rybqdm,
+        a.zgqk as zgqk,
+        a.txbz as txbz
+        from IM_RYZD a, DIC_JBBM b
+        where b.jbxh = a.zdxh
+        and a.zdlb in (3,4)
+        <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+            and a.zyh = #{zyh}
+        </if>
+        order by a.zdlb
+    </select>
+
+    <select id="findList" resultType="com.buit.cis.im.response.ImRyzdModel">
+        SELECT t.*
+        FROM (
+                 SELECT ryzd.ZYH,
+                        ryzd.ZDXH,
+                        jbdm.ICD_CODE AS zddm,
+                        jbdm.JBMC     AS zdmc,
+                        ryzd.ZDLB,
+                        ryzd.JGID,
+                        ryzd.ZGQK,
+                        ryzd.TXBZ,
+                        ryzd.SCBZ,
+                        ryzd.ZDRQ,
+                        ryzd.RYBQDM,
+                        ryzd.ZXLB
+                 FROM im_ryzd ryzd
+                          INNER JOIN dic_jbbm jbdm ON (ryzd.ZDXH = jbdm.JBXH AND ryzd.ZXLB = 1)
+                 UNION
+                 SELECT ryzd.ZYH,
+                        ryzd.ZDXH,
+                        zyjb.JBDM AS zddm,
+                        zyjb.JBMC AS zdmc,
+                        ryzd.ZDLB,
+                        ryzd.JGID,
+                        ryzd.ZGQK,
+                        ryzd.TXBZ,
+                        ryzd.SCBZ,
+                        ryzd.ZDRQ,
+                        ryzd.RYBQDM,
+                        ryzd.ZXLB
+                 FROM im_ryzd ryzd
+                          INNER JOIN dic_zyjb zyjb ON (ryzd.ZDXH = zyjb.JBBS AND ryzd.ZXLB = 2)
+             ) t
+        WHERE ZYH = #{zyh}
+          AND ZDLB = #{zdlb}
+    </select>
+
+    <update id="updateAdmittingDiagnosis">
+        UPDATE im_ryzd
+        SET ZDXH = #{zdxh}
+        where ZYH = #{zyh}
+          and ZDLB = 2
+    </update>
+</mapper>
+

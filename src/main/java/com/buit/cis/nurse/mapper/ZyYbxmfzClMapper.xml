@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 医保项目分组(材料) -->
+<mapper namespace="com.buit.cis.nurse.dao.ZyYbxmfzClDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        ID as id,FZBH as fzbh,FZMC as fzmc,FZXJ as fzxj,FYLB as fylb,WJBM as wjbm,YBBM as ybbm,FYGB as fygb
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO ZY_YBXMFZ_CL (
+            ID ,
+            FZBH ,
+            FZMC ,
+            FZXJ ,
+            FYLB ,
+            WJBM ,
+            YBBM ,
+            FYGB 
+        ) VALUES (
+            #{id} ,
+            #{fzbh} ,
+            #{fzmc} ,
+            #{fzxj} ,
+            #{fylb} ,
+            #{wjbm} ,
+            #{ybbm} ,
+            #{fygb} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE ZY_YBXMFZ_CL SET
+            FZBH = #{fzbh} ,
+            FZMC = #{fzmc} ,
+            FZXJ = #{fzxj} ,
+            FYLB = #{fylb} ,
+            WJBM = #{wjbm} ,
+            YBBM = #{ybbm} ,
+            FYGB = #{fygb} 
+        WHERE 
+            ID = #{id} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM ZY_YBXMFZ_CL WHERE
+        ID = #{id} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM ZY_YBXMFZ_CL <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="ZyYbxmfzCl">
+        SELECT <include refid="columns" />
+            FROM ZY_YBXMFZ_CL 
+            WHERE 
+        ID = #{id} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(id)"> -->
+<!--                     AND ID = #{id} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fzbh)"> -->
+<!--                     AND FZBH = #{fzbh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fzmc)"> -->
+<!--                     AND FZMC = #{fzmc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fzxj)"> -->
+<!--                     AND FZXJ = #{fzxj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fylb)"> -->
+<!--                     AND FYLB = #{fylb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(wjbm)"> -->
+<!--                     AND WJBM = #{wjbm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ybbm)"> -->
+<!--                     AND YBBM = #{ybbm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fygb)"> -->
+<!--                     AND FYGB = #{fygb} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM ZY_YBXMFZ_CL 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="ZyYbxmfzCl">
+        SELECT <include refid="columns" />
+        FROM ZY_YBXMFZ_CL 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+</mapper>
+

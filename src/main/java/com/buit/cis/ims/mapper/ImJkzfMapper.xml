@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院_缴款作废 -->
+<mapper namespace="com.buit.cis.ims.dao.ImJkzfDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JKXH as jkxh,JGID as jgid,ZFGH as zfgh,ZFRQ as zfrq,JZRQ as jzrq,HZRQ as hzrq,MZLB as mzlb
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_JKZF (
+            JKXH ,
+            JGID ,
+            ZFGH ,
+            ZFRQ ,
+            JZRQ ,
+            HZRQ ,
+            MZLB 
+        ) VALUES (
+            #{jkxh} ,
+            #{jgid} ,
+            #{zfgh} ,
+            #{zfrq} ,
+            #{jzrq} ,
+            #{hzrq} ,
+            #{mzlb} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE IM_JKZF SET
+            JGID = #{jgid} ,
+            ZFGH = #{zfgh} ,
+            ZFRQ = #{zfrq} ,
+            JZRQ = #{jzrq} ,
+            HZRQ = #{hzrq} ,
+            MZLB = #{mzlb} 
+        WHERE 
+            JKXH = #{jkxh} 
+            -->            
+    </update>
+
+
+    <delete id="deleteById">
+        DELETE FROM IM_JKZF WHERE
+        JKXH = #{jkxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM IM_JKZF <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="ImJkzf">
+        SELECT <include refid="columns" />
+            FROM IM_JKZF 
+            WHERE 
+        JKXH = #{jkxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jkxh)"> -->
+<!--                     AND JKXH = #{jkxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfgh)"> -->
+<!--                     AND ZFGH = #{zfgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfrq)"> -->
+<!--                     AND ZFRQ = #{zfrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jzrq)"> -->
+<!--                     AND JZRQ = #{jzrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hzrq)"> -->
+<!--                     AND HZRQ = #{hzrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mzlb)"> -->
+<!--                     AND MZLB = #{mzlb} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_JKZF 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="ImJkzf">
+        SELECT <include refid="columns" />
+        FROM IM_JKZF 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+
+
+    <!--查询是否有住院缴款作废记录-->
+    <select id="checkCount" resultType="java.lang.Integer">
+        select count(1)  FROM IM_JKZF  where ZFGH = #{is_UserIdis_UserId} AND JZRQ IS NULL AND ZFRQ &gt;#{idt_jzrq} and JGID =#{gl_jgid}
+    </select>
+    <!--取消日报-->
+    <select id="doCancelCommit">
+    update IM_JKZF set JZRQ = null where ZFGH = #{czgh}  and JZRQ=#{jzrq} and JGID =#{jgid}
+    </select>
+    <!--查询结账期内 结账作废的记录-->
+    <select id="queryJzrqCount" resultType="java.lang.Integer">
+      select count(1) from IM_JKZF where   ZFGH = #{userid}   AND JZRQ IS NULL AND ZFRQ &lt;#{ldt_End}  and JGID = #{gl_jgid}
+    </select>
+    <!--查询汇总次数-->
+    <select id="queryHzCount" resultType="java.lang.Integer">
+        select  count(1) from IM_JKZF where  HZRQ IS Null AND JZRQ &lt;#{idt_End} and JGID= #{gl_jgid}
+    </select>
+    <!--修改缴款作废的结账日期-->
+    <update id="updateJzrq">
+        UPDATE IM_JKZF SET JZRQ = #{idt_jzrq} WHERE ZFGH = #{userid} AND JZRQ IS NULL AND ZFRQ &lt; #{ldt_End} and JGID = #{gl_jgid}
+    </update>
+    <!--住院管理-日终汇总（取消汇总）-->
+    <update id="doCancelCollectCommit">
+    update IM_JKZF set HZRQ=null where HZRQ =#{hzrq} and JGID=#{jgid}
+    </update>
+    <!--修改汇总日期-->
+    <update id="updateHzrq">
+        UPDATE IM_JKZF Set HZRQ=#{ldt_GatherDate}  Where HZRQ IS Null AND JZRQ &lt;#{idt_End}  and JGID= #{gl_jgid}
+    </update>
+
+
+</mapper>
+

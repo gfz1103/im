@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.nurse.dao.NisFyfxpgdDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,MBLX as mblx,NL as nl,SZ as sz,TSFX as tsfx,HXLX as hxlx,QDLX as qdlx,JXTQ as jxtq,LXFB as lxfb,CGQM as cgqm,HSQM as hsqm,HLCS as hlcs,ZF as zf,RQ as rq,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_FYFXPGD (
+            JLXH ,
+            ZYH ,
+            MBLX ,
+            NL ,
+            SZ ,
+            TSFX ,
+            HXLX ,
+            QDLX ,
+            JXTQ ,
+            LXFB ,
+            CGQM ,
+            HSQM ,
+            HLCS ,
+            ZF ,
+            RQ ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{mblx} ,
+            #{nl} ,
+            #{sz} ,
+            #{tsfx} ,
+            #{hxlx} ,
+            #{qdlx} ,
+            #{jxtq} ,
+            #{lxfb} ,
+            #{cgqm} ,
+            #{hsqm} ,
+            #{hlcs} ,
+            #{zf} ,
+            #{rq} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_FYFXPGD SET
+            ZYH = #{zyh} ,
+            MBLX = #{mblx} ,
+            NL = #{nl} ,
+            SZ = #{sz} ,
+            TSFX = #{tsfx} ,
+            HXLX = #{hxlx} ,
+            QDLX = #{qdlx} ,
+            JXTQ = #{jxtq} ,
+            LXFB = #{lxfb} ,
+            CGQM = #{cgqm} ,
+            HSQM = #{hsqm} ,
+            HLCS = #{hlcs} ,
+            ZF = #{zf} ,
+            RQ = #{rq} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}             
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_FYFXPGD WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_FYFXPGD <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisFyfxpgd">
+        SELECT <include refid="columns" />
+            FROM NIS_FYFXPGD 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                     AND ZYH = #{zyh}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mblx)"> -->
+<!--                     AND MBLX = #{mblx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(nl)"> -->
+<!--                     AND NL = #{nl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sz)"> -->
+<!--                     AND SZ = #{sz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tsfx)"> -->
+<!--                     AND TSFX = #{tsfx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hxlx)"> -->
+<!--                     AND HXLX = #{hxlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qdlx)"> -->
+<!--                     AND QDLX = #{qdlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jxtq)"> -->
+<!--                     AND JXTQ = #{jxtq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lxfb)"> -->
+<!--                     AND LXFB = #{lxfb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cgqm)"> -->
+<!--                     AND CGQM = #{cgqm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hsqm)"> -->
+<!--                     AND HSQM = #{hsqm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlcs)"> -->
+<!--                     AND HLCS = #{hlcs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zf)"> -->
+<!--                     AND ZF = #{zf} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rq)"> -->
+<!--                     AND RQ = #{rq} -->
+<!--                </if> -->
+               <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                    AND JGID = #{jgid}
+               </if>
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_FYFXPGD 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisFyfxpgd">
+        SELECT <include refid="columns" />
+        FROM NIS_FYFXPGD 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 医院获得性肺炎风险因素评估单查询树结构-->
+    <select id="queryFyfxpgdTree" resultType="com.buit.cis.nurse.response.NisHzmbResp">
+        SELECT CONCAT(a.RQ, '  ', b.MBMC ) as LABEL, a.MBLX as NAME
+			FROM ( SELECT DATE_FORMAT( RQ, '%m-%d' ) AS RQ, 
+							ZYH as ZYH,
+							MBLX as MBLX,
+							JGID as JGID
+				FROM NIS_FYFXPGD 
+				GROUP BY 
+					DATE_FORMAT(RQ, '%m-%d'),
+					ZYH,
+					MBLX,
+					JGID 
+				) a, NIS_HZMB b WHERE
+				a.ZYH = b.ZYH 
+				AND a.MBLX = b.MBLX 
+				AND a.JGID = b.JGID
+				AND a.ZYH = #{zyh}
+				AND a.JGID = #{jgid}
+				order by a.RQ
+    </select>
+    
+    <!-- 根据日期查询医院获得性肺炎风险因素评估单 -->
+    <select id="queryFyfxpgdByDate" resultType="com.buit.cis.nurse.response.NisFyfxpgdResp">
+       SELECT JLXH as jlxh,ZYH as zyh,MBLX as mblx,NL as nl,SZ as sz,TSFX as tsfx,HXLX as hxlx,QDLX as qdlx,JXTQ as jxtq,LXFB as lxfb,CGQM as cgqm,HSQM as hsqm,HLCS as hlcs,ZF as zf,date_format(RQ, '%Y-%m-%d %H:%i') as rq,JGID as jgid
+        FROM NIS_FYFXPGD 
+        WHERE ZYH = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and DATE_FORMAT(RQ, '%m-%d') = #{queryDate}
+        </if> 
+        and JGID = #{jgid}
+        order by RQ
+    </select>
+    
+    <!-- 根据日期查询医院获得性肺炎风险因素评估单打印信息 -->
+    <select id="queryPrintFyfxpgdByDate" resultType="java.util.HashMap">
+       select date_format(rq, '%Y-%m-%d %H:%i') as rq,
+        case nl when '≤12岁' then '√' else '' end as nl1,
+        case nl when '≥65岁' then '√' else '' end as nl2,
+        case sz when '意识障碍' then '√' else '' end as sz1,
+        case sz when '镇静状态' then '√' else '' end as sz2,
+        case when find_in_set('住院时间≥14d',tsfx) > 0 then '√' else '' end as tsfx1,
+        case when find_in_set('卧床时间≥7d',tsfx) > 0 then '√' else '' end as tsfx2,
+        case when find_in_set('入住ICU≥3d',tsfx) > 0 then '√' else '' end as tsfx3,
+        case when find_in_set('限制平卧',tsfx) > 0 then '√' else '' end as tsfx4,
+        case when find_in_set('肥胖BMI>24',tsfx) > 0 then '√' else '' end as tsfx5,
+        case when find_in_set('吸烟史',tsfx) > 0 then '√' else '' end as tsfx6,
+        case when find_in_set('COPD史',tsfx) > 0 then '√' else '' end as tsfx7,
+        case when find_in_set('恶性肿瘤',tsfx) > 0 then '√' else '' end as tsfx8,
+        case when find_in_set('糖尿病',tsfx) > 0 then '√' else '' end as tsfx9,
+        case when find_in_set('营养不良',tsfx) > 0 then '√' else '' end as tsfx10,
+        case when find_in_set('免疫控制',tsfx) > 0 then '√' else '' end as tsfx11,
+        case when find_in_set('吞咽障碍',tsfx) > 0 then '√' else '' end as tsfx12,
+        case when find_in_set('留置胃管≥3d',tsfx) > 0 then '√' else '' end as tsfx13,
+        case when find_in_set('全肠外营养',tsfx) > 0 then '√' else '' end as tsfx14,
+        case hxlx when '有创通气' then '√' else '' end as hxlx1,
+        case hxlx when '无创通气' then '√' else '' end as hxlx2,
+        case hxlx when '自主呼吸' then '√' else '' end as hxlx3,
+        case qdlx when '经鼻插管' then '√' else '' end as qdlx1,
+        case qdlx when '经口插管' then '√' else '' end as qdlx2,
+        case qdlx when '气管切开造口' then '√' else '' end as qdlx3,
+        case qdlx when '口/鼻咽管' then '√' else '' end as qdlx4,
+        case jxtq when '&lt;3天' then '√' else '' end as jxtq1,
+        case jxtq when '3-7天' then '√' else '' end as jxtq2,
+        case jxtq when '>7天' then '√' else '' end as jxtq3,
+        case lxfb when 1 then '√' else '' end as lxfb,
+        case cgqm when 1 then '√' else '' end as cgqm,
+        zf,
+        hlcs,
+        hsqm
+        from nis_fyfxpgd 
+        where zyh = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and date_format(rq, '%m-%d') = #{queryDate}
+        </if> 
+        and jgid = #{jgid}
+        order by rq
+    </select>
+</mapper>
+

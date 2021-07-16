@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院_作废票据 -->
+<mapper namespace="com.buit.cis.ims.dao.ImZfpjDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JZRQ as jzrq,CZGH as czgh,PJLB as pjlb,PJHM as pjhm,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_ZFPJ (
+            JZRQ ,
+            CZGH ,
+            PJLB ,
+            PJHM ,
+            JGID 
+        ) VALUES (
+            #{jzrq} ,
+            #{czgh} ,
+            #{pjlb} ,
+            #{pjhm} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE IM_ZFPJ SET
+            JGID = #{jgid} 
+        WHERE 
+            JZRQ = #{jzrq}  AND 
+                        CZGH = #{czgh}  AND 
+                        PJLB = #{pjlb}  AND 
+                        PJHM = #{pjhm} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM IM_ZFPJ WHERE
+        JZRQ = #{jzrq}  AND 
+        CZGH = #{czgh}  AND 
+        PJLB = #{pjlb}  AND 
+        PJHM = #{pjhm} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM IM_ZFPJ <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="ImZfpj">
+        SELECT <include refid="columns" />
+            FROM IM_ZFPJ 
+            WHERE 
+        JZRQ = #{jzrq}  AND 
+        CZGH = #{czgh}  AND 
+        PJLB = #{pjlb}  AND 
+        PJHM = #{pjhm} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jzrq)"> -->
+<!--                     AND JZRQ = #{jzrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czgh)"> -->
+<!--                     AND CZGH = #{czgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pjlb)"> -->
+<!--                     AND PJLB = #{pjlb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pjhm)"> -->
+<!--                     AND PJHM = #{pjhm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_ZFPJ 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="ImZfpj">
+        SELECT <include refid="columns" />
+        FROM IM_ZFPJ 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    <!--取消日报-->
+    <select id="doCancelCommit">
+        delete from IM_ZFPJ where JGID=#{jgid} and CZGH=#{czgh} and JZRQ=#{jzrq}
+    </select>
+    <!--查询结账发票作废信息(结账日期不为空)-->
+    <select id="queryJzxxByJzrq" resultType="java.util.Map">
+    SELECT a.PJLB as PJLB,a.PJHM as PJHM FROM IM_ZFPJ a WHERE  a.CZGH =#{as_czgh}  AND a.JGID =#{al_jgid}  AND  date_format(a.JZRQ,'%Y-%m-%d %H:%i:%S') = #{jzrq}
+    </select>
+    <!--询结账发票作废信息-->
+    <select id="queryJzxx" resultType="java.util.Map">
+        SELECT a.PJLB as PJLB,a.PJHM as PJHM FROM IM_ZFPJ a WHERE  a.CZGH =#{as_czgh} AND a.JGID = #{al_jgid} AND  a.JZRQ &gt;= #{adt_jzrq_s}  AND  a.JZRQ &lt; #{adt_jzrq_e}
+    </select>
+
+</mapper>
+

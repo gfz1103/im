@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="NeurologyRecordsColumnHead" language="groovy" pageWidth="750" pageHeight="130" whenNoDataType="AllSectionsNoDetail" columnWidth="750" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="69602616-f453-40ec-b6e0-fe1e06b45e96">
+	<property name="ireport.zoom" value="1.0000000000000007"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="myBaseStyleName" fontName="宋体"/>
+	<parameter name="zdylmc1" class="java.lang.String"/>
+	<parameter name="zdylmc2" class="java.lang.String"/>
+	<columnHeader>
+		<band height="130">
+			<staticText>
+				<reportElement x="388" y="0" width="228" height="20" uuid="5eff2b6b-9515-4d53-9863-92fcc21d447d"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[一般护理]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="0" width="141" height="20" uuid="6288b4ce-2e9d-4d7d-ad74-3adda35d8bc6"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[生命体征]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="476" y="20" width="22" height="110" uuid="a5e3529f-fc65-41e9-a865-0d8de1e476fb"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[基
+础
+护
+理]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="20" width="22" height="110" uuid="5b3d1c2c-b9d7-455b-93ab-f0c4f61050f1"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[导
+管
+评
+分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="670" y="0" width="80" height="130" uuid="be7dafa7-9221-4020-921f-d4edc15fff99"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[护理记录]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="388" y="20" width="22" height="110" uuid="ed991570-4a7c-4137-8181-5582c0d04d5b"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[自
+理
+能
+力
+评
+分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="318" y="20" width="48" height="110" uuid="3acf83c7-f4d6-4125-837a-98f5b370f1ee"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[BP
+m
+m
+Hg]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="572" y="20" width="22" height="110" uuid="8e88f87d-7531-44c0-8d99-0e20ac06fe0b"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[营
+养]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="616" y="0" width="54" height="20" uuid="1d8b9a9f-eb7e-40fc-81e8-8121924da967"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[专科护理]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="115" height="110" uuid="34e223d0-84ae-4ad4-a7ae-72a5f62f3814"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[时间]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="366" y="20" width="22" height="110" uuid="69c79a6f-32b2-4b79-a85a-f971651e43e8"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[疼
+痛
+评
+分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="498" y="20" width="74" height="110" uuid="4fd3dbe1-9400-4e46-8f53-02f42ded4d79"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[护
+理
+宣
+教]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="432" y="20" width="22" height="110" uuid="f7648dbd-c01d-40e2-8dc0-fff1b4ac7015"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[压
+力
+性
+损
+伤]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="20" width="27" height="110" uuid="12d217ea-8949-48b7-a6b7-eb57b498fdae"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[T
+℃]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="616" y="20" width="27" height="110" uuid="ee29d9c7-6ce8-45d8-9172-0eaf4423ac26"/>
+				<box leftPadding="5" rightPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{zdylmc1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="594" y="20" width="22" height="110" uuid="abdf2ced-9cb5-4d56-9ff9-caa94d0a794d"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[精
+神
+心
+理]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="20" width="22" height="110" uuid="39bb9e88-5313-43cd-9f9f-46b475fd78b9"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[跌
+倒
+坠
+床
+评
+分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="274" y="20" width="22" height="110" uuid="a771c9b2-1a69-4170-a7d4-540fd774ccba"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[HR
+/P
+次
+/
+分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="115" y="0" width="22" height="130" uuid="1f018c6b-a758-44b4-9d89-dc843a446016"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[神
+志]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="137" y="0" width="22" height="130" uuid="bc4c7292-7258-4761-949d-ee739939c444"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[格
+拉
+斯
+评
+分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="159" y="0" width="88" height="20" uuid="a57e8fe4-9a62-438f-8535-ecfc79c7860d"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[瞳孔]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="159" y="20" width="44" height="20" uuid="261c939b-5ce4-42b9-94b2-806c7c09118d"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[左侧]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="203" y="20" width="44" height="20" uuid="457db8df-b327-484d-8e8c-9726581156d8"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[右侧]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="159" y="40" width="22" height="90" uuid="189d65c9-50fd-4064-b349-552c5d3177d5"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[大
+小
+m
+m]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="40" width="22" height="90" uuid="e4dba6ea-0312-4098-bc5b-3c9f0e123e3c"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[对
+光
+反
+射]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="203" y="40" width="22" height="90" uuid="3e5f9a7f-d56c-4494-9a5d-a77fa6390eab"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[大
+小
+m
+m]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="225" y="40" width="22" height="90" uuid="7d1f6a85-fc76-4e6a-9428-0182e2f16732"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[对
+光
+反
+射]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="643" y="20" width="27" height="110" uuid="93995f50-bd61-4a57-9ac5-3a399477a93b"/>
+				<box leftPadding="5" rightPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{zdylmc2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="296" y="20" width="22" height="110" uuid="eba6a165-ea5e-4291-856c-b270087b1fe3"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[R
+次
+/
+分]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="115" height="20" uuid="d1257c33-348b-4281-925a-dd11174d185b"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="13" isBold="false"/>
+				</textElement>
+				<text><![CDATA[日期]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+</jasperReport>

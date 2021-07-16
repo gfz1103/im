@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 中心静脉导管相关性感染风险因素评估表 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisZxjmpgbDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,MBLX as mblx,NL as nl,JCJB as jcjb,ZGBW as zgbw,ZGZT as zgzt,LZSJ as lzsj,DGCZ as dgcz,DGQS as dgqs,SYJK as syjk,SZYT as szyt,HLCS as hlcs,HSQM as hsqm,RQ as rq,ZF as zf,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_ZXJMPGB (
+            JLXH ,
+            ZYH ,
+            MBLX ,
+            NL ,
+            JCJB ,
+            ZGBW ,
+            ZGZT ,
+            LZSJ ,
+            DGCZ ,
+            DGQS ,
+            SYJK ,
+            SZYT ,
+            HLCS ,
+            HSQM ,
+            RQ ,
+            ZF ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{mblx} ,
+            #{nl} ,
+            #{jcjb} ,
+            #{zgbw} ,
+            #{zgzt} ,
+            #{lzsj} ,
+            #{dgcz} ,
+            #{dgqs} ,
+            #{syjk} ,
+            #{szyt} ,
+            #{hlcs} ,
+            #{hsqm} ,
+            #{rq} ,
+            #{zf} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_ZXJMPGB SET
+            ZYH = #{zyh} ,
+            MBLX = #{mblx} ,
+            NL = #{nl} ,
+            JCJB = #{jcjb} ,
+            ZGBW = #{zgbw} ,
+            ZGZT = #{zgzt} ,
+            LZSJ = #{lzsj} ,
+            DGCZ = #{dgcz} ,
+            DGQS = #{dgqs} ,
+            SYJK = #{syjk} ,
+            SZYT = #{szyt} ,
+            HLCS = #{hlcs} ,
+            HSQM = #{hsqm} ,
+            RQ = #{rq} ,
+            ZF = #{zf} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_ZXJMPGB WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_ZXJMPGB <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisZxjmpgb">
+        SELECT <include refid="columns" />
+            FROM NIS_ZXJMPGB 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                     AND ZYH = #{zyh}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mblx)"> -->
+<!--                     AND MBLX = #{mblx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(nl)"> -->
+<!--                     AND NL = #{nl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jcjb)"> -->
+<!--                     AND JCJB = #{jcjb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zgbw)"> -->
+<!--                     AND ZGBW = #{zgbw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zgzt)"> -->
+<!--                     AND ZGZT = #{zgzt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lzsj)"> -->
+<!--                     AND LZSJ = #{lzsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dgcz)"> -->
+<!--                     AND DGCZ = #{dgcz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dgqs)"> -->
+<!--                     AND DGQS = #{dgqs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(syjk)"> -->
+<!--                     AND SYJK = #{syjk} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(szyt)"> -->
+<!--                     AND SZYT = #{szyt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlcs)"> -->
+<!--                     AND HLCS = #{hlcs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hsqm)"> -->
+<!--                     AND HSQM = #{hsqm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rq)"> -->
+<!--                     AND RQ = #{rq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zf)"> -->
+<!--                     AND ZF = #{zf} -->
+<!--                </if> -->
+               <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                    AND JGID = #{jgid}
+               </if>
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_ZXJMPGB 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisZxjmpgb">
+        SELECT <include refid="columns" />
+        FROM NIS_ZXJMPGB 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 患者病情预警评估单查询树结构-->
+    <select id="queryZxjmpgbTree" resultType="com.buit.cis.nurse.response.NisHzmbResp">
+        SELECT CONCAT(a.RQ, '  ', b.MBMC ) as LABEL, a.MBLX as NAME
+			FROM ( SELECT DATE_FORMAT( RQ, '%m-%d' ) AS RQ, 
+							ZYH as ZYH,
+							MBLX as MBLX,
+							JGID as JGID
+				FROM NIS_ZXJMPGB 
+				GROUP BY 
+					DATE_FORMAT(RQ, '%m-%d'),
+					ZYH,
+					MBLX,
+					JGID 
+				) a, NIS_HZMB b WHERE
+				a.ZYH = b.ZYH 
+				AND a.MBLX = b.MBLX 
+				AND a.JGID = b.JGID
+				AND a.ZYH = #{zyh}
+				AND a.JGID = #{jgid}
+				order by a.RQ
+    </select>
+    
+    <!-- 根据日期查询中心静脉导管相关性感染风险因素评估表 -->
+    <select id="queryZxjmpgbByDate" resultType="com.buit.cis.nurse.response.NisZxjmpgbResp">
+       SELECT JLXH as jlxh,ZYH as zyh,MBLX as mblx,NL as nl,JCJB as jcjb,ZGBW as zgbw,ZGZT as zgzt,LZSJ as lzsj,DGCZ as dgcz,DGQS as dgqs,SYJK as syjk,SZYT as szyt,HLCS as hlcs,HSQM as hsqm,date_format(RQ, '%Y-%m-%d %H:%i') as rq,ZF as zf,JGID as jgid
+        FROM NIS_ZXJMPGB 
+        WHERE ZYH = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and DATE_FORMAT(RQ, '%m-%d') = #{queryDate}
+        </if> 
+        and JGID = #{jgid}
+        order by RQ
+    </select>
+    
+    <!-- 根据日期查询中心静脉导管相关性感染风险因素评估表打印信息 -->
+    <select id="queryPrintZxjmpgbByDate" resultType="java.util.HashMap">
+       select date_format(rq, '%Y-%m-%d %H:%i') as rq,
+        case nl when '≥65岁' then '√' else '' end as nl,
+        case when find_in_set('糖尿病',jcjb) > 0 then '√' else '' end as jcjb1,
+        case when find_in_set('营养不良',jcjb) > 0 then '√' else '' end as jcjb2,
+        case when find_in_set('恶性肿瘤',jcjb) > 0 then '√' else '' end as jcjb3,
+        case when find_in_set('免疫压制',jcjb) > 0 then '√' else '' end as jcjb4,
+        case when find_in_set('股静脉',zgbw) > 0 then '√' else '' end as zgbw1,
+        case when find_in_set('颈内静脉',zgbw) > 0 then '√' else '' end as zgbw2,
+        case when find_in_set('锁骨下静脉',zgbw) > 0 then '√' else '' end as zgbw3,
+        case when find_in_set('PICC',zgbw) > 0 then '√' else '' end as zgbw4,
+        case zgzt when '紧急' then '√' else '' end as zgzt1,
+        case zgzt when '常规' then '√' else '' end as zgzt2,
+        case lzsj when '&lt;3天' then '√' else '' end as zlsj1,
+        case lzsj when '3-7天' then '√' else '' end as zlsj2,
+        case lzsj when '>7天' then '√' else '' end as zlsj3,
+        case dgcz when '抗感染' then '√' else '' end as dgcz1,
+        case dgcz when '普通' then '√' else '' end as dgcz2,
+        case dgqs when '单腔' then '√' else '' end as dgqs1,
+        case dgqs when '双腔' then '√' else '' end as dgqs2,
+        case dgqs when '三腔' then '√' else '' end as dgqs3,
+        case syjk when '≤3个' then '√' else '' end as syjk1,
+        case syjk when '>3个' then '√' else '' end as syjk2,
+        case szyt when '普通' then '√' else '' end as szyt1,
+        case szyt when '脂乳类' then '√' else '' end as szyt2,
+        case szyt when '血脂品' then '√' else '' end as szyt3,
+        zf,
+        hsqm,
+        hlcs
+        from nis_zxjmpgb 
+        where zyh = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and date_format(rq, '%m-%d') = #{queryDate}
+        </if> 
+        and jgid = #{jgid}
+        order by rq
+    </select>
+</mapper>
+

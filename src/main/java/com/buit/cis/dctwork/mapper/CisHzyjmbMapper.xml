@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 会诊意见模板维护表 -->
+<mapper namespace="com.buit.cis.dctwork.dao.CisHzyjmbDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,MBMC as mbmc,HZYJ as hzyj,YSGH as ysgh,KSDM as ksdm,ZFPB as zfpb,PYDM as pydm,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO CIS_HZYJMB (
+            JLXH ,
+            MBMC ,
+            HZYJ ,
+            YSGH ,
+            KSDM ,
+            ZFPB ,
+            PYDM ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{mbmc} ,
+            #{hzyj} ,
+            #{ysgh} ,
+            #{ksdm} ,
+            #{zfpb} ,
+            #{pydm} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE CIS_HZYJMB SET
+            MBMC = #{mbmc} ,
+            HZYJ = #{hzyj} ,
+            YSGH = #{ysgh} ,
+            KSDM = #{ksdm} ,
+            ZFPB = #{zfpb} ,
+            PYDM = #{pydm} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}           
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM CIS_HZYJMB WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM CIS_HZYJMB <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="CisHzyjmb">
+        SELECT <include refid="columns" />
+            FROM CIS_HZYJMB 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+               <if test="@sqlt.Ognl@isNotEmpty(mbmc)">
+                    AND MBMC like concat('%', #{mbmc},'%')
+               </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hzyj)"> -->
+<!--                     AND HZYJ = #{hzyj} -->
+<!--                </if> -->
+               <if test="@sqlt.Ognl@isNotEmpty(ysgh)">
+                    AND YSGH = #{ysgh}
+               </if>
+               <if test="@sqlt.Ognl@isNotEmpty(ksdm)">
+                    AND KSDM = #{ksdm}
+               </if>
+               <if test="@sqlt.Ognl@isNotEmpty(zfpb)">
+                    AND ZFPB = #{zfpb}
+               </if>
+               <if test="@sqlt.Ognl@isNotEmpty(pydm)">
+                    AND PYDM like concat('%', upper(#{pydm}),'%')
+               </if>
+               <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                    AND JGID = #{jgid}
+               </if>
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM CIS_HZYJMB 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="CisHzyjmb">
+        SELECT <include refid="columns" />
+        FROM CIS_HZYJMB 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <update id="invalid" >
+        update cis_hzyjmb set zfpb = #{zfpb} where jlxh = #{jlxh}             
+    </update>
+</mapper>
+

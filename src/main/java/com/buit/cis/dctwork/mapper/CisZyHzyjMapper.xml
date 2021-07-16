@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.dctwork.dao.CisZyHzyjDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,SQXH as sqxh,HZYJ as hzyj,KSDM as ksdm,SSYS as ssys,SXYS as sxys,SXSJ as sxsj,QMYS as qmys,QMSJ as qmsj,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO CIS_ZY_HZYJ (
+            JLXH ,
+            SQXH ,
+            HZYJ ,
+            KSDM ,
+            SSYS ,
+            SXYS ,
+            SXSJ ,
+            QMYS ,
+            QMSJ ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{sqxh} ,
+            #{hzyj} ,
+            #{ksdm} ,
+            #{ssys} ,
+            #{sxys} ,
+            #{sxsj} ,
+            #{qmys} ,
+            #{qmsj} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE CIS_ZY_HZYJ SET
+            SQXH = #{sqxh} ,
+            HZYJ = #{hzyj} ,
+            KSDM = #{ksdm} ,
+            SSYS = #{ssys} ,
+            SXYS = #{sxys} ,
+            SXSJ = #{sxsj} ,
+            QMYS = #{qmys} ,
+            QMSJ = #{qmsj} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM CIS_ZY_HZYJ WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM CIS_ZY_HZYJ <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="CisZyHzyj">
+        SELECT <include refid="columns" />
+            FROM CIS_ZY_HZYJ 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(sqxh)"> 
+                     AND SQXH = #{sqxh} 
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hzyj)"> -->
+<!--                     AND HZYJ = #{hzyj} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(ksdm)"> 
+                     AND KSDM = #{ksdm} 
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(ssys)"> 
+                     AND SSYS = #{ssys} 
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sxys)"> -->
+<!--                     AND SXYS = #{sxys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sxsj)"> -->
+<!--                     AND SXSJ = #{sxsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qmys)"> -->
+<!--                     AND QMYS = #{qmys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qmsj)"> -->
+<!--                     AND QMSJ = #{qmsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM CIS_ZY_HZYJ 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="CisZyHzyj">
+        SELECT <include refid="columns" />
+        FROM CIS_ZY_HZYJ 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 根据申请序号查询 -->
+    <select id="getBySqxh" resultType="CisZyHzyj">
+        SELECT <include refid="columns" />
+            FROM CIS_ZY_HZYJ 
+            WHERE 
+        SQXH = #{sqxh} 
+    </select>
+    
+    <!-- 更新会诊申请意见结束 -->
+    <update id="updateCisZyHzyjEnd" >
+        update CIS_ZY_HZYJ set 
+        	HZYJ = #{hzyj},
+   			SSYS = #{ssys},
+	  	 	KSDM = #{ksdm}
+	 	where JLXH = #{jlxh}    
+    </update>
+    
+    <!-- 根据申请序号查询会诊意见和人员科室  -->
+    <select id="getCisZyHzyjBySqxh" resultType="com.buit.cis.dctwork.response.CisZyHzyjResp">
+        select a.HZYJ as HZYJ, 
+        b.OFFICENAME as OFFICENAME, 
+        c.personname as PERSONNAME,
+        a.SSYS as SSYS,
+        a.KSDM as KSDM
+	  from CIS_ZY_HZYJ a, DIC_KSZD b, HR_PERSONNEL c
+	 where a.SQXH = #{sqxh}
+	   and a.KSDM = b.ID
+	   and a.SXYS = c.PERSONID
+	   order by a.SXSJ 
+    </select>
+
+    <select id="findHzyjForBl" resultType="java.util.HashMap">
+        SELECT <include refid="columns" />,
+        (select personname from hr_personnel where personid = SSYS) as SSYSMC,
+        (select personname from hr_personnel where personid = SXYS) as SXYSMC
+        FROM CIS_ZY_HZYJ
+        <include refid="where"/>
+
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+</mapper>
+

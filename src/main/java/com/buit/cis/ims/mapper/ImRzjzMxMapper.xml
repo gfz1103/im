@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.ims.dao.ImRzjzMxDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JZRQ as jzrq,CZGH as czgh,JGID as jgid,XMMC as xmmc,XMLX as xmlx,SRHJ as srhj,YHJE as yhje,SJSR as sjsr
+    </sql>
+    <insert id="insert">
+        INSERT INTO IM_RZJZ_MX (JZRQ,CZGH,JGID,XMMC,XMLX,SRHJ,YHJE,SJSR
+        ) VALUES (
+            #{jzrq},#{czgh},#{jgid},#{xmmc},#{xmlx},#{srhj},#{yhje},#{sjsr}
+        )
+    </insert>
+    <!-- 删除结账信息 -->
+    <select id="doCancelCommit">
+    delete from IM_RZJZ_MX where JGID=#{jgid} and CZGH=#{czgh} and JZRQ=#{jzrq}
+    </select>
+
+    <select id="queryJzxx" resultType="ImRzjzMx">
+        SELECT <include refid="columns" />
+        FROM IM_RZJZ_MX
+        WHERE
+        JZRQ = #{adt_jzrq}  AND
+        CZGH = #{czgh}  AND
+        JGID = #{jgid}
+    </select>
+
+</mapper>
+

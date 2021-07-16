@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院_结算明细 -->
+<mapper namespace="com.buit.cis.ims.dao.ImJsmxDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        ZYH as zyh,JSCS as jscs,KSDM as ksdm,FYXM as fyxm,JGID as jgid,ZJJE as zjje,ZFJE as zfje,ZLJE as zlje,SCBZ as scbz,FLZF as flzf,CZF as czf
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_JSMX (
+            ZYH ,
+            JSCS ,
+            KSDM ,
+            FYXM ,
+            JGID ,
+            ZJJE ,
+            ZFJE ,
+            ZLJE ,
+            SCBZ ,
+            FLZF ,
+            CZF
+        ) VALUES (
+            #{zyh} ,
+            #{jscs} ,
+            #{ksdm} ,
+            #{fyxm} ,
+            #{jgid} ,
+            #{zjje} ,
+            #{zfje} ,
+            #{zlje} ,
+            #{scbz} ,
+            #{flzf} ,
+            #{czf}
+        )
+    </insert>
+
+
+
+    <update id="update" >
+<!--        UPDATE IM_JSMX SET-->
+<!--            ZJJE = #{zjje} ,-->
+<!--            ZFJE = #{zfje} ,-->
+<!--            ZLJE = #{zlje} ,-->
+<!--            SCBZ = #{scbz} ,-->
+<!--            FLZF = #{flzf} ,-->
+<!--            CZF = #{czf} -->
+<!--        WHERE-->
+<!--            ZYH = #{zyh}  AND -->
+<!--            JSCS = #{jscs}  AND -->
+<!--            KSDM = #{ksdm}  AND -->
+<!--            FYXM = #{fyxm}  AND -->
+<!--            JGID = #{jgid} -->
+    </update>
+
+    <update id="updateStatus" >
+<!--        UPDATE IM_JSMX SET-->
+<!--            ZJJE = #{zjje} ,-->
+<!--            ZFJE = #{zfje} ,-->
+<!--            ZLJE = #{zlje} ,-->
+<!--            SCBZ = #{scbz} ,-->
+<!--            FLZF = #{flzf} ,-->
+<!--            CZF = #{czf} -->
+<!--        WHERE-->
+<!--            ZYH = #{zyh}  AND -->
+<!--            JSCS = #{jscs}  AND -->
+<!--            KSDM = #{ksdm}  AND -->
+<!--            FYXM = #{fyxm}  AND -->
+<!--            JGID = #{jgid} -->
+    </update>
+
+
+    <delete id="deleteById">
+        DELETE FROM IM_JSMX WHERE
+        ZYH = #{zyh}  AND
+        JSCS = #{jscs}  AND
+        KSDM = #{ksdm}  AND
+        FYXM = #{fyxm}  AND
+        JGID = #{jgid}
+    </delete>
+
+    <delete id="removeByEntity">
+        DELETE FROM IM_JSMX <include refid="where"/>
+    </delete>
+
+    <select id="getById" resultType="ImJsmx">
+        SELECT <include refid="columns" />
+            FROM IM_JSMX
+            WHERE
+        ZYH = #{zyh}  AND
+        JSCS = #{jscs}  AND
+        KSDM = #{ksdm}  AND
+        FYXM = #{fyxm}  AND
+        JGID = #{jgid}
+    </select>
+
+    <sql id="where">
+        <where>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> -->
+<!--                     AND ZYH = #{zyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jscs)"> -->
+<!--                     AND JSCS = #{jscs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ksdm)"> -->
+<!--                     AND KSDM = #{ksdm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fyxm)"> -->
+<!--                     AND FYXM = #{fyxm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zjje)"> -->
+<!--                     AND ZJJE = #{zjje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfje)"> -->
+<!--                     AND ZFJE = #{zfje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zlje)"> -->
+<!--                     AND ZLJE = #{zlje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(scbz)"> -->
+<!--                     AND SCBZ = #{scbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(flzf)"> -->
+<!--                     AND FLZF = #{flzf} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czf)"> -->
+<!--                     AND CZF = #{czf} -->
+<!--                </if> -->
+        </where>
+    </sql>
+
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_JSMX
+        <include refid="where"/>
+    </select>
+
+    <select id="findByEntity" resultType="ImJsmx">
+        SELECT <include refid="columns" />
+        FROM IM_JSMX
+        <include refid="where"/>
+
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    <!--新增住院结算记录-->
+    <insert id="insertJs">
+        INSERT INTO IM_JSMX (
+            ZYH,
+            JSCS,
+            KSDM,
+            FYXM,
+            ZJJE,
+            ZFJE,
+            ZLJE,
+            JGID,
+            FLZF,
+            CZF
+            ) SELECT
+            a.ZYH ,#{UJSCS},
+            a.FYKS,
+            a.FYXM,
+            sum(a.ZJJE) ZJJE,
+            sum(a.ZFJE) ZFJE,
+            sum(a.ZLJE) ZLJE,
+            a.JGID,
+            sum(a.FLZF) FLZF,
+            IFNULL (sum(a.CZF), 0) CZF
+            FROM
+            (
+            SELECT
+            CASE
+            WHEN ZFBL &lt; 1 THEN
+             ZFJE
+            END FLZF,
+            CASE
+            WHEN ZFBL = 1 THEN
+            (ZJJE * zfbl)
+            END CZF,
+            FYXM,
+            ZYH,
+            FYKS,
+            ZJJE,
+            ZFJE,
+            ZLJE,
+            JGID
+            FROM
+            IM_FEE_FYMX
+            WHERE
+            ZYH = #{ZYH}
+            AND JSCS =  #{UJSCS}
+            )a
+            GROUP BY
+            a.ZYH,
+            a.FYKS,
+            a.FYXM,
+            a.JGID
+            HAVING
+            (
+            sum(a.ZJJE) != 0
+            OR sum(a.ZFJE) != 0
+            OR sum(a.ZLJE) != 0
+            )
+    </insert>
+    <!--写入结算明细-->
+    <insert id="insertJsMx">
+        INSERT INTO
+        IM_JSMX
+        (ZYH,JSCS,KSDM,FYXM,ZJJE,ZFJE,ZLJE,JGID,FLZF,CZF) SELECT a.ZYH,#{UJSCS},a.FYKS,a.FYXM,sum(a.ZFJE) ZJJE,sum(a.ZFJE) ZFJE,sum(a.ZLJE) ZLJE,a.JGID,sum(a.FLZF) FLZF,IFNULL(sum(a.CZF),0) CZF FROM (
+         select CASE WHEN ZFBL &lt; 1 THEN ZFJE END FLZF, CASE WHEN ZFBL = 1 THEN (ZJJE * zfbl) END CZF,FYXM,ZYH,FYKS,ZJJE,ZFJE,ZLJE,JGID FROM
+        IM_FEE_FYMX
+         WHERE ZYH = #{ZYH} AND JSCS = #{UJSCS} )a GROUP BY a.ZYH,a.FYKS,a.FYXM,a.JGID Having ( sum(a.ZJJE) != 0 Or sum(a.ZFJE) != 0 Or sum(a.ZLJE) != 0 )
+    </insert>
+</mapper>
+

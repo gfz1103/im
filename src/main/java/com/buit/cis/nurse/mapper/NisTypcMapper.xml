@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.nurse.dao.NisTypcDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        id as id,tyxh as tyxh,tjxh as tjxh,zxsj as zxsj
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_TYPC (
+            id ,
+            tyxh ,
+            tjxh ,
+            zxsj 
+        ) VALUES (
+            #{id} ,
+            #{tyxh} ,
+            #{tjxh} ,
+            #{zxsj} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE NIS_TYPC SET
+            tyxh = #{tyxh} ,
+            tjxh = #{tjxh} ,
+            zxsj = #{zxsj} 
+        WHERE 
+            id = #{id} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_TYPC WHERE
+        id = #{id} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_TYPC <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisTypc">
+        SELECT <include refid="columns" />
+            FROM NIS_TYPC 
+            WHERE 
+        id = #{id} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(id)"> -->
+<!--                     AND id = #{id} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tyxh)"> -->
+<!--                     AND tyxh = #{tyxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tjxh)"> -->
+<!--                     AND tjxh = #{tjxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zxsj)"> -->
+<!--                     AND zxsj = #{zxsj} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_TYPC 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisTypc">
+        SELECT <include refid="columns" />
+        FROM NIS_TYPC 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 根据住院号删除存在未提交退药明细的退药批次 -->
+    <delete id="deleteTypcByZyh">
+       delete from nis_typc where tyxh in (
+		select jlxh from nis_tymx  where zyh = #{zyh}
+		   and jgid = #{jgid}
+		   and (tjbz = 0 or tjbz is null)
+		   and tyrq is null)
+    </delete>
+    
+    <!-- 根据退药序号删除存在未提交退药明细的退药批次 -->
+    <delete id="deleteTypcByTyxh">
+       delete from nis_typc where tyxh = #{tyxh}
+    </delete>
+</mapper>
+

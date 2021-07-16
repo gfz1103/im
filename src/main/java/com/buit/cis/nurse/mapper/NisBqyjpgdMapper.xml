@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.nurse.dao.NisBqyjpgdDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,MBLX as mblx,XL as xl,SSY as ssy,HX as hx,TW as tw,YS as ys,PL as pl,YPHD as yphd,XT as xt,HLCS as hlcs,HSQM as hsqm,RQ as rq,ZF as zf,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_BQYJPGD (
+            JLXH ,
+            ZYH ,
+            MBLX ,
+            XL ,
+            SSY ,
+            HX ,
+            TW ,
+            YS ,
+            PL ,
+            YPHD ,
+            XT ,
+            HLCS ,
+            HSQM ,
+            RQ ,
+            ZF ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{mblx} ,
+            #{xl} ,
+            #{ssy} ,
+            #{hx} ,
+            #{tw} ,
+            #{ys} ,
+            #{pl} ,
+            #{yphd} ,
+            #{xt} ,
+            #{hlcs} ,
+            #{hsqm} ,
+            #{rq} ,
+            #{zf} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" > 
+        UPDATE NIS_BQYJPGD SET
+            ZYH = #{zyh} ,
+            MBLX = #{mblx} ,
+            XL = #{xl} ,
+            SSY = #{ssy} ,
+            HX = #{hx} ,
+            TW = #{tw} ,
+            YS = #{ys} ,
+            PL = #{pl} ,
+            YPHD = #{yphd} ,
+            XT = #{xt} ,
+            HLCS = #{hlcs} ,
+            HSQM = #{hsqm} ,
+            RQ = #{rq} ,
+            ZF = #{zf} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_BQYJPGD WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_BQYJPGD <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisBqyjpgd">
+        SELECT <include refid="columns" />
+            FROM NIS_BQYJPGD 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                     AND ZYH = #{zyh}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mblx)"> -->
+<!--                     AND MBLX = #{mblx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xl)"> -->
+<!--                     AND XL = #{xl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ssy)"> -->
+<!--                     AND SSY = #{ssy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hx)"> -->
+<!--                     AND HX = #{hx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tw)"> -->
+<!--                     AND TW = #{tw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ys)"> -->
+<!--                     AND YS = #{ys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pl)"> -->
+<!--                     AND PL = #{pl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yphd)"> -->
+<!--                     AND YPHD = #{yphd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xt)"> -->
+<!--                     AND XT = #{xt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlcs)"> -->
+<!--                     AND HLCS = #{hlcs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hsqm)"> -->
+<!--                     AND HSQM = #{hsqm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rq)"> -->
+<!--                     AND RQ = #{rq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zf)"> -->
+<!--                     AND ZF = #{zf} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> 
+                     AND JGID = #{jgid} 
+                </if> 
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_BQYJPGD 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisBqyjpgd">
+        SELECT <include refid="columns" />
+        FROM NIS_BQYJPGD 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 患者病情预警评估单查询树结构-->
+    <select id="queryBqyjpgdTree" resultType="com.buit.cis.nurse.response.NisHzmbResp">
+        SELECT CONCAT(a.RQ, '  ', b.MBMC ) as LABEL, a.MBLX as NAME
+			FROM ( SELECT DATE_FORMAT( RQ, '%m-%d' ) AS RQ, 
+							ZYH as ZYH,
+							MBLX as MBLX,
+							JGID as JGID
+				FROM NIS_BQYJPGD 
+				GROUP BY 
+					DATE_FORMAT(RQ, '%m-%d'),
+					ZYH,
+					MBLX,
+					JGID 
+				) a, NIS_HZMB b WHERE
+				a.ZYH = b.ZYH 
+				AND a.MBLX = b.MBLX 
+				AND a.JGID = b.JGID
+				AND a.ZYH = #{zyh}
+				AND a.JGID = #{jgid}
+				order by a.RQ
+    </select>
+    
+    <!-- 根据日期查询患者病情预警评估单 -->
+    <select id="queryBqyjpgdByDate" resultType="com.buit.cis.nurse.response.NisBqyjpgdResp">
+       SELECT JLXH as jlxh,ZYH as zyh,MBLX as mblx,XL as xl,SSY as ssy,HX as hx,TW as tw,YS as ys,PL as pl,YPHD as yphd,XT as xt,HLCS as hlcs,HSQM as hsqm,date_format(RQ, '%Y-%m-%d %H:%i') as rq,ZF as zf,JGID as jgid
+        FROM NIS_BQYJPGD 
+        WHERE ZYH = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and DATE_FORMAT(RQ, '%m-%d') = #{queryDate}
+        </if> 
+        and JGID = #{jgid}
+        order by RQ
+    </select>
+    
+    <!-- 根据日期查询患者病情预警评估单打印信息 -->
+    <select id="queryPrintBqyjpgdByDate" resultType="java.util.HashMap">
+       select date_format(rq, '%Y-%m-%d %H:%i') as rq,
+       	case xl when '≤40' then '√' else '' end as xl1,
+       	case xl when '41-50' then '√' else '' end as xl2,
+       	case xl when '51-100' then '√' else '' end as xl3,
+       	case xl when '101-110' then '√' else '' end as xl4,
+       	case xl when '111-129' then '√' else '' end as xl5,
+       	case xl when '≥130' then '√' else '' end as xl6,
+       	case ssy when '≤70' then '√' else '' end as ssy1,
+       	case ssy when '71-80' then '√' else '' end as ssy2,
+       	case ssy when '81-100' then '√' else '' end as ssy3,
+       	case ssy when '101-199' then '√' else '' end as ssy4,
+       	case ssy when '≥200' then '√' else '' end as ssy5,
+       	case hx when '&lt;9' then '√' else '' end as hx1,
+       	case hx when '9-14' then '√' else '' end as hx2,
+       	case hx when '15-20' then '√' else '' end as hx3,
+       	case hx when '21-29' then '√' else '' end as hx4,
+       	case hx when '≥30' then '√' else '' end as hx5,
+       	case tw when '≤35.0' then '√' else '' end as tw1,
+       	case tw when '35.1-36.0' then '√' else '' end as tw2,
+       	case tw when '36.1-38.0' then '√' else '' end as tw3,
+       	case tw when '38.1-38.5' then '√' else '' end as tw4,
+       	case tw when '≥38.6' then '√' else '' end as tw5,
+       	case ys when '完全清醒' then '√' else '' end as ys1,
+       	case ys when '对声音有反应' then '√' else '' end as ys2,
+       	case ys when '对疼痛有反应' then '√' else '' end as ys3,
+       	case ys when '无反应' then '√' else '' end as ys4,
+       	case pl when '&lt;30' then '√' else '' end as pl1,
+       	case pl when '无' then '√' else '' end as pl2,
+       	case yphd when '≤84%' then '√' else '' end as yphd1,
+       	case yphd when '85%-89%' then '√' else '' end as yphd2,
+       	case yphd when '90%-95%' then '√' else '' end as yphd3,
+       	case yphd when '96%-100%' then '√' else '' end as yphd4,
+       	case xt when '≤2.8' then '√' else '' end as xt1,
+       	case xt when '2.9-3.3' then '√' else '' end as xt2,
+       	case xt when '3.4-3.8' then '√' else '' end as xt3,
+       	case xt when '3.9-6.1' then '√' else '' end as xt4,
+       	zf,
+       	hlcs,
+       	hsqm
+        from nis_bqyjpgd 
+        where zyh = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and date_format(rq, '%m-%d') = #{queryDate}
+        </if> 
+        and jgid = #{jgid}
+        order by rq
+    </select>
+</mapper>
+

@@ -1,0 +1,2 @@
+ALTER TABLE `nis_hlmbwhb` 
+ADD COLUMN `BQDM` int(0) NULL COMMENT '病区代码' AFTER `PYDM`;

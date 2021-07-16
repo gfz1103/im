@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院收入汇总 -->
+<mapper namespace="com.buit.cis.ims.dao.ImSrhzDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JGID as jgid,HZRQ as hzrq,KSLB as kslb,KSDM as ksdm,SFXM as sfxm,ZJJE as zjje,ZFJE as zfje
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_SRHZ (
+            JGID ,
+            HZRQ ,
+            KSLB ,
+            KSDM ,
+            SFXM ,
+            ZJJE ,
+            ZFJE 
+        ) VALUES (
+            #{jgid} ,
+            #{hzrq} ,
+            #{kslb} ,
+            #{ksdm} ,
+            #{sfxm} ,
+            #{zjje} ,
+            #{zfje} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE IM_SRHZ SET
+            ZJJE = #{zjje} ,
+            ZFJE = #{zfje} 
+        WHERE 
+            JGID = #{jgid}  AND 
+                        HZRQ = #{hzrq}  AND 
+                        KSLB = #{kslb}  AND 
+                        KSDM = #{ksdm}  AND 
+                        SFXM = #{sfxm} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM IM_SRHZ WHERE
+        JGID = #{jgid}  AND 
+        HZRQ = #{hzrq}  AND 
+        KSLB = #{kslb}  AND 
+        KSDM = #{ksdm}  AND 
+        SFXM = #{sfxm} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM IM_SRHZ <include refid="where"/>  
+    </delete>
+    <!--住院管理-日终汇总（取消汇总）-->
+    <delete id="doCancelCollectCommit">
+        delete from IM_SRHZ where JGID = #{jgid} and HZRQ= #{hzrq}
+    </delete>
+
+    <select id="getById" resultType="ImSrhz">
+        SELECT <include refid="columns" />
+            FROM IM_SRHZ 
+            WHERE 
+        JGID = #{jgid}  AND 
+        HZRQ = #{hzrq}  AND 
+        KSLB = #{kslb}  AND 
+        KSDM = #{ksdm}  AND 
+        SFXM = #{sfxm} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hzrq)"> -->
+<!--                     AND HZRQ = #{hzrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kslb)"> -->
+<!--                     AND KSLB = #{kslb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ksdm)"> -->
+<!--                     AND KSDM = #{ksdm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sfxm)"> -->
+<!--                     AND SFXM = #{sfxm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zjje)"> -->
+<!--                     AND ZJJE = #{zjje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfje)"> -->
+<!--                     AND ZFJE = #{zfje} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_SRHZ 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="ImSrhz">
+        SELECT <include refid="columns" />
+        FROM IM_SRHZ 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+
+    <!--     业务sql      -->
+    <!--日终汇总（三）费用list查询-->
+    <select id="queryHzThree" resultType="java.util.Map">
+        SELECT IFNULL(sum(a.ZJJE),0) as ZJJE FROM IM_SRHZ a,DIC_SFXMLB b WHERE ( a.SFXM = b.SFXM ) AND ( a.KSLB = 1 ) AND ( a.HZRQ &gt;= #{adt_hzrq} ) and ( a.HZRQ &lt;= #{adt_hzrq_end} ) AND a.JGID = #{al_jgid}
+    </select>
+    <!--日终汇总（三）费用项目汇总-->
+    <select id="qyeryHzFymxThree" resultType="java.util.Map">
+        SELECT b.ZYGB as ZYGB,b.SFMC as SFMC,sum(a.ZJJE) as ZJJE FROM IM_SRHZ a,DIC_SFXMLB b WHERE ( a.SFXM = b.SFXM ) AND ( a.KSLB = 1 ) AND ( a.HZRQ &gt;= #{adt_hzrq} ) and ( a.HZRQ &lt;= #{adt_hzrq_end} ) AND a.JGID = #{al_jgid} GROUP BY b.ZYGB,b.SFMC
+    </select>
+</mapper>
+

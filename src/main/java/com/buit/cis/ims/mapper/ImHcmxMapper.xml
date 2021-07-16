@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院_换床明细 -->
+<mapper namespace="com.buit.cis.ims.dao.ImHcmxDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        ZYH as zyh,HCRQ as hcrq,JGID as jgid,ZZRQ as zzrq,HCLX as hclx,HQCH as hqch,HHCH as hhch,HQKS as hqks,HHKS as hhks,HQBQ as hqbq,HHBQ as hhbq,JSCS as jscs,CZGH as czgh,SCBZ as scbz
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_HCMX (
+            ZYH ,
+            HCRQ ,
+            JGID ,
+            ZZRQ ,
+            HCLX ,
+            HQCH ,
+            HHCH ,
+            HQKS ,
+            HHKS ,
+            HQBQ ,
+            HHBQ ,
+            JSCS ,
+            CZGH ,
+            SCBZ
+        ) VALUES (
+            #{zyh} ,
+            #{hcrq} ,
+            #{jgid} ,
+            #{zzrq} ,
+            #{hclx} ,
+            #{hqch} ,
+            #{hhch} ,
+            #{hqks} ,
+            #{hhks} ,
+            #{hqbq} ,
+            #{hhbq} ,
+            #{jscs} ,
+            #{czgh} ,
+            #{scbz}
+        )
+    </insert>
+
+    <update id="update" ><!--
+        UPDATE IM_HCMX SET
+            JGID = #{jgid} ,
+            ZZRQ = #{zzrq} ,
+            HCLX = #{hclx} ,
+            HQCH = #{hqch} ,
+            HHCH = #{hhch} ,
+            HQKS = #{hqks} ,
+            HHKS = #{hhks} ,
+            HQBQ = #{hqbq} ,
+            HHBQ = #{hhbq} ,
+            JSCS = #{jscs} ,
+            CZGH = #{czgh} ,
+            SCBZ = #{scbz}
+        WHERE
+            ZYH = #{zyh}  AND
+                        HCRQ = #{hcrq}
+            -->
+    </update>
+
+
+    <delete id="deleteById">
+        DELETE FROM IM_HCMX WHERE
+        ZYH = #{zyh}  AND
+        HCRQ = #{hcrq}
+    </delete>
+
+    <delete id="removeByEntity">
+        DELETE FROM IM_HCMX <include refid="where"/>
+    </delete>
+
+    <select id="getById" resultType="ImHcmx">
+        SELECT <include refid="columns" />
+            FROM IM_HCMX
+            WHERE
+        ZYH = #{zyh}  AND
+        HCRQ = #{hcrq}
+    </select>
+
+    <sql id="where">
+        <where>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> -->
+<!--                     AND ZYH = #{zyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hcrq)"> -->
+<!--                     AND HCRQ = #{hcrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zzrq)"> -->
+<!--                     AND ZZRQ = #{zzrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hclx)"> -->
+<!--                     AND HCLX = #{hclx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hqch)"> -->
+<!--                     AND HQCH = #{hqch} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hhch)"> -->
+<!--                     AND HHCH = #{hhch} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hqks)"> -->
+<!--                     AND HQKS = #{hqks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hhks)"> -->
+<!--                     AND HHKS = #{hhks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hqbq)"> -->
+<!--                     AND HQBQ = #{hqbq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hhbq)"> -->
+<!--                     AND HHBQ = #{hhbq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jscs)"> -->
+<!--                     AND JSCS = #{jscs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czgh)"> -->
+<!--                     AND CZGH = #{czgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(scbz)"> -->
+<!--                     AND SCBZ = #{scbz} -->
+<!--                </if> -->
+        </where>
+    </sql>
+
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_HCMX
+        <include refid="where"/>
+    </select>
+
+    <select id="findByEntity" resultType="ImHcmx">
+        SELECT <include refid="columns" />
+        FROM IM_HCMX
+        <include refid="where"/>
+
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+
+    <!--     业务sql      -->
+    <!--修改结算次数-->
+<!--    <update id="updateJscs">
+        UPDATE IM_HCMX SET JSCS = #{ujscs} WHERE ZYH = #{zyh} AND JSCS = 0 And JGID = #{jgid}
+    </update>-->
+    <!--修改结算次数(fyrq)-->
+    <update id="updateJscsAndJsrq">
+        UPDATE IM_HCMX SET JSCS = #{jscs} WHERE ZYH = #{zyh} AND JSCS = 0 And JGID = #{jgid} and HCRQ &lt; #{zzrq}
+    </update>
+    <!--住院号查询换床信息-->
+    <select id="queryHqchAndhch" resultType="com.buit.cis.ims.model.ImHcmx">
+    SELECT <include refid="columns" /> FROM IM_HCMX WHERE ZYH = #{zyh} AND HCRQ = (SELECT MAX(HCRQ) as HCRQ FROM IM_HCMX WHERE ZYH = #{zyh})
+    </select>
+    
+    <!-- 查询换床信息-->
+    <select id="queryHcInfo" resultType="java.util.HashMap">
+    	select hqch as hqch,
+			hhch as hhch 
+		from
+			im_hcmx 
+		where zyh = #{zyh} 
+			and hclx in (1,2)
+			and jgid = #{jgid}
+			and date_format(hcrq, '%Y-%m-%d')  &gt;= #{minDate}
+			and date_format(hcrq, '%Y-%m-%d')  &lt;= #{maxDate}
+		order by hcrq asc
+    </select>
+</mapper>
+

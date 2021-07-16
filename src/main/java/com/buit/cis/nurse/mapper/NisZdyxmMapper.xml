@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 护理记录单自定义项目 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisZdyxmDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        XMDM as xmdm,XMMC as xmmc,ZFPB as zfpb,PYDM as pydm,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_ZDYXM (
+            XMDM ,
+            XMMC ,
+            ZFPB ,
+            PYDM ,
+            JGID 
+        ) VALUES (
+            #{xmdm} ,
+            #{xmmc} ,
+            #{zfpb} ,
+            #{pydm} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_ZDYXM SET
+            XMMC = #{xmmc} ,
+            ZFPB = #{zfpb} ,
+            PYDM = #{pydm} ,
+            JGID = #{jgid} 
+        WHERE 
+            XMDM = #{xmdm}            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_ZDYXM WHERE
+        XMDM = #{xmdm} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_ZDYXM <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisZdyxm">
+        SELECT <include refid="columns" />
+            FROM NIS_ZDYXM 
+            WHERE 
+        XMDM = #{xmdm} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+                <if test="@sqlt.Ognl@isNotEmpty(xmdm)">
+                     AND XMDM = #{xmdm} 
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(xmmc)"> 
+                     AND XMMC like concat('%', #{xmmc},'%')
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(zfpb)"> 
+                     AND ZFPB = #{zfpb} 
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(pydm)">
+                     AND PYDM like concat('%', #{pydm},'%')
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> 
+                     AND JGID = #{jgid} 
+                </if> 
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_ZDYXM 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisZdyxm">
+        SELECT <include refid="columns" />
+        FROM NIS_ZDYXM 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <update id="invalid" >
+        update nis_zdyxm set zfpb = #{zfpb} where xmdm = #{xmdm}            
+    </update>
+</mapper>
+

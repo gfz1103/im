@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.dctwork.dao.PubCsrzDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        RZXH as rzxh,JGID as jgid,RZSJ as rzsj,RZLX as rzlx,RZXX as rzxx
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO PUB_CSRZ (
+            RZXH ,
+            JGID ,
+            RZSJ ,
+            RZLX ,
+            RZXX 
+        ) VALUES (
+            #{rzxh} ,
+            #{jgid} ,
+            #{rzsj} ,
+            #{rzlx} ,
+            #{rzxx} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE PUB_CSRZ SET
+            JGID = #{jgid} ,
+            RZSJ = #{rzsj} ,
+            RZLX = #{rzlx} ,
+            RZXX = #{rzxx} 
+        WHERE 
+            RZXH = #{rzxh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM PUB_CSRZ WHERE
+        RZXH = #{rzxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM PUB_CSRZ <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="PubCsrz">
+        SELECT <include refid="columns" />
+            FROM PUB_CSRZ 
+            WHERE 
+        RZXH = #{rzxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rzxh)"> -->
+<!--                     AND RZXH = #{rzxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rzsj)"> -->
+<!--                     AND RZSJ = #{rzsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rzlx)"> -->
+<!--                     AND RZLX = #{rzlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rzxx)"> -->
+<!--                     AND RZXX = #{rzxx} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM PUB_CSRZ 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="PubCsrz">
+        SELECT <include refid="columns" />
+        FROM PUB_CSRZ 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+</mapper>
+

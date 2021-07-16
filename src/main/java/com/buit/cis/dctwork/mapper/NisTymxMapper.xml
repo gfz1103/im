@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 病区_退药明细 -->
+<mapper namespace="com.buit.cis.dctwork.dao.NisTymxDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,YPXH as ypxh,YPCD as ypcd,SQRQ as sqrq,YPJG as ypjg,JGID as jgid,TYRQ as tyrq,YPGG as ypgg,YFDW as yfdw,YFBZ as yfbz,YPSL as ypsl,ZFBL as zfbl,YEPB as yepb,YFSB as yfsb,TYBQ as tybq,CZGH as czgh,ZFPB as zfpb,TJBZ as tjbz,YZID as yzid,TYLX as tylx,THBZ as thbz,THSJ as thsj,THR as thr,JLID as jlid,FYFS as fyfs,TYYY as tyyy
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_TYMX (
+            JLXH ,
+            ZYH ,
+            YPXH ,
+            YPCD ,
+            SQRQ ,
+            YPJG ,
+            JGID ,
+            TYRQ ,
+            YPGG ,
+            YFDW ,
+            YFBZ ,
+            YPSL ,
+            ZFBL ,
+            YEPB ,
+            YFSB ,
+            TYBQ ,
+            CZGH ,
+            ZFPB ,
+            TJBZ ,
+            YZID ,
+            TYLX ,
+            THBZ ,
+            THSJ ,
+            THR ,
+            JLID ,
+            FYFS ,
+            TYYY
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{ypxh} ,
+            #{ypcd} ,
+            #{sqrq} ,
+            #{ypjg} ,
+            #{jgid} ,
+            #{tyrq} ,
+            #{ypgg} ,
+            #{yfdw} ,
+            #{yfbz} ,
+            #{ypsl} ,
+            #{zfbl} ,
+            #{yepb} ,
+            #{yfsb} ,
+            #{tybq} ,
+            #{czgh} ,
+            #{zfpb} ,
+            #{tjbz} ,
+            #{yzid} ,
+            #{tylx} ,
+            #{thbz} ,
+            #{thsj} ,
+            #{thr} ,
+            #{jlid} ,
+            #{fyfs} ,
+            #{tyyy}
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE NIS_TYMX SET
+            ZYH = #{zyh} ,
+            YPXH = #{ypxh} ,
+            YPCD = #{ypcd} ,
+            SQRQ = #{sqrq} ,
+            YPJG = #{ypjg} ,
+            JGID = #{jgid} ,
+            TYRQ = #{tyrq} ,
+            YPGG = #{ypgg} ,
+            YFDW = #{yfdw} ,
+            YFBZ = #{yfbz} ,
+            YPSL = #{ypsl} ,
+            ZFBL = #{zfbl} ,
+            YEPB = #{yepb} ,
+            YFSB = #{yfsb} ,
+            TYBQ = #{tybq} ,
+            CZGH = #{czgh} ,
+            ZFPB = #{zfpb} ,
+            TJBZ = #{tjbz} ,
+            YZID = #{yzid} ,
+            TYLX = #{tylx} ,
+            THBZ = #{thbz} ,
+            THSJ = #{thsj} ,
+            THR = #{thr} ,
+            JLID = #{jlid} ,
+            fyfs = #{fyfs} ,
+            tyyy = #{tyyy}
+        WHERE 
+            JLXH = #{jlxh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_TYMX WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_TYMX <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisTymx">
+        SELECT <include refid="columns" />
+            FROM NIS_TYMX 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> -->
+<!--                     AND ZYH = #{zyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ypxh)"> -->
+<!--                     AND YPXH = #{ypxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ypcd)"> -->
+<!--                     AND YPCD = #{ypcd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqrq)"> -->
+<!--                     AND SQRQ = #{sqrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ypjg)"> -->
+<!--                     AND YPJG = #{ypjg} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tyrq)"> -->
+<!--                     AND TYRQ = #{tyrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ypgg)"> -->
+<!--                     AND YPGG = #{ypgg} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yfdw)"> -->
+<!--                     AND YFDW = #{yfdw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yfbz)"> -->
+<!--                     AND YFBZ = #{yfbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ypsl)"> -->
+<!--                     AND YPSL = #{ypsl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfbl)"> -->
+<!--                     AND ZFBL = #{zfbl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yepb)"> -->
+<!--                     AND YEPB = #{yepb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yfsb)"> -->
+<!--                     AND YFSB = #{yfsb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tybq)"> -->
+<!--                     AND TYBQ = #{tybq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czgh)"> -->
+<!--                     AND CZGH = #{czgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfpb)"> -->
+<!--                     AND ZFPB = #{zfpb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tjbz)"> -->
+<!--                     AND TJBZ = #{tjbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yzid)"> -->
+<!--                     AND YZID = #{yzid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tylx)"> -->
+<!--                     AND TYLX = #{tylx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(thbz)"> -->
+<!--                     AND THBZ = #{thbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(thsj)"> -->
+<!--                     AND THSJ = #{thsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(thr)"> -->
+<!--                     AND THR = #{thr} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlid)"> -->
+<!--                     AND JLID = #{jlid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fyfs)"> -->
+<!--                     AND FYFS = #{fyfs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tyyy)"> -->
+<!--                     AND TYYY = #{tyyy} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_TYMX 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisTymx">
+        SELECT <include refid="columns" />
+        FROM NIS_TYMX 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 退药医嘱未提交或未确认表单记录数 -->
+    <select id="queryTyNotSubmitOrNotSure" resultType="com.buit.cis.dctwork.response.NisTymxResp">
+       SELECT DRUGS_TYPK.YPMC as YPMC, 
+       		  NIS_TYMX.YPXH as YPXH,
+       		  NIS_TYMX.YPGG as YPGG,
+       		  NIS_TYMX.YFDW as YFDW,
+       		  NIS_TYMX.YPSL as YPSL,
+       		  NIS_TYMX.YPJG as YPJG,
+       		  NIS_TYMX.YZID as YZID
+	  FROM NIS_TYMX, v_drugs_typk as DRUGS_TYPK
+	 WHERE (DRUGS_TYPK.YPXH = NIS_TYMX.YPXH)
+	   AND (NIS_TYMX.TJBZ = 1 OR NIS_TYMX.TYRQ IS NULL)
+	   AND (NIS_TYMX.ZYH = #{zyh}) 
+	   AND NIS_TYMX.JGID = #{jgid}
+    </select>
+    
+    <!-- 退药申请查询退药记录 -->
+    <select id="queryTymxRecord" resultType="com.buit.cis.nurse.response.NisTymxRecordResp">
+	    select 
+	    	a.TYRQ as TYRQ,
+	       b.YPMC as YPMC,
+	       a.YPGG as YPGG,
+	       d.YFDW as YFDW,
+	       sum(ceiling(d.FYSL)) as YPSL,
+	       a.YPJG as YPJG,
+	       c.CDMC as CDMC,
+           a.SQRQ as SQRQ,
+           a.TYYY as TYYY
+	  from NIS_TYMX a, v_drugs_typk b, DRUGS_CDDZ c, NIS_TJ02 d,
+	  NIS_TYPC e
+	 where  a.YZID = d.YZXH
+	   and a.YPXH = b.YPXH
+	   and a.YPCD = c.YPCD
+	   and d.JLXH = e.TJXH
+	   and a.JLXH = e.TYXH
+	   and a.ZYH = #{zyh} 
+	   and (a.TJBZ = 1 or a.TYRQ is not null)
+	   and date_format(d.QRRQ, '%Y-%m-%d') &gt;= #{beginDate}
+	   and date_format(d.QRRQ, '%Y-%m-%d') &lt;= #{endDate}
+	   group by a.TYRQ,
+	       b.YPMC,
+	       a.YPGG,
+	       d.YFDW,
+	       a.YPJG,
+	       c.CDMC,
+           a.SQRQ,
+           a.TYYY
+     </select>
+     
+     <!-- 查询已提交的退药数量 -->
+     <select id="queryTyslSubmitted" resultType="java.math.BigDecimal">
+	     select ifnull(sum(ceiling(c.fysl)), 0) 
+	     from nis_tymx a,nis_typc b,nis_tj02 c
+			where a.jlxh = b.tyxh 
+			and b.tjxh = c.jlxh 
+			and a.tyrq is null
+			and a.tjbz = 1
+			and a.zyh = #{zyh}
+			and a.ypxh = #{ypxh}
+			and a.ypcd = #{ypcd}
+			and a.yzid = #{yzxh}
+			and a.jgid = #{jgid}
+            <if test="@sqlt.Ognl@isNotEmpty(start)">
+                 and date_format(c.qrrq, '%Y-%m-%d') &gt;= #{start}
+            </if>
+			<if test="@sqlt.Ognl@isNotEmpty(end)">
+                 and date_format(c.qrrq, '%Y-%m-%d') &lt;= #{end}
+            </if>
+	 </select>
+	 
+	 <!-- 根据住院号和机构id删除退药明细 -->
+	 <delete id="deleteTymxByZyhAndJgid">
+       delete from NIS_TYMX
+		 where ZYH = #{zyh}
+		   and JGID = #{jgid}
+		   and (TJBZ = 0 Or TJBZ Is Null)
+		   and TYRQ Is Null
+     </delete>
+     
+     <!-- 根据住院号和机构id更新退药明细提交状态 -->
+     <update id="updateTymxByZyhAndJgid">
+       	update NIS_TYMX set TJBZ = 1 where ZYH = #{zyh} and JGID = #{jgid} and (TJBZ = 0 Or TJBZ is null) and TYRQ is null
+     </update>
+     
+     <!-- 判断是否未提交或未确认的退药单 -->
+     <select id="queryAntidoteNotSureOrExcuted" resultType="long">
+		     select count(1)
+		  from NIS_TYMX
+		 where (TJBZ = 1 or TYRQ is null) and ZYH = #{zyh} and JGID = #{jgid}
+	 </select>
+     <select id="queryByCond" resultType="com.buit.cis.dctwork.response.QueryBackMedicineWardApiResp">
+         select TYBQ as tybq,b.officeName as ksmc, count(1) as tyts
+         from NIS_TYMX a,DIC_KSZD  b,im_fyfs c
+         where a.TYBQ=b.ID and b.HOSPITALAREA=1 and a.TJBZ=1 and a.TYRQ is null and a.FYFS=c.FYFS
+         and ${@com.buit.his.pha.commons.util.SqlConverterUtil@transfer(cond)}
+         group by a.TYBQ,b.officeName order by TYBQ
+     </select>
+	 <select id="queryByJlxh"  resultType="NisTymx">
+         SELECT <include refid="columns" />
+         FROM NIS_TYMX
+         where JLXH IN (
+         <foreach collection="list" item="x" separator=",">
+             #{x}
+         </foreach>
+         )
+     </select>
+     
+     <!-- 判断是否未提交或未确认的退药单列表 -->
+     <select id="queryAntidoteNotSureOrExcutedInfo" resultType="com.buit.cis.dctwork.response.NisTymxResp">
+		     select a.JLXH as JLXH,
+			     a.TYBQ as TYBQ,
+			     a.TJBZ as TJBZ,
+			     b.YPMC as YPMC,
+			     c.CDMC as CDMC,
+			     a.SQRQ as SQRQ,
+			     a.YPGG as YPGG,
+			     a.TYLX as TYLX
+		  from NIS_TYMX a, v_drugs_typk b, DRUGS_CDDZ c
+		 where (a.TJBZ = 1 or a.TYRQ is null) and a.ZYH = #{zyh} and a.JGID = #{jgid}
+		 AND a.YPXH = b.YPXH
+		 AND a.YPCD = c.YPCD
+	 </select>
+	 
+	 <!-- 查询已保存退药申请列表 -->
+     <select id="queryDrugWithdrawalApplicationList" resultType="com.buit.cis.dctwork.response.NisTymxResp">
+		        select DRUGS_TYPK1_.YPMC as YPMC,
+               NIS_TYMX0_.YPGG as YPGG,
+               NIS_TYMX0_.YFDW as YFDW,
+               -sum(ceiling(NIS_TJ024_.FYSL)) as YPSL,
+               NIS_TYMX0_.YPJG as YPJG,
+               DRUGS_CDDZ2_.CDMC as CDMC,
+               NIS_TYMX0_.JLXH as JLXH,
+               NIS_TYMX0_.YFSB as YFSB,
+               NIS_TYMX0_.YPXH as YPXH,
+               NIS_TYMX0_.YFBZ as YFBZ,
+               NIS_TYMX0_.SQRQ as SQRQ,
+               NIS_TYMX0_.TYRQ as TYRQ,
+               NIS_TYMX0_.TYBQ as TYBQ,
+               NIS_TYMX0_.YEPB as YEPB,
+               NIS_TYMX0_.CZGH as CZGH,
+               NIS_TYMX0_.YPCD as YPCD,
+               NIS_TYMX0_.ZFBL as ZFBL,
+               NIS_TYMX0_.ZFPB as ZFPB,
+               NIS_TYMX0_.TJBZ as TJBZ,
+               NIS_TYMX0_.YZID as YZID,
+               NIS_TYMX0_.THBZ as THBZ,
+               NIS_TYMX0_.THSJ as THSJ,
+               NIS_TYMX0_.THR  as THR,
+               NIS_TYMX0_.ZYH  as ZYH,
+               NIS_TYMX0_.TYLX as TYLX,
+               NIS_TYMX0_.JGID as JGID,
+			   NIS_TJ024_.YCSL as YCSL
+          from NIS_TYMX NIS_TYMX0_, v_drugs_typk DRUGS_TYPK1_, DRUGS_CDDZ DRUGS_CDDZ2_,
+          NIS_TYPC NIS_TYPC3_, NIS_TJ02 NIS_TJ024_
+         where DRUGS_TYPK1_.YPXH = NIS_TYMX0_.YPXH
+           and DRUGS_CDDZ2_.YPCD = NIS_TYMX0_.YPCD
+           and (NIS_TYMX0_.TYRQ is null)
+           and NIS_TYMX0_.ZYH = #{zyh}
+           and NIS_TYMX0_.TJBZ = 0
+           <if test="@sqlt.Ognl@isNotEmpty(beginDate)">
+                 and date_format(NIS_TJ024_.QRRQ, '%Y-%m-%d') &gt;= #{beginDate}
+           </if>
+		   <if test="@sqlt.Ognl@isNotEmpty(endDate)">
+                 and date_format(NIS_TJ024_.QRRQ, '%Y-%m-%d') &lt;= #{endDate}
+           </if>
+		 and NIS_TYMX0_.JLXH = NIS_TYPC3_.TYXH and NIS_TYPC3_.TJXH = NIS_TJ024_.JLXH 
+		 group by DRUGS_TYPK1_.YPMC,
+               NIS_TYMX0_.YPGG ,
+               NIS_TYMX0_.YFDW,
+               NIS_TYMX0_.YPJG ,
+               DRUGS_CDDZ2_.CDMC,
+               NIS_TYMX0_.JLXH, 
+               NIS_TYMX0_.YFSB ,
+               NIS_TYMX0_.YPXH ,
+               NIS_TYMX0_.YFBZ ,
+               NIS_TYMX0_.SQRQ ,
+               NIS_TYMX0_.TYRQ ,
+               NIS_TYMX0_.TYBQ ,
+               NIS_TYMX0_.YEPB ,
+               NIS_TYMX0_.CZGH,
+               NIS_TYMX0_.YPCD ,
+               NIS_TYMX0_.ZFBL,
+               NIS_TYMX0_.ZFPB,
+               NIS_TYMX0_.TJBZ ,
+               NIS_TYMX0_.YZID ,
+               NIS_TYMX0_.THBZ,
+               NIS_TYMX0_.THSJ,
+               NIS_TYMX0_.THR ,
+               NIS_TYMX0_.ZYH  ,
+               NIS_TYMX0_.TYLX ,
+               NIS_TYMX0_.JGID ,
+               NIS_TJ024_.YCSL
+	 </select>
+     
+</mapper>
+

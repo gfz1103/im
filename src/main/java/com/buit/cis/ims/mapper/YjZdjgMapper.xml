@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.ims.dao.YjZdjgDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        ZDID as zdid,JGID as jgid,ZDDM as zddm,ZDMC as zdmc,KSDM as ksdm
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO YJ_ZDJG (
+            ZDID ,
+            JGID ,
+            ZDDM ,
+            ZDMC ,
+            KSDM 
+        ) VALUES (
+            #{zdid} ,
+            #{jgid} ,
+            #{zddm} ,
+            #{zdmc} ,
+            #{ksdm} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE YJ_ZDJG SET
+            ZDDM = #{zddm} ,
+            ZDMC = #{zdmc}
+        WHERE
+            ZDID = #{zdid} 
+
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM YJ_ZDJG WHERE
+        ZDID = #{zdid} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM YJ_ZDJG <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="YjZdjg">
+        SELECT <include refid="columns" />
+            FROM YJ_ZDJG 
+            WHERE 
+        ZDID = #{zdid} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zdid)"> -->
+<!--                     AND ZDID = #{zdid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zddm)"> -->
+<!--                     AND ZDDM = #{zddm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zdmc)"> -->
+<!--                     AND ZDMC = #{zdmc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ksdm)"> -->
+<!--                     AND KSDM = #{ksdm} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM YJ_ZDJG 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="YjZdjg">
+        SELECT <include refid="columns" />
+        FROM YJ_ZDJG 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+</mapper>
+

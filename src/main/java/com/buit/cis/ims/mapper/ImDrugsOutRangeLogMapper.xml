@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 药品费用超出结算时间记录表 -->
+<mapper namespace="com.buit.cis.ims.dao.ImDrugsOutRangeLogDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,FYMX_JLXH as fymxJlxh,SJFYRQ as sjfyrq
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_DRUGS_OUT_RANGE_LOG (JLXH,
+                                            ZYH,
+                                            FYMX_JLXH,
+                                            SJFYRQ)
+        VALUES (#{jlxh},
+                #{zyh},
+                #{fymxJlxh},
+                #{sjfyrq})
+    </insert>
+
+    <update id="update">
+        UPDATE IM_DRUGS_OUT_RANGE_LOG
+        SET ZYH       = #{zyh},
+            FYMX_JLXH = #{fymxJlxh},
+            SJFYRQ    = #{sjfyrq}
+        WHERE JLXH = #{jlxh}
+    </update>
+
+    <update id="updateByEntity">
+        UPDATE IM_DRUGS_OUT_RANGE_LOG
+        <set>
+            <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                ZYH = #{zyh},
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(fymxJlxh)">
+                FYMX_JLXH = #{fymxJlxh},
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(sjfyrq)">
+                SJFYRQ = #{sjfyrq},
+            </if>
+        </set>
+        WHERE
+        JLXH = #{jlxh}
+    </update>
+
+    <delete id="deleteById">
+        DELETE
+        FROM IM_DRUGS_OUT_RANGE_LOG
+        WHERE JLXH = #{jlxh}
+    </delete>
+
+    <delete id="removeByEntity">
+        DELETE FROM IM_DRUGS_OUT_RANGE_LOG
+        <include refid="where"/>
+    </delete>
+
+    <select id="getById" resultType="ImDrugsOutRangeLog">
+        SELECT
+        <include refid="columns"/>
+        FROM IM_DRUGS_OUT_RANGE_LOG
+        WHERE
+        JLXH = #{jlxh}
+    </select>
+
+    <sql id="where">
+        <where>
+            <if test="@sqlt.Ognl@isNotEmpty(jlxh)">
+                AND JLXH = #{jlxh}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                AND ZYH = #{zyh}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(fymxJlxh)">
+                AND FYMX_JLXH = #{fymxJlxh}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(sjfyrq)">
+                AND SJFYRQ = #{sjfyrq}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_DRUGS_OUT_RANGE_LOG
+        <include refid="where"/>
+    </select>
+
+    <select id="findByEntity" resultType="ImDrugsOutRangeLog">
+        SELECT
+        <include refid="columns"/>
+        FROM IM_DRUGS_OUT_RANGE_LOG
+        <include refid="where"/>
+
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+</mapper>
+

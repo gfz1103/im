@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院_收款结帐信息 -->
+<mapper namespace="com.buit.cis.ims.dao.ImJzxxDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JZRQ as jzrq,CZGH as czgh,JGID as jgid,CYSR as cysr,YJJE as yjje,YJXJ as yjxj,YJZP as yjzp,TPJE as tpje,FPZS as fpzs,SJZS as sjzs,YSJE as ysje,YSXJ as ysxj,YSZP as yszp,ZPZS as zpzs,TYJJ as tyjj,TJKS as tjks,KBJE as kbje,KBZP as kbzp,HZRQ as hzrq,YJQT as yjqt,YSQT as ysqt,QTZS as qtzs,SRJE as srje,YJYHK as yjyhk,YSYHK as ysyhk,YSYH as ysyh,QZPJ as qzpj,QZSJ as qzsj,ZXJZFY as zxjzfy,GRXJZF as grxjzf,BCZHZF as bczhzf,TCZC as tczc,DBZC as dbzc,AZQGFY as azqgfy,QTYSFB as qtysfb
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_JZXX (
+            JZRQ ,
+            CZGH ,
+            JGID ,
+            CYSR ,
+            YJJE ,
+            YJXJ ,
+            YJZP ,
+            TPJE ,
+            FPZS ,
+            SJZS ,
+            YSJE ,
+            YSXJ ,
+            YSZP ,
+            ZPZS ,
+            TYJJ ,
+            TJKS ,
+            KBJE ,
+            KBZP ,
+            HZRQ ,
+            YJQT ,
+            YSQT ,
+            QTZS ,
+            SRJE ,
+            YJYHK ,
+            YSYHK ,
+            YSYH ,
+            QZPJ ,
+            QZSJ ,
+            ZXJZFY ,
+            GRXJZF ,
+            BCZHZF ,
+            TCZC ,
+            DBZC ,
+            AZQGFY ,
+            QTYSFB 
+        ) VALUES (
+            #{jzrq} ,
+            #{czgh} ,
+            #{jgid} ,
+            #{cysr} ,
+            #{yjje} ,
+            #{yjxj} ,
+            #{yjzp} ,
+            #{tpje} ,
+            #{fpzs} ,
+            #{sjzs} ,
+            #{ysje} ,
+            #{ysxj} ,
+            #{yszp} ,
+            #{zpzs} ,
+            #{tyjj} ,
+            #{tjks} ,
+            #{kbje} ,
+            #{kbzp} ,
+            #{hzrq} ,
+            #{yjqt} ,
+            #{ysqt} ,
+            #{qtzs} ,
+            #{srje} ,
+            #{yjyhk} ,
+            #{ysyhk} ,
+            #{ysyh} ,
+            #{qzpj} ,
+            #{qzsj} ,
+            #{zxjzfy} ,
+            #{grxjzf} ,
+            #{bczhzf} ,
+            #{tczc} ,
+            #{dbzc} ,
+            #{azqgfy} ,
+            #{qtysfb} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE IM_JZXX SET
+            JGID = #{jgid} ,
+            CYSR = #{cysr} ,
+            YJJE = #{yjje} ,
+            YJXJ = #{yjxj} ,
+            YJZP = #{yjzp} ,
+            TPJE = #{tpje} ,
+            FPZS = #{fpzs} ,
+            SJZS = #{sjzs} ,
+            YSJE = #{ysje} ,
+            YSXJ = #{ysxj} ,
+            YSZP = #{yszp} ,
+            ZPZS = #{zpzs} ,
+            TYJJ = #{tyjj} ,
+            TJKS = #{tjks} ,
+            KBJE = #{kbje} ,
+            KBZP = #{kbzp} ,
+            HZRQ = #{hzrq} ,
+            YJQT = #{yjqt} ,
+            YSQT = #{ysqt} ,
+            QTZS = #{qtzs} ,
+            SRJE = #{srje} ,
+            YJYHK = #{yjyhk} ,
+            YSYHK = #{ysyhk} ,
+            YSYH = #{ysyh} ,
+            QZPJ = #{qzpj} ,
+            QZSJ = #{qzsj} ,
+            ZXJZFY = #{zxjzfy} ,
+            GRXJZF = #{grxjzf} ,
+            BCZHZF = #{bczhzf} ,
+            TCZC = #{tczc} ,
+            DBZC = #{dbzc} ,
+            AZQGFY = #{azqgfy} ,
+            QTYSFB = #{qtysfb} 
+        WHERE 
+            JZRQ = #{jzrq}  AND 
+                        CZGH = #{czgh} 
+            -->            
+    </update>
+    <!--住院管理-日终汇总（取消汇总）-->
+    <update id="doCancelCollectCommit">
+    update IM_JZXX set HZRQ=null where HZRQ =#{hzrq} and JGID=#{jgid}
+    </update>
+    <!--修改汇总日期-->
+    <update id="updateHzrq">
+        UPDATE IM_JZXX Set HZRQ=#{ldt_GatherDate} Where HZRQ IS Null AND JZRQ &lt;#{idt_End} and JGID=#{gl_jgid}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM IM_JZXX WHERE
+        JZRQ = #{jzrq}  AND 
+        CZGH = #{czgh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM IM_JZXX <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="ImJzxx">
+        SELECT <include refid="columns" />
+            FROM IM_JZXX 
+            WHERE 
+        JZRQ = #{jzrq}  AND 
+        CZGH = #{czgh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jzrq)"> -->
+<!--                     AND JZRQ = #{jzrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czgh)"> -->
+<!--                     AND CZGH = #{czgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cysr)"> -->
+<!--                     AND CYSR = #{cysr} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yjje)"> -->
+<!--                     AND YJJE = #{yjje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yjxj)"> -->
+<!--                     AND YJXJ = #{yjxj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yjzp)"> -->
+<!--                     AND YJZP = #{yjzp} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tpje)"> -->
+<!--                     AND TPJE = #{tpje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fpzs)"> -->
+<!--                     AND FPZS = #{fpzs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sjzs)"> -->
+<!--                     AND SJZS = #{sjzs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ysje)"> -->
+<!--                     AND YSJE = #{ysje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ysxj)"> -->
+<!--                     AND YSXJ = #{ysxj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yszp)"> -->
+<!--                     AND YSZP = #{yszp} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zpzs)"> -->
+<!--                     AND ZPZS = #{zpzs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tyjj)"> -->
+<!--                     AND TYJJ = #{tyjj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tjks)"> -->
+<!--                     AND TJKS = #{tjks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kbje)"> -->
+<!--                     AND KBJE = #{kbje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kbzp)"> -->
+<!--                     AND KBZP = #{kbzp} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hzrq)"> -->
+<!--                     AND HZRQ = #{hzrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yjqt)"> -->
+<!--                     AND YJQT = #{yjqt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ysqt)"> -->
+<!--                     AND YSQT = #{ysqt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qtzs)"> -->
+<!--                     AND QTZS = #{qtzs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(srje)"> -->
+<!--                     AND SRJE = #{srje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yjyhk)"> -->
+<!--                     AND YJYHK = #{yjyhk} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ysyhk)"> -->
+<!--                     AND YSYHK = #{ysyhk} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ysyh)"> -->
+<!--                     AND YSYH = #{ysyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qzpj)"> -->
+<!--                     AND QZPJ = #{qzpj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qzsj)"> -->
+<!--                     AND QZSJ = #{qzsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zxjzfy)"> -->
+<!--                     AND ZXJZFY = #{zxjzfy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(grxjzf)"> -->
+<!--                     AND GRXJZF = #{grxjzf} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bczhzf)"> -->
+<!--                     AND BCZHZF = #{bczhzf} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tczc)"> -->
+<!--                     AND TCZC = #{tczc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dbzc)"> -->
+<!--                     AND DBZC = #{dbzc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(azqgfy)"> -->
+<!--                     AND AZQGFY = #{azqgfy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qtysfb)"> -->
+<!--                     AND QTYSFB = #{qtysfb} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_JZXX 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="ImJzxx">
+        SELECT <include refid="columns" />
+        FROM IM_JZXX 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+
+    <!--     业务sql      -->
+    <!--查询有没结账过-->
+    <select id="quertCount" resultType="java.lang.Integer">
+        select count(1) from IM_JZXX where JZRQ &gt;=#{begin} and JZRQ &lt;#{end} and  CZGH=#{czgh}  and JGID=#{jgid}
+    </select>
+    <!--查询明细-->
+    <select id="queryMx" resultType="java.util.Map">
+    select MAX(JZRQ) as JZRQ from IM_JZXX where CZGH=#{czgh}  and JGID= #{jgid}
+    </select>
+    <!--取消日报查询-->
+    <select id="queryCancelCommit" resultType="java.util.Map">
+        select distinct date_format(JZRQ,'%Y-%m-%d %H:%i:%S') as JZRQ,CZGH as CZGH from IM_JZXX where CZGH= #{czgh} and JGID=#{jgid} and HZRQ is null order by JZRQ desc
+    </select>
+    <!--查询结账汇总信息-->
+    <select id="quereyHz" resultType="java.sql.Timestamp">
+    SELECT JZRQ as JZRQ FROM IM_JZXX WHERE CZGH =#{czgh} and JGID =#{jgid} and JZRQ=#{jzrq} and HZRQ is null
+    </select>
+    <!--查询最大结账日期-->
+    <select id="queryMaxJzrq" resultType="java.util.Map">
+    select  date_format(max(JZRQ),'%Y-%m-%d %H:%i:%S') as JZRQ from IM_JZXX where CZGH=#{czgh}  and JGID=#{jgid} and HZRQ is null
+    </select>
+    <!--取消日报-->
+    <select id="doCancelCommit">
+    delete from IM_JZXX where JGID=#{jgid} and CZGH=#{czgh} and JZRQ=#{jzrq}
+    </select>
+    <!--查询住院结账信息-->
+    <select id="queryZyjzxx" resultType="java.util.Map">
+        SELECT  a.QTYSFB as QTYSFB,a.JZRQ as JZRQ, a.CZGH as CZGH,a.CYSR as CYSR,a.YJJE as YJJE,a.YJXJ as YJXJ, a.YJZP as YJZP,a.QZPJ as QZPJ,a.QZSJ as QZSJ,a.FPZS as FPZS, a.SJZS as SJZS,a.YSJE as YSJE,a.YSXJ as YSXJ,a.YSZP as YSZP,a.ZPZS as ZPZS, a.TYJJ as TYJJ,a.TJKS as TJKS,a.KBJE as KBJE,a.KBZP as KBZP, a.YSQT as YSQT,a.QTZS as QTZS,a.SRJE as SRJE,a.YJYHK as YJYHK, a.YSYHK as YSYHK, a.YSYH  as YSYH, a.JGID  as JGID FROM IM_JZXX  a WHERE ( a.JZRQ &gt;=#{adt_jzrq_s} ) AND  ( a.JZRQ &lt; #{adt_jzrq_e}) AND  ( a.CZGH = #{as_czgh} ) AND   a.JGID =#{al_jgid} order by a.JZRQ
+    </select>
+    <!--查询住院结账信息(结账日期不为空)-->
+    <select id="queryZyjzxxBrJzrq" resultType="java.util.Map">
+SELECT  a.QTYSFB as QTYSFB,a.JZRQ as JZRQ, a.CZGH as CZGH,a.CYSR as CYSR,a.YJJE as YJJE,a.YJXJ as YJXJ, a.YJZP as YJZP,a.QZPJ as QZPJ,a.QZSJ as QZSJ,a.FPZS as FPZS, a.SJZS as SJZS,a.YSJE as YSJE,a.YSXJ as YSXJ,a.YSZP as YSZP,a.ZPZS as ZPZS, a.TYJJ as TYJJ,a.TJKS as TJKS,a.KBJE as KBJE,a.KBZP as KBZP, a.YSQT as YSQT,a.QTZS as QTZS,a.SRJE as SRJE,a.YJYHK as YJYHK, a.YSYHK as YSYHK, a.YSYH  as YSYH, a.JGID  as JGID FROM IM_JZXX  a WHERE ( date_format(a.JZRQ,'%Y-%m-%d %H:%i:%S') = #{jzrq}) AND  ( a.CZGH = #{as_czgh} ) AND   a.JGID = #{al_jgid}
+    </select>
+    <!--校验结账信息-->
+    <select id="checkRecordCount" resultType="java.util.Map">
+        SELECT  a.JZRQ as JZRQ, a.CZGH as CZGH,a.CYSR as CYSR,a.YJJE as YJJE,a.YJXJ as YJXJ, a.YJZP as YJZP,a.QZPJ as QZPJ,a.QZSJ as QZSJ,a.FPZS as FPZS, a.SJZS as SJZS,a.YSJE as YSJE,a.YSXJ as YSXJ,a.YSZP as YSZP,a.ZPZS as ZPZS, a.TYJJ as TYJJ,a.TJKS as TJKS,a.KBJE as KBJE,a.KBZP as KBZP, a.YSQT as YSQT,a.QTZS as QTZS,a.SRJE as SRJE,a.YJYHK as YJYHK, a.YSYHK as YSYHK, a.YSYH  as YSYH, a.JGID  as JGID
+        FROM IM_JZXX  a
+        WHERE ( a.JZRQ &gt;= #{adt_jzrq_s} ) AND  ( a.JZRQ &lt; #{adt_jzrq_e} )
+        AND  ( a.CZGH = #{as_czgh} ) AND   a.JGID = #{al_jgid}
+        order by a.JZRQ
+    </select>
+    <!--查询日终汇总的次数-->
+    <select id="queryRzhzCount" resultType="java.lang.Integer">
+        select count(1) from IM_JZXX where HZRQ IS NULL AND JZRQ &lt;= #{adt_jzrq} AND JGID= #{al_jgid}
+    </select>
+    <!--判断日终汇总有没有数据可查询-->
+    <select id="doQueryVerification" resultType="java.util.Map">
+        SELECT IM_JZXX.CZGH as CZGH,sum(IM_JZXX.CYSR) as CYSR,sum(IM_JZXX.YJJE) as YJJE,sum(IM_JZXX.TPJE) as TPJE,sum(IM_JZXX.FPZS) as FPZS,sum(IM_JZXX.SJZS) as SJZS,sum(IM_JZXX.YSJE) as YSJE,sum(IM_JZXX.YSXJ) as YSXJ,sum(IM_JZXX.ZPZS) as ZPZS,sum(IM_JZXX.TYJJ) as TYJJ,sum(IM_JZXX.YSQT) as YSQT,sum(IM_JZXX.QTZS) as QTZS,sum(IM_JZXX.SRJE) as SRJE FROM IM_JZXX IM_JZXX WHERE IM_JZXX.HZRQ &gt;=#{adt_hzrq_b} AND IM_JZXX.HZRQ &lt;=#{adt_hzrq_e} AND IM_JZXX.JGID= #{al_jgid} group by IM_JZXX.CZGH
+    </select>
+    <!--查询汇总次数-->
+    <select id="queryHzCount" resultType="java.lang.Integer">
+       select count(1) from IM_JZXX where  HZRQ IS Null AND JZRQ &lt;#{idt_End} and JGID= #{gl_jgid}
+    </select>
+    <!--日结汇总汇总表单-->
+    <select id="queryHzList" resultType="java.util.Map">
+        SELECT IM_JZXX.CZGH as CZGH,sum(IM_JZXX.CYSR) as CYSR,sum(IM_JZXX.YJJE) as YJJE,sum(IM_JZXX.TPJE) as TPJE,sum(IM_JZXX.FPZS) as FPZS,sum(IM_JZXX.SJZS) as SJZS,sum(IM_JZXX.YSJE) as YSJE,sum(IM_JZXX.YSXJ) as YSXJ,sum(IM_JZXX.ZPZS) as ZPZS,sum(IM_JZXX.TYJJ) as TYJJ,sum(IM_JZXX.YSQT) as YSQT,sum(IM_JZXX.QTZS) as QTZS,sum(IM_JZXX.SRJE) as SRJE,sum(IM_JZXX.TCZC) as TCZC,sum(IM_JZXX.DBZC) as DBZC,sum(IM_JZXX.ZXJZFY) as ZXJZFY,sum(IM_JZXX.GRXJZF) as GRXJZF,sum(IM_JZXX.BCZHZF) as BCZHZF,sum(IM_JZXX.AZQGFY) as AZQGFY FROM IM_JZXX IM_JZXX WHERE IM_JZXX.HZRQ&gt;=#{adt_hzrq_b} AND IM_JZXX.HZRQ&lt;=#{adt_hzrq_e} AND IM_JZXX.JGID=#{al_jgid} group by IM_JZXX.CZGH order by IM_JZXX.CZGH
+
+    </select>
+    <!--查询汇总合计-->
+    <select id="queryHzhj" resultType="java.util.Map">
+        SELECT IFNULL(sum(IM_JZXX.CYSR),0) as ZCYSR,sum(IM_JZXX.YJJE) as ZYJJE,sum(IM_JZXX.TPJE) as ZTPJE,sum(IM_JZXX.FPZS) as ZFPZS,sum(IM_JZXX.SJZS) as ZSJZS,sum(IM_JZXX.YSJE) as ZYSJE,sum(IM_JZXX.YSXJ) as ZYSXJ,sum(IM_JZXX.ZPZS) as ZZPZS,sum(IM_JZXX.TYJJ) as ZTYJJ,sum(IM_JZXX.YSQT) as ZYSQT,sum(IM_JZXX.QTZS) as ZQTZS,sum(IM_JZXX.SRJE) as ZSRJE,sum(IM_JZXX.TCZC) as TCZC,sum(IM_JZXX.DBZC) as DBZC,sum(IM_JZXX.ZXJZFY) as ZXJZFY,sum(IM_JZXX.GRXJZF) as GRXJZF,sum(IM_JZXX.BCZHZF) as BCZHZF,sum(IM_JZXX.AZQGFY) as AZQGFY FROM IM_JZXX IM_JZXX WHERE IM_JZXX.HZRQ &gt;=#{adt_hzrq_b} AND IM_JZXX.HZRQ &lt;=#{adt_hzrq_e} AND IM_JZXX.JGID= #{al_jgid}
+    </select>
+    <!--汇总查询发票的作废方式-->
+    <select id="queryHzzfzs" resultType="java.util.Map">
+        SELECT IM_ZFPJ.PJLB as PJLB,IM_ZFPJ.PJHM as PJHM FROM IM_ZFPJ IM_ZFPJ,IM_JZXX IM_JZXX WHERE ( IM_ZFPJ.JZRQ = IM_JZXX.JZRQ ) AND ( IM_ZFPJ.CZGH = IM_JZXX.CZGH ) AND IM_JZXX.HZRQ &gt;=#{adt_hzrq_b} AND IM_JZXX.HZRQ &lt;=#{adt_hzrq_e} AND IM_JZXX.JGID=#{al_jgid} ORDER BY IM_ZFPJ.PJLB,IM_ZFPJ.PJHM
+    </select>
+    <!--汇总查询作废票据list-->
+    <select id="queryHzZfpjList" resultType="java.util.Map">
+        SELECT IFNULL(QZPJ,'') as QZPJ,IFNULL(QZSJ,'') as QZSJ From IM_JZXX Where CZGH=#{as_czgh} And HZRQ &gt;=#{adt_hzrq_b} And HZRQ &lt;=#{adt_hzrq_e} And JGID=#{gl_jgid}
+    </select>
+    <!--查询日结汇总表单数据-->
+    <select id="queryHzParamList" resultType="java.util.Map">
+        SELECT a.CZGH as CZGH,sum(a.CYSR) as CYSR,sum(a.YJJE) as YJJE,sum(a.TPJE) as TPJE,sum(a.FPZS) as FPZS,sum(a.SJZS) as SJZS,sum(a.YSJE) as YSJE,sum(a.YSXJ) as YSXJ,sum(a.ZPZS) as ZPZS,sum(a.TYJJ) as TYJJ,sum(a.YSQT) as YSQT,sum(a.QTZS) as QTZS,sum(a.SRJE) as SRJE,sum(a.TCZC) as TCZC,sum(a.DBZC) as DBZC,sum(a.ZXJZFY) as ZXJZFY,sum(a.GRXJZF) as GRXJZF,sum(a.BCZHZF) as BCZHZF,sum(a.AZQGFY) as AZQGFY FROM IM_JZXX a WHERE a.HZRQ IS NULL AND a.JZRQ &lt;=#{adt_jzrq} AND a.JGID=#{al_jgid} group by a.CZGH order by a.CZGH
+    </select>
+    <!--汇总查询作废票据list报表参数-->
+    <select id="queryHzZfpjParamList" resultType="java.util.Map">
+        SELECT IM_ZFPJ.PJLB as PJLB,IM_ZFPJ.PJHM as PJHM FROM IM_ZFPJ IM_ZFPJ,IM_JZXX IM_JZXX WHERE ( IM_ZFPJ.JZRQ = IM_JZXX.JZRQ ) AND ( IM_ZFPJ.CZGH = IM_JZXX.CZGH ) AND IM_JZXX.HZRQ IS NULL AND IM_JZXX.JZRQ &lt;=#{adt_jzrq} and IM_JZXX.JGID=#{al_jgid} ORDER BY IM_ZFPJ.PJLB,IM_ZFPJ.PJHM
+    </select>
+    <select id="queryHzShj" resultType="java.util.Map">
+        SELECT IFNULL(sum(IM_JZXX.CYSR),0) as ZCYSR,IFNULL(sum(IM_JZXX.YJJE),0) as ZYJJE,IFNULL(sum(IM_JZXX.TPJE),0) as ZTPJE,IFNULL(sum(IM_JZXX.FPZS),0) as ZFPZS,IFNULL(sum(IM_JZXX.SJZS),0) as ZSJZS,IFNULL(sum(IM_JZXX.YSJE),0) as ZYSJE,IFNULL(sum(IM_JZXX.YSXJ),0) as ZYSXJ,IFNULL(sum(IM_JZXX.ZPZS),0) as ZZPZS,IFNULL(sum(IM_JZXX.TYJJ),0) as ZTYJJ,IFNULL(sum(IM_JZXX.YSQT),0) as ZYSQT,IFNULL(sum(IM_JZXX.QTZS),0) as ZQTZS,IFNULL(sum(IM_JZXX.SRJE),0) as ZSRJE,IFNULL(sum(IM_JZXX.TCZC),0) as TCZC,IFNULL(sum(IM_JZXX.DBZC),0) as DBZC,IFNULL(sum(IM_JZXX.ZXJZFY),0) as ZXJZFY,IFNULL(sum(IM_JZXX.GRXJZF),0) as GRXJZF,IFNULL(sum(IM_JZXX.BCZHZF),0) as BCZHZF,IFNULL(sum(IM_JZXX.AZQGFY),0) as AZQGFY FROM IM_JZXX IM_JZXX WHERE IM_JZXX.HZRQ IS NULL AND IM_JZXX.JZRQ &lt;=#{adt_jzrq} AND JGID=#{al_jgid}
+    </select>
+    <!--查询汇总报表参数 按病人性质-->
+    <select id="queryHzIdsBrxzParam" resultType="java.util.Map">
+        select sum(c.FYHJ) as FYHJ,sum(c.ZFHJ) as ZFHJ,c.BRXZ as BRXZ,d.XZMC as XZMC,d.DBPB as DBPB from (
+        SELECT a.FYHJ as FYHJ,a.ZFHJ as ZFHJ,a.BRXZ as BRXZ FROM IM_ZYJS a,IM_JZXX b WHERE a.JSLX!=4 and a.FYHJ!=a.ZFHJ and a.JZRQ = b.JZRQ and b.JGID = a.JGID and b.HZRQ IS NULL AND b.JZRQ &lt;=#{adt_jzrq} AND b.JGID=#{al_jgid} and a.CZGH =#{czgh}
+         union all
+        SELECT (-1*a.FYHJ) as FYHJ,(-1*a.ZFHJ) as ZFHJ,a.BRXZ as BRXZ FROM IM_ZYJS a ,IM_JSZF b,IM_JZXX c WHERE a.JSLX!=4 and a.ZYH = b.ZYH AND a.JSCS = b.JSCS and a.FYHJ!=a.ZFHJ and b.JZRQ = c.JZRQ and b.JGID = c.JGID and c.HZRQ IS NULL AND c.JZRQ &lt;=#{adt_jzrq} AND c.JGID= #{al_jgid} and b.ZFGH = #{czgh}
+        ) c left outer join PUB_BRXZ d on c.BRXZ = d.BRXZ group by c.BRXZ,d.XZMC,d.DBPB
+    </select>
+    <select id="queryHzIdsFkfsParam" resultType="java.util.Map">
+        select d.FKFS as FKFS,sum(d.FKJE) as FKJE,e.FKMC as FKMC from (
+        select a.FKFS as FKFS, (-1*a.FKJE) as FKJE from IM_FKXX a, IM_JSZF b,IM_JZXX c where a.ZYH = b.ZYH and a.JSCS = b.JSCS AND b.JZRQ = c.JZRQ and b.JGID = c.JGID and c.HZRQ IS NULL AND c.JZRQ &lt;=#{adt_jzrq} AND c.JGID= #{al_jgid} and b.ZFGH = #{czgh}
+        union all
+        select a.FKFS as FKFS, a.FKJE as FKJE from IM_FKXX a, IM_ZYJS b,IM_JZXX c where b.JSLX!=4 and a.ZYH = b.ZYH and a.JSCS = b.JSCS AND b.JZRQ = c.JZRQ and b.JGID = c.JGID and c.HZRQ IS NULL AND c.JZRQ &lt;=#{adt_jzrq} AND c.JGID= #{al_jgid} and b.CZGH = #{czgh}
+         union all
+        SELECT a.JKFS as FKFS,a.JKJE as FKJE FROM IM_TBKK a,IM_JZXX b WHERE a.JZRQ = b.JZRQ and b.JGID = a.JGID and b.HZRQ IS NULL AND b.JZRQ &lt;=#{adt_jzrq} AND b.JGID= #{al_jgid} and a.CZGH = #{czgh}
+         union all
+        SELECT a.JKFS as FKFS,(-1*a.JKJE) as FKJE FROM IM_TBKK a ,IM_JKZF b,IM_JZXX c WHERE b.JKXH = a.JKXH AND b.JZRQ = c.JZRQ and b.JGID = c.JGID and c.HZRQ IS NULL AND c.JZRQ &lt;=#{adt_jzrq} AND c.JGID=#{al_jgid} and b.ZFGH = #{czgh}
+        ) d left outer join PUB_FKFS e on d.FKFS = e.FKFS group by d.FKFS,e.FKMC
+    </select>
+    <!-- 查询日终汇总四的收入金额-->
+    <select id="queryHzFour" resultType="java.util.Map">
+        SELECT sum(TCZC) as TCZF,sum(SRJE) AS SRJE, sum(BCZHZF) as ZHZF FROM IM_JZXX WHERE ( HZRQ &gt;= #{adt_hzrq} ) and ( HZRQ &lt;#{adt_hzrq_end} ) AND JGID = #{al_jgid}
+    </select>
+</mapper>
+

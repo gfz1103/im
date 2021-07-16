@@ -1,0 +1,2 @@
+ALTER TABLE `im_cwsz` 
+ADD COLUMN `CWZH` int(0) NULL COMMENT '床位组号' AFTER `SBBRCWFY`;

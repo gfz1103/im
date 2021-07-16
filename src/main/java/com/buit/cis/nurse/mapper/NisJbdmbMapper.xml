@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 护理交班单模板 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisJbdmbDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        ID as id,HZLX as hzlx,SBARLX as sbarlx,BCLX as bclx,MBNR as mbnr,ZFPB as zfpb,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_JBDMB (
+            ID ,
+            HZLX ,
+            SBARLX ,
+            BCLX ,
+            MBNR ,
+            ZFPB ,
+            JGID 
+        ) VALUES (
+            #{id} ,
+            #{hzlx} ,
+            #{sbarlx} ,
+            #{bclx} ,
+            #{mbnr} ,
+            #{zfpb} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_JBDMB SET
+            HZLX = #{hzlx} ,
+            SBARLX = #{sbarlx} ,
+            BCLX = #{bclx} ,
+            MBNR = #{mbnr} ,
+            ZFPB = #{zfpb} ,
+            JGID = #{jgid} 
+        WHERE 
+            ID = #{id} 
+          
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_JBDMB WHERE
+        ID = #{id} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_JBDMB <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisJbdmb">
+        SELECT <include refid="columns" />
+            FROM NIS_JBDMB 
+            WHERE 
+        ID = #{id} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(id)"> -->
+<!--                     AND ID = #{id} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(hzlx)"> 
+                     AND HZLX = #{hzlx} 
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(sbarlx)"> 
+                     AND SBARLX = #{sbarlx} 
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(bclx)"> 
+                     AND BCLX = #{bclx} 
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mbnr)"> -->
+<!--                     AND MBNR = #{mbnr} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zfpb)"> 
+                     AND ZFPB = #{zfpb} 
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                     AND JGID = #{jgid} 
+                </if> 
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_JBDMB 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisJbdmb">
+        SELECT <include refid="columns" />
+        FROM NIS_JBDMB 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <update id="invalid" >
+        update nis_jbdmb set zfpb = #{zfpb} where id = #{id}             
+    </update>
+</mapper>
+

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 病区_提交记录 | 记录病区医嘱提交的记录，与提交明细表BQ_TJMX通过TJXH关联 -->
+<mapper namespace="com.buit.cis.dctwork.dao.NisTj01Dao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        TJXH as tjxh,JGID as jgid,TJYF as tjyf,YZLX as yzlx,FYFS as fyfs,XMLX as xmlx,TJSJ as tjsj,TJBQ as tjbq,TJGH as tjgh,FYBZ as fybz
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_TJ01 (
+            TJXH ,
+            JGID ,
+            TJYF ,
+            YZLX ,
+            FYFS ,
+            XMLX ,
+            TJSJ ,
+            TJBQ ,
+            TJGH ,
+            FYBZ 
+        ) VALUES (
+            #{tjxh} ,
+            #{jgid} ,
+            #{tjyf} ,
+            #{yzlx} ,
+            #{fyfs} ,
+            #{xmlx} ,
+            #{tjsj} ,
+            #{tjbq} ,
+            #{tjgh} ,
+            #{fybz} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE NIS_TJ01 SET
+            JGID = #{jgid} ,
+            TJYF = #{tjyf} ,
+            YZLX = #{yzlx} ,
+            FYFS = #{fyfs} ,
+            XMLX = #{xmlx} ,
+            TJSJ = #{tjsj} ,
+            TJBQ = #{tjbq} ,
+            TJGH = #{tjgh} ,
+            FYBZ = #{fybz} 
+        WHERE 
+            TJXH = #{tjxh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_TJ01 WHERE
+        TJXH = #{tjxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_TJ01 <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisTj01">
+        SELECT <include refid="columns" />
+            FROM NIS_TJ01 
+            WHERE 
+        TJXH = #{tjxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tjxh)"> -->
+<!--                     AND TJXH = #{tjxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tjyf)"> -->
+<!--                     AND TJYF = #{tjyf} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yzlx)"> -->
+<!--                     AND YZLX = #{yzlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fyfs)"> -->
+<!--                     AND FYFS = #{fyfs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmlx)"> -->
+<!--                     AND XMLX = #{xmlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tjsj)"> -->
+<!--                     AND TJSJ = #{tjsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tjbq)"> -->
+<!--                     AND TJBQ = #{tjbq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tjgh)"> -->
+<!--                     AND TJGH = #{tjgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fybz)"> -->
+<!--                     AND FYBZ = #{fybz} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_TJ01 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisTj01">
+        SELECT <include refid="columns" />
+        FROM NIS_TJ01 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    <select id="queryByCond" resultType="com.buit.cis.dctwork.response.QueryDispensingWardApiResp">
+        select a.TJBQ as tjbq,a.FYFS as fyfs,count(1) as fyts,c.OFFICENAME as ksmc,d.FSMC as fsmc
+        from NIS_TJ01 a,NIS_TJ02 b,DIC_KSZD c,IM_FYFS  d,im_hzry e
+        where a.FYFS=d.FYFS  and a.TJBQ=c.ID and c.HOSPITALAREA=1  and a.JGID=b.JGID and a.TJXH=b.TJXH and a.FYBZ=0 and b.FYBZ=0 and b.zyh=e.zyh
+            and ${@com.buit.his.pha.commons.util.SqlConverterUtil@transfer(cond)}
+        group by a.TJBQ,a.FYFS,c.OFFICENAME,d.FSMC
+        order by a.TJBQ,d.FSMC,a.FYFS,c.OFFICENAME
+    </select>
+    <select id="queryTjxhByZyh" resultType="java.lang.Integer">
+        select distinct a.TJXH as TJXH
+        from NIS_TJ01 a,NIS_TJ02 b
+        where a.TJXH=b.TJXH and a.FYBZ=0 and b.FYBZ=0 and b.ZYH  in(
+            <foreach collection="list" item="x" separator=",">
+                #{x}
+            </foreach>
+        )
+    </select>
+    <select id="queryDispensingTjd" resultType="com.buit.cis.dctwork.response.QuerySubmitApplyApiResp">
+        select distinct a.YZLX as yzlx,a.XMLX as xmlx,a.TJSJ as tjsj,a.FYFS as fyfs,a.TJBQ as tjbq,c.PERSONNAME as czgh,b.LSYZ as lsyz,a.TJGH as tjgh,a.FYBZ as fybz,a.JGID as jgid,a.TJXH as tjxh
+        from NIS_TJ01 a,NIS_TJ02 b,HR_PERSONNEL c,im_hzry d
+        where a.TJXH=b.TJXH and a.TJGH = c.PERSONID and a.FYBZ=0 and b.zyh=d.zyh
+        and ${@com.buit.his.pha.commons.util.SqlConverterUtil@transfer(cond)}
+    </select>
+    
+    <!-- 根据提交序号更新tj01发药标志 -->
+    <update id="updateFybzByTjxh">
+        update nis_tj01 set fybz = 1
+        where jgid = #{jgid}
+        and fybz = 0
+        and tjxh in
+        <foreach collection="tjxhList" item="z" open="(" close=")" separator=",">
+      		#{z}
+ 		</foreach> 
+    </update>
+</mapper>
+

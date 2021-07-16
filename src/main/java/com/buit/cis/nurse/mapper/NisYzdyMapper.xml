@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.nurse.dao.NisYzdyDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        DYXH as dyxh,YZBXH as yzbxh,ZYH as zyh,YZQX as yzqx,DYRQ as dyrq,DYNR as dynr,DYYM as dyym,DYHH as dyhh,CZBZ as czbz,JGID as jgid,CZYS as czys,CZHS as czhs
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_YZDY (
+            DYXH ,
+            YZBXH ,
+            ZYH ,
+            YZQX ,
+            DYRQ ,
+            DYNR ,
+            DYYM ,
+            DYHH ,
+            CZBZ ,
+            JGID ,
+            CZYS ,
+            CZHS 
+        ) VALUES (
+            #{dyxh} ,
+            #{yzbxh} ,
+            #{zyh} ,
+            #{yzqx} ,
+            #{dyrq} ,
+            #{dynr} ,
+            #{dyym} ,
+            #{dyhh} ,
+            #{czbz} ,
+            #{jgid} ,
+            #{czys} ,
+            #{czhs} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE NIS_YZDY SET
+            YZBXH = #{yzbxh} ,
+            ZYH = #{zyh} ,
+            YZQX = #{yzqx} ,
+            DYRQ = #{dyrq} ,
+            DYNR = #{dynr} ,
+            DYYM = #{dyym} ,
+            DYHH = #{dyhh} ,
+            CZBZ = #{czbz} ,
+            JGID = #{jgid} ,
+            CZYS = #{czys} ,
+            CZHS = #{czhs} 
+        WHERE 
+            DYXH = #{dyxh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_YZDY WHERE
+        DYXH = #{dyxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_YZDY <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisYzdy">
+        SELECT <include refid="columns" />
+            FROM NIS_YZDY 
+            WHERE 
+        DYXH = #{dyxh} 
+    </select>
+    
+    <sql id="where">
+        <where>        
+        		<if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+                     AND ZYH = #{zyh} 
+            	</if>   
+                <if test="@sqlt.Ognl@isNotEmpty(dyrq)"> 
+                     AND DYRQ = #{dyrq} 
+                </if>     
+                <if test="@sqlt.Ognl@isNotEmpty(yzbxh)">
+                    AND YZBXH = #{yzbxh} 
+                </if>  
+                <if test="@sqlt.Ognl@isNotEmpty(yzqx)"> 
+                    AND YZQX = #{yzqx} 
+                </if>          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dyxh)"> -->
+<!--                     AND DYXH = #{dyxh} -->
+<!--                </if> -->          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dynr)"> -->
+<!--                     AND DYNR = #{dynr} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dyym)"> -->
+<!--                     AND DYYM = #{dyym} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dyhh)"> -->
+<!--                     AND DYHH = #{dyhh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czbz)"> -->
+<!--                     AND CZBZ = #{czbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czys)"> -->
+<!--                     AND CZYS = #{czys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czhs)"> -->
+<!--                     AND CZHS = #{czhs} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_YZDY 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisYzdy">
+        SELECT <include refid="columns" />
+        FROM NIS_YZDY 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 根据打印序号更新重整护士 -->
+    <update id="updateCzhsByDyxh" >
+    	update NIS_YZDY a set a.CZHS = #{czhs} where a.DYXH = #{dyxh}
+    </update>
+    
+    <!-- 根据医嘱本序号查询打印序号-->
+    <select id="queryDyxhByYzbxh" resultType="NisYzdy">
+       select DYXH as DYXH from NIS_YZDY where YZBXH = #{yzbxh} and CZBZ &lt;&gt; 1
+    </select>
+    
+    <!-- 查询是否有当前输入页的打印数据-->
+    <select id="queryIsExistPrintPage" resultType="long">
+       select count(1) from NIS_YZDY where ZYH = #{zyh} 
+       and YZQX = #{yzlx} 
+       and DYYM &gt;= #{pageFrom}
+	   <if test="@sqlt.Ognl@isNotEmpty(pageTo) and pageTo != 0"> 
+ 			and DYYM &lt;= #{pageTo}
+	   </if> 
+    </select>
+    
+    <!-- 根据住院号查询打印日期  -->
+    <select id="queryDyrqByZyh" resultType="java.util.HashMap">
+       select a.DYRQ as DYRQ
+	  from (select DYRQ as DYRQ
+	          from NIS_YZDY
+	         where DYHH = 0
+	           and ZYH = #{zyh}
+	         order by dyxh desc) a
+	 LIMIT 1
+    </select>
+    
+    <!-- 更新打印操作标志 -->
+    <update id="updatePrintCzbz" >
+    	update NIS_YZDY set CZBZ=1 where ZYH = #{zyh} and YZQX = #{yzlx}
+    </update>
+    
+    <!-- 根据打印序号查询打印信息  -->
+    <select id="queryDyInfoByDyxh" resultType="java.util.HashMap">
+       select DYHH as DYHH, DYXH as DYXH, DYYM as DYYM
+		  from NIS_YZDY
+		 where DYXH in 
+		 <foreach collection="dyxhlist" item="dyxh" open="(" close=")" separator="," >
+                #{dyxh}
+        </foreach>	
+		 order by DYYM, DYHH
+    </select>
+    
+    <!-- 继续打印查询 -->
+    <select id="queryResumePrint" resultType="java.util.HashMap">
+       select  DISTINCT
+       		   b.DYXH as DYXH,
+		       b.YZBXH as YZBXH,
+		       a.YZZH as YZZH,
+		       a.KSSJ as KSSJ,
+		       b.DYNR as YZMC,
+		       a.YSGH as YSGH,
+		       (select d.PERSONNAME from HR_PERSONNEL d where d.PERSONID = a.YSGH) as YSGHMC,
+		       a.FHGH as FHGH,
+		       (select e.PERSONNAME from HR_PERSONNEL e where e.PERSONID = a.FHGH) as FHGHMC,
+		       a.TZSJ as TZSJ,
+		       a.TZYS as TZYS,
+		       (select f.PERSONNAME from HR_PERSONNEL f where f.PERSONID = a.TZYS) as TZYSMC,
+		       a.TZFHR as TZFHR,
+		       (select g.PERSONNAME from HR_PERSONNEL g where g.PERSONID = a.TZFHR) as TZFHRMC,
+		       b.DYYM as DYYM,
+		       b.DYHH as DYHH,
+		       a.FHSJ as ZXSJ,
+		       a.JLXH as JLXH,
+		       <if test="@sqlt.Ognl@isNotEmpty(yzlx) and yzlx == 1"> 
+ 				 (select m.PERSONNAME from IM_FEE_FYMX c, HR_PERSONNEL m where a.ZYH = c.ZYH 
+ 				 and a.JLXH = c.YZXH and c.QRGH = m.PERSONID and c.FYSL > 0 LIMIT 1) as ZXFHGHMC,
+	   		   </if> 
+		       a.YZZF as YZZF,
+		       a.LSYZ as LSYZ
+		  from NIS_YZDY b
+		  left outer join CIS_HZYZ a on a.JLXH = b.YZBXH 
+		  <if test="@sqlt.Ognl@isNotEmpty(yzlx)"> 
+	 		 and a.LSYZ = #{yzlx}
+	 	  </if>
+		 where b.ZYH = #{zyh} 
+	 	<if test="@sqlt.Ognl@isNotEmpty(jlxhs)"> 
+	 		and b.DYXH in 
+		 	<foreach collection="jlxhs" item="jlxh" open="(" close=")" separator="," >
+                #{jlxh}
+        	</foreach>	
+	 	</if> 
+		 order by DYYM, DYHH
+    </select>
+    
+    <!-- 按页打印查询 -->
+    <select id="queryPagePrint" resultType="java.util.HashMap">
+       select  b.CZYS as CZYS,
+		       b.CZHS as CZHS,
+		       date_format(b.DYRQ,'%Y-%m-%d') as RQ,
+		       date_format(b.DYRQ, '%H:%i') as SJ,
+		       b.YZBXH as YZBXH,
+		       a.YZZH as YZZH,
+		       a.KSSJ as KSSJ,
+		       b.DYNR as YZMC,
+		       a.YSGH as YSGH,
+		       (select d.PERSONNAME from HR_PERSONNEL d where d.PERSONID = a.YSGH) as YSGHMC,
+		       a.FHGH as FHGH,
+		       (select e.PERSONNAME from HR_PERSONNEL e where e.PERSONID = a.FHGH) as FHGHMC,
+		       a.TZSJ as TZSJ,
+		       a.TZYS as TZYS,
+		       (select f.PERSONNAME from HR_PERSONNEL f where f.PERSONID = a.TZYS) as TZYSMC,
+		       a.TZFHR as TZFHR,
+		       (select g.PERSONNAME from HR_PERSONNEL g where g.PERSONID = a.TZFHR) as TZFHRMC,
+		       b.DYYM as DYYM,
+		       b.DYHH as DYHH,
+		       a.FHSJ as ZXSJ,
+		       b.DYHH as DYHH,
+		       a.JLXH as JLXH,
+		       <if test="@sqlt.Ognl@isNotEmpty(yzlx) and yzlx == 1"> 
+ 				 (select m.PERSONNAME from IM_FEE_FYMX c, HR_PERSONNEL m where a.ZYH = c.ZYH 
+ 				 and a.JLXH = c.YZXH and c.QRGH = m.PERSONID and c.FYSL > 0 LIMIT 1) as ZXFHGHMC,
+	   		   </if> 
+	   		   a.YZZF as YZZF
+		  from NIS_YZDY b
+		  left outer join CIS_HZYZ a
+		    on a.JLXH = b.YZBXH
+		 where b.ZYH = #{zyh}
+		   and b.YZQX = #{yzlx}
+		   and b.DYYM &gt;= #{pageFrom}
+		   <if test="@sqlt.Ognl@isNotEmpty(pageTo) and pageTo != 0"> 
+ 				and b.DYYM &lt;= #{pageTo}
+	   	   </if> 
+		 order by b.DYYM, b.DYHH
+    </select>
+    
+    <!-- 指定行打印查询 -->
+    <select id="querySpecifyLinePrint" resultType="java.util.HashMap">
+       select  b.CZYS as CZYS,
+		       b.CZHS as CZHS,
+		       date_format(b.DYRQ,'%Y-%m-%d') as RQ,
+		       date_format(b.DYRQ, '%H:%i') as SJ,
+		       b.DYRQ as DYRQ,
+		       b.YZBXH as YZBXH,
+		       a.YZZH as YZZH,
+		       a.KSSJ as KSSJ,
+		       b.DYNR as YZMC,
+		       a.YSGH as YSGH,
+		       (select d.PERSONNAME from HR_PERSONNEL d where d.PERSONID = a.YSGH) as YSGHMC,
+		       a.FHGH as FHGH,
+		       (select e.PERSONNAME from HR_PERSONNEL e where e.PERSONID = a.FHGH) as FHGHMC,
+		       a.TZSJ as TZSJ,
+		       a.TZYS as TZYS,
+		       (select f.PERSONNAME from HR_PERSONNEL f where f.PERSONID = a.TZYS) as TZYSMC,
+		       a.TZFHR as TZFHR,		       
+		       (select g.PERSONNAME from HR_PERSONNEL g where g.PERSONID = a.TZFHR) as TZFHRMC,
+		       b.DYYM as DYYM,
+		       b.DYHH as DYHH,
+		       a.FHSJ as ZXSJ, 
+		       a.JLXH as JLXH, 
+		       <if test="@sqlt.Ognl@isNotEmpty(yzlx) and yzlx == 1"> 
+ 				 (select m.PERSONNAME from IM_FEE_FYMX c, HR_PERSONNEL m where a.ZYH = c.ZYH 
+ 				 and a.JLXH = c.YZXH and c.QRGH = m.PERSONID and c.FYSL > 0 LIMIT 1) as ZXFHGHMC,
+	   		   </if> 
+	   		   a.YZZF as YZZF
+		  from NIS_YZDY b
+		  left outer join CIS_HZYZ a
+		    on a.JLXH = b.YZBXH
+		 where b.ZYH = #{zyh}
+		   and b.YZQX = #{yzlx}
+		   <if test="@sqlt.Ognl@isNotEmpty(type)"> 
+ 				and (b.DYYM &gt; #{dyym} or (b.DYYM = #{dyym} and b.DYHH &gt;= #{dyhh}))
+   		   </if>   
+		 order by b.DYYM, b.DYHH
+    </select>
+    
+    <!-- 重整打印查询 -->
+    <select id="queryRestructPrint" resultType="java.util.HashMap">
+       select  b.CZYS as CZYS,
+		       b.CZHS as CZHS,
+		       date_format(b.DYRQ,'%Y-%m-%d') as RQ,
+		       date_format(b.DYRQ, '%H:%i') as SJ,
+		       b.YZBXH as YZBXH,
+		       a.YZZH as YZZH,
+		       a.KSSJ as KSSJ,
+		       b.DYNR as YZMC,
+		       a.YSGH as YSGH,
+		       (select d.PERSONNAME from HR_PERSONNEL d where d.PERSONID = a.YSGH) as YSGHMC,
+		       a.FHGH as FHGH,
+		       (select e.PERSONNAME from HR_PERSONNEL e where e.PERSONID = a.FHGH) as FHGHMC,
+		       a.TZYS as TZYS,
+		       (select f.PERSONNAME from HR_PERSONNEL f where f.PERSONID = a.TZYS) as TZYSMC,
+		       a.TZSJ as TZSJ,
+		       a.TZFHR as TZFHR,
+		       (select g.PERSONNAME from HR_PERSONNEL g where g.PERSONID = a.TZFHR) as TZFHRMC,
+		       b.DYYM as DYYM,
+		       b.DYHH as DYHH,
+		       a.FHSJ as ZXSJ,  
+		       a.JLXH as JLXH,
+		       <if test="@sqlt.Ognl@isNotEmpty(yzlx) and yzlx == 1"> 
+ 				 (select m.PERSONNAME from IM_FEE_FYMX c, HR_PERSONNEL m where a.ZYH = c.ZYH 
+ 				 and a.JLXH = c.YZXH and c.QRGH = m.PERSONID and c.FYSL > 0 LIMIT 1) as ZXFHGHMC,
+	   		   </if> 
+	   		   a.YZZF as YZZF
+		  from NIS_YZDY b
+		  left outer join CIS_HZYZ a
+		    on a.JLXH = b.YZBXH
+		 where b.ZYH = #{zyh}
+		   and b.YZQX = #{yzlx}
+		   and (b.CZBZ = 0 or b.CZBZ = 2)
+		   and b.YZBXH &lt;&gt; -1
+		 order by b.DYYM, b.DYHH
+    </select>
+    
+    <!-- 全部打印查询 -->
+    <select id="queryAllOrdersPrint" resultType="java.util.HashMap">
+       select  a.YZZH as YZZH,
+		       a.KSSJ as KSSJ,
+		       b.DYNR as YZMC,
+		       a.YSGH as YSGH,
+		       (select d.PERSONNAME from HR_PERSONNEL d where d.PERSONID = a.YSGH) as YSGHMC,
+		       a.FHGH as FHGH,
+		       (select e.PERSONNAME from HR_PERSONNEL e where e.PERSONID = a.FHGH) as FHGHMC,
+		       a.TZSJ as TZSJ,
+		       a.TZYS as TZYS,
+		       (select f.PERSONNAME from HR_PERSONNEL f where f.PERSONID = a.TZYS) as TZYSMC,
+		       a.TZFHR as TZFHR,
+		       (select g.PERSONNAME from HR_PERSONNEL g where g.PERSONID = a.TZFHR) as TZFHRMC,
+		       a.FHSJ as ZXSJ,
+		       a.JLXH as JLXH,
+		       <if test="@sqlt.Ognl@isNotEmpty(yzlx) and yzlx == 1"> 
+ 				 (select m.PERSONNAME from IM_FEE_FYMX c, HR_PERSONNEL m where a.ZYH = c.ZYH 
+ 				 and a.JLXH = c.YZXH and c.QRGH = m.PERSONID and c.FYSL > 0 LIMIT 1) as ZXFHGHMC,
+	   		   </if> 
+		       a.YZZF as YZZF
+		  from CIS_HZYZ a
+		 where b.ZYH = #{zyh}
+	     and a.LSYZ = #{yzlx}
+		 order by DYYM, DYHH
+    </select>
+</mapper>
+

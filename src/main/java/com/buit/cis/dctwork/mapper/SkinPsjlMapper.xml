@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 公用_病人皮试记录 -->
+<mapper namespace="com.buit.cis.dctwork.dao.SkinPsjlDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,BRID as brid,YPXH as ypxh,JGID as jgid,PSJG as psjg,PSLY as psly,GMZZ as gmzz,QTZZ as qtzz,BLFY as blfy
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO SKIN_PSJL (
+            JLXH ,
+            BRID ,
+            YPXH ,
+            JGID ,
+            PSJG ,
+            PSLY ,
+            GMZZ ,
+            QTZZ ,
+            BLFY 
+        ) VALUES (
+            #{jlxh} ,
+            #{brid} ,
+            #{ypxh} ,
+            #{jgid} ,
+            #{psjg} ,
+            #{psly} ,
+            #{gmzz} ,
+            #{qtzz} ,
+            #{blfy} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE SKIN_PSJL SET
+            BRID = #{brid} ,
+            YPXH = #{ypxh} ,
+            JGID = #{jgid} ,
+            PSJG = #{psjg} ,
+            PSLY = #{psly} ,
+            GMZZ = #{gmzz} ,
+            QTZZ = #{qtzz} ,
+            BLFY = #{blfy} 
+        WHERE 
+            JLXH = #{jlxh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM SKIN_PSJL WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM SKIN_PSJL <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="SkinPsjl">
+        SELECT <include refid="columns" />
+            FROM SKIN_PSJL 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>          
+        	    <if test="@sqlt.Ognl@isNotEmpty(brid)"> 
+                     AND BRID = #{brid} 
+                </if>               
+                <if test="@sqlt.Ognl@isNotEmpty(ypxh)"> 
+                     AND YPXH = #{ypxh} 
+                </if>     
+                <if test="@sqlt.Ognl@isNotEmpty(psjg)"> 
+					 AND PSJG = #{psjg}
+				</if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(psly)"> -->
+<!--                     AND PSLY = #{psly} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(gmzz)"> -->
+<!--                     AND GMZZ = #{gmzz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qtzz)"> -->
+<!--                     AND QTZZ = #{qtzz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(blfy)"> -->
+<!--                     AND BLFY = #{blfy} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM SKIN_PSJL 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="SkinPsjl">
+        SELECT <include refid="columns" />
+        FROM SKIN_PSJL 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 根据brid,jgid查询病人过敏药物 -->
+    <select id="getAllergicDrugsByEntity" resultType="com.buit.cis.dctwork.response.SkinPsjlResp">
+        select a.jlxh as jlxh,
+		       a.brid as brid,
+		       a.ypxh as ypxh,
+		       b.ypmc as ypmc,
+		       a.blfy as blfy,
+		       a.gmzz as gmzz,
+		       a.qtzz as qtzz,
+		       a.psjg as psjg,
+		       a.psly as psly,
+		       a.jgid as jgid,
+		       b.yybs as yybs,
+		       b.gmywlb as gmywlb
+			  from SKIN_PSJL a, v_drugs_typk b
+			 where a.ypxh = b.ypxh
+			  <if test="@sqlt.Ognl@isNotEmpty(brid)"> 
+	                and a.brid = #{brid} 
+	          </if>
+	          <if test="@sqlt.Ognl@isNotEmpty(jgid)"> 
+	                and a.jgid = #{jgid} 
+	          </if> 
+    </select>
+    
+    <!-- 根据brid,ypxh,jgid删除过敏药物 -->
+    <delete id="deleteByEntity">
+        DELETE FROM SKIN_PSJL WHERE
+        BRID = #{brid} and YPXH = #{ypxh}  and JGID = #{jgid} 
+    </delete>
+    
+    <!-- -->
+    <update id="updateAllergicDrugs" >
+        UPDATE SKIN_PSJL SET
+            YPXH = #{ypxhnew} ,
+            GMZZ = #{gmzz} ,
+            QTZZ = #{qtzz} ,
+            BLFY = #{blfy} 
+        WHERE 
+            BRID = #{brid} and YPXH = #{ypxh}  and JGID = #{jgid} 
+    </update>
+    
+</mapper>
+

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院_收入结帐汇总 -->
+<mapper namespace="com.buit.cis.ims.dao.ImJzhzDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JGID as jgid,HZRQ as hzrq,XMBH as xmbh,SQJC as sqjc,BQFS as bqfs,BQJS as bqjs,XJZP as xjzp,YHJE as yhje,CYDJ as cydj,QFJE as qfje,CBJE as cbje,QTJE as qtje,BQYE as bqye
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_JZHZ (
+            JGID ,
+            HZRQ ,
+            XMBH ,
+            SQJC ,
+            BQFS ,
+            BQJS ,
+            XJZP ,
+            YHJE ,
+            CYDJ ,
+            QFJE ,
+            CBJE ,
+            QTJE ,
+            BQYE 
+        ) VALUES (
+            #{jgid} ,
+            #{hzrq} ,
+            #{xmbh} ,
+            #{sqjc} ,
+            #{bqfs} ,
+            #{bqjs} ,
+            #{xjzp} ,
+            #{yhje} ,
+            #{cydj} ,
+            #{qfje} ,
+            #{cbje} ,
+            #{qtje} ,
+            #{bqye} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE IM_JZHZ SET
+            SQJC = #{sqjc} ,
+            BQFS = #{bqfs} ,
+            BQJS = #{bqjs} ,
+            XJZP = #{xjzp} ,
+            YHJE = #{yhje} ,
+            CYDJ = #{cydj} ,
+            QFJE = #{qfje} ,
+            CBJE = #{cbje} ,
+            QTJE = #{qtje} ,
+            BQYE = #{bqye} 
+        WHERE 
+            JGID = #{jgid}  AND 
+                        HZRQ = #{hzrq}  AND 
+                        XMBH = #{xmbh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM IM_JZHZ WHERE
+        JGID = #{jgid}  AND 
+        HZRQ = #{hzrq}  AND 
+        XMBH = #{xmbh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM IM_JZHZ <include refid="where"/>  
+    </delete>
+    <!--住院管理-日终汇总（取消汇总）-->
+    <delete id="doCancelCollectCommit">
+     delete from IM_JZHZ where JGID = #{jgid} and HZRQ= #{hzrq}
+    </delete>
+
+    <select id="getById" resultType="ImJzhz">
+        SELECT <include refid="columns" />
+            FROM IM_JZHZ 
+            WHERE 
+        JGID = #{jgid}  AND 
+        HZRQ = #{hzrq}  AND 
+        XMBH = #{xmbh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hzrq)"> -->
+<!--                     AND HZRQ = #{hzrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmbh)"> -->
+<!--                     AND XMBH = #{xmbh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqjc)"> -->
+<!--                     AND SQJC = #{sqjc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bqfs)"> -->
+<!--                     AND BQFS = #{bqfs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bqjs)"> -->
+<!--                     AND BQJS = #{bqjs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xjzp)"> -->
+<!--                     AND XJZP = #{xjzp} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yhje)"> -->
+<!--                     AND YHJE = #{yhje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cydj)"> -->
+<!--                     AND CYDJ = #{cydj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qfje)"> -->
+<!--                     AND QFJE = #{qfje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cbje)"> -->
+<!--                     AND CBJE = #{cbje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qtje)"> -->
+<!--                     AND QTJE = #{qtje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bqye)"> -->
+<!--                     AND BQYE = #{bqye} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_JZHZ 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="ImJzhz">
+        SELECT <include refid="columns" />
+        FROM IM_JZHZ 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    <!--查询时间内结账汇总的数量-->
+    <select id="queryHzCount" resultType="java.lang.Integer">
+       select count(1) from IM_JZHZ where  HZRQ &gt;=#{ldt_Begin} AND HZRQ &lt;#{ldt_End} and JGID= #{gl_jgid}
+    </select>
+    <!--查询最大的汇总日期-->
+    <select id="queryMaxHzrq" resultType="java.util.Map">
+         SELECT DATE_FORMAT(MAX(HZRQ), '%Y-%m-%d %H:%i:%S')  as HZRQ FROM IM_JZHZ where JGID= #{gl_jgid}
+    </select>
+    <!--查询上期结存-->
+    <select id="queryBqye" resultType="java.util.Map">
+        SELECT IFNULL(BQYE,0) as SQJC FROM IM_JZHZ WHERE HZRQ=#{ldt_sqhzrq} AND XMBH=#{xmbh} and JGID= #{gl_jgid}
+    </select>
+    <!--按病人性质日终汇总-->
+    <select id="queryHzIdsBrxz" resultType="java.util.Map">
+    select sum(c.FYHJ) as FYHJ,sum(c.ZFHJ) as ZFHJ,c.BRXZ as BRXZ,d.XZMC as XZMC,d.DBPB as DBPB from (
+    SELECT a.FYHJ as FYHJ,a.ZFHJ as ZFHJ,a.BRXZ as BRXZ FROM IM_ZYJS a WHERE a.JSLX!=4 and a.FYHJ!=a.ZFHJ and a.HZRQ &gt;=#{adt_hzrq_b} AND a.HZRQ&lt;=#{adt_hzrq_e} AND a.JGID=#{al_jgid} and a.CZGH =#{czgh}
+    union all
+    SELECT (-1*a.FYHJ) as FYHJ,(-1*a.ZFHJ) as ZFHJ,a.BRXZ as BRXZ FROM IM_ZYJS a ,IM_JSZF b WHERE a.JSLX!=4 and a.ZYH = b.ZYH AND a.JSCS = b.JSCS and a.FYHJ!=a.ZFHJ and b.HZRQ &gt;=#{adt_hzrq_b} AND b.HZRQ&lt;=#{adt_hzrq_e} AND b.JGID=#{al_jgid} and b.ZFGH = #{czgh}
+    ) c left outer join PUB_BRXZ d on c.BRXZ = d.BRXZ group by c.BRXZ,d.XZMC,d.DBPB
+    </select>
+    <!--按付款方式汇总-->
+    <select id="queryHzIdsFkfs" resultType="java.util.Map">
+       select d.FKFS as FKFS,sum(d.FKJE) as FKJE,e.FKMC as FKMC from (
+        select a.FKFS as FKFS, (-1*a.FKJE) as FKJE from IM_FKXX a, IM_JSZF b where a.ZYH = b.ZYH and a.JSCS = b.JSCS and b.HZRQ&gt;=#{adt_hzrq_b} AND b.HZRQ&lt;=#{adt_hzrq_e} AND b.JGID=#{al_jgid} and b.ZFGH =#{czgh}
+         union all
+        select a.FKFS as FKFS, a.FKJE as FKJE from IM_FKXX a, IM_ZYJS b where b.JSLX!=4 and a.ZYH = b.ZYH and a.JSCS = b.JSCS and b.HZRQ &gt;=#{adt_hzrq_b} AND b.HZRQ&lt;=#{adt_hzrq_e} AND b.JGID=#{al_jgid} and b.CZGH = #{czgh}
+         union all
+        SELECT a.JKFS as FKFS,a.JKJE as FKJE FROM IM_TBKK a WHERE a.HZRQ &gt;=#{adt_hzrq_b} AND a.HZRQ&lt;=#{adt_hzrq_e} AND a.JGID=#{al_jgid} and a.CZGH = #{czgh}
+         union all
+        SELECT a.JKFS as FKFS,(-1*a.JKJE) as FKJE FROM IM_TBKK a ,IM_JKZF b WHERE b.JKXH = a.JKXH and b.HZRQ&gt;=#{adt_hzrq_b} AND b.HZRQ&lt;=#{adt_hzrq_e} AND b.JGID=#{al_jgid} and b.ZFGH =#{czgh}
+        ) d left outer join PUB_FKFS e on d.FKFS = e.FKFS group by d.FKFS,e.FKMC
+    </select>
+
+
+    <!--按病人性质汇总作废-->
+    <select id="queryHzIdsBrxzZf" resultType="java.util.Map">
+        select sum(c.FYHJ) as FYHJ,sum(c.ZFHJ) as ZFHJ,c.BRXZ as BRXZ,d.XZMC as XZMC,d.DBPB as DBPB from (
+        SELECT a.FYHJ as FYHJ,a.ZFHJ as ZFHJ,a.BRXZ as BRXZ FROM IM_ZYJS a WHERE a.JSLX!=4 and a.FYHJ!=a.ZFHJ and a.HZRQ &gt;=#{adt_hzrq_b} AND a.HZRQ &lt;=#{adt_hzrq_e} AND a.JGID= #{al_jgid}
+         union all
+        SELECT (-1*a.FYHJ) as FYHJ,(-1*a.ZFHJ) as ZFHJ,a.BRXZ as BRXZ FROM IM_ZYJS a ,IM_JSZF b WHERE a.JSLX!=4 and a.ZYH = b.ZYH AND a.JSCS = b.JSCS and a.FYHJ &lt;&gt; a.ZFHJ and b.HZRQ&gt;=#{adt_hzrq_b} AND b.HZRQ &lt;=#{adt_hzrq_e} AND b.JGID=#{al_jgid}
+        ) c left outer join PUB_BRXZ d on c.BRXZ = d.BRXZ group by c.BRXZ,d.XZMC,d.DBPB
+    </select>
+    <!--按付款方式汇总作废-->
+    <select id="queryHzIdsFkfsZf" resultType="java.util.Map">
+        select d.FKFS as FKFS,sum(d.FKJE) as FKJE,e.FKMC as FKMC from (
+        select a.FKFS as FKFS, (-1*a.FKJE) as FKJE from IM_FKXX a, IM_JSZF b where a.ZYH = b.ZYH and a.JSCS = b.JSCS and b.HZRQ &gt;=#{adt_hzrq_b} AND b.HZRQ &lt;=#{adt_hzrq_e} AND b.JGID=#{al_jgid}
+         union all
+        select a.FKFS as FKFS, a.FKJE as FKJE from IM_FKXX a, IM_ZYJS b where b.JSLX!=4 and a.ZYH = b.ZYH and a.JSCS = b.JSCS and b.HZRQ &gt;=#{adt_hzrq_b} AND b.HZRQ &lt;=#{adt_hzrq_e} AND b.JGID=#{al_jgid}
+         union all
+        SELECT a.JKFS as FKFS,a.JKJE as FKJE FROM IM_TBKK a WHERE a.HZRQ&gt;=#{adt_hzrq_b} AND a.HZRQ &lt;=#{adt_hzrq_e} AND a.JGID= #{al_jgid}
+         union all
+        SELECT a.JKFS as FKFS,(-1*a.JKJE) as FKJE FROM IM_TBKK a ,IM_JKZF b WHERE b.JKXH = a.JKXH and b.HZRQ&gt;=#{adt_hzrq_b} AND b.HZRQ &lt;=#{adt_hzrq_e} AND b.JGID=#{al_jgid}
+        ) d left outer join PUB_FKFS e on d.FKFS = e.FKFS group by d.FKFS,e.FKMC
+    </select>
+   <!-- 日终汇总表（二）list数据-->
+    <select id="queryHzListTwo" resultType="java.util.Map">
+        SELECT IM_JZHZ.XMBH as XMBH,IM_JZHZ.SQJC as SQJC,IM_JZHZ.QFJE as QFJE,IM_JZHZ.BQFS as BQFS,IM_JZHZ.BQJS as BQJS,IM_JZHZ.XJZP as XJZP,IM_JZHZ.CBJE as CBJE,IM_JZHZ.QTJE as QTJE,IM_JZHZ.BQYE as BQYE FROM IM_JZHZ IM_JZHZ WHERE IM_JZHZ.HZRQ &gt;=#{adt_hzrq_b} and IM_JZHZ.HZRQ &lt;=#{adt_hzrq_e} and IM_JZHZ.JGID= #{al_jgid} order by IM_JZHZ.XMBH asc,IM_JZHZ.HZRQ desc
+    </select>
+    <!--日终汇总表（二）住院结算list数据-->
+    <select id="queryHzIdsZyjsTwo" resultType="java.util.Map">
+        select d.FKFS as FKFS,sum(d.FKJE) as FKJE,e.FKMC as FKMC from (
+        select a.FKFS as FKFS, (-1*a.FKJE) as FKJE from IM_FKXX a, IM_JSZF b where a.ZYH = b.ZYH and a.JSCS = b.JSCS and b.HZRQ &gt;=#{adt_hzrq_b} AND b.HZRQ &lt;=#{adt_hzrq_e} AND b.JGID=#{al_jgid}
+         union all
+        select a.FKFS as FKFS, a.FKJE as FKJE from IM_FKXX a, IM_ZYJS b where b.JSLX!=4 and a.ZYH = b.ZYH and a.JSCS = b.JSCS and b.HZRQ &gt;=#{adt_hzrq_b} AND b.HZRQ &lt;=#{adt_hzrq_e} AND b.JGID=#{al_jgid}
+         union all
+        select a.JKFS as FKFS, a.JKJE as FKJE from IM_TBKK a, IM_ZYJS b where b.JSLX!=4 and a.ZYH = b.ZYH and a.JSCS = b.JSCS and b.HZRQ &gt;=#{adt_hzrq_b} AND b.HZRQ &lt;=#{adt_hzrq_e} AND b.JGID=#{al_jgid}
+         union all
+        select a.JKFS as FKFS, (-1*a.JKJE) as FKJE from IM_TBKK a, IM_JKZF b,IM_ZYJS c where b.JKXH = a.JKXH and c.JSLX!=4 and a.ZYH = c.ZYH and a.JSCS = c.JSCS and c.HZRQ &gt;=#{adt_hzrq_b} AND c.HZRQ &lt;=#{adt_hzrq_e} AND c.JGID=#{al_jgid}
+        ) d left outer join PUB_FKFS e on d.FKFS = e.FKFS group by d.FKFS,e.FKMC
+    </select>
+    <!--日终汇总表（二）按病人性质统计应收金额-->
+    <select id="queryHzIdsBrxzTwo" resultType="java.util.Map">
+        select sum(c.FYHJ) as FYHJ,sum(c.ZFHJ) as ZFHJ,c.BRXZ as BRXZ,d.XZMC as XZMC,d.DBPB as DBPB from(
+        SELECT a.FYHJ as FYHJ,a.ZFHJ as ZFHJ,a.BRXZ as BRXZ FROM IM_ZYJS a WHERE a.JSLX!=4 and a.FYHJ!=a.ZFHJ and a.HZRQ &gt;=#{adt_hzrq_b} AND a.HZRQ &lt;=#{adt_hzrq_e} AND a.JGID=#{al_jgid}
+         union all
+        SELECT (-1*a.FYHJ) as FYHJ,(-1*a.ZFHJ) as ZFHJ,a.BRXZ as BRXZ FROM IM_ZYJS a ,IM_JSZF b WHERE a.JSLX!=4 and a.ZYH = b.ZYH AND a.JSCS = b.JSCS and a.FYHJ!=a.ZFHJ and b.HZRQ&gt;=#{adt_hzrq_b} AND b.HZRQ &lt;=#{adt_hzrq_e} AND b.JGID=#{al_jgid}
+        ) c left outer join PUB_BRXZ d on c.BRXZ = d.BRXZ group by c.BRXZ,d.XZMC,d.DBPB
+
+
+    </select>
+    <!--日终汇总表（二）统计预缴款-->
+    <select id="queryHzIdsYjkTwo" resultType="java.util.Map">
+        select d.FKFS as FKFS,sum(d.FKJE) as FKJE,e.FKMC as FKMC from (
+        select a.JKFS as FKFS, a.JKJE as FKJE from IM_TBKK a, IM_ZYJS b where b.JSLX!=4 and a.ZYH = b.ZYH and a.JSCS = b.JSCS and b.HZRQ &gt;=#{adt_hzrq_b} AND b.HZRQ &lt;=#{adt_hzrq_e} AND b.JGID=#{al_jgid}
+         union all
+        SELECT a.JKFS as FKFS,(-1*a.JKJE) as FKJE FROM IM_TBKK a ,IM_JKZF b,IM_ZYJS c WHERE c.JSLX!=4 and a.ZYH = c.ZYH and a.JSCS = c.JSCS AND b.JKXH = a.JKXH and c.HZRQ &gt;=#{adt_hzrq_b} AND c.HZRQ &lt;=#{adt_hzrq_e} AND c.JGID=#{al_jgid}
+        ) d left outer join PUB_FKFS e on d.FKFS = e.FKFS group by d.FKFS,e.FKMC
+    </select>
+    <!--日终汇总表（二）汇总住院结算金额-->
+    <select id="queryHzIdsZyjsTwoCyzj" resultType="java.util.Map">
+        select d.FKFS as FKFS,sum(d.FKJE) as FKJE,e.FKMC as FKMC from (
+        select a.FKFS as FKFS, a.FKJE as FKJE from IM_FKXX a, IM_ZYJS b where b.JSLX=4 and a.ZYH = b.ZYH and a.JSCS = b.JSCS and b.HZRQ &gt;=#{adt_hzrq_b} AND b.HZRQ &lt;=#{adt_hzrq_e} AND b.JGID=#{al_jgid}
+         union all
+        select a.JKFS as FKFS, a.JKJE as FKJE from IM_TBKK a, IM_ZYJS b where b.JSLX=4 and a.ZYH = b.ZYH and a.JSCS = b.JSCS and b.HZRQ &gt;=#{adt_hzrq_b} AND b.HZRQ &lt;=#{adt_hzrq_e} AND b.JGID=#{al_jgid}
+        ) d left outer join PUB_FKFS e on d.FKFS = e.FKFS group by d.FKFS,e.FKMC
+    </select>
+    <!--日终汇总表（二）出院总结 汇总病人性质金额-->
+    <select id="queryHzIdsbrxzTwoCyzj" resultType="java.util.Map">
+        select sum(c.FYHJ) as FYHJ,sum(c.ZFHJ) as ZFHJ,c.BRXZ as BRXZ,d.XZMC as XZMC,d.DBPB as DBPB from (
+        SELECT a.FYHJ as FYHJ,a.ZFHJ as ZFHJ,a.BRXZ as BRXZ FROM IM_ZYJS a WHERE a.JSLX=4 and a.FYHJ!=a.ZFHJ and a.HZRQ &gt;=#{adt_hzrq_b} AND a.HZRQ &lt;=#{adt_hzrq_e} AND a.JGID= #{al_jgid}
+        ) c left outer join PUB_BRXZ d on c.BRXZ = d.BRXZ group by c.BRXZ,d.XZMC,d.DBPB
+
+
+    </select>
+    <!--日终汇总(四) 汇总结算信息-->
+    <select id="queryHzIdsZyjsFour" resultType="java.util.Map">
+        select d.FKFS as FKFS,sum(d.FKJE) as FKJE,e.FKMC as FKMC from (
+        select a.FKFS as FKFS, (-1*a.FKJE) as FKJE from IM_FKXX a, IM_JSZF b where a.ZYH = b.ZYH and a.JSCS = b.JSCS and b.HZRQ &gt;=#{adt_hzrq} AND b.HZRQ &lt;=#{adt_hzrq_end} AND b.JGID=#{al_jgid}
+         union all
+        select a.FKFS as FKFS, a.FKJE as FKJE from IM_FKXX a, IM_ZYJS b where b.JSLX!=4 and a.ZYH = b.ZYH and a.JSCS = b.JSCS and b.HZRQ &gt;=#{adt_hzrq} AND b.HZRQ &lt;=#{adt_hzrq_end} AND b.JGID=#{al_jgid}
+         union all
+        select a.JKFS as FKFS, a.JKJE as FKJE from IM_TBKK a, IM_ZYJS b where b.JSLX!=4 and a.ZYH = b.ZYH and a.JSCS = b.JSCS and b.HZRQ &gt;=#{adt_hzrq} AND b.HZRQ &lt;=#{adt_hzrq_end} AND b.JGID=#{al_jgid}
+         union all
+        select a.JKFS as FKFS, (-1*a.JKJE) as FKJE from IM_TBKK a, IM_JKZF b,IM_ZYJS c where b.JKXH = a.JKXH and c.JSLX!=4 and a.ZYH = c.ZYH and a.JSCS = c.JSCS and c.HZRQ &gt;=#{adt_hzrq} AND c.HZRQ &lt;=#{adt_hzrq_end} AND c.JGID =#{al_jgid}
+        ) d left outer join PUB_FKFS e on d.FKFS = e.FKFS group by d.FKFS,e.FKMC
+    </select>
+    <!--日终汇总表（四）按病人性质汇总-->
+    <select id="queryHzbrxzFour" resultType="java.util.Map">
+        select IFNULL(sum(c.FYHJ),0) as FYHJ,IFNULL(sum(c.ZFHJ),0) as ZFHJ,c.BRXZ as BRXZ,d.XZMC as XZMC,d.DBPB as DBPB from (
+        SELECT a.FYHJ as FYHJ,a.ZFHJ as ZFHJ,a.BRXZ as BRXZ FROM IM_ZYJS a WHERE a.JSLX!=4 and a.FYHJ!=a.ZFHJ and a.HZRQ &gt;=#{adt_hzrq} AND a.HZRQ &lt;=#{adt_hzrq_end} AND a.JGID=#{al_jgid}
+         union all
+        SELECT (-1*a.FYHJ) as FYHJ,(-1*a.ZFHJ) as ZFHJ,a.BRXZ as BRXZ FROM IM_ZYJS a ,IM_JSZF b WHERE a.JSLX!=4 and a.ZYH = b.ZYH AND a.JSCS = b.JSCS and a.FYHJ!=a.ZFHJ and b.HZRQ &gt;=#{adt_hzrq} AND b.HZRQ &lt;=#{adt_hzrq_end} AND b.JGID=#{al_jgid}
+        ) c left outer join PUB_BRXZ d on c.BRXZ = d.BRXZ group by c.BRXZ,d.XZMC,d.DBPB
+    </select>
+
+
+</mapper>
+

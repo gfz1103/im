@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 自定义专科护理内容 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisZdyxmnrDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        XMNRDM as xmnrdm,XMNRXH as xmnrxh,XMNRMC as xmnrmc,PYDM as pydm,JGID as jgid,XMDM as xmdm,BZXX as bzxx,ZFPB as zfpb
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_ZDYXMNR (
+            XMNRDM ,
+            XMNRXH ,
+            XMNRMC ,
+            PYDM ,
+            JGID ,
+            XMDM ,
+            BZXX ,
+            ZFPB 
+        ) VALUES (
+            #{xmnrdm} ,
+            #{xmnrxh} ,
+            #{xmnrmc} ,
+            #{pydm} ,
+            #{jgid} ,
+            #{xmdm} ,
+            #{bzxx} ,
+            #{zfpb} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_ZDYXMNR SET
+            XMNRMC = #{xmnrmc} ,
+            XMNRXH = #{xmnrxh} ,
+            PYDM = #{pydm} ,
+            JGID = #{jgid} ,
+            XMDM = #{xmdm} ,
+            BZXX = #{bzxx} ,
+            ZFPB = #{zfpb} 
+        WHERE 
+            XMNRDM = #{xmnrdm}            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_ZDYXMNR WHERE
+        XMNRDM = #{xmnrdm} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_ZDYXMNR <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisZdyxmnr">
+        SELECT <include refid="columns" />
+            FROM NIS_ZDYXMNR 
+            WHERE 
+        XMNRDM = #{xmnrdm} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmnrdm)"> -->
+<!--                     AND XMNRDM = #{xmnrdm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmnrxh)"> -->
+<!--                     AND XMNRXH = #{xmnrxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmnrmc)"> -->
+<!--                     AND XMNRMC = #{xmnrmc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pydm)"> -->
+<!--                     AND PYDM = #{pydm} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> 
+                     AND JGID = #{jgid} 
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(xmdm)"> 
+                     AND XMDM = #{xmdm} 
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bzxx)"> -->
+<!--                     AND BZXX = #{bzxx} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zfpb)"> 
+                     AND ZFPB = #{zfpb} 
+                </if> 
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_ZDYXMNR 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisZdyxmnr">
+        SELECT <include refid="columns" />
+        FROM NIS_ZDYXMNR 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <update id="invalid" >
+        update nis_zdyxmnr set zfpb = #{zfpb} where xmnrdm = #{xmnrdm}            
+    </update>
+    
+    <!-- 查询是专科项目是否被使用 -->
+    <select id="queryIsExistUse" resultType="long">
+    	select count(1) from nis_zdyxmnr a, nis_hljldzdy b
+		where concat(a.xmnrdm, '-', a.xmnrxh) = b.xmdm
+		and a.jgid = #{jgid}
+		and a.xmdm = #{xmdm}          
+    </select>
+</mapper>
+

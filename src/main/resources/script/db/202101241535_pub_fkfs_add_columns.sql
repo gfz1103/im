@@ -1,0 +1,21 @@
+-- 付款方式字典表 增加 住院归并/门诊归并字段;
+-- 增加新支付方式 POS机（住院使用：支付宝，微信，银联 归并为POS机）
+ALTER TABLE pub_fkfs
+    ADD COLUMN MZGB int(0) NULL COMMENT '门诊归并 | 日终相关报表的归并标志' AFTER ZJJSSY,
+    ADD COLUMN ZYGB int(0) NULL COMMENT '住院归并 | 日终相关报表的归并标志' AFTER MZGB;
+
+INSERT INTO pub_fkfs(FKFS, FKMC, SYLX, FKLB, HMCD, FKJD, HBWC, MRBZ, ZFBZ, KJFS, SRFS, BZXX, ZJJSSY)
+VALUES (40, 'POS机', 1, 8, NULL, 3, 0, 0, 0, NULL, 2, NULL, NULL);
+INSERT INTO pub_fkfs(FKFS, FKMC, SYLX, FKLB, HMCD, FKJD, HBWC, MRBZ, ZFBZ, KJFS, SRFS, BZXX, ZJJSSY)
+VALUES (41, 'POS机', 2, 8, NULL, 3, 0, 0, 0, NULL, 2, NULL, NULL);
+
+UPDATE PUB_FKFS
+SET MZGB = FKFS,
+    ZYGB = FKFS;
+UPDATE PUB_FKFS
+SET ZYGB = 41
+WHERE FKFS IN (17, 27, 39);
+
+ALTER TABLE pub_fkfs
+    MODIFY COLUMN MZGB int(0) NOT NULL COMMENT '门诊归并 | 日终相关报表的归并标志' AFTER ZJJSSY,
+    MODIFY COLUMN ZYGB int(0) NOT NULL COMMENT '住院归并 | 日终相关报表的归并标志' AFTER MZGB;

@@ -1,0 +1,2 @@
+ALTER TABLE `im_ryzd`
+ADD COLUMN `PXH` int(0) NULL COMMENT '排序号' AFTER `ZXLB`;

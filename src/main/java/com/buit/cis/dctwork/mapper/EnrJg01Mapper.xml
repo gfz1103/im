@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.dctwork.dao.EnrJg01Dao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JGBH as jgbh,JGMC as jgmc,BLLB as bllb,MBLB as mblb,SSKS as ssks,PLCX as plcx,PYDM as pydm,WBDM as wbdm,GLMB as glmb,ZZKD as zzkd,ZZGD as zzgd,MYHS as myhs,ZXBZ as zxbz,BZXX as bzxx,DLHHXM as dlhhxm,DLYM as dlym,ZZFX as zzfx,ZZDX as zzdx,TBTZ as tbtz
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO ENR_JG01 (
+            JGBH ,
+            JGMC ,
+            BLLB ,
+            MBLB ,
+            SSKS ,
+            PLCX ,
+            PYDM ,
+            WBDM ,
+            GLMB ,
+            ZZKD ,
+            ZZGD ,
+            MYHS ,
+            ZXBZ ,
+            BZXX ,
+            DLHHXM ,
+            DLYM ,
+            ZZFX ,
+            ZZDX ,
+            TBTZ 
+        ) VALUES (
+            #{jgbh} ,
+            #{jgmc} ,
+            #{bllb} ,
+            #{mblb} ,
+            #{ssks} ,
+            #{plcx} ,
+            #{pydm} ,
+            #{wbdm} ,
+            #{glmb} ,
+            #{zzkd} ,
+            #{zzgd} ,
+            #{myhs} ,
+            #{zxbz} ,
+            #{bzxx} ,
+            #{dlhhxm} ,
+            #{dlym} ,
+            #{zzfx} ,
+            #{zzdx} ,
+            #{tbtz} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE ENR_JG01 SET
+            JGMC = #{jgmc} ,
+            BLLB = #{bllb} ,
+            MBLB = #{mblb} ,
+            SSKS = #{ssks} ,
+            PLCX = #{plcx} ,
+            PYDM = #{pydm} ,
+            WBDM = #{wbdm} ,
+            GLMB = #{glmb} ,
+            ZZKD = #{zzkd} ,
+            ZZGD = #{zzgd} ,
+            MYHS = #{myhs} ,
+            ZXBZ = #{zxbz} ,
+            BZXX = #{bzxx} ,
+            DLHHXM = #{dlhhxm} ,
+            DLYM = #{dlym} ,
+            ZZFX = #{zzfx} ,
+            ZZDX = #{zzdx} ,
+            TBTZ = #{tbtz} 
+        WHERE 
+            JGBH = #{jgbh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM ENR_JG01 WHERE
+        JGBH = #{jgbh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM ENR_JG01 <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="EnrJg01">
+        SELECT <include refid="columns" />
+            FROM ENR_JG01 
+            WHERE 
+        JGBH = #{jgbh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgbh)"> -->
+<!--                     AND JGBH = #{jgbh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(jgmc)"> 
+                     AND JGMC = #{jgmc} 
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bllb)"> -->
+<!--                     AND BLLB = #{bllb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mblb)"> -->
+<!--                     AND MBLB = #{mblb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ssks)"> -->
+<!--                     AND SSKS = #{ssks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(plcx)"> -->
+<!--                     AND PLCX = #{plcx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pydm)"> -->
+<!--                     AND PYDM = #{pydm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(wbdm)"> -->
+<!--                     AND WBDM = #{wbdm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(glmb)"> -->
+<!--                     AND GLMB = #{glmb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zzkd)"> -->
+<!--                     AND ZZKD = #{zzkd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zzgd)"> -->
+<!--                     AND ZZGD = #{zzgd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(myhs)"> -->
+<!--                     AND MYHS = #{myhs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zxbz)"> -->
+<!--                     AND ZXBZ = #{zxbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bzxx)"> -->
+<!--                     AND BZXX = #{bzxx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dlhhxm)"> -->
+<!--                     AND DLHHXM = #{dlhhxm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dlym)"> -->
+<!--                     AND DLYM = #{dlym} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zzfx)"> -->
+<!--                     AND ZZFX = #{zzfx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zzdx)"> -->
+<!--                     AND ZZDX = #{zzdx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tbtz)"> -->
+<!--                     AND TBTZ = #{tbtz} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM ENR_JG01 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="EnrJg01">
+        SELECT <include refid="columns" />
+        FROM ENR_JG01 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+</mapper>
+

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院_结算付款信息 -->
+<mapper namespace="com.buit.cis.ims.dao.ImFkxxDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,JSCS as jscs,JGID as jgid,FKFS as fkfs,FKJE as fkje,FKHM as fkhm
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_FKXX (
+            JLXH ,
+            ZYH ,
+            JSCS ,
+            JGID ,
+            FKFS ,
+            FKJE ,
+            FKHM
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{jscs} ,
+            #{jgid} ,
+            #{fkfs} ,
+            #{fkje} ,
+            #{fkhm}
+        )
+    </insert>
+
+
+
+    <update id="update" >
+<!--        UPDATE IM_FKXX SET-->
+<!--            ZYH = #{zyh} ,-->
+<!--            JSCS = #{jscs} ,-->
+<!--            JGID = #{jgid} ,-->
+<!--            FKFS = #{fkfs} ,-->
+<!--            FKJE = #{fkje} ,-->
+<!--            FKHM = #{fkhm} -->
+<!--        WHERE-->
+<!--            JLXH = #{jlxh} -->
+    </update>
+
+    <update id="updateStatus" >
+<!--        UPDATE IM_FKXX SET-->
+<!--            ZYH = #{zyh} ,-->
+<!--            JSCS = #{jscs} ,-->
+<!--            JGID = #{jgid} ,-->
+<!--            FKFS = #{fkfs} ,-->
+<!--            FKJE = #{fkje} ,-->
+<!--            FKHM = #{fkhm} -->
+<!--        WHERE-->
+<!--            JLXH = #{jlxh} -->
+    </update>
+
+
+    <delete id="deleteById">
+        DELETE FROM IM_FKXX WHERE
+        JLXH = #{jlxh}
+    </delete>
+
+    <delete id="removeByEntity">
+        DELETE FROM IM_FKXX <include refid="where"/>
+    </delete>
+
+    <select id="getById" resultType="ImFkxx">
+        SELECT <include refid="columns" />
+            FROM IM_FKXX
+            WHERE
+        JLXH = #{jlxh}
+    </select>
+
+    <sql id="where">
+        <where>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> -->
+<!--                     AND ZYH = #{zyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jscs)"> -->
+<!--                     AND JSCS = #{jscs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fkfs)"> -->
+<!--                     AND FKFS = #{fkfs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fkje)"> -->
+<!--                     AND FKJE = #{fkje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fkhm)"> -->
+<!--                     AND FKHM = #{fkhm} -->
+<!--                </if> -->
+        </where>
+    </sql>
+
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_FKXX
+        <include refid="where"/>
+    </select>
+
+    <select id="findByEntity" resultType="ImFkxx">
+        SELECT <include refid="columns" />
+        FROM IM_FKXX
+        <include refid="where"/>
+
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    <!--查询打印发票的付款信息-->
+    <select id="queryDyfp" resultType="java.util.Map">
+        select f.FKJE as HBWC
+        from IM_FKXX f,
+             PUB_FKFS b
+        where f.FKFS = b.FKFS
+          and b.SYLX = 2
+          and HBWC = 1
+          and f.ZYH = #{ZYH}
+          and f.JSCS = #{JSCS}
+    </select>
+    <!--查询付款方式-->
+    <select id="queryPaymentWay" resultType="java.util.Map">
+        select a.fkfs, b.fkmc
+        from IM_FKXX a,
+             PUB_FKFS b
+        where a.fkfs = b.fkfs
+          and b.HBWC &lt;&gt; 1
+          and a.ZYH = #{ZYH}
+          and a.JSCS = #{JSCS}
+    </select>
+    <!--查询打印打票的付款金额-->
+    <select id="queryDyfpFkje" resultType="java.util.Map">
+        select -sum(a.FKJE) as TKXJ from IM_FKXX a,IM_JSMX b,PUB_FKFS c where a.ZYH=b.ZYH and a.JSCS=b.JSCS and a.FKFS=c.FKFS and c.HBWC=0  and a.ZYH =#{ZYH} and a.JSCS =#{JSCS}
+    </select>
+
+</mapper>
+

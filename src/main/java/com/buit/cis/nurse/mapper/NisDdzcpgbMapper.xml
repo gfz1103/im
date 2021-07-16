@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院患者跌倒、坠床危险因素评估表 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisDdzcpgbDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,MBLX as mblx,DDS as dds,NL as nl,ZD as zd,XZFZ as xzfz,ZGZ as zgz,BT as bt,JSZT as jszt,SYJMYW as syjmyw,XW as xw,TSJ as tsj,GTNL as gtnl,XY as xy,PX as px,DXGW as dxgw,HSQM as hsqm,HLCS as hlcs,ZF as zf,RQ as rq,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_DDZCPGB (
+            JLXH ,
+            ZYH ,
+            MBLX ,
+            DDS ,
+            NL ,
+            ZD ,
+            XZFZ ,
+            ZGZ ,
+            BT ,
+            JSZT ,
+            SYJMYW ,
+            XW ,
+            TSJ ,
+            GTNL ,
+            XY ,
+            PX ,
+            DXGW ,
+            HSQM ,
+            HLCS ,
+            ZF ,
+            RQ ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{mblx} ,
+            #{dds} ,
+            #{nl} ,
+            #{zd} ,
+            #{xzfz} ,
+            #{zgz} ,
+            #{bt} ,
+            #{jszt} ,
+            #{syjmyw} ,
+            #{xw} ,
+            #{tsj} ,
+            #{gtnl} ,
+            #{xy} ,
+            #{px} ,
+            #{dxgw} ,
+            #{hsqm} ,
+            #{hlcs} ,
+            #{zf} ,
+            #{rq} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_DDZCPGB SET
+            ZYH = #{zyh} ,
+            MBLX = #{mblx} ,
+            DDS = #{dds} ,
+            NL = #{nl} ,
+            ZD = #{zd} ,
+            XZFZ = #{xzfz} ,
+            ZGZ = #{zgz} ,
+            BT = #{bt} ,
+            JSZT = #{jszt} ,
+            SYJMYW = #{syjmyw} ,
+            XW = #{xw} ,
+            TSJ = #{tsj} ,
+            GTNL = #{gtnl} ,
+            XY = #{xy} ,
+            PX = #{px} ,
+            DXGW = #{dxgw} ,
+            HSQM = #{hsqm} ,
+            HLCS = #{hlcs} ,
+            ZF = #{zf} ,
+            RQ = #{rq} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}         
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_DDZCPGB WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_DDZCPGB <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisDdzcpgb">
+        SELECT <include refid="columns" />
+            FROM NIS_DDZCPGB 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                     AND ZYH = #{zyh}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mblx)"> -->
+<!--                     AND MBLX = #{mblx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dds)"> -->
+<!--                     AND DDS = #{dds} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(nl)"> -->
+<!--                     AND NL = #{nl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zd)"> -->
+<!--                     AND ZD = #{zd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xzfz)"> -->
+<!--                     AND XZFZ = #{xzfz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zgz)"> -->
+<!--                     AND ZGZ = #{zgz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bt)"> -->
+<!--                     AND BT = #{bt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jszt)"> -->
+<!--                     AND JSZT = #{jszt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(syjmyw)"> -->
+<!--                     AND SYJMYW = #{syjmyw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xw)"> -->
+<!--                     AND XW = #{xw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tsj)"> -->
+<!--                     AND TSJ = #{tsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(gtnl)"> -->
+<!--                     AND GTNL = #{gtnl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xy)"> -->
+<!--                     AND XY = #{xy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(px)"> -->
+<!--                     AND PX = #{px} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dxgw)"> -->
+<!--                     AND DXGW = #{dxgw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hsqm)"> -->
+<!--                     AND HSQM = #{hsqm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlcs)"> -->
+<!--                     AND HLCS = #{hlcs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zf)"> -->
+<!--                     AND ZF = #{zf} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rq)"> -->
+<!--                     AND RQ = #{rq} -->
+<!--                </if> -->
+               <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                    AND JGID = #{jgid}
+               </if>
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_DDZCPGB 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisDdzcpgb">
+        SELECT <include refid="columns" />
+        FROM NIS_DDZCPGB 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 查询跌倒、坠床危险因素评估表结构树 -->
+    <select id="queryDdzcpgbTree" resultType="com.buit.cis.nurse.response.NisHzmbResp">
+        SELECT CONCAT(a.RQ, '  ', b.MBMC ) as LABEL, a.MBLX as NAME
+			FROM ( SELECT DATE_FORMAT( RQ, '%m-%d' ) AS RQ, 
+							ZYH as ZYH,
+							MBLX as MBLX,
+							JGID as JGID
+				FROM NIS_DDZCPGB
+				GROUP BY 
+					DATE_FORMAT(RQ, '%m-%d'),
+					ZYH,
+					MBLX,
+					JGID 
+				) a, NIS_HZMB b WHERE
+				a.ZYH = b.ZYH 
+				AND a.MBLX = b.MBLX 
+				AND a.JGID = b.JGID
+				AND a.ZYH = #{zyh}
+				AND a.JGID = #{jgid}
+				order by a.RQ
+    </select>
+    
+    <!-- 根据日期跌倒、坠床危险因素评估表 -->
+    <select id="queryDdzcpgbByDate" resultType="com.buit.cis.nurse.response.NisDdzcpgbResp">
+       SELECT JLXH as jlxh,ZYH as zyh,MBLX as mblx,DDS as dds,NL as nl,ZD as zd,XZFZ as xzfz,ZGZ as zgz,BT as bt,JSZT as jszt,SYJMYW as syjmyw,XW as xw,TSJ as tsj,GTNL as gtnl,XY as xy,PX as px,DXGW as dxgw,HSQM as hsqm,HLCS as hlcs,ZF as zf,date_format(RQ, '%Y-%m-%d %H:%i') as rq,JGID as jgid
+        FROM NIS_DDZCPGB 
+        WHERE ZYH = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and DATE_FORMAT(RQ, '%m-%d') = #{queryDate}
+        </if> 
+        and JGID = #{jgid}
+        order by RQ
+    </select>
+    
+    <!-- 根据日期跌倒、坠床危险因素评估表打印信息 -->
+    <select id="queryPrintDdzcpgbByDate" resultType="java.util.HashMap">
+       select date_format(rq, '%Y-%m-%d %H:%i') as rq,
+        case nl when '&lt;65岁' then '√' else '' end as nl1,
+        case nl when '65-70岁' then '√' else '' end as nl2, 
+        case nl when '>70岁' then '√' else '' end as nl3, 
+        case dds when '无' then '√' else '' end as dds1,  
+        case dds when '近3月有跌倒史' then '√' else '' end as dds2,  
+        case zd when '≥2种诊断' then '√' else '' end as zd,  
+        case xzfz when '无/卧床/坐轮椅/有人扶持/学步车' then '√' else '' end as xzfz1,  
+        case xzfz when '拐杖/手杖/助行器' then '√' else '' end as xzfz2,  
+        case xzfz when '扶家具行走' then '√' else '' end as xzfz3,  
+        case xzfz when '无法下床、坐下' then '√' else '' end as xzfz4, 
+        case zgz when '无需/有照顾者' then '√' else '' end as zgz1,   
+        case zgz when '有照顾者但经常不在或无照顾者' then '√' else '' end as zgz2,
+        case bt when '正常/卧床/轮椅' then '√' else '' end as bt1,
+        case bt when '虚弱/乏力/体位性低血压' then '√' else '' end as bt2,
+        case bt when '失调/不平衡（中枢神经系统疾病所致）' then '√' else '' end as bt3,
+        case jszt when '正确的自我认知' then '√' else '' end as jszt1,  
+        case jszt when '自我认知不正确/忘记' then '√' else '' end as jszt2,
+        case xw when '躁动不安' then '√' else '' end as xw,    
+        case tsj when '有听/视觉障碍' then '√' else '' end as tsj,  
+        case gtnl when '无法表达或无法了解所说' then '√' else '' end as gtnl,  
+        case xy when '无' then '√' else '' end as xy1,     
+        case xy when '有眩晕病史' then '√' else '' end as xy2, 
+        case xy when '目前有眩晕' then '√' else '' end as xy3, 
+        case px when '频繁入厕' then '√' else '' end as px, 
+        case syjmyw when '无使用以上药物' then '√' else '' end as syyw1, 
+        case syjmyw when '利尿剂' then '√' else '' end as syyw2, 
+        case syjmyw when '抗高血压、抗心律失常药品、降血糖药、抗抑郁、抗焦虑' then '√' else '' end as syyw3, 
+        case syjmyw when '麻醉药、抗癫痫药、抗痉挛药、镇静催眠药、肌肉松弛药、抗精神病药。服用2种以上药物' then '√' else '' end as syyw4,
+        case dxgw when '单项高危' then '√' else '' end as dxgw,
+        zf,
+        hlcs,
+        hsqm
+        from nis_ddzcpgb 
+        where zyh = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and date_format(rq, '%m-%d') = #{queryDate}
+        </if> 
+        and jgid = #{jgid}
+        order by rq
+    </select>
+</mapper>
+

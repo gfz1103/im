@@ -1,0 +1,3 @@
+ALTER TABLE `his`.`im_cwsz`
+ADD COLUMN `CECWFY` decimal(6, 2) NULL COMMENT '差额床位费用' AFTER `VIPCWFY`,
+ADD COLUMN `CEFYXH` int(0) NULL COMMENT '差额费用序号' AFTER `SBFYXH`;

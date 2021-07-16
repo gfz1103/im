@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 病区_提交明细 | 记录病区医嘱提交明细的记录，与提交记录表通过TJXH关联 -->
+<mapper namespace="com.buit.cis.dctwork.dao.NisTj02Dao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,JGID as jgid,TJXH as tjxh,YZXH as yzxh,ZYH as zyh,YPXH as ypxh,YPCD as ypcd,YFGG as yfgg,YFDW as yfdw,YFBZ as yfbz,KSSJ as kssj,YCSL as ycsl,YTCS as ytcs,FYSL as fysl,JFRQ as jfrq,QRRQ as qrrq,SYPC as sypc,FYJE as fyje,YPDJ as ypdj,FYBZ as fybz,FYGH as fygh,FYRQ as fyrq,LSYZ as lsyz,QZCL as qzcl,YEPB as yepb,FYKS as fyks,SJFYBZ as sjfybz,SJFYR as sjfyr,SJFYSJ as sjfysj,YYTS as yyts,BQYZ as bqyz,QRBZ as qrbz,QRSJ as qrsj,QRGH as qrgh,FYMXJLXH as fymxjlxh
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_TJ02 (
+            JLXH ,
+            JGID ,
+            TJXH ,
+            YZXH ,
+            ZYH ,
+            YPXH ,
+            YPCD ,
+            YFGG ,
+            YFDW ,
+            YFBZ ,
+            KSSJ ,
+            YCSL ,
+            YTCS ,
+            FYSL ,
+            JFRQ ,
+            QRRQ ,
+            SYPC ,
+            FYJE ,
+            YPDJ ,
+            FYBZ ,
+            FYGH ,
+            FYRQ ,
+            LSYZ ,
+            QZCL ,
+            YEPB ,
+            FYKS ,
+            SJFYBZ ,
+            SJFYR ,
+            SJFYSJ ,
+            YYTS ,
+            BQYZ ,
+            QRBZ ,
+            QRSJ ,
+            QRGH ,
+            FYMXJLXH 
+        ) VALUES (
+            #{jlxh} ,
+            #{jgid} ,
+            #{tjxh} ,
+            #{yzxh} ,
+            #{zyh} ,
+            #{ypxh} ,
+            #{ypcd} ,
+            #{yfgg} ,
+            #{yfdw} ,
+            #{yfbz} ,
+            #{kssj} ,
+            #{ycsl} ,
+            #{ytcs} ,
+            #{fysl} ,
+            #{jfrq} ,
+            #{qrrq} ,
+            #{sypc} ,
+            #{fyje} ,
+            #{ypdj} ,
+            #{fybz} ,
+            #{fygh} ,
+            #{fyrq} ,
+            #{lsyz} ,
+            #{qzcl} ,
+            #{yepb} ,
+            #{fyks} ,
+            #{sjfybz} ,
+            #{sjfyr} ,
+            #{sjfysj} ,
+            #{yyts} ,
+            #{bqyz} ,
+            #{qrbz} ,
+            #{qrsj} ,
+            #{qrgh} ,
+            #{fymxjlxh} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE NIS_TJ02 SET
+            JGID = #{jgid} ,
+            TJXH = #{tjxh} ,
+            YZXH = #{yzxh} ,
+            ZYH = #{zyh} ,
+            YPXH = #{ypxh} ,
+            YPCD = #{ypcd} ,
+            YFGG = #{yfgg} ,
+            YFDW = #{yfdw} ,
+            YFBZ = #{yfbz} ,
+            KSSJ = #{kssj} ,
+            YCSL = #{ycsl} ,
+            YTCS = #{ytcs} ,
+            FYSL = #{fysl} ,
+            JFRQ = #{jfrq} ,
+            QRRQ = #{qrrq} ,
+            SYPC = #{sypc} ,
+            FYJE = #{fyje} ,
+            YPDJ = #{ypdj} ,
+            FYBZ = #{fybz} ,
+            FYGH = #{fygh} ,
+            FYRQ = #{fyrq} ,
+            LSYZ = #{lsyz} ,
+            QZCL = #{qzcl} ,
+            YEPB = #{yepb} ,
+            FYKS = #{fyks} ,
+            SJFYBZ = #{sjfybz} ,
+            SJFYR = #{sjfyr} ,
+            SJFYSJ = #{sjfysj} ,
+            YYTS = #{yyts} ,
+            BQYZ = #{bqyz} ,
+            QRBZ = #{qrbz} ,
+            QRSJ = #{qrsj} ,
+            QRGH = #{qrgh} ,
+            FYMXJLXH = #{fymxjlxh} 
+        WHERE 
+            JLXH = #{jlxh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_TJ02 WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_TJ02 <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisTj02">
+        SELECT <include refid="columns" />
+            FROM NIS_TJ02 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tjxh)"> -->
+<!--                     AND TJXH = #{tjxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yzxh)"> -->
+<!--                     AND YZXH = #{yzxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> -->
+<!--                     AND ZYH = #{zyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ypxh)"> -->
+<!--                     AND YPXH = #{ypxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ypcd)"> -->
+<!--                     AND YPCD = #{ypcd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yfgg)"> -->
+<!--                     AND YFGG = #{yfgg} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yfdw)"> -->
+<!--                     AND YFDW = #{yfdw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yfbz)"> -->
+<!--                     AND YFBZ = #{yfbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kssj)"> -->
+<!--                     AND KSSJ = #{kssj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ycsl)"> -->
+<!--                     AND YCSL = #{ycsl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ytcs)"> -->
+<!--                     AND YTCS = #{ytcs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fysl)"> -->
+<!--                     AND FYSL = #{fysl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jfrq)"> -->
+<!--                     AND JFRQ = #{jfrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qrrq)"> -->
+<!--                     AND QRRQ = #{qrrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sypc)"> -->
+<!--                     AND SYPC = #{sypc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fyje)"> -->
+<!--                     AND FYJE = #{fyje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ypdj)"> -->
+<!--                     AND YPDJ = #{ypdj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fybz)"> -->
+<!--                     AND FYBZ = #{fybz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fygh)"> -->
+<!--                     AND FYGH = #{fygh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fyrq)"> -->
+<!--                     AND FYRQ = #{fyrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lsyz)"> -->
+<!--                     AND LSYZ = #{lsyz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qzcl)"> -->
+<!--                     AND QZCL = #{qzcl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yepb)"> -->
+<!--                     AND YEPB = #{yepb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fyks)"> -->
+<!--                     AND FYKS = #{fyks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sjfybz)"> -->
+<!--                     AND SJFYBZ = #{sjfybz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sjfyr)"> -->
+<!--                     AND SJFYR = #{sjfyr} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sjfysj)"> -->
+<!--                     AND SJFYSJ = #{sjfysj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yyts)"> -->
+<!--                     AND YYTS = #{yyts} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bqyz)"> -->
+<!--                     AND BQYZ = #{bqyz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qrbz)"> -->
+<!--                     AND QRBZ = #{qrbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qrsj)"> -->
+<!--                     AND QRSJ = #{qrsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qrgh)"> -->
+<!--                     AND QRGH = #{qrgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fymxjlxh)"> -->
+<!--                     AND FYMXJLXH = #{fymxjlxh} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_TJ02 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisTj02">
+        SELECT <include refid="columns" />
+        FROM NIS_TJ02 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 查询病区药品提交库存 -->
+    <select id="queryBqtj02Stock" resultType="java.util.HashMap">
+        select t.YPXH, t.YPCD, sum(t.KCZL) as KCZL
+		  from (select kc.YPXH as YPXH, kc.YPCD as YPCD, sum(kc.YPSL) as KCZL
+		          from PHAR_KCMX kc
+		         where kc.YPXH in
+	         	   <foreach item="item" index="index" collection="YPXHS.split(',')" open="(" close=")" separator="," >
+            			#{item}
+        		   </foreach>
+		           and kc.YPCD in 
+		           <foreach item="item" index="index" collection="YPCDS.split(',')" open="(" close=")" separator="," >
+            			#{item}
+        		   </foreach>
+		           and kc.YFSB = #{YFSB}
+		           and kc.JYBZ = 0
+		         group by kc.YPXH, kc.YPCD
+		        union all
+		        select tj02.YPXH as YPXH, tj02.YPCD as YPCD, -sum(tj02.FYSL) as KCZL
+		          from NIS_TJ02 tj02
+		          left outer join DRUGS_TYPK PK
+		            on tj02.YPXH = PK.YPXH 
+		         where tj02.YPXH in 
+				   <foreach item="item" index="index" collection="YPXHS.split(',')" open="(" close=")" separator="," >
+            			#{item}
+        		   </foreach>
+		           and PK.TYPE &lt;&gt; 3
+		           and tj02.YPCD in 
+		           <foreach item="item" index="index" collection="YPCDS.split(',')" open="(" close=")" separator="," >
+            			#{item}
+        		   </foreach>
+		           and tj02.FYBZ = 0
+		         group by tj02.YPXH, tj02.YPCD) t
+		 group by t.YPXH, t.YPCD
+		 order by t.YPXH
+    </select>
+    
+    <!-- 更新提交02的确认状态 -->
+    <update id="updateSubmit02Status" >
+	    update NIS_TJ02
+	   set QRBZ = 1, QRSJ = #{qrsj}, QRGH = #{qrgh}
+	 where JLXH = #{jlxh}
+	   and QRBZ = 0
+	   and BQYZ = 1
+    </update>
+
+<!--    <select id="queryFyDetailByTjxh" resultType="com.buit.cis.dctwork.response.NisTj02DetailDto">
+        select c.yzzh as yzzh,a.ZYH AS zyh,b.YPMC AS ypmc,a.YFGG AS yfgg,a.YCSL AS ycsl,a.FYSL AS fysl,a.YFDW AS yfdw,a.YPDJ AS ypdj,a.FYJE AS fyje,a.SYPC AS sypc,g.CDMC AS cdmc,a.YTCS AS ytcs,a.YPXH AS ypxh,a.KSSJ AS kssj,a.QRRQ AS qrrq,d.FYFS AS fyfs,d.TJBQ AS tjbq,d.YZLX AS yzlx,a.JFRQ AS jfrq,a.TJXH AS tjxh,a.FYGH AS fygh,a.FYRQ AS fyrq,a.YZXH AS yzxh,a.LSYZ AS lsyz,a.FYBZ AS fybz,a.JLXH AS jlxh,a.YPCD AS ypcd,a.QZCL AS qzcl,a.YEPB AS yepb,a.FYKS AS fyks,a.YFBZ AS yfbz,a.YYTS AS yyts,a.BQYZ AS bqyz
+        from NIS_TJ02 a ,DRUGS_TYPK b,CIS_HZYZ c ,NIS_TJ01 d, DRUGS_CDDZ g
+        where a.YPXH=b.YPXH  and a.TJXH=d.TJXH and a.JGID=d.JGID and g.YPCD=a.YPCD and c.jlxh=a.yzxh
+            and ${@com.buit.his.pha.commons.util.SqlConverterUtil@transfer(cond)}
+        ORDER BY c.yzzh,a.YZXH, a.QRRQ
+    </select>-->
+    <select id="queryByJlxh" resultType="NisTj02">
+        SELECT <include refid="columns" />
+        FROM NIS_TJ02
+        where JLXH in (
+        <foreach collection="list" separator="," item="x">
+            #{x}
+        </foreach>
+        )
+    </select>
+
+    <select id="queryByFybzEqZeroByYzxh" resultType="java.lang.Integer">
+        select distinct YZXH AS yzxh  from NIS_TJ02
+        where YZXH in (
+            <foreach collection="list" item="y" separator=",">
+                #{y}
+            </foreach>
+        ) and FYBZ=0
+    </select>
+    <select id="queryByFybzEqZeroByTjxh" resultType="java.lang.Integer">
+        select distinct TJXH AS tjxh from NIS_TJ02
+        where TJXH in (
+            <foreach collection="list" item="y" separator=",">
+                #{y}
+            </foreach>
+        ) and FYBZ=0
+    </select>
+    <select id="queryYzxhByTjxh" resultType="java.lang.Integer">
+        select  distinct YZXH as YZXH
+        from NIS_TJ02
+        where TJXH in (
+        <foreach collection="list" item="y" separator=",">
+            #{y}
+        </foreach>
+        )
+    </select>
+    <delete id="deleteByJgidAndTjyf">
+        DELETE FROM NIS_TJ02 b
+        WHERE EXISTS (SELECT TJXH FROM NIS_TJ01 a WHERE a.JGID = #{jgid} and a.TJYF =#{yfsb} AND a.TJXH = b.TJXH)
+    </delete>
+    
+    <!-- 查询药品医嘱退回 -->
+    <select id="queryDrugReturn" resultType="com.buit.cis.dctwork.response.NisTj02Resp">
+        select a.JLXH     as JLXH,
+               b.ZYHM      as ZYHM,
+               b.BRCH      as BRCH,
+               b.BRXM      as BRXM,
+               c.YPMC      as YPMC,
+               d.CDMC      as CDMC,
+               a.YFGG     as YFGG,
+               a.YFDW     as YFDW,
+               a.YPDJ     as YPDJ,
+               a.YCSL     as YCSL,
+               a.FYBZ     as FYBZ,
+               a.QRBZ     as QRBZ,
+               a.QRSJ     as QRSJ,
+               a.QRGH     as QRGH,
+               a.FYMXJLXH as FYMXJLXH
+          from NIS_TJ02 a,
+               IM_HZRY b,
+               DRUGS_TYPK c,
+               DRUGS_CDDZ d
+         where a.ZYH = b.ZYH
+           and a.YPXH = c.YPXH
+           and a.YPCD = d.YPCD
+           and a.FYBZ = 2
+           and a.BQYZ = 1   
+            <if test="@sqlt.Ognl@isNotEmpty(qrbz)">
+                  and a.QRBZ = #{qrbz}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(comprehensive)">
+                  and (b.ZYHM = #{comprehensive} or b.BRCH like concat(concat('%',UPPER(#{comprehensive})),'%')
+                  or b.BRXM like concat('%',#{comprehensive},'%'))
+            </if>
+    </select>
+    
+    <!-- 查询退药申请明细 -->
+    <select id="queryTurningBackDetail" resultType="com.buit.cis.dctwork.response.NisTj02BackDetailResp">
+       		select a.jlxh,
+				a.qrrq,
+				b.yfsb,
+				sum(b.ypsl) as ypsl,
+				a.yfdw,
+				a.ypdj,
+				b.lsjg,
+				a.fyrq,
+				c.tjxh,
+				d.tjbz 
+			from nis_tj02 a left join nis_typc c on a.jlxh = c.tjxh
+			left join nis_tymx d on c.tyxh = d.jlxh ,
+			phar_zyfymx b 
+		where a.jlxh = b.tjxh 
+			and b.yzxh = #{yzxh}
+			and a.jgid = #{jgid}
+			and b.jlxh not in (
+			select tygl from phar_zyfymx  where tygl is not null 
+			and ypsl &lt; 0 and yzxh = #{yzxh}
+			)
+			<if test="@sqlt.Ognl@isNotEmpty(beginDate)">
+                 and date_format(a.qrrq, '%Y-%m-%d') &gt;= #{beginDate}
+            </if>
+			<if test="@sqlt.Ognl@isNotEmpty(endDate)">
+                 and date_format(a.qrrq, '%Y-%m-%d') &lt;= #{endDate}
+            </if>
+			<if test="@sqlt.Ognl@isNotEmpty(type) and type == 2">
+                 and (d.tjbz is null or d.tjbz &lt;&gt; 1)
+            </if>
+            group by a.jlxh,
+				a.qrrq,
+				b.yfsb,	
+			    a.yfdw,
+				a.ypdj,
+				b.lsjg,
+				a.fyrq,
+				c.tjxh,
+				d.tjbz 
+			order by a.qrrq desc
+    </select>
+    
+    <!-- 查询病区药品提交库存 -->
+    <select id="queryBqtj02Inventory" resultType="java.util.HashMap">
+        select t.ypxh, t.ypcd, sum(t.kczl) as kczl
+		  from (select kc.ypxh as ypxh, kc.ypcd as ypcd, sum(kc.ypsl) as kczl
+		          from phar_kcmx kc
+		         where concat(kc.ypxh,'-',kc.ypcd)  in
+	         	   <foreach collection="ypList" item="z" open="(" close=")" separator=",">
+            			#{z}
+        		   </foreach>
+		           and kc.yfsb = #{yfsb}
+		           and kc.jybz = 0
+		         group by kc.ypxh, kc.ypcd
+		        union all
+		        select tj02.ypxh as ypxh, tj02.ypcd as ypcd, -sum(tj02.fysl) as kczl
+		          from nis_tj02 tj02
+		          left outer join drugs_typk pk
+		            on tj02.ypxh = pk.ypxh 
+		         where concat(tj02.ypxh,'-',tj02.ypcd) in 
+				   <foreach collection="ypList" item="z" open="(" close=")" separator=",">
+            			#{z}
+        		   </foreach>
+		           and pk.type &lt;&gt; 3
+		           and tj02.fybz = 0
+		         group by tj02.ypxh, tj02.ypcd) t
+		 group by t.ypxh, t.ypcd
+		 order by t.ypxh
+    </select>
+    
+   <!-- 查询可退回病区药品病人信息 -->
+   <select id="queryBqDrugReturnHzInfo" resultType="com.buit.cis.dctwork.response.NisTj02HzInfoResp">
+        select distinct b.brch, b.brxm, a.zyh from nis_tj02 a, im_hzry b, nis_tj01 c
+		 where a.zyh = b.zyh 
+		 and a.tjxh = c.tjxh 
+		 and a.fybz = 0
+		 and a.jgid = #{jgid}
+		 <if test="@sqlt.Ognl@isNotEmpty(brbq)">
+             and b.brbq = #{brbq}
+         </if>
+         <if test="@sqlt.Ognl@isNotEmpty(comprehensive) ">
+   			 and (b.zyhm = #{comprehensive} or b.brch = #{comprehensive}
+             or b.brxm like concat('%',#{comprehensive},'%'))
+   		 </if>
+		 order by b.brch
+    </select>
+    
+   <!-- 查询可退回病区药品信息 -->
+   <select id="queryBqDrugReturnInfo" resultType="com.buit.cis.dctwork.response.NisTj02DrugInfoResp">
+        select  a.jlxh,
+		 a.tjxh,
+		 a.yzxh,
+		 a.ypxh,
+		 a.ypcd,
+		 b.ypmc,
+		 d.kssj,
+		 a.ycsl,
+		 a.yfgg,
+		 a.yfdw,
+		 a.ypdj,
+		 (a.ycsl * a.ypdj ) as fyje,
+		 c.cdmc,
+		 a.qrrq,
+		 d.yfsb,
+		 e.fyfs,
+		 d.yzzh,
+		 d.lsyz,
+		 d.yplx,
+		 d.ztbz,
+		 d.ztyzjlxh
+		 from nis_tj02 a, drugs_typk b, drugs_cddz c, cis_hzyz d, nis_tj01 e
+		 where a.fybz = 0
+		 and a.ypxh = b.ypxh
+		 and a.ypcd = c.ypcd
+		 and a.yzxh = d.jlxh
+		 and a.tjxh = e.tjxh
+		 and a.jgid = #{jgid}
+		 and a.zyh in 
+		 <foreach collection="zyhList" item="z" open="(" close=")" separator=",">
+      		#{z}
+ 		 </foreach> 
+		 order by a.zyh, a.ypxh
+    </select>
+    
+   <!-- 根据提交序号查询退药明细数量 -->
+   <select id="queryReturnDetailByTjxh" resultType="long">
+        select count(1) from nis_tj02 a
+        where fybz = 0
+        and jgid = #{jgid}
+        and tjxh in
+        <foreach collection="tjxhList" item="z" open="(" close=")" separator=",">
+      		#{z}
+ 		</foreach> 
+    </select>
+    
+    <!-- 根据记录序号更新tj02发药标志 -->
+    <update id="updateTj02FybzByJlxh">
+        update nis_tj02 set fybz = 2, thgh = #{thgh}
+        where jgid = #{jgid}
+        and fybz = 0
+        and jlxh in
+        <foreach collection="jlxhList" item="z" open="(" close=")" separator=",">
+      		#{z}
+ 		</foreach> 
+    </update>
+    
+    <!-- 查询发药一次数量 -->
+    <select id="queryOneTimeQuantity" resultType="java.math.BigDecimal">
+       	select ifnull(ycsl,0) from nis_tj02 
+       	where yzxh = #{yzxh}
+       	<if test="@sqlt.Ognl@isNotEmpty(beginDate)">
+                 and date_format(qrrq, '%Y-%m-%d') &gt;= #{beginDate}
+        </if>
+		<if test="@sqlt.Ognl@isNotEmpty(endDate)">
+               and date_format(qrrq, '%Y-%m-%d') &lt;= #{endDate}
+        </if>
+		limit 1
+    </select>
+     
+</mapper>
+

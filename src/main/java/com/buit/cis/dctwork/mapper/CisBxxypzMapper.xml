@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.dctwork.dao.CisBxxypzDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        YLJGD as yljgd,SQDH as sqdh,XH as xh,SXPZDM as sxpzdm,SXPZMC as sxpzmc,SL as sl,DW as dw,DJ as dj,JE as je,ZTBZ as ztbz
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO cis_bxxypz (
+            YLJGD ,
+            SQDH ,
+            XH ,
+            SXPZDM ,
+            SXPZMC ,
+            SL ,
+            DW ,
+            DJ ,
+            JE ,
+            ZTBZ
+        ) VALUES (
+            #{yljgd} ,
+            #{sqdh} ,
+            #{xh} ,
+            #{sxpzdm} ,
+            #{sxpzmc} ,
+            #{sl} ,
+            #{dw} ,
+            #{dj} ,
+            #{je} ,
+            #{ztbz}
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE cis_bxxypz SET
+            SXPZDM = #{sxpzdm} ,
+            SXPZMC = #{sxpzmc} ,
+            SL = #{sl} ,
+            DW = #{dw} ,
+            DJ = #{dj} ,
+            JE = #{je} 
+        WHERE 
+            YLJGD = #{yljgd}  AND 
+                        SQDH = #{sqdh}  AND 
+                        XH = #{xh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM cis_bxxypz WHERE
+        YLJGD = #{yljgd}  AND 
+        SQDH = #{sqdh}  AND 
+        XH = #{xh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM cis_bxxypz <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="CisBxxypz">
+        SELECT <include refid="columns" />
+            FROM cis_bxxypz 
+            WHERE 
+        YLJGD = #{yljgd}  AND 
+        SQDH = #{sqdh}  AND 
+        XH = #{xh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+                <if test="@sqlt.Ognl@isNotEmpty(yljgd)"> 
+                     AND YLJGD = #{yljgd} 
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(sqdh)"> 
+                     AND SQDH = #{sqdh} 
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xh)"> -->
+<!--                     AND XH = #{xh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sxpzdm)"> -->
+<!--                     AND SXPZDM = #{sxpzdm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sxpzmc)"> -->
+<!--                     AND SXPZMC = #{sxpzmc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sl)"> -->
+<!--                     AND SL = #{sl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dw)"> -->
+<!--                     AND DW = #{dw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dj)"> -->
+<!--                     AND DJ = #{dj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(je)"> -->
+<!--                     AND JE = #{je} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM cis_bxxypz 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="CisBxxypz">
+        SELECT <include refid="columns" />
+        FROM cis_bxxypz 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 删除备血申请单血液表 -->
+    <delete id="deleteBatchById">
+       delete from cis_bxxypz where sqdh in
+       <foreach collection="sqidList" item="z" open="(" close=")" separator=",">
+            #{z}
+       </foreach>
+    </delete>
+</mapper>
+

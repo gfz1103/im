@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院_转科记录 -->
+<mapper namespace="com.buit.cis.ims.dao.ImZkjlDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,HCLX as hclx,YSSQRQ as yssqrq,YSSQGH as yssqgh,BQSQRQ as bqsqrq,BQSQGH as bqsqgh,BQZXRQ as bqzxrq,BQZXGH as bqzxgh,YSZXRQ as yszxrq,YSZXGH as yszxgh,ZXBZ as zxbz,HQCH as hqch,HHCH as hhch,HQBQ as hqbq,HHBQ as hhbq,HQKS as hqks,HHKS as hhks,HQYS as hqys,HHYS as hhys,JGID as jgid,TZZT as tzzt,TZTIME as tztime,TZGH as tzgh
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_ZKJL (
+            JLXH ,
+            ZYH ,
+            HCLX ,
+            YSSQRQ ,
+            YSSQGH ,
+            BQSQRQ ,
+            BQSQGH ,
+            BQZXRQ ,
+            BQZXGH ,
+            YSZXRQ ,
+            YSZXGH ,
+            ZXBZ ,
+            HQCH ,
+            HHCH ,
+            HQBQ ,
+            HHBQ ,
+            HQKS ,
+            HHKS ,
+            HQYS ,
+            HHYS ,
+            JGID ,
+            TZZT , 
+            TZTIME ,
+            TZGH 
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{hclx} ,
+            #{yssqrq} ,
+            #{yssqgh} ,
+            #{bqsqrq} ,
+            #{bqsqgh} ,
+            #{bqzxrq} ,
+            #{bqzxgh} ,
+            #{yszxrq} ,
+            #{yszxgh} ,
+            #{zxbz} ,
+            #{hqch} ,
+            #{hhch} ,
+            #{hqbq} ,
+            #{hhbq} ,
+            #{hqks} ,
+            #{hhks} ,
+            #{hqys} ,
+            #{hhys} ,
+            #{jgid} ,
+            #{tzzt} ,
+            #{tztime} ,
+            #{tzgh} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE IM_ZKJL SET
+            ZYH = #{zyh} ,
+            HCLX = #{hclx} ,
+            YSSQRQ = #{yssqrq} ,
+            YSSQGH = #{yssqgh} ,
+            BQSQRQ = #{bqsqrq} ,
+            BQSQGH = #{bqsqgh} ,
+            BQZXRQ = #{bqzxrq} ,
+            BQZXGH = #{bqzxgh} ,
+            YSZXRQ = #{yszxrq} ,
+            YSZXGH = #{yszxgh} ,
+            ZXBZ = #{zxbz} ,
+            HQCH = #{hqch} ,
+            HHCH = #{hhch} ,
+            HQBQ = #{hqbq} ,
+            HHBQ = #{hhbq} ,
+            HQKS = #{hqks} ,
+            HHKS = #{hhks} ,
+            HQYS = #{hqys} ,
+            HHYS = #{hhys} ,
+            JGID = #{jgid} ,
+            TZZT = #{tzzt} ,
+            TZTIME = #{tztime} ,
+            TZGH = #{tzgh}
+        WHERE 
+            JLXH = #{jlxh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM IM_ZKJL WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM IM_ZKJL <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="ImZkjl">
+        SELECT <include refid="columns" />
+            FROM IM_ZKJL 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> -->
+<!--                     AND ZYH = #{zyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hclx)"> -->
+<!--                     AND HCLX = #{hclx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yssqrq)"> -->
+<!--                     AND YSSQRQ = #{yssqrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yssqgh)"> -->
+<!--                     AND YSSQGH = #{yssqgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bqsqrq)"> -->
+<!--                     AND BQSQRQ = #{bqsqrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bqsqgh)"> -->
+<!--                     AND BQSQGH = #{bqsqgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bqzxrq)"> -->
+<!--                     AND BQZXRQ = #{bqzxrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bqzxgh)"> -->
+<!--                     AND BQZXGH = #{bqzxgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yszxrq)"> -->
+<!--                     AND YSZXRQ = #{yszxrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yszxgh)"> -->
+<!--                     AND YSZXGH = #{yszxgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zxbz)"> -->
+<!--                     AND ZXBZ = #{zxbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hqch)"> -->
+<!--                     AND HQCH = #{hqch} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hhch)"> -->
+<!--                     AND HHCH = #{hhch} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hqbq)"> -->
+<!--                     AND HQBQ = #{hqbq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hhbq)"> -->
+<!--                     AND HHBQ = #{hhbq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hqks)"> -->
+<!--                     AND HQKS = #{hqks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hhks)"> -->
+<!--                     AND HHKS = #{hhks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hqys)"> -->
+<!--                     AND HQYS = #{hqys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hhys)"> -->
+<!--                     AND HHYS = #{hhys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_ZKJL 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="ImZkjl">
+        SELECT <include refid="columns" />
+        FROM IM_ZKJL 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 查询是否有转科记录 -->
+    <select id="queryisExistZkjlCount" resultType="long">
+        select count(1) from IM_ZKJL where
+    	ZYH = #{zyh} And JGID = #{jgid} And (HCLX = 3 OR HCLX = 1) AND ZXBZ = 2 
+    </select> 
+    
+    <!-- 查询是否有转科记录返回实体-->
+    <select id="queryisExistZkjl" resultType="com.buit.cis.ims.response.ImZkjlResp">
+        select <include refid="columns" /> from IM_ZKJL where
+    	ZYH = #{zyh} AND JGID = #{jgid} AND (HCLX = 3 OR HCLX = 1) AND ZXBZ = 2 
+    </select>
+    
+    <!-- 查询转科转入记录 -->
+    <select id="queryZkjlChangeInto" resultType="com.buit.cis.ims.response.ImZkjlResp">
+		        SELECT IM_ZKJL.JLXH   as JLXH,
+		       IM_ZKJL.ZYH    as ZYH,
+		       IM_HZRY.BRXM   as BRXM,
+		       IM_HZRY.BRCH   as BRCH,
+		       IM_ZKJL.HCLX   as HCLX,
+		       IM_ZKJL.YSSQRQ as YSSQRQ,
+		       IM_ZKJL.YSSQGH as YSSQGH,
+		       IM_ZKJL.BQSQRQ as BQSQRQ,
+		       IM_ZKJL.BQSQGH as BQSQGH,
+		       IM_ZKJL.BQZXRQ as BQZXRQ,
+		       IM_ZKJL.BQZXGH as BQZXGH,
+		       IM_ZKJL.YSZXRQ as YSZXRQ,
+		       IM_ZKJL.YSZXGH as YSZXGH,
+		       IM_ZKJL.ZXBZ   as ZXBZ,
+		       IM_ZKJL.HQCH   as HQCH,
+		       IM_ZKJL.HHCH   as HHCH,
+		       IM_ZKJL.HQBQ   as HQBQ,
+		       IM_ZKJL.HHBQ   as HHBQ,
+		       IM_ZKJL.HQKS   as HQKS,
+		       IM_ZKJL.HHKS   as HHKS,
+		       IM_ZKJL.HQYS   as HQYS,
+		       IM_ZKJL.HHYS   as HHYS,
+		       IM_ZKJL.JGID   as JGID
+		  FROM IM_ZKJL IM_ZKJL, IM_HZRY IM_HZRY
+		 WHERE (IM_HZRY.ZYH = IM_ZKJL.ZYH)
+		   and (IM_HZRY.JGID = IM_ZKJL.JGID)
+		   and (IM_ZKJL.HCLX = 3 OR IM_ZKJL.HCLX = 1)
+           <if test="@sqlt.Ognl@isNotEmpty(type) and type == 1">
+				and (IM_ZKJL.HHBQ = #{hhbq} or IM_ZKJL.HHKS = #{hhbq})
+		   		and IM_ZKJL.ZXBZ = 2
+		   </if>
+		   <if test="@sqlt.Ognl@isNotEmpty(type) and type == 2">
+				and (IM_ZKJL.HQBQ = #{hhbq} or IM_ZKJL.HHKS = #{hhbq})
+				and IM_ZKJL.ZXBZ = 3
+		   </if> 
+		   and IM_HZRY.JGID = #{jgid}
+    </select>
+    
+    <!-- 更新转科记录信息 -->
+    <update id="updateZkjlInfo" >
+    	UPDATE IM_ZKJL
+   		Set ZXBZ = 3, BQZXRQ = #{bqzxrq}, BQZXGH = #{bqzxgh}, HHCH = #{hhch}
+	 Where ZYH = #{zyh}
+	   And (hclx = 1 Or hclx = 3)
+	   And ZXBZ = 2
+    </update>
+    
+    <!-- 查询转科病区信息 -->
+    <select id="queryZkBqjl" resultType="java.util.HashMap">
+		select hqks as hqks,
+			   hhks as hhks,
+			   hqbq as hqbq,
+			   hhbq as hhbq,
+			   (select officename from dic_kszd where id = hqks) as hqksmc,
+			   (select officename from dic_kszd where id = hhks) as hhksmc,
+			   (select officename from dic_kszd where id = hqbq) as hqbqmc,
+			   (select officename from dic_kszd where id = hhbq) as hhbqmc
+			from im_zkjl  
+		where zyh = #{zyh}
+			and (hclx = 1 or hclx =  3) 
+			and bqzxrq is not null
+			and date_format(bqzxrq, '%Y-%m-%d')  &gt;= #{minDate}
+			and date_format(bqzxrq, '%Y-%m-%d')  &lt;= #{maxDate}
+			order by bqzxrq asc
+    </select>
+    
+    <!-- 查询首页转科记录 -->
+    <select id="queryZkjlHomePage" resultType="com.buit.cis.ims.response.ImZkjlHomeResp">
+		select a.jlxh, 
+			a.hqch, 
+			b.brxm,
+			<if test="@sqlt.Ognl@isNotEmpty(bqdm)">
+           		case when a.hhbq = #{bqdm} and a.zxbz = 2 then 2
+				when a.hqbq = #{bqdm} and a.zxbz = 2 then 1
+				when a.hqbq = #{bqdm} and a.zxbz = 3 
+           		and date_format(a.bqzxrq, '%Y-%m-%d') = date_format(sysdate(), '%Y-%m-%d') then 3
+           		when a.hhbq = #{bqdm} and a.zxbz = 3
+           		and date_format(a.bqzxrq, '%Y-%m-%d') = date_format(sysdate(), '%Y-%m-%d') then 4
+				else null end as bqzt,
+	       	</if>
+			<if test="@sqlt.Ognl@isNotEmpty(ksdm)">
+           		case when a.hqks = #{ksdm} and a.zxbz = 2 then 1
+				when a.hhks = #{ksdm} and a.zxbz = 2 then 2
+				when a.hqks = #{ksdm} and a.zxbz = 3 
+           		and date_format(a.bqzxrq, '%Y-%m-%d') = date_format(sysdate(), '%Y-%m-%d') then 3
+           		when a.hhks = #{ksdm} and a.zxbz = 3 
+           		and date_format(a.bqzxrq, '%Y-%m-%d') = date_format(sysdate(), '%Y-%m-%d') then 4
+				else null end as kszt,
+	       	</if>
+			a.hqks, 
+			a.hqys, 
+			a.hqbq, 
+			a.hhks, 
+			a.hhbq,
+			a.hhys, 
+			a.yssqrq 
+			from im_zkjl a , im_hzry b 
+		where a.zyh = b.zyh
+			and a.hclx  = 1	
+			and b.jgid = #{jgid}
+			<if test="@sqlt.Ognl@isNotEmpty(bqdm)">
+           		and b.brbq = #{bqdm}
+	       	</if>
+	       	<if test="@sqlt.Ognl@isNotEmpty(ksdm)">
+           		and b.brks = #{ksdm}
+	       	</if>
+	       	<if test="@sqlt.Ognl@isNotEmpty(bqdm) and @sqlt.Ognl@isNotEmpty(zt) and zt == 1">
+           		and a.hqbq = #{bqdm} and a.zxbz = 2 
+	       	</if>
+	       	<if test="@sqlt.Ognl@isNotEmpty(bqdm) and @sqlt.Ognl@isNotEmpty(zt) and zt == 2">
+           		and a.hhbq = #{bqdm} and a.zxbz = 2          		
+	       	</if>
+	       	<if test="@sqlt.Ognl@isNotEmpty(bqdm) and @sqlt.Ognl@isNotEmpty(zt) and zt == 3">
+           		and a.hqbq = #{bqdm} and a.zxbz = 3 
+           		and date_format(a.bqzxrq, '%Y-%m-%d') = date_format(sysdate(), '%Y-%m-%d')
+	       	</if>
+	       	<if test="@sqlt.Ognl@isNotEmpty(bqdm) and @sqlt.Ognl@isNotEmpty(zt) and zt == 4">
+           		and a.hhbq = #{bqdm} and a.zxbz = 3
+           		and date_format(a.bqzxrq, '%Y-%m-%d') = date_format(sysdate(), '%Y-%m-%d')
+	       	</if>
+	       	order by a.yssqrq 
+    </select>
+    
+    <!-- 病人转科更新通知状态 -->
+	<update id="updateZkNoticeStatus">
+		update im_zkjl 
+		set tzzt = #{tzzt}, tztime = sysdate(), tzgh = #{tzgh}
+		where jlxh = #{jlxh}
+		and hclx  = 1
+		and zxbz = 2
+	</update>
+	
+	<!-- 病人转出转入数 -->
+	<select id="queryTransferInAndOutCount" resultType="long">
+    	select count(1) from im_zkjl
+    	where bqzxrq &gt;= #{kssj}
+    	and bqzxrq &lt; #{jssj}
+    	and jgid = #{jgid}
+    	and zxbz = 3
+    	<if test="@sqlt.Ognl@isNotEmpty(type) and type == 1">
+       		and hqbq = #{bqdm}
+       		and hhbq &lt;&gt; #{bqdm}
+    	</if> 
+    	<if test="@sqlt.Ognl@isNotEmpty(type) and type == 2">
+       		and hhbq = #{bqdm}
+       		and hqbq &lt;&gt; #{bqdm}
+    	</if>
+	</select>
+</mapper>
+

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 床位使用记录表 -->
+<mapper namespace="com.buit.cis.ims.dao.ImCwszjlDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,JLRQ as jlrq,BQDM as bqdm,CWSYS as cwsys,CWWSY as cwwsy,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_CWSZJL (
+            JLXH ,
+            JLRQ ,
+            BQDM ,
+            CWSYS ,
+            CWWSY ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{jlrq} ,
+            #{bqdm} ,
+            #{cwsys} ,
+            #{cwwsy} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE IM_CWSZJL SET
+            JLRQ = #{jlrq} ,
+            BQDM = #{bqdm} ,
+            CWSYS = #{cwsys} ,
+            CWWSY = #{cwwsy} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM IM_CWSZJL WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM IM_CWSZJL <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="ImCwszjl">
+        SELECT <include refid="columns" />
+            FROM IM_CWSZJL 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlrq)"> -->
+<!--                     AND JLRQ = #{jlrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bqdm)"> -->
+<!--                     AND BQDM = #{bqdm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cwsys)"> -->
+<!--                     AND CWSYS = #{cwsys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cwwsy)"> -->
+<!--                     AND CWWSY = #{cwwsy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_CWSZJL 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="ImCwszjl">
+        SELECT <include refid="columns" />
+        FROM IM_CWSZJL 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+</mapper>
+

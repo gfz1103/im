@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 病区_发药药房 -->
+<mapper namespace="com.buit.cis.dctwork.dao.NisFyyfDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,JGID as jgid,BQDM as bqdm,GNFL as gnfl,TYPE as type,YFSB as yfsb,DMSB as dmsb,ZXPB as zxpb
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_FYYF (
+        	JLXH ,
+            JGID ,
+            BQDM ,
+            GNFL ,
+            TYPE ,
+            YFSB ,
+            DMSB ,
+            ZXPB 
+        ) VALUES (
+        	#{jlxh} ,
+            #{jgid} ,
+            #{bqdm} ,
+            #{gnfl} ,
+            #{type} ,
+            #{yfsb} ,
+            #{dmsb} ,
+            #{zxpb} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_FYYF SET
+            JGID = #{jgid} ,
+            BQDM = #{bqdm} ,
+            GNFL = #{gnfl} ,
+            TYPE = #{type} ,
+            YFSB = #{yfsb} ,
+            DMSB = #{dmsb} ,
+            ZXPB = #{zxpb} 
+        WHERE 
+            JLXH = #{jlxh}          
+    </update>
+
+
+    <delete id="deleteById">
+        DELETE FROM NIS_FYYF WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_FYYF <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisFyyf">
+        SELECT <include refid="columns" />
+            FROM NIS_FYYF 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+                <if test="@sqlt.Ognl@isNotEmpty(jlxh)">
+                     AND JLXH = #{jlxh}
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                     AND JGID = #{jgid}
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(bqdm)">
+                     AND BQDM = #{bqdm}
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(type)">
+                     AND TYPE = #{type} 
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(gnfl)">
+                     AND GNFL = #{gnfl} 
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yfsb)"> -->
+<!--                     AND YFSB = #{yfsb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dmsb)"> -->
+<!--                     AND DMSB = #{dmsb} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zxpb)"> 
+                     AND ZXPB = #{zxpb} 
+                </if> 
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_FYYF 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisFyyf">
+        SELECT <include refid="columns" />
+        FROM NIS_FYYF 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    <!--注销病区的发药药房-->
+    <update id="updateZxpb">
+        update NIS_FYYF set ZXPB = #{ZXPB}
+        <include refid="where"/>
+
+    </update>
+    
+    <!-- 查询病区发药药房信息 -->
+    <select id="queryInpatientPharmacyInfo" resultType="java.util.HashMap">
+        select a.DMSB as DMSB, a.YFSB as YFSB, b.YFMC as YFMC
+		  from NIS_FYYF a, PHAR_YFLB b
+		 where a.YFSB = b.YFSB
+		   and a.JGID = #{JGID}
+		   and a.BQDM = #{BQDM}
+		   and a.TYPE = 1
+		   and a.ZXPB = 0
+		   and a.GNFL = 4
+    </select>
+    
+    <!-- 查询药房识别 -->
+    <select id="queryYfsb" resultType="java.util.HashMap">
+        select distinct YFSB as YFSB from NIS_FYYF 
+        where BQDM = #{bqdm} and JGID = #{jgid} and TYPE = #{yfsz}
+        <if test="@sqlt.Ognl@isNotEmpty(dmsb)">
+		  	and DMSB = #{dmsb}
+       </if>
+    </select>
+    
+    <!-- 查询机构病区所有发药药房 -->
+    <select id="queryAllYfsbCurrent" resultType="com.buit.cis.dctwork.response.NisFyyfResp">
+	    select b.YFSB as YFSB, b.YFMC as YFMC, a.TYPE as TYPE, a.DMSB as DMSB
+		  from NIS_FYYF a, PHAR_YFLB b
+		 where a.YFSB = b.YFSB
+		   and a.BQDM = #{bqdm}
+		   and a.JGID = #{jgid}
+		 order by DMSB
+    </select>
+    
+</mapper>
+

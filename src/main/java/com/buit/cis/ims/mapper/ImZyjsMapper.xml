@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院_住院结算 -->
+<mapper namespace="com.buit.cis.ims.dao.ImZyjsDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        ZYH as zyh,JSCS as jscs,JGID as jgid,JSLX as jslx,KSRQ as ksrq,ZZRQ as zzrq,JSRQ as jsrq,FYHJ as fyhj,ZFHJ as zfhj,JKHJ as jkhj,FPHM as fphm,CZGH as czgh,JZRQ as jzrq,HZRQ as hzrq,TPHM as tphm,ZFRQ as zfrq,ZFGH as zfgh,ZFPB as zfpb,JSXM as jsxm,JSJK as jsjk,BRXZ as brxz,SCBZ as scbz,BXJE as bxje,NHBH as nhbh,NHBXID as nhbxid,NHBXRQ as nhbxrq,ZYTS as zyts,MZLB as mzlb,JMJE as jmje,MPJE as mpje,LPJE as lpje,HLSYJE as hlsyje,CFJE as cfje,YCZJE as yczje,YHZJE as yhzje,BINVCODE as binvcode,BINVNR as binvnr,GJYBZ as gjybz,GZDWMC as gzdwmc
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_ZYJS (
+            ZYH ,
+            JSCS ,
+            JGID ,
+            JSLX ,
+            KSRQ ,
+            ZZRQ ,
+            JSRQ ,
+            FYHJ ,
+            ZFHJ ,
+            JKHJ ,
+            FPHM ,
+            CZGH ,
+            JZRQ ,
+            HZRQ ,
+            TPHM ,
+            ZFRQ ,
+            ZFGH ,
+            ZFPB ,
+            JSXM ,
+            JSJK ,
+            BRXZ ,
+            SCBZ ,
+            BXJE ,
+            NHBH ,
+            NHBXID ,
+            NHBXRQ ,
+            ZYTS ,
+            MZLB ,
+            JMJE ,
+            MPJE ,
+            LPJE ,
+            HLSYJE ,
+            CFJE ,
+            YCZJE ,
+            YHZJE ,
+            BINVCODE ,
+            BINVNR ,
+            GJYBZ ,
+            GZDWMC 
+        ) VALUES (
+            #{zyh} ,
+            #{jscs} ,
+            #{jgid} ,
+            #{jslx} ,
+            #{ksrq} ,
+            #{zzrq} ,
+            #{jsrq} ,
+            #{fyhj} ,
+            #{zfhj} ,
+            #{jkhj} ,
+            #{fphm} ,
+            #{czgh} ,
+            #{jzrq} ,
+            #{hzrq} ,
+            #{tphm} ,
+            #{zfrq} ,
+            #{zfgh} ,
+            #{zfpb} ,
+            #{jsxm} ,
+            #{jsjk} ,
+            #{brxz} ,
+            #{scbz} ,
+            #{bxje} ,
+            #{nhbh} ,
+            #{nhbxid} ,
+            #{nhbxrq} ,
+            #{zyts} ,
+            #{mzlb} ,
+            #{jmje} ,
+            #{mpje} ,
+            #{lpje} ,
+            #{hlsyje} ,
+            #{cfje} ,
+            #{yczje} ,
+            #{yhzje} ,
+            #{binvcode} ,
+            #{binvnr} ,
+            #{gjybz} ,
+            #{gzdwmc} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE IM_ZYJS SET
+            JGID = #{jgid} ,
+            JSLX = #{jslx} ,
+            KSRQ = #{ksrq} ,
+            ZZRQ = #{zzrq} ,
+            JSRQ = #{jsrq} ,
+            FYHJ = #{fyhj} ,
+            ZFHJ = #{zfhj} ,
+            JKHJ = #{jkhj} ,
+            FPHM = #{fphm} ,
+            CZGH = #{czgh} ,
+            JZRQ = #{jzrq} ,
+            HZRQ = #{hzrq} ,
+            TPHM = #{tphm} ,
+            ZFRQ = #{zfrq} ,
+            ZFGH = #{zfgh} ,
+            ZFPB = #{zfpb} ,
+            JSXM = #{jsxm} ,
+            JSJK = #{jsjk} ,
+            BRXZ = #{brxz} ,
+            SCBZ = #{scbz} ,
+            BXJE = #{bxje} ,
+            NHBH = #{nhbh} ,
+            NHBXID = #{nhbxid} ,
+            NHBXRQ = #{nhbxrq} ,
+            ZYTS = #{zyts} ,
+            MZLB = #{mzlb} ,
+            JMJE = #{jmje} ,
+            MPJE = #{mpje} ,
+            LPJE = #{lpje} ,
+            HLSYJE = #{hlsyje} ,
+            CFJE = #{cfje} ,
+            YCZJE = #{yczje} ,
+            YHZJE = #{yhzje} ,
+            BINVCODE = #{binvcode} ,
+            BINVNR = #{binvnr} ,
+            GJYBZ = #{gjybz} ,
+            GZDWMC = #{gzdwmc} 
+        WHERE 
+            ZYH = #{zyh}  AND 
+                        JSCS = #{jscs} 
+            -->            
+    </update>
+
+
+    <delete id="deleteById">
+        DELETE FROM IM_ZYJS WHERE
+        ZYH = #{zyh}  AND 
+        JSCS = #{jscs} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM IM_ZYJS <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="ImZyjs">
+        SELECT <include refid="columns" />
+            FROM IM_ZYJS 
+            WHERE 
+        ZYH = #{zyh}  AND 
+        JSCS = 0
+    </select>
+    
+    <sql id="where">
+        <where>                          
+                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+                     AND ZYH = #{zyh}
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jscs)"> -->
+<!--                     AND JSCS = #{jscs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jslx)"> -->
+<!--                     AND JSLX = #{jslx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ksrq)"> -->
+<!--                     AND KSRQ = #{ksrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zzrq)"> -->
+<!--                     AND ZZRQ = #{zzrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jsrq)"> -->
+<!--                     AND JSRQ = #{jsrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fyhj)"> -->
+<!--                     AND FYHJ = #{fyhj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfhj)"> -->
+<!--                     AND ZFHJ = #{zfhj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jkhj)"> -->
+<!--                     AND JKHJ = #{jkhj} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(fphm)">
+                     AND FPHM = #{fphm}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czgh)"> -->
+<!--                     AND CZGH = #{czgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jzrq)"> -->
+<!--                     AND JZRQ = #{jzrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hzrq)"> -->
+<!--                     AND HZRQ = #{hzrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tphm)"> -->
+<!--                     AND TPHM = #{tphm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfrq)"> -->
+<!--                     AND ZFRQ = #{zfrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfgh)"> -->
+<!--                     AND ZFGH = #{zfgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfpb)"> -->
+<!--                     AND ZFPB = #{zfpb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jsxm)"> -->
+<!--                     AND JSXM = #{jsxm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jsjk)"> -->
+<!--                     AND JSJK = #{jsjk} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brxz)"> -->
+<!--                     AND BRXZ = #{brxz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(scbz)"> -->
+<!--                     AND SCBZ = #{scbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bxje)"> -->
+<!--                     AND BXJE = #{bxje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(nhbh)"> -->
+<!--                     AND NHBH = #{nhbh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(nhbxid)"> -->
+<!--                     AND NHBXID = #{nhbxid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(nhbxrq)"> -->
+<!--                     AND NHBXRQ = #{nhbxrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyts)"> -->
+<!--                     AND ZYTS = #{zyts} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mzlb)"> -->
+<!--                     AND MZLB = #{mzlb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jmje)"> -->
+<!--                     AND JMJE = #{jmje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mpje)"> -->
+<!--                     AND MPJE = #{mpje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lpje)"> -->
+<!--                     AND LPJE = #{lpje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlsyje)"> -->
+<!--                     AND HLSYJE = #{hlsyje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cfje)"> -->
+<!--                     AND CFJE = #{cfje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yczje)"> -->
+<!--                     AND YCZJE = #{yczje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yhzje)"> -->
+<!--                     AND YHZJE = #{yhzje} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(binvcode)"> -->
+<!--                     AND BINVCODE = #{binvcode} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(binvnr)"> -->
+<!--                     AND BINVNR = #{binvnr} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(gjybz)"> -->
+<!--                     AND GJYBZ = #{gjybz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(gzdwmc)"> -->
+<!--                     AND GZDWMC = #{gzdwmc} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_ZYJS 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="ImZyjs">
+        SELECT <include refid="columns" />
+        FROM IM_ZYJS 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 根据住院号和结算次数查询住院结算交款合计 -->
+    <select id="queryTotalPaymentHospital" resultType="java.math.BigDecimal">
+    	SELECT sum(JKHJ) as JKHJ FROM IM_ZYJS WHERE ZYH  = #{zyh} AND JSCS = #{jscs}
+    </select>
+    
+    <!-- 根据住院号和结算次数查询住院结算自负合计 -->
+    <select id="queryTotalSelfHospital" resultType="java.math.BigDecimal">
+    	SELECT sum(ZFHJ) as ZFHJ FROM IM_ZYJS WHERE ZYH  = #{zyh} AND JSCS = #{jscs}
+    </select>
+    <!--判断当前病人是否在发票作废列表-->
+<!--    <select id="isFbzfList" resultType="java.lang.Integer">
+        select count(a.zyh) from IM_HZRY a,IM_ZYJS b where a.ZYH = b.ZYH and b.ZFPB = 0 and b.JSLX !=4 and a.ZYH = #{zyh}
+
+    </select>-->
+
+    <!--结算发票作废-->
+    <update id="updateFpzf">
+        UPDATE IM_ZYJS SET ZFPB = 1,ZFRQ = #{zfrq},ZFGH = #{zfgh} WHERE ZYH=#{zyh} AND JGID = #{jgid} AND ZFPB = 0 And JSCS =#{jscs}
+
+    </update>
+
+
+    <!--通过住院号获取IM_ZYJS表的费用开始日期-->
+    <select id="findMaxZyrq" resultType="java.lang.String">
+        SELECT
+             max(IFNULL( b.ZZRQ, a.RYRQ )) AS KSRQ
+        FROM
+            IM_HZRY a
+            LEFT JOIN IM_ZYJS b ON a.zyh = b.zyh
+            AND b.zfpb = 0
+        WHERE
+            a.zyh = #{zyh}
+
+    </select>
+    <!--查询是否有住院结算记录-->
+    <select id="checkCount" resultType="java.lang.Integer">
+     select count(1) from   IM_ZYJS where CZGH = #{is_UserId} AND JZRQ IS NULL AND JSRQ &gt; #{idt_jzrq} and JGID =#{gl_jgid}
+    </select>
+    <!-- 取消日报-->
+    <select id="doCancelCommit">
+        update IM_ZYJS set JZRQ = null where CZGH = #{czgh}  and JZRQ= #{jzrq} and JGID = #{jgid}
+    </select>
+    <!--查询结算发票和缴款收据 票据序列-->
+    <select id="queryIdsjsfp" resultType="java.util.Map">
+    SELECT a.FPHM as FPHM FROM IM_ZYJS a,IM_HZRY b  WHERE a.ZYH=b.ZYH and  a.CZGH =#{as_czgh} AND a.JGID = #{al_jgid} AND  a.JZRQ IS not NULL AND (a.JZRQ between #{adt_jzrq_s} and #{adt_jzrq_e}) and a.FPHM is not null order by a.FPHM asc
+    </select>
+    <!--查询结账期内的住院结算记录数-->
+    <select id="queryJzrqCount" resultType="java.lang.Integer">
+    select count(1) from IM_ZYJS  where CZGH = #{userid} AND JZRQ IS NULL AND JSRQ &lt; #{ldt_End}  and JGID = #{gl_jgid}
+
+    </select>
+
+    <!--修改结账日前-->
+    <update id="updateJzrq">
+        UPDATE IM_ZYJS SET JZRQ = #{idt_jzrq} WHERE CZGH =#{userid}  AND JZRQ IS NULL AND JSRQ &lt; #{ldt_End}  and JGID =#{gl_jgid}
+    </update>
+    <!--住院管理-日终汇总（取消汇总）-->
+    <update id="doCancelCollectCommit">
+      update IM_ZYJS set HZRQ=null where HZRQ =#{hzrq} and JGID=#{jgid}
+    </update>
+    <!--修改日终汇总日期-->
+    <update id="updateHzrq">
+        UPDATE IM_ZYJS Set HZRQ= #{ldt_GatherDate} Where HZRQ IS Null AND JZRQ &lt;#{idt_End} and JGID= #{gl_jgid}
+    </update>
+    <!--查询结算明细(结算日期为空)-->
+    <select id="queryJsmxJzrq" resultType="java.util.Map">
+        SELECT IFNULL(sum(a.FYHJ),0) as FYHJ_ALL,
+               IFNULL(sum(a.ZFHJ),0) as ZFHJ_ALL, IFNULL(sum(a.JKHJ),0) as JKHJ_ALL,
+                IFNULL(sum(a.ZFHJ-a.JKHJ),0) as JSJE_ALL
+                 FROM IM_ZYJS a,IM_HZRY b,DIC_KSZD c
+                 WHERE a.ZYH=b.ZYH and    ( b.BRKS = c.ID )	AND ( a.CZGH = #{as_czgh} )
+                AND ( a.JGID = #{al_jgid} )
+        <if test="jzbs==0">
+            AND  a.JZRQ IS NULL AND a.JSRQ &lt;=#{idt_jzrq}
+        </if>
+        <if test="jzbs!=0 and hasRecordMore==true">
+            AND ( a.JZRQ &gt;= #{adt_jzrq_s} ) AND  ( a.JZRQ &lt;#{adt_jzrq_e} )
+        </if>
+        <if test="jzbs!=0 and hasRecordMore==false">
+            AND a.JZRQ =#{idt_jzrq}
+        </if>
+
+
+
+    </select>
+    <!--查询结算了作废明细-->
+    <select id="queryJszfmxJzrq" resultType="java.util.Map">
+        SELECT IFNULL(sum(a.FYHJ),0) as FYHJ_ALL,
+        IFNULL(sum(a.ZFHJ),0)  as ZFHJ_ALL,
+        IFNULL(sum(a.JKHJ),0) as JKHJ_ALL,
+        IFNULL(sum(a.ZFHJ-a.JKHJ),0)  as JSJE_ALL
+				FROM  IM_ZYJS a,IM_HZRY b,DIC_KSZD c ,IM_JSZF  e
+				WHERE (a.ZYH=b.ZYH ) and ( a.ZYH  = e.ZYH  )
+				AND ( a.JSCS =e.JSCS )
+				AND ( b.BRKS = c.ID ) 
+				AND ( e.ZFGH =#{as_czgh} ) AND ( e.JGID =#{al_jgid} )
+        <if test="jzbs==0">
+            AND  e.JZRQ IS NULL AND e.ZFRQ &lt;=#{idt_jzrq}
+        </if>
+        <if test="jzbs!=0 and hasRecordMore==true">
+            AND ( e.JZRQ &gt;= #{adt_jzrq_s} ) AND  ( e.JZRQ &lt;#{adt_jzrq_e} )
+        </if>
+         <if test="jzbs!=0 and hasRecordMore==false">
+            AND e.JZRQ =#{idt_jzrq}
+        </if>
+    </select>
+    <!--结算明细list-->
+    <select id="queryJsmxJzrqList" resultType="java.util.Map">
+    SELECT c.ID as KSDM,c.OFFICENAME as KSMC,
+				b.ZYH as ZYH, b.ZYHM as ZYHM,	b.BRXM as BRXM,
+				a.JSCS as JSCS,	a.FPHM as FPHM,	a.FYHJ as FYHJ,
+					a.ZFHJ as ZFHJ,a.JKHJ as JKHJ,
+				d.RYBH as CZGH,a.ZFHJ-a.JKHJ as JSJE,
+					0 AS ZFPB
+				  FROM IM_ZYJS a,IM_HZRY b,DIC_KSZD c,hr_personnel d
+				 WHERE a.ZYH=b.ZYH and   ( b.BRKS = c.ID )	AND
+				( a.CZGH = d.PERSONID ) AND ( a.CZGH = #{as_czgh} )
+				AND ( a.JGID = #{al_jgid} )
+        <if test="jzbs==0">
+            AND  a.JZRQ IS NULL AND a.JSRQ &lt;= #{idt_jzrq}
+        </if>
+         <if test="jzbs!=0 and hasRecordMore==true">
+            AND ( a.JZRQ &gt;= #{adt_jzrq_s} ) AND  ( a.JZRQ &lt; #{adt_jzrq_e})
+        </if>
+         <if test="jzbs!=0 and hasRecordMore==false">
+            AND a.JZRQ = #{idt_jzrq}
+        </if>
+        order by b.ZYH
+    </select>
+    <!--结算明细作废list-->
+    <select id="queryJsmxJzrqListZf" resultType="java.util.Map">
+    SELECT c.ID as KSDM,
+				c.OFFICENAME as KSMC,
+				b.BRKS as BRKS,
+				b.ZYH as ZYH,
+				b.ZYHM as ZYHM,
+				b.BRXM as BRXM,
+				a.JSCS as JSCS,
+				a.FPHM as FPHM,
+				-a.FYHJ as FYHJ,
+				-a.ZFHJ as ZFHJ,
+				-a.JKHJ as JKHJ,
+				d.RYBH as CZGH,
+				-a.ZFHJ+a.JKHJ as JSJE,
+				1 AS ZFPB
+				FROM  IM_ZYJS a,IM_HZRY b,DIC_KSZD c ,hr_personnel d,IM_JSZF  e
+				WHERE (a.ZYH=b.ZYH ) and ( a.ZYH  = e.ZYH  )
+				AND ( a.JSCS =e.JSCS )
+				AND ( b.BRKS = c.ID ) AND ( a.CZGH = d.PERSONID )
+				AND ( e.ZFGH = #{as_czgh} ) AND ( e.JGID =#{al_jgid} )
+        <if test="jzbs==0">
+            AND  e.JZRQ IS NULL AND e.ZFRQ &lt;= #{idt_jzrq}
+        </if>
+         <if test="jzbs!=0 and hasRecordMore==true">
+            AND ( e.JZRQ &gt;= #{adt_jzrq_s} ) AND  ( e.JZRQ &lt; #{adt_jzrq_e} )
+        </if>
+         <if test="jzbs!=0 and hasRecordMore==false">
+            AND e.JZRQ = #{idt_jzrq}
+        </if>
+        order by b.ZYH
+    </select>
+    <!--查询汇总次数-->
+    <select id="queryHzCount" resultType="java.lang.Integer">
+    select count(1) from IM_ZYJS where     HZRQ IS Null AND JZRQ &lt; #{idt_End}  and JGID= #{gl_jgid}
+    </select>
+    <!--汇总费用合计-->
+    <select id="queryHzFyhj" resultType="java.util.Map">
+    SELECT IFNULL(sum(FYHJ),0) as BQJS FROM IM_ZYJS WHERE HZRQ=#{adt_hzrq} AND JSLX in(5,1) and JGID= #{gl_jgid}
+    </select>
+    <!--汇总缴款合计-->
+    <select id="queryHzJkhj" resultType="java.util.Map">
+        SELECT IFNULL(sum(JKHJ),0) as BQJS FROM IM_ZYJS WHERE HZRQ=#{adt_hzrq} AND JSLX in(5,1) and JGID= #{gl_jgid}
+    </select>
+    <!--汇总费用合计作废-->
+    <select id="queryHzFyhjZf" resultType="java.util.Map">
+        SELECT IFNULL(sum(IM_ZYJS.FYHJ),0) as BQJS FROM IM_ZYJS IM_ZYJS,IM_JSZF IM_JSZF WHERE IM_ZYJS.ZYH = IM_JSZF.ZYH AND IM_ZYJS.JSCS = IM_JSZF.JSCS AND IM_ZYJS.JGID = IM_JSZF.JGID AND IM_JSZF.HZRQ=#{adt_hzrq} AND IM_ZYJS.JSLX in(5,1) and IM_JSZF.JGID=#{gl_jgid}
+    </select>
+    <!--汇总现金支票的自负合计-->
+    <select id="queryHzZfhjXjzp" resultType="java.util.Map">
+         SELECT IFNULL(sum(ZFHJ),0) as XJZP FROM IM_ZYJS WHERE HZRQ=#{adt_hzrq} AND JSLX in(5,1) and JGID=#{gl_jgid}
+    </select>
+    <!--汇总现金支票的额缴款合计-->
+    <select id="queryHzJkhjXjzp" resultType="java.util.Map">
+        SELECT IFNULL(sum(JKHJ),0) as XJZP FROM IM_ZYJS WHERE HZRQ=#{adt_hzrq} AND JSLX in(5,1) and JGID=#{gl_jgid}
+    </select>
+    <!--汇总出院终结-->
+    <select id="queryHzCyzj" resultType="java.util.Map">
+        select IFNULL(sum(a.ZFHJ),0) as ZFHJ,IFNULL(sum(a.JKHJ),0) as JKHJ from IM_ZYJS a WHERE a.HZRQ=#{adt_hzrq} and a.JSLX = 4 and a.JGID=#{gl_jgid}
+    </select>
+    <!--汇总其他应收作废-->
+    <select id="queryHzQtysZf" resultType="java.util.Map">
+       SELECT IFNULL(sum(IM_ZYJS.FYHJ - IM_ZYJS.ZFHJ),0) as QTYS FROM IM_ZYJS IM_ZYJS,IM_JSZF IM_JSZF WHERE IM_ZYJS.ZYH=IM_JSZF.ZYH AND IM_ZYJS.JSCS=IM_JSZF.JSCS AND IM_ZYJS.JGID=IM_JSZF.JGID AND IM_JSZF.HZRQ=#{adt_hzrq} AND IM_ZYJS.JSLX in(5,1) AND IM_ZYJS.BRXZ IN (SELECT PUB_BRXZ.BRXZ FROM PUB_BRXZ PUB_BRXZ WHERE PUB_BRXZ.DBPB=0) and IM_ZYJS.JGID=#{gl_jgid}
+    </select>
+    <!--汇总其他应收-->
+    <select id="queryQtys" resultType="java.util.Map">
+        SELECT IFNULL(sum(FYHJ - ZFHJ),0) as QTYS FROM IM_ZYJS IM_ZYJS WHERE IM_ZYJS.HZRQ=#{adt_hzrq} AND IM_ZYJS.JSLX in(5,1) AND IM_ZYJS.BRXZ IN (SELECT PUB_BRXZ.BRXZ FROM PUB_BRXZ PUB_BRXZ WHERE PUB_BRXZ.DBPB=0) and JGID= #{gl_jgid}
+    </select>
+    <!--汇总参保应收-->
+    <select id="queryHzCbys" resultType="java.util.Map">
+    SELECT IFNULL(sum(FYHJ - ZFHJ),0) as CBYS FROM IM_ZYJS IM_ZYJS WHERE IM_ZYJS.HZRQ=#{adt_hzrq} AND IM_ZYJS.JSLX in(5,1) AND IM_ZYJS.BRXZ IN ( SELECT PUB_BRXZ.BRXZ FROM PUB_BRXZ PUB_BRXZ WHERE PUB_BRXZ.DBPB>0) and JGID=#{gl_jgid}
+    </select>
+    <!--汇总参保应收作废-->
+    <select id="queryHzCbysZf" resultType="java.util.Map">
+        SELECT IFNULL(sum(IM_ZYJS.FYHJ - IM_ZYJS.ZFHJ),0) as CBYS FROM IM_ZYJS IM_ZYJS,IM_JSZF IM_JSZF WHERE IM_ZYJS.ZYH  = IM_JSZF.ZYH AND IM_ZYJS.JSCS = IM_JSZF.JSCS AND IM_ZYJS.JGID = IM_JSZF.JGID AND IM_JSZF.HZRQ=#{adt_hzrq} AND IM_ZYJS.JSLX in(5,1) AND IM_ZYJS.BRXZ IN (SELECT PUB_BRXZ.BRXZ FROM PUB_BRXZ PUB_BRXZ WHERE PUB_BRXZ.DBPB>0) and IM_ZYJS.JGID=#{gl_jgid}
+    </select>
+    <!--取本期结算-->
+    <select id="queryHzBqjs" resultType="java.util.Map">
+        SELECT IM_JSMX.FYXM as FYXM,sum(IM_JSMX.ZJJE) AS FYJE FROM IM_ZYJS IM_ZYJS,IM_JSMX IM_JSMX WHERE IM_ZYJS.ZYH=IM_JSMX.ZYH AND IM_ZYJS.JSCS=IM_JSMX.JSCS AND	IM_ZYJS.HZRQ=#{adt_hzrq} and IM_ZYJS.JGID=#{al_jgid} and IM_ZYJS.JSLX in(5,1) GROUP BY IM_JSMX.FYXM UNION ALL SELECT IM_JSMX.FYXM,- sum(IM_JSMX.ZJJE) AS FYJE FROM IM_ZYJS,IM_JSMX,IM_JSZF WHERE IM_ZYJS.JSLX in(5,1) and IM_ZYJS.ZYH=IM_JSMX.ZYH AND IM_ZYJS.JSCS=IM_JSMX.JSCS AND IM_ZYJS.ZYH=IM_JSZF.ZYH AND IM_ZYJS.JSCS=IM_JSZF.JSCS AND IM_JSZF.HZRQ=#{adt_hzrq} and IM_ZYJS.JGID=#{al_jgid} GROUP BY IM_JSMX.FYXM
+    </select>
+    <!--查询住院发票打印的结算信息-->
+    <select id="queryDyfpJsxx" resultType="java.util.Map">
+        SELECT
+            a.JSLX AS JSLX,
+            date_format( a.KSRQ, '%Y-%m-%d %H:%i:%s' ) AS KSRQ,
+            date_format( a.ZZRQ, '%Y-%m-%d %H:%i:%s' ) AS ZZRQ,
+            date_format( a.JSRQ, '%Y%m%d' ) AS JSRQ1,
+            date_format( a.KSRQ, '%Y%m%d' ) AS KSRQ1,
+            d.XZMC AS BRXZ,
+            d.SJXZ AS SJXZ,
+            a.JSCS AS JSCS,
+            a.JKHJ AS JKHJ,
+            a.JMJE AS JMJE,
+            d.XZMC AS RYLB,
+            c.PERSONNAME AS SYY,
+            b.ZYH AS ZYH,
+            b.GZDW AS GZDW,
+            b.BRCH AS BRCH,
+            b.ZYHM AS XLH,
+            b.BRXM AS XM,
+            b.BRXB AS BRXB,
+            b.CSNY as CSNY,
+            b.YBKH as YBKH,
+            b.BRKS as BRKS,
+            date_format( a.KSRQ, '%Y-%m-%d %H:%i:%s' ) AS RYRQ,
+            date_format( a.KSRQ, '%Y%m%d' ) AS RYRQ1,
+            date_format( a.ZZRQ, '%Y-%m-%d %H:%i:%s' ) AS CYRQ,
+            date_format( a.ZZRQ, '%Y%m%d' ) AS CYRQ1,
+            date_format( a.KSRQ, '%Y' ) AS RYYY,
+            date_format( a.KSRQ, '%m' ) AS RYMM,
+            date_format( a.KSRQ, '%d' ) AS RYDD,
+            date_format( a.ZZRQ, '%Y' ) AS CYYY,
+            date_format( a.ZZRQ, '%m' ) AS CYMM,
+            date_format( a.ZZRQ, '%d' ) AS CYDD,
+            a.fphm as FPHM,
+            a.FYHJ AS HJJE,
+            a.ZFHJ AS ZFJE,
+            date_format( a.JSRQ, '%Y' ) AS YYYY,
+            date_format ( a.JSRQ, '%m' ) AS MM,
+            date_format( a.JSRQ, '%d' ) AS DD,
+            date_format( a.JSRQ, '%Y-%m-%d %H:%i:%s' ) AS JSRQ,
+            IFNULL( a.LPJE, 0 ) AS LPJE,
+            a.ZYTS as ZYTS,
+            c.RYBH as RYBH
+        FROM
+            IM_ZYJS a
+            left join IM_HZRY b on a.ZYH = b.ZYH
+            left join hr_personnel c on a.CZGH = c.PERSONID
+            left join PUB_BRXZ d on a.BRXZ = d.BRXZ
+        WHERE
+             a.FPHM = #{fphm}
+            AND a.JGID = #{jgid}
+            AND a.ZFPB = 0
+
+    </select>
+    <!--查询打印发票的结算日期-->
+    <select id="queryDyfpJsrq" resultType="java.util.Map">
+      SELECT
+            date_format ( a.KSRQ, '%Y-%m-%d %H:%i:%s' ) AS KSRQ,
+            date_format ( IFNULL ( a.JSRQ, now() ), '%Y-%m-%d %H:%i:%s' ) AS ZZRQ,
+            DATEDIFF( IFNULL ( a.JSRQ, now() ), a.KSRQ ) AS JSTS,
+            a.JSLX AS JSLX
+        FROM
+            IM_ZYJS a
+        WHERE
+            a.FPHM = #{fphm}
+            AND a.JGID = #{jgid}
+            AND a.ZFPB =0
+
+    </select>
+
+    <!--查询打印发票的结算日期-->
+    <select id="getJscs" resultType="java.util.Map">
+      SELECT
+          JSCS
+        FROM
+            IM_ZYJS
+        WHERE
+            ZYH = #{zyh}
+            ORDER BY JSCS DESC
+            LIMIT 1
+    </select>
+
+    <!--查询结算记录(未作废)-->
+    <select id = "getLastRecord" resultType="com.buit.cis.ims.model.ImZyjs">
+        SELECT
+            <include refid="columns" />
+        FROM
+            IM_ZYJS
+        WHERE
+            ZFPB = 0
+            AND JSLX IN ( 1, 5 )
+            AND ZYH = #{zyh}
+        ORDER BY jscs DESC LIMIT 1
+    </select>
+
+    <!--结算自负合计-->
+    <update id="updateImzyjsZfhj">
+        UPDATE IM_ZYJS SET ZFHJ = #{ZFHJ}  WHERE ZYH=#{zyh} AND JGID = #{jgid} AND ZFPB = 0 And JSCS =#{jscs}
+
+    </update>
+    
+    <!-- 查询中途结算的最大终止日期 -->
+    <select id = "queryTerminationDate" resultType="java.util.Date">
+        select max(zzrq) from im_zyjs where jslx = 1 and zfpb = 0
+        and zyh = #{zyh}
+    </select>
+</mapper>
+

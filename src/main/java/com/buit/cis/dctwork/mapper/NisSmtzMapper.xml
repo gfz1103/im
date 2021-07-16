@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 生命体征 -->
+<mapper namespace="com.buit.cis.dctwork.dao.NisSmtzDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        CJH as cjh,CJZH as cjzh,XMH as xmh,JHBZ as jhbz,CJSJ as cjsj,ZYH as zyh,BRKS as brks,BRBQ as brbq,BRCH as brch,TZNR as tznr,XMXB as xmxb,FCBZ as fcbz,FCGL as fcgl,TWDXS as twdxs,JLSJ as jlsj,JLGH as jlgh,ZFBZ as zfbz,BZXX as bzxx,YCBZ as ycbz,JGID as jgid,ZDYXH as zdyxh,SJD as sjd
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_SMTZ (
+            CJH ,
+            CJZH ,
+            XMH ,
+            JHBZ ,
+            CJSJ ,
+            ZYH ,
+            BRKS ,
+            BRBQ ,
+            BRCH ,
+            TZNR ,
+            XMXB ,
+            FCBZ ,
+            FCGL ,
+            TWDXS ,
+            JLSJ ,
+            JLGH ,
+            ZFBZ ,
+            BZXX ,
+            YCBZ ,
+            JGID ,
+            ZDYXH ,
+            SJD
+        ) VALUES (
+            #{cjh} ,
+            #{cjzh} ,
+            #{xmh} ,
+            #{jhbz} ,
+            #{cjsj} ,
+            #{zyh} ,
+            #{brks} ,
+            #{brbq} ,
+            #{brch} ,
+            #{tznr} ,
+            #{xmxb} ,
+            #{fcbz} ,
+            #{fcgl} ,
+            #{twdxs} ,
+            #{jlsj} ,
+            #{jlgh} ,
+            #{zfbz} ,
+            #{bzxx} ,
+            #{ycbz} ,
+            #{jgid} ,
+            #{zdyxh} ,
+            #{sjd}
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_SMTZ SET
+            <if test="@sqlt.Ognl@isNotEmpty(cjzh)"> 
+                    CJZH = #{cjzh} ,
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(xmh)"> 
+                    XMH = #{xmh} ,
+            </if> 
+            <if test="@sqlt.Ognl@isNotEmpty(jhbz)"> 
+                    JHBZ = #{jhbz} ,
+            </if> 
+            <if test="@sqlt.Ognl@isNotEmpty(cjsj)"> 
+                    CJSJ = #{cjsj} ,
+            </if> 
+            <if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+                    ZYH = #{zyh} ,
+            </if> 
+            <if test="@sqlt.Ognl@isNotEmpty(brks)"> 
+                    BRKS = #{brks} ,
+            </if> 
+            <if test="@sqlt.Ognl@isNotEmpty(brbq)"> 
+                    BRBQ = #{brbq} ,
+            </if> 
+            <if test="@sqlt.Ognl@isNotEmpty(brch)"> 
+                    BRCH = #{brch} ,
+            </if> 
+                     TZNR = #{tznr} ,
+            <if test="@sqlt.Ognl@isNotEmpty(xmxb)"> 
+                    XMXB = #{xmxb} ,
+            </if> 
+            <if test="@sqlt.Ognl@isNotEmpty(fcbz)"> 
+                    FCBZ = #{fcbz} ,
+            </if>  
+            <if test="@sqlt.Ognl@isNotEmpty(fcgl)"> 
+                    FCGL = #{fcgl} ,
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(twdxs)"> 
+                    TWDXS = #{twdxs} ,
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(jlsj)"> 
+                    JLSJ = #{jlsj} ,
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(jlgh)"> 
+                    JLGH = #{jlgh} ,
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zfbz)"> 
+                    ZFBZ = #{zfbz} ,
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(bzxx)"> 
+                    BZXX = #{bzxx} ,
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(ycbz)"> 
+                    YCBZ = #{ycbz} ,
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zdyxh)"> 
+                    ZDYXH = #{zdyxh} ,
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zdyxh)"> 
+                    SJD = #{sjd} ,
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(jgid)"> 
+                    JGID = #{jgid} 
+            </if>  
+        WHERE 
+            CJH = #{cjh}            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_SMTZ WHERE
+        CJH = #{cjh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_SMTZ <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisSmtz">
+        SELECT <include refid="columns" />
+            FROM NIS_SMTZ 
+            WHERE 
+        CJH = #{cjh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cjh)"> -->
+<!--                     AND CJH = #{cjh} -->
+<!--                </if> -->
+               <if test="@sqlt.Ognl@isNotEmpty(cjzh)"> 
+                     AND CJZH = #{cjzh}
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmh)"> -->
+<!--                     AND XMH = #{xmh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jhbz)"> -->
+<!--                     AND JHBZ = #{jhbz} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(cjsj)"> 
+                     AND CJSJ = #{cjsj}
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+                     AND ZYH = #{zyh} 
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brks)"> -->
+<!--                     AND BRKS = #{brks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brbq)"> -->
+<!--                     AND BRBQ = #{brbq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brch)"> -->
+<!--                     AND BRCH = #{brch} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tznr)"> -->
+<!--                     AND TZNR = #{tznr} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmxb)"> -->
+<!--                     AND XMXB = #{xmxb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fcbz)"> -->
+<!--                     AND FCBZ = #{fcbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fcgl)"> -->
+<!--                     AND FCGL = #{fcgl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(twdxs)"> -->
+<!--                     AND TWDXS = #{twdxs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlsj)"> -->
+<!--                     AND JLSJ = #{jlsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlgh)"> -->
+<!--                     AND JLGH = #{jlgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfbz)"> -->
+<!--                     AND ZFBZ = #{zfbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bzxx)"> -->
+<!--                     AND BZXX = #{bzxx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ycbz)"> -->
+<!--                     AND YCBZ = #{ycbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zdyxh)"> 
+                     AND ZDYXH = #{zdyxh} 
+                </if> 
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_SMTZ 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisSmtz">
+        SELECT <include refid="columns" />
+        FROM NIS_SMTZ 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 查询生命体征和体征项目序号 -->
+    <select id="querySmtzAndBqtzInfo" resultType="java.util.HashMap">
+	    select b.PYDM as PYDM, a.CJH as CJH, a.XMH as XMH
+	  from NIS_SMTZ a, NIS_TZXM b
+	 where a.ZYH = #{ZYH}
+	   and a.CJSJ = #{CJSJ}
+	   and a.XMH = b.XMH
+    </select>
+    
+    <!-- 根据住院号查询病人生命体征 -->
+    <select id="querySmtzInfoByZyh" resultType="com.buit.cis.dctwork.response.NisSmtzResp">
+        select * from (
+			select a.CJH as CJH,
+		        a.CJSJ as CJSJ,
+		        a.XMXB as XMXB,
+		        case when a.XMH = 1 and a.XMXB != '不升' then a.XMXB
+				else b.XMMC end as XMMC,
+		        a.TZNR as TZNR,
+		        a.XMH as XMH,
+			    a.ZDYXH as ZDYXH
+		    from NIS_SMTZ a, NIS_TZXM b
+		    where a.XMH = b.XMH 
+			    and a.ZYH = #{zyh}
+		UNION ALL
+			select a.CJH as CJH,
+		        a.CJSJ as CJSJ,
+		        a.XMXB as XMXB,
+		        b.ZDYMC as XMMC,
+		        a.TZNR as TZNR,
+		        a.XMH as XMH,
+				a.ZDYXH as ZDYXH
+	        from NIS_SMTZ a, NIS_ZDYTZ b
+			where a.ZDYXH = b.ZDYID 
+				and a.ZYH = #{zyh} 
+				) m
+        order by m.CJH desc
+    </select>
+    
+    <!-- 根据时间和住院号查询病人生命体征 -->
+    <select id="querySmtzInfoByZyhAndDate" resultType="java.util.HashMap">
+         select  CJSJ,
+         		 <if test="@sqlt.Ognl@isNotEmpty(type) and type == 1"> 
+                     HOUR(CJSJ) as HOUR,
+                 </if>
+                 <if test="@sqlt.Ognl@isNotEmpty(type) and type == 2"> 
+                     case when HOUR(CJSJ) &gt;= 0 and HOUR(CJSJ) &lt; 6 then 2
+	                 when HOUR(CJSJ) &gt;= 6 and HOUR(CJSJ) &lt; 10 then 6
+	                 when HOUR(CJSJ) &gt;= 10 and HOUR(CJSJ) &lt; 14 then 10
+	                 when HOUR(CJSJ) &gt;= 14 and HOUR(CJSJ) &lt; 18 then 14
+	                 when HOUR(CJSJ) &gt;= 18 and HOUR(CJSJ) &lt; 22 then 18
+	                 else 22 end as HOUR,
+                 </if> 
+                 TZNR,
+                 XMXB,
+                 XMH,
+                 FCBZ
+            from NIS_SMTZ
+           where ZYH = #{zyh}
+             and date_format(CJSJ, '%Y-%m-%d') = #{cjsj}
+             and FCBZ = 0
+                <if test="@sqlt.Ognl@isNotEmpty(xmh)"> 
+                     and XMH = #{xmh} 
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(list)"> 
+                    and XMH in  
+                    <foreach collection="list" item="v" open="(" close=")" separator=",">
+		            	#{v}
+		        	</foreach> 
+                </if>  
+           order by CJSJ desc, XMH, CJH
+    </select>
+    
+    <!-- 根据时间和住院号查询病人生命体征心率和脉搏 -->
+    <select id="querySmtzPulseAndRate" resultType="java.util.HashMap">
+         select  CJSJ,
+                 HOUR(CJSJ) as HOUR,
+                 TZNR,
+                 XMXB,
+                 XMH,
+                 FCBZ
+            from NIS_SMTZ
+           where ZYH = #{zyh}
+             and date_format(CJSJ, '%Y-%m-%d') = #{cjsj}
+             and FCBZ = 0
+             and XMH in 
+		 		<foreach collection="list" item="v" open="(" close=")" separator=",">
+		            #{v}
+		        </foreach>
+           order by CJSJ, XMH, CJH
+    </select>
+    
+    <!-- 根据时住院号和自定义序号查询病人生命体征 -->
+    <select id="querySmtzInfoByZyhAndZdyxh" resultType="java.util.HashMap">
+         select  TZNR,
+         		ZDYXH
+            from NIS_SMTZ
+           where ZYH = #{zyh}
+           	 and ZDYXH = #{zdyxh}
+             and date_format(CJSJ, '%Y-%m-%d') = #{cjsj}
+           order by CJSJ desc
+    </select>
+    
+    <!-- 查询自定义生命体征 -->
+    <select id="queryZdySmtz" resultType="java.util.HashMap">
+		select b.zdymc, a.tznr, b.zdyid, b.xmdm 
+       		from nis_smtz a, nis_zdytz b
+			where a.zdyxh = b.zdyid and a.cjh in (
+			select max(a.cjh) from nis_smtz a where  a.zyh = #{zyh}
+            and date_format(a.cjsj, '%Y-%m-%d') =  #{queryDate}
+            and a.jgid = #{jgid}
+			and a.sjd = #{hour}
+			group by a.zdyxh )
+			order by b.zdyid
+    </select>
+    
+    <!-- 根据小时查询自定义生命体征 -->
+    <select id="queryZdySmtzByHour" resultType="java.util.HashMap">
+         	select a.cjh, b.zdymc, a.tznr, a.cjsj
+       		from nis_smtz a, nis_zdytz b
+			where a.zdyxh = b.zdyid 
+			and a.zyh = #{zyh}
+            and a.sjd = #{hour}
+			and date_format(a.cjsj, '%Y-%m-%d') = #{cjsj}
+            and a.jgid = #{jgid}
+            and b.zdyid = #{zdyid}
+           	order by a.cjsj desc, a.cjh
+    </select>
+    
+    <!-- 查询批量最新生命体征和体征项目序号 -->
+    <select id="queryBatchSmtzAndBqtzInfo" resultType="java.util.HashMap">
+	   	 select b.pydm, a.cjh, a.xmh
+	   	 from nis_smtz a, nis_tzxm b where a.cjh in (
+		 select max(a.cjh) from nis_smtz a 
+		 where a.zyh = #{zyh}
+	   	 and date_format(a.cjsj, '%Y-%m-%d') = #{queryDate}
+		 and a.sjd = #{hour} group by a.xmh )
+		 and a.xmh = b.xmh
+    </select>
+    
+    <!-- 批量删除体征 -->
+    <delete id="batchRemoveSmtz">
+        delete from nis_smtz where cjh in
+        <foreach collection="cjhList" item="cjh" open="(" close=")" separator="," >
+                #{cjh}
+        </foreach>
+    </delete>
+    
+    <!-- 查询脉搏起搏器心率 -->
+    <select id="queryPulsePacemakerHeartRate" resultType="java.util.HashMap">
+        select  SJD as HOUR,
+    	max(case XMH when 2 then TZNR end) as MB,  
+    	max(case XMH when 4 then TZNR end) as XL,  
+		max(case xmh when 10 then TZNR end) as QBQ
+		from  
+    	NIS_SMTZ where ZYH = #{zyh} and date_format(CJSJ, '%Y-%m-%d') = #{cjsj} 
+    	and FCBZ = 0 and XMH in (2, 4, 10)
+		group BY  SJD order by SJD
+    </select>
+    
+    <!-- 根据时间和住院号查询病人降温生命体征 -->
+    <select id="queryJwSmtzInfo" resultType="java.util.HashMap">
+         select  CJSJ,
+         		 <if test="@sqlt.Ognl@isNotEmpty(type) and type == 1"> 
+                     HOUR(CJSJ) as HOUR,
+                 </if>
+                 <if test="@sqlt.Ognl@isNotEmpty(type) and type == 2"> 
+                     case when HOUR(CJSJ) &gt;= 0 and HOUR(CJSJ) &lt; 6 then 2
+	                 when HOUR(CJSJ) &gt;= 6 and HOUR(CJSJ) &lt; 10 then 6
+	                 when HOUR(CJSJ) &gt;= 10 and HOUR(CJSJ) &lt; 14 then 10
+	                 when HOUR(CJSJ) &gt;= 14 and HOUR(CJSJ) &lt; 18 then 14
+	                 when HOUR(CJSJ) &gt;= 18 and HOUR(CJSJ) &lt; 22 then 18
+	                 else 22 end as HOUR,
+                 </if> 
+                 TZNR,
+                 XMXB,
+                 XMH,
+                 FCBZ
+            from NIS_SMTZ
+           where ZYH = #{zyh}
+             and CJSJ = #{cjsj}
+             and FCBZ = 0
+                <if test="@sqlt.Ognl@isNotEmpty(xmh)"> 
+                     and XMH = #{xmh} 
+                </if> 
+           order by CJSJ desc, XMH, CJH
+    </select>
+    
+    
+    <select id="queryNisSmtzInfoBySjdAndDate" resultType="NisSmtz">
+       select <include refid="columns" /> 
+        from nis_smtz  where sjd = #{sjd} and 
+        date_format(cjsj, '%Y-%m-%d') = #{queryDate}
+       order by cjsj desc
+    </select>
+</mapper>
+

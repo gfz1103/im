@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.dctwork.dao.CisZyHzsqDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        SQXH as sqxh,JZHM as jzhm,SQKS as sqks,SQYS as sqys,SQSJ as sqsj,HZMD as hzmd,HZMD2 as hzmd2,HZSJ as hzsj,YQDX as yqdx,JJBZ as jjbz,TJBZ as tjbz,TJYS as tjys,TJSJ as tjsj,ZFBZ as zfbz,JSBZ as jsbz,JSSJ as jssj,TXRY as txry,JGID as jgid,BQZL as bqzl,NHZYY as nhzyy,NYQHZYY as nyqhzyy,NYQHZKS as nyqhzks,NYQHZKS2 as nyqhzks2,NYQHZYS2 as nyqhzys2,KZRYS as kzrys,MESSID as messid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO CIS_ZY_HZSQ (
+            SQXH ,
+            JZHM ,
+            SQKS ,
+            SQYS ,
+            SQSJ ,
+            HZMD ,
+            HZMD2 ,
+            HZSJ ,
+            YQDX ,
+            JJBZ ,
+            TJBZ ,
+            TJYS ,
+            TJSJ ,
+            ZFBZ ,
+            JSBZ ,
+            JSSJ ,
+            TXRY ,
+            JGID ,
+            BQZL ,
+            NHZYY ,
+            NYQHZYY ,
+            NYQHZKS ,
+            NYQHZKS2 ,
+            NYQHZYS2 ,
+            KZRYS ,
+            MESSID
+        ) VALUES (
+            #{sqxh} ,
+            #{jzhm} ,
+            #{sqks} ,
+            #{sqys} ,
+            #{sqsj} ,
+            #{hzmd} ,
+            #{hzmd2} ,
+            #{hzsj} ,
+            #{yqdx} ,
+            #{jjbz} ,
+            #{tjbz} ,
+            #{tjys} ,
+            #{tjsj} ,
+            #{zfbz} ,
+            #{jsbz} ,
+            #{jssj} ,
+            #{txry} ,
+            #{jgid} ,
+            #{bqzl} ,
+            #{nhzyy} ,
+            #{nyqhzyy} ,
+            #{nyqhzks} ,
+            #{nyqhzks2} ,
+            #{nyqhzys2} ,
+            #{kzrys} ,
+            #{messid}
+        )
+    </insert>
+    
+    <update id="update" > 
+        UPDATE CIS_ZY_HZSQ SET
+            JZHM = #{jzhm} ,
+            SQKS = #{sqks} ,
+            SQYS = #{sqys} ,
+            SQSJ = #{sqsj} ,
+            HZMD = #{hzmd} ,
+            HZMD2 = #{hzmd2} ,
+            HZSJ = #{hzsj} ,
+            YQDX = #{yqdx} ,
+            JJBZ = #{jjbz} ,
+            TJBZ = #{tjbz} ,
+            TJYS = #{tjys} ,
+            TJSJ = #{tjsj} ,
+            ZFBZ = #{zfbz} ,
+            JSBZ = #{jsbz} ,
+            JSSJ = #{jssj} ,
+            TXRY = #{txry} ,
+            JGID = #{jgid} ,
+            BQZL = #{bqzl} ,
+            NHZYY = #{nhzyy} ,
+            NYQHZYY = #{nyqhzyy} ,
+            NYQHZKS = #{nyqhzks} ,
+            NYQHZKS2 = #{nyqhzks2} ,
+            NYQHZYS2 = #{nyqhzys2} ,
+            KZRYS = #{kzrys} 
+        WHERE 
+            SQXH = #{sqxh}          
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM CIS_ZY_HZSQ WHERE
+        SQXH = #{sqxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM CIS_ZY_HZSQ <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="CisZyHzsq">
+        SELECT <include refid="columns" />
+            FROM CIS_ZY_HZSQ 
+            WHERE 
+        SQXH = #{sqxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+                <if test="@sqlt.Ognl@isNotEmpty(sqxh)">
+                     AND SQXH = #{sqxh} 
+                </if>
+	            <if test="@sqlt.Ognl@isNotEmpty(jzhm)">
+	                 AND JZHM = #{jzhm}
+	            </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqks)"> -->
+<!--                     AND SQKS = #{sqks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqys)"> -->
+<!--                     AND SQYS = #{sqys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqsj)"> -->
+<!--                     AND SQSJ = #{sqsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hzmd)"> -->
+<!--                     AND HZMD = #{hzmd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hzmd2)"> -->
+<!--                     AND HZMD2 = #{hzmd2} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hzsj)"> -->
+<!--                     AND HZSJ = #{hzsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yqdx)"> -->
+<!--                     AND YQDX = #{yqdx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jjbz)"> -->
+<!--                     AND JJBZ = #{jjbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tjbz)"> -->
+<!--                     AND TJBZ = #{tjbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tjys)"> -->
+<!--                     AND TJYS = #{tjys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tjsj)"> -->
+<!--                     AND TJSJ = #{tjsj} -->
+<!--                </if> -->
+	            <if test="@sqlt.Ognl@isNotEmpty(zfbz)">
+	                 AND ZFBZ = #{zfbz}
+	            </if>
+                <if test="@sqlt.Ognl@isNotEmpty(jsbz)">
+                     AND JSBZ = #{jsbz} -->
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jssj)"> -->
+<!--                     AND JSSJ = #{jssj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(txry)"> -->
+<!--                     AND TXRY = #{txry} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bqzl)"> -->
+<!--                     AND BQZL = #{bqzl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(nhzyy)"> -->
+<!--                     AND NHZYY = #{nhzyy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(nyqhzyy)"> -->
+<!--                     AND NYQHZYY = #{nyqhzyy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(nyqhzks)"> -->
+<!--                     AND NYQHZKS = #{nyqhzks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(nyqhzks2)"> -->
+<!--                     AND NYQHZKS2 = #{nyqhzks2} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(nyqhzys2)"> -->
+<!--                     AND NYQHZYS2 = #{nyqhzys2} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kzrys)"> -->
+<!--                     AND KZRYS = #{kzrys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(messid)"> -->
+<!--                     AND MESSID = #{messid} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM CIS_ZY_HZSQ 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="CisZyHzsq">
+        SELECT <include refid="columns" />
+        FROM CIS_ZY_HZSQ 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <sql id="consultationSql">
+       CIS_ZY_HZSQ.JZHM as JZHM,
+       CIS_ZY_HZSQ.SQSJ as SQSJ,
+       CIS_ZY_HZSQ.SQKS as SQKS,
+       CIS_ZY_HZSQ.SQYS as SQYS,
+       CIS_ZY_HZSQ.HZSJ as HZSJ,
+       CIS_ZY_HZSQ.YQDX as YQDX,
+       CIS_ZY_HZSQ.JJBZ as JJBZ,
+       CIS_ZY_HZSQ.JSBZ as JSBZ,
+       CIS_ZY_HZSQ.ZFBZ as ZFBZ,
+       CIS_ZY_HZSQ.SQXH as SQXH,
+       CIS_ZY_HZSQ.TJBZ as TJBZ,
+       CIS_ZY_HZSQ.TJYS as TJYS,
+       CIS_ZY_HZSQ.TJSJ as TJSJ,
+       CIS_ZY_HZSQ.TXRY as TXRY,
+       CIS_ZY_HZSQ.YQDX as YQDX,
+       CIS_ZY_HZSQ.JGID as JGID,
+       CIS_ZY_HZSQ.HZMD as HZMD,
+       CIS_ZY_HZSQ.BQZL as BQZL,
+       CIS_ZY_HZSQ.NHZYY,
+       CIS_ZY_HZSQ.NYQHZYY,
+       CIS_ZY_HZSQ.NYQHZKS,
+       CIS_ZY_HZSQ.NYQHZKS2,
+       CIS_ZY_HZSQ.NYQHZYS2,
+       CIS_ZY_HZSQ.KZRYS,
+       CIS_ZY_HZSQ.YQDX AS NYQHZYS,
+       CASE
+         WHEN CIS_ZY_HZSQ.NHZYY = 1 THEN
+          YQDX
+         ELSE
+          NYQHZYS2
+       END AS NYQHZYS3,
+       CASE
+         WHEN CIS_ZY_HZSQ.NHZYY = 1 THEN
+          NYQHZKS
+         ELSE
+          NYQHZKS2
+       END AS NYQHZKS3
+    </sql>
+    
+    <!-- 根据工号查询会诊申请 -->
+    <select id="queryHzSqByUseId" resultType="com.buit.cis.dctwork.response.CisZyHzsqResp">
+	     select  <include refid="consultationSql" />  
+	     from CIS_ZY_HZSQ
+	 	 where CIS_ZY_HZSQ.JZHM = #{jzhm}
+ 	     <if test="@sqlt.Ognl@isNotEmpty(txry)"> 
+              and TXRY = #{txry}
+         </if>
+	 	
+    </select>
+    
+    <!-- 根据病区科室代码查询会诊申请 -->
+    <select id="queryHzSqByKs" resultType="com.buit.cis.dctwork.response.CisZyHzsqResp">
+	     select  <include refid="consultationSql" />  
+	     from CIS_ZY_HZSQ
+	 	 where CIS_ZY_HZSQ.JZHM = #{jzhm}
+	 	 and ( CIS_ZY_HZSQ.YQDX like CONCAT('%',#{yqdx},'%') OR CIS_ZY_HZSQ.NYQHZKS like CONCAT('%',#{nyqhzks},'%') )
+    </select>
+    
+    <!-- 根据申请序号更新会诊申请提交状态 -->
+    <update id="updateCisZyHzsqSubmitStatus" > 
+       update  CIS_ZY_HZSQ  set TJBZ = #{tjbz}, TJYS = #{userId}, TJSJ = #{time} WHERE SQXH = #{sqxh}
+    </update>
+    
+    <!-- 结束会诊申请修改 -->
+    <update id="stopCisZyHzsq" > 
+       update CIS_ZY_HZSQ set JSBZ = 1 , JSSJ = #{jssj}  WHERE SQXH = #{sqxh}
+    </update>
+    
+    <!-- 根据住院号查询已提交会诊申请记录 -->
+    <select id="queryHzSqByZyh" resultType="java.util.HashMap">
+	     select b.YQDX as YQDX, b.NYQHZKS as NYQHZKS
+             from CIS_ZY_HZSQ a, CIS_ZY_HZYQDX b
+            where a.SQXH = b.SQXH
+              and a.JSBZ = 0
+              and a.ZFBZ = 0
+              and a.TJBZ = 1
+              and a.JZHM = #{jzhm}
+    </select>
+    
+    <!-- 医嘱提交根据申请序号更新会诊申请提交状态 -->
+    <update id="updateYzHzsqSubmitStatus" > 
+       update  cis_zy_hzsq  set tjbz = 1 where sqxh in
+      	<foreach collection="sqxhList" item="sqxh" open="(" close=")" separator="," >
+                #{sqxh}
+        </foreach>	
+         and tjbz = 0 and jsbz = 0
+    </update>
+    
+    <!-- 根据记录序号批量取消会诊提交状态 -->
+	<update id="canceHzlSubmitStatusByJlxhList">
+		update cis_zy_hzsq  set tjbz = 0
+		where sqxh in
+        <foreach collection="sqxhList" item="z" open="(" close=")" separator=",">
+            #{z}
+        </foreach>
+		and tjbz = 1 and jsbz = 0
+	</update>
+	
+	<!-- 根据申请序号查询病人信息 -->
+    <select id="queryImHzBySqxh" resultType="java.util.HashMap">
+	    select b.*, 
+		   case b.BRXB  when 1 then '男' when 2 then '女' else '未知' end as XB, 
+		   c.OFFICENAME as OFFICENAME
+	  	   from cis_zy_hzsq a , im_hzry b
+		left join dic_kszd c on b.brks  = c.id
+		where a.jzhm  = b.zyh 
+		and a.sqxh = #{sqxh}
+    </select>
+    
+    <!-- 根据申请序号查询申请单打印信息 -->
+    <select id="queryHzsqPrintBySqxh" resultType="java.util.HashMap">
+	    select a.SQXH,
+			b.BRXM,
+			year(b.csny) as YEAR,
+			month(b.csny) as MONTH,
+			day(b.csny) as DAY,
+			case b.brxb when 1 then '男'
+			when 2 then '女'
+			else '未知' end as BRXB,
+			b.RYNL,
+			(select officename from dic_kszd where id = b.brks) as KSMC,
+			(select officename from dic_kszd where id = b.brbq) as BQMC,
+			b.BRCH,
+			b.ZYHM,
+			a.JJBZ,
+			year(b.ryrq) as RYYEAR,
+			month(b.ryrq) as RYMONTH,
+			day(b.ryrq) as RYDAY,
+			hour(b.ryrq) as RYHOUR,
+			minute(b.ryrq) as RYMIN,
+			b.MQZD,
+			a.HZMD,
+			(select personname from hr_personnel where personid = a.sqys) as SQYSMC,
+			year(a.sqsj) as SQYEAR,
+			month(a.sqsj) as SQMONTH,
+			day(a.sqsj) as SQDAY,
+			hour(a.sqsj) as SQHOUR,
+			minute(a.sqsj) as SQMIN,
+			year(a.hzsj) as HZYEAR,
+			month(a.hzsj) as HZMONTH,
+			day(a.hzsj) as HZDAY,
+			hour(a.hzsj) as HZHOUR,
+			minute(a.hzsj) as HZMIN,
+			a.YQDX,
+			a.NYQHZKS,
+			a.BQZL,
+			a.NHZYY,
+			a.NYQHZYY,
+			a.NYQHZKS2,
+			a.NYQHZYS2,
+			(select personname from hr_personnel where personid = b.zzys) as ZZYSMC,
+			(select personname from hr_personnel where personid = a.kzrys) as KZRYSMC
+		from cis_zy_hzsq a, im_hzry b
+			where a.jzhm = b.zyh
+			and a.sqxh = #{sqxh}
+			and a.jgid = #{jgid}
+    </select>
+    
+    <!-- 更新消息返回id -->
+    <update id="updateMessIdBySqxh" > 
+       update  cis_zy_hzsq  set messid = #{messid} where sqxh = #{sqxh}
+    </update>
+    
+    <!-- 查询消息id -->
+    <select id="queryMessIdBySqxh" resultType="java.lang.String"> 
+       select messid from cis_zy_hzsq where sqxh = #{sqxh}
+    </select>
+    
+    <select id="queryBySqxh" resultType="com.buit.cis.dctwork.response.CisZyHzsqResp"> 
+       select <include refid="columns" />
+            from cis_zy_hzsq 
+            where 
+        sqxh = #{sqxh} 
+    </select>
+
+    <select id="findHzsqForBl" resultType="java.util.HashMap">
+        SELECT <include refid="columns" />,
+        (select personname from hr_personnel where personid = sqys) as SQYSMC,
+        (select personname from hr_personnel where personid = kzrys) as KZRYSMC
+        FROM CIS_ZY_HZSQ
+        <include refid="where"/>
+
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+
+    <!-- 批量删除会诊申请 -->
+    <delete id="deleteConsultationBySqidList">
+        delete from cis_zy_hzsq
+        where sqxh in
+        <foreach collection="sqidList" item="z" open="(" close=")" separator=",">
+            #{z}
+        </foreach>
+    </delete>
+
+</mapper>
+

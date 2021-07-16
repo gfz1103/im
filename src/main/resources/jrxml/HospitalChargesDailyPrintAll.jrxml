@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HospitalChargesDaily" language="groovy" pageWidth="750" pageHeight="1070" columnWidth="750" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ee5dcfcf-aa33-4d27-8c74-922ede0286cd">
+	<property name="ireport.zoom" value="1.5000000000000095"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="myBaseStyleName" isBlankWhenNull="true" fontName="宋体"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="JSMX" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<parameter name="JKMX" class="net.sf.jasperreports.engine.JRDataSource" isForPrompting="false"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="44">
+			<subreport>
+				<reportElement style="myBaseStyleName" x="29" y="0" width="666" height="44" uuid="4d8dbedd-7763-4db3-91ff-5e6f28dd473c"/>
+				<dataSourceExpression><![CDATA[$P{JSMX}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "HospitalChargesDailyJsmx.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="44">
+			<subreport>
+				<reportElement style="myBaseStyleName" x="29" y="0" width="666" height="44" uuid="b8c7b95f-6a4c-4033-930c-8a2fa37c975a"/>
+				<dataSourceExpression><![CDATA[$P{JKMX}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "HospitalChargesDailyJkmx.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

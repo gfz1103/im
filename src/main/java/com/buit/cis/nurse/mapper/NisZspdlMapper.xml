@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Barthel指数平定量表 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisZspdlDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,MBLX as mblx,JS as js,XZ as xz,XS as xs,CY as cy,KZDB as kzdb,KZXB as kzxb,RC as rc,CYZY as cyzy,PDXZ as pdxz,SXLT as sxlt,HSQM as hsqm,ZF as zf,DJ as dj,RQ as rq,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_ZSPDL (
+            JLXH ,
+            ZYH ,
+            MBLX ,
+            JS ,
+            XZ ,
+            XS ,
+            CY ,
+            KZDB ,
+            KZXB ,
+            RC ,
+            CYZY ,
+            PDXZ ,
+            SXLT ,
+            HSQM ,
+            ZF ,
+            DJ ,
+            RQ ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{mblx} ,
+            #{js} ,
+            #{xz} ,
+            #{xs} ,
+            #{cy} ,
+            #{kzdb} ,
+            #{kzxb} ,
+            #{rc} ,
+            #{cyzy} ,
+            #{pdxz} ,
+            #{sxlt} ,
+            #{hsqm} ,
+            #{zf} ,
+            #{dj} ,
+            #{rq} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_ZSPDL SET
+            ZYH = #{zyh} ,
+            MBLX = #{mblx} ,
+            JS = #{js} ,
+            XZ = #{xz} ,
+            XS = #{xs} ,
+            CY = #{cy} ,
+            KZDB = #{kzdb} ,
+            KZXB = #{kzxb} ,
+            RC = #{rc} ,
+            CYZY = #{cyzy} ,
+            PDXZ = #{pdxz} ,
+            SXLT = #{sxlt} ,
+            HSQM = #{hsqm} ,
+            ZF = #{zf} ,
+            DJ = #{dj} ,
+            RQ = #{rq} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_ZSPDL WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_ZSPDL <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisZspdl">
+        SELECT <include refid="columns" />
+            FROM NIS_ZSPDL 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                     AND ZYH = #{zyh}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mblx)"> -->
+<!--                     AND MBLX = #{mblx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(js)"> -->
+<!--                     AND JS = #{js} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xz)"> -->
+<!--                     AND XZ = #{xz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xs)"> -->
+<!--                     AND XS = #{xs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cy)"> -->
+<!--                     AND CY = #{cy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kzdb)"> -->
+<!--                     AND KZDB = #{kzdb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kzxb)"> -->
+<!--                     AND KZXB = #{kzxb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rc)"> -->
+<!--                     AND RC = #{rc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cyzy)"> -->
+<!--                     AND CYZY = #{cyzy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pdxz)"> -->
+<!--                     AND PDXZ = #{pdxz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sxlt)"> -->
+<!--                     AND SXLT = #{sxlt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hsqm)"> -->
+<!--                     AND HSQM = #{hsqm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zf)"> -->
+<!--                     AND ZF = #{zf} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dj)"> -->
+<!--                     AND DJ = #{dj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rq)"> -->
+<!--                     AND RQ = #{rq} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> 
+                     AND JGID = #{jgid} 
+                </if> 
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_ZSPDL 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisZspdl">
+        SELECT <include refid="columns" />
+        FROM NIS_ZSPDL 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- Barthel指数平定量表查询树结构-->
+    <select id="queryZspdlTree" resultType="com.buit.cis.nurse.response.NisHzmbResp">
+        SELECT CONCAT(a.RQ, '  ', b.MBMC ) as LABEL, a.MBLX as NAME
+			FROM ( SELECT DATE_FORMAT( RQ, '%m-%d' ) AS RQ, 
+							ZYH as ZYH,
+							MBLX as MBLX,
+							JGID as JGID
+				FROM NIS_ZSPDL 
+				GROUP BY 
+					DATE_FORMAT(RQ, '%m-%d'),
+					ZYH,
+					MBLX,
+					JGID 
+				) a, NIS_HZMB b WHERE
+				a.ZYH = b.ZYH 
+				AND a.MBLX = b.MBLX 
+				AND a.JGID = b.JGID
+				AND a.ZYH = #{zyh}
+				AND a.JGID = #{jgid}
+				order by a.RQ
+    </select>
+    
+    <!-- 根据日期查询Barthel指数平定量表 -->
+    <select id="queryZspdlByDate" resultType="com.buit.cis.nurse.response.NisZspdlResp">
+       SELECT JLXH as jlxh,ZYH as zyh,MBLX as mblx,JS as js,XZ as xz,XS as xs,CY as cy,KZDB as kzdb,KZXB as kzxb,RC as rc,CYZY as cyzy,PDXZ as pdxz,SXLT as sxlt,HSQM as hsqm,ZF as zf,DJ as dj,date_format(RQ, '%Y-%m-%d %H:%i') as rq,JGID as jgid
+        FROM NIS_ZSPDL 
+        WHERE ZYH = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and DATE_FORMAT(RQ, '%m-%d') = #{queryDate}
+        </if> 
+        and JGID = #{jgid}
+        order by RQ
+    </select>
+    
+    <!-- 根据日期查询Barthel指数平定量表打印信息 -->
+    <select id="queryPrintZspdlByDate" resultType="java.util.HashMap">
+       select date_format(rq, '%Y-%m-%d %H:%i') as rq,
+        case js when '完全独立' then '√' else '' end as js1,
+        case js when '需部分帮助' then '√' else '' end as js2,
+        case js when '需极大帮助' then '√' else '' end as js3,
+        case xz when '完全独立' then '√' else '' end as xz1,
+        case xz when '需部分帮助' then '√' else '' end as xz2,
+        case xs when '完全独立' then '√' else '' end as xs1,
+        case xs when '需部分帮助' then '√' else '' end as xs2,
+        case cy when '完全独立' then '√' else '' end as cy1,
+        case cy when '需部分帮助' then '√' else '' end as cy2,
+        case cy when '需极大帮助' then '√' else '' end as cy3,
+        case kzdb when '完全独立' then '√' else '' end as kzdb1,
+        case kzdb when '需部分帮助' then '√' else '' end as kzdb2,
+        case kzdb when '需极大帮助' then '√' else '' end as kzdb3,
+        case kzxb when '完全独立' then '√' else '' end as kzxb1,
+        case kzxb when '需部分帮助' then '√' else '' end as kzxb2,
+        case kzxb when '需极大帮助' then '√' else '' end as kzxb3,
+        case rc when '完全独立' then '√' else '' end as rc1,
+        case rc when '需部分帮助' then '√' else '' end as rc2,
+        case rc when '需极大帮助' then '√' else '' end as rc3,
+        case cyzy when '完全独立' then '√' else '' end as cyzy1,
+        case cyzy when '需部分帮助' then '√' else '' end as cyzy2,
+        case cyzy when '需极大帮助' then '√' else '' end as cyzy3,
+        case cyzy when '完全依赖' then '√' else '' end as cyzy4,
+        case pdxz when '完全独立' then '√' else '' end as pdxz1,
+        case pdxz when '需部分帮助' then '√' else '' end as pdxz2,
+        case pdxz when '需极大帮助' then '√' else '' end as pdxz3,
+        case pdxz when '完全依赖' then '√' else '' end as pdxz4,
+        case sxlt when '完全独立' then '√' else '' end as sxlt1,
+        case sxlt when '需部分帮助' then '√' else '' end as sxlt2,
+        case sxlt when '需极大帮助' then '√' else '' end as sxlt3,
+        zf,
+        dj,
+        hsqm
+        from nis_zspdl 
+        where zyh = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and date_format(rq, '%m-%d') = #{queryDate}
+        </if> 
+        and jgid = #{jgid}
+        order by rq
+    </select>
+</mapper>
+

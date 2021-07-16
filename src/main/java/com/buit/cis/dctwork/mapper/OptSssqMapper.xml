@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.buit.cis.dctwork.dao.OptSssqDao">
+
+	<!-- 批量删除手术  -->
+    <delete id="deleteBatchBySqidList">
+        delete from opt_sssq 
+        where sqdh in
+		<foreach collection="sqidList" item="z" open="(" close=")" separator=",">
+            #{z}
+        </foreach>
+    </delete>
+    
+</mapper>
+

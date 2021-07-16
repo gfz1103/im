@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 压力性损伤预报、传报单(监控随访) -->
+<mapper namespace="com.buit.cis.nurse.dao.NisYlxssjksfDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,CBDJLXH as cbdjlxh,PF as pf,YB as yb,YNFS as ynfs,YWDR as ywdr,BW as bw,DX as dx,SKFQ as skfq,JBYS as jbys,SC as sc,CMCL as cmcl,HLCS as hlcs,HSZQM as hszqm,HLBDD as hlbdd,RQ as rq,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_YLXSSJKSF (
+            JLXH ,
+            CBDJLXH ,
+            PF ,
+            YB ,
+            YNFS ,
+            YWDR ,
+            BW ,
+            DX ,
+            SKFQ ,
+            JBYS ,
+            SC ,
+            CMCL ,
+            HLCS ,
+            HSZQM ,
+            HLBDD ,
+            RQ ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{cbdjlxh} ,
+            #{pf} ,
+            #{yb} ,
+            #{ynfs} ,
+            #{ywdr} ,
+            #{bw} ,
+            #{dx} ,
+            #{skfq} ,
+            #{jbys} ,
+            #{sc} ,
+            #{cmcl} ,
+            #{hlcs} ,
+            #{hszqm} ,
+            #{hlbdd} ,
+            #{rq} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_YLXSSJKSF SET
+            CBDJLXH = #{cbdjlxh} ,
+            PF = #{pf} ,
+            YB = #{yb} ,
+            YNFS = #{ynfs} ,
+            YWDR = #{ywdr} ,
+            BW = #{bw} ,
+            DX = #{dx} ,
+            SKFQ = #{skfq} ,
+            JBYS = #{jbys} ,
+            SC = #{sc} ,
+            CMCL = #{cmcl} ,
+            HLCS = #{hlcs} ,
+            HSZQM = #{hszqm} ,
+            HLBDD = #{hlbdd} ,
+            RQ = #{rq} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}          
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_YLXSSJKSF WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_YLXSSJKSF <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisYlxssjksf">
+        SELECT <include refid="columns" />
+            FROM NIS_YLXSSJKSF 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(cbdjlxh)"> 
+                     AND CBDJLXH = #{cbdjlxh}
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pf)"> -->
+<!--                     AND PF = #{pf} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yb)"> -->
+<!--                     AND YB = #{yb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ynfs)"> -->
+<!--                     AND YNFS = #{ynfs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ywdr)"> -->
+<!--                     AND YWDR = #{ywdr} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bw)"> -->
+<!--                     AND BW = #{bw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dx)"> -->
+<!--                     AND DX = #{dx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(skfq)"> -->
+<!--                     AND SKFQ = #{skfq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jbys)"> -->
+<!--                     AND JBYS = #{jbys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sc)"> -->
+<!--                     AND SC = #{sc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cmcl)"> -->
+<!--                     AND CMCL = #{cmcl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlcs)"> -->
+<!--                     AND HLCS = #{hlcs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hszqm)"> -->
+<!--                     AND HSZQM = #{hszqm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlbdd)"> -->
+<!--                     AND HLBDD = #{hlbdd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rq)"> -->
+<!--                     AND RQ = #{rq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_YLXSSJKSF 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisYlxssjksf">
+        SELECT <include refid="columns" />
+        FROM NIS_YLXSSJKSF 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <select id="queryJksfByCbdjlxh" resultType="com.buit.cis.nurse.response.NisYlxssjksfResp">
+        SELECT JLXH as jlxh,CBDJLXH as cbdjlxh,PF as pf,YB as yb,YNFS as ynfs,YWDR as ywdr,BW as bw,DX as dx,SKFQ as skfq,JBYS as jbys,SC as sc,CMCL as cmcl,HLCS as hlcs,HSZQM as hszqm,HLBDD as hlbdd,date_format(RQ, '%Y-%m-%d %H:%i') as rq,JGID as jgid
+        FROM NIS_YLXSSJKSF 
+        WHERE CBDJLXH = #{cbdjlxh}
+    </select>
+</mapper>
+

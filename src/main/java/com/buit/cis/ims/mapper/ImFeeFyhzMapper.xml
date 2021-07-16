@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 费用汇总 -->
+<mapper namespace="com.buit.cis.ims.dao.ImFeeFyhzDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JGID as jgid,HZRQ as hzrq,FYXM as fyxm,SQJC as sqjc,BQFS as bqfs,BQJS as bqjs,BQJC as bqjc,SJJC as sjjc
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_FEE_FYHZ (
+            JGID ,
+            HZRQ ,
+            FYXM ,
+            SQJC ,
+            BQFS ,
+            BQJS ,
+            BQJC ,
+            SJJC 
+        ) VALUES (
+            #{jgid} ,
+            #{hzrq} ,
+            #{fyxm} ,
+            #{sqjc} ,
+            #{bqfs} ,
+            #{bqjs} ,
+            #{bqjc} ,
+            #{sjjc} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE IM_FEE_FYHZ SET
+            SQJC = #{sqjc} ,
+            BQFS = #{bqfs} ,
+            BQJS = #{bqjs} ,
+            BQJC = #{bqjc} ,
+            SJJC = #{sjjc} 
+        WHERE 
+            JGID = #{jgid}  AND 
+                        HZRQ = #{hzrq}  AND 
+                        FYXM = #{fyxm} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM IM_FEE_FYHZ WHERE
+        JGID = #{jgid}  AND 
+        HZRQ = #{hzrq}  AND 
+        FYXM = #{fyxm} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM IM_FEE_FYHZ <include refid="where"/>  
+    </delete>
+    <!--住院管理-日终汇总（取消汇总）-->
+    <delete id="doCancelCollectCommit">
+        delete from IM_FEE_FYHZ where JGID = #{jgid} and HZRQ= #{hzrq}
+    </delete>
+
+    <select id="getById" resultType="ImFeeFyhz">
+        SELECT <include refid="columns" />
+            FROM IM_FEE_FYHZ 
+            WHERE 
+        JGID = #{jgid}  AND 
+        HZRQ = #{hzrq}  AND 
+        FYXM = #{fyxm} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hzrq)"> -->
+<!--                     AND HZRQ = #{hzrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fyxm)"> -->
+<!--                     AND FYXM = #{fyxm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqjc)"> -->
+<!--                     AND SQJC = #{sqjc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bqfs)"> -->
+<!--                     AND BQFS = #{bqfs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bqjs)"> -->
+<!--                     AND BQJS = #{bqjs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bqjc)"> -->
+<!--                     AND BQJC = #{bqjc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sjjc)"> -->
+<!--                     AND SJJC = #{sjjc} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_FEE_FYHZ 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="ImFeeFyhz">
+        SELECT <include refid="columns" />
+        FROM IM_FEE_FYHZ 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    <!--查询上期的汇总日期-->
+    <select id="queryMaxHzrq" resultType="java.util.Map">
+        SELECT max(HZRQ) as HZRQ FROM IM_FEE_FYHZ where JGID=#{gl_jgid}
+    </select>
+    <!--查询上期结存-->
+    <select id="queryHzSqjc" resultType="java.util.Map">
+        SELECT IM_FEE_FYHZ.FYXM as FYXM,sum(IM_FEE_FYHZ.BQJC) AS FYJE FROM IM_FEE_FYHZ IM_FEE_FYHZ WHERE IM_FEE_FYHZ.HZRQ= #{adt_hzrq} and IM_FEE_FYHZ.JGID= #{al_jgid} GROUP BY IM_FEE_FYHZ.FYXM
+    </select>
+
+</mapper>
+

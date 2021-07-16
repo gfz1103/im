@@ -1,0 +1,566 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院_床位设置 -->
+<mapper namespace="com.buit.cis.ims.dao.ImCwszDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JGID as jgid,BRCH as brch,FJHM as fjhm,CWKS as cwks,KSDM as ksdm,CWXB as cwxb,CWFY as cwfy,ICU as icu,JCPB as
+        jcpb,ZYH as zyh,YEWYH as yewyh,ZDYCW as zdycw,JCRQ as jcrq,SCBZ as scbz,VIPCWFY as vipcwfy,SBBRCWFY as
+        sbbrcwfy,CWZH as cwzh,CWFYXH as cwfyxh,ICUFYXH as icufyxh,VIPFYXH as vipfyxh,SBFYXH as sbfyxh,CECWFY as cecwfy,
+        CEFYXH as cefyxh
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_CWSZ (
+        JGID ,
+        BRCH ,
+        FJHM ,
+        CWKS ,
+        KSDM ,
+        CWXB ,
+        CWFY ,
+        ICU ,
+        JCPB ,
+        ZYH ,
+        YEWYH ,
+        ZDYCW ,
+        JCRQ ,
+        SCBZ ,
+        VIPCWFY ,
+        CECWFY ,
+        SBBRCWFY ,
+        CWZH ,
+        CWFYXH ,
+        ICUFYXH ,
+        VIPFYXH ,
+        SBFYXH,
+        CEFYXH
+        ) VALUES (
+        #{jgid} ,
+        #{brch} ,
+        #{fjhm} ,
+        #{cwks} ,
+        #{ksdm} ,
+        #{cwxb} ,
+        #{cwfy} ,
+        #{icu} ,
+        #{jcpb} ,
+        #{zyh} ,
+        #{yewyh} ,
+        #{zdycw} ,
+        #{jcrq} ,
+        #{scbz} ,
+        #{vipcwfy} ,
+        #{cecwfy} ,
+        #{sbbrcwfy} ,
+        #{cwzh} ,
+        #{cwfyxh} ,
+        #{icufyxh} ,
+        #{vipfyxh} ,
+        #{sbfyxh},
+        #{cefyxh}
+        )
+    </insert>
+
+    <update id="update" >
+        UPDATE IM_CWSZ SET
+        BRCH = #{brch},
+        FJHM = #{fjhm} ,
+        CWKS = #{cwks} ,
+        KSDM = #{ksdm} ,
+        CWXB = #{cwxb} ,
+        CWFY = #{cwfy} ,
+        ICU = #{icu} ,
+        JCPB = #{jcpb} ,
+        VIPCWFY = #{vipcwfy} ,
+        CECWFY = #{cecwfy} ,
+        SBBRCWFY = #{sbbrcwfy} ,
+        CWZH = #{cwzh} ,
+        CWFYXH = #{cwfyxh} ,
+        ICUFYXH = #{icufyxh} ,
+        VIPFYXH = #{vipfyxh} ,
+        SBFYXH = #{sbfyxh} ,
+        CEFYXH = #{cefyxh}
+        WHERE
+        JGID = #{jgid}
+        AND BRCH = #{brch}
+        AND KSDM = #{ksdm}
+
+    </update>
+
+
+    <delete id="deleteById">
+        DELETE FROM IM_CWSZ WHERE
+        JGID = #{jgid}  AND
+        BRCH = #{brch}  AND
+        KSDM = #{ksdm}
+    </delete>
+
+    <delete id="removeByEntity">
+        DELETE FROM IM_CWSZ
+        <include refid="where"/>
+    </delete>
+
+
+    <select id="getById" resultType="ImCwsz">
+        SELECT
+        <include refid="columns"/>
+        FROM IM_CWSZ
+        WHERE
+        JGID = #{jgid} AND
+        BRCH = #{brch} AND
+        KSDM = #{ksdm}
+    </select>
+
+    <select id="getByPk" resultType="ImCwsz">
+        SELECT
+        <include refid="columns"/>
+        FROM IM_CWSZ
+        WHERE
+        JGID = #{jgid} AND
+        BRCH = #{brch} AND
+        KSDM = #{ksdm}
+    </select>
+
+    <sql id="where">
+        <where>
+            <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                AND JGID = #{jgid}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(brch)">
+                AND BRCH = #{brch}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(fjhm)">
+                AND FJHM = #{fjhm}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(cwks)">
+                AND CWKS = #{cwks}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(ksdm)">
+                AND KSDM = #{ksdm}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                AND ZYH = #{zyh}
+            </if>
+            <!--                <if test="@sqlt.Ognl@isNotEmpty(cwxb)"> -->
+            <!--                     AND CWXB = #{cwxb} -->
+            <!--                </if> -->
+            <!--                <if test="@sqlt.Ognl@isNotEmpty(cwfy)"> -->
+            <!--                     AND CWFY = #{cwfy} -->
+            <!--                </if> -->
+            <!--                <if test="@sqlt.Ognl@isNotEmpty(icu)"> -->
+            <!--                     AND ICU = #{icu} -->
+            <!--                </if> -->
+            <if test="@sqlt.Ognl@isNotEmpty(jcpb)">
+                AND JCPB = #{jcpb}
+            </if>
+            <!--                <if test="@sqlt.Ognl@isNotEmpty(yewyh)"> -->
+            <!--                     AND YEWYH = #{yewyh} -->
+            <!--                </if> -->
+            <!--                <if test="@sqlt.Ognl@isNotEmpty(zdycw)"> -->
+            <!--                     AND ZDYCW = #{zdycw} -->
+            <!--                </if> -->
+            <!--                <if test="@sqlt.Ognl@isNotEmpty(jcrq)"> -->
+            <!--                     AND JCRQ = #{jcrq} -->
+            <!--                </if> -->
+            <if test="@sqlt.Ognl@isNotEmpty(scbz)">
+                AND SCBZ = #{scbz}
+            </if>
+            <!--                <if test="@sqlt.Ognl@isNotEmpty(vipcwfy)"> -->
+            <!--                     AND VIPCWFY = #{vipcwfy} -->
+            <!--                </if> -->
+            <!--                <if test="@sqlt.Ognl@isNotEmpty(sbbrcwfy)"> -->
+            <!--                     AND SBBRCWFY = #{sbbrcwfy} -->
+            <!--                </if> -->
+			<if test="@sqlt.Ognl@isNotEmpty(cwzh)"> 
+				AND CWZH = #{cwzh} 
+			</if>
+        </where>
+    </sql>
+
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_CWSZ
+        <include refid="where"/>
+    </select>
+
+    <select id="findByEntity" resultType="ImCwsz">
+        SELECT <include refid="columns" />
+        FROM IM_CWSZ
+        <include refid="where"/>
+
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+
+
+    <!--     业务sql      -->
+    <!--住院病人床位设置列表分页查询-->
+    <select id="queryZybrCwszPage" resultType="com.buit.cis.ims.response.ZybrCwszResp">
+        SELECT
+        cw.JGID AS jgid,
+        cw.BRCH AS brch,
+        cw.FJHM AS fjhm,
+        cw.CWKS AS cwks,
+        cw.KSDM AS ksdm,
+        cw.CWXB AS cwxb,
+        cw.CWFY AS cwfy,
+        cw.VIPCWFY AS vipcwfy,
+        cw.JCPB AS jcpb,
+        br.ZYH AS zyh,
+        br.ZYHM AS zyhm,
+        br.BRXM AS brxm,
+        br.BRXB AS brxb,
+        br.BRXZ AS brxz,
+        br.BRKS AS brks,
+        br.BRBQ AS brbq,
+        br.RYRQ AS ryrq,
+        br.CYPB AS cypb
+        FROM
+        IM_CWSZ cw
+        LEFT JOIN dic_kszd c on cw.KSDM = c.ID
+        LEFT JOIN IM_HZRY br ON cw.ZYH = br.ZYH
+        WHERE
+        cw.JGID = #{jgid}
+        <if test="ywlx == 1 ">
+            and c.LGBQ = 0
+        </if>
+        <if test="ywlx == 2 ">
+            and c.LGBQ = 1
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(brch)">
+            AND  cw.BRCH like CONCAT(CONCAT('%',#{brch}),'%')
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(cwks)">
+            AND cw.CWKS = #{cwks}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(cwbq)">
+            AND cw.KSDM = #{cwbq}
+        </if>
+        <!--        <if test="@sqlt.Ognl@isNotEmpty(ywlx)">
+                    AND br.ywlx = #{ywlx}
+                </if>-->
+        <if test="@sqlt.Ognl@isNotEmpty(zyhm)">
+            AND br.ZYHM  like CONCAT(CONCAT('%',#{zyhm}),'%')
+        </if>
+        ORDER BY
+        cw.BRCH
+
+
+    </select>
+    <!--退床操作-->
+    <update id="updateTc">
+        UPDATE IM_CWSZ Set ZYH=null Where BRCH=#{brch} AND ZYH=#{zyh}  and JGID=#{jgid}
+    </update>
+    <!--查询床位使用数-->
+    <select id="cwtj" resultType="com.buit.cis.ims.model.ImCwsz">
+        SELECT <include refid="columns" />
+        FROM IM_CWSZ
+        where  ZYH  IS NOT NULL and JCPB &lt; 2
+        <if test="@sqlt.Ognl@isNotEmpty(cwks)">
+            AND CWKS = #{cwks}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(ksdm)">
+            AND KSDM = #{ksdm}
+        </if>
+
+
+    </select>
+    <!--住院病人结算退床操作-->
+    <update id="tc">
+        UPDATE  IM_CWSZ Set ZYH = Null,YEWYH = Null Where ZYH = #{zyh}  And JGID = #{jgid}
+    </update>
+
+
+    <!-- 查询床位是否有人 -->
+    <select id="queryIsExistsCw" resultType="long">
+        select count(1) from IM_CWSZ where (ZYH is not null or ZYH &lt;&gt; '')  and JGID = #{jgid} AND KSDM = #{ksdm} and BRCH = #{brch}
+    </select>
+
+    <!-- 判断病人是否满足新床位性别限制 -->
+    <select id="queryIsGenderFit" resultType="java.util.HashMap">
+        select a.BRCH as BRCH
+        from IM_CWSZ a
+        where a.KSDM = #{ksdm}
+        and a.CWKS = #{cwks}
+        and a.JGID = #{jgid}
+        and a.BRCH = #{brch}
+        and (a.CWXB = (select BRXB from IM_HZRY where ZYH = #{zyh}) or a.CWXB = 3)
+    </select>
+    <!--机构id跟病人床号查询住院号-->
+    <select id="queryZyhByJgidAndBrch" resultType="java.util.HashMap">
+        SELECT ZYH as zyh FROM  IM_CWSZ WHERE JGID = #{jgid} and BRCH = #{brch} AND KSDM = #{ksdm}
+    </select>
+
+    <!--通过机构id跟病人床号修改病人住院号-->
+    <update id="updateZyhByBrchAndJgid">
+        UPDATE IM_CWSZ SET ZYH = #{zyh} WHERE JGID = #{jgid} and BRCH = #{brch} AND KSDM = #{ksdm}
+    </update>
+
+    <!--通过病人床号跟机构id查询床位科室跟科室代码-->
+    <select id="queryCwksAndKsdm" resultType="java.util.Map">
+        SELECT CWKS as cwks,KSDM as ksdm FROM IM_CWSZ Where JGID = #{jgid} and BRCH = #{brch} AND KSDM = #{ksdm}
+
+    </select>
+
+    <!--床位对调-->
+    <update id="updateCwdd">
+        UPDATE IM_CWSZ Set ZYH =#{zyh} Where BRCH =#{newCwhm} And ZYH =#{newZyh} And JGID =#{jgid}
+    </update>
+    <!--转到空床-->
+    <update id="updateKc">
+        UPDATE IM_CWSZ Set ZYH =#{zyh} Where ZYH Is Null And JGID =#{jgid} and BRCH =#{newCwhm} AND KSDM = #{ksdm}
+    </update>
+    <!--转到空床JCKS = null-->
+    <update id="updateKcJcks">
+        UPDATE IM_HZRY SET BRCH =#{brch},BRBQ =#{bqdm},JCKS=NULL Where ZYH =#{zyh}
+    </update>
+    <!--床位对调(老)-->
+    <update id="updateCwddOld">
+        UPDATE IM_CWSZ Set ZYH =#{zyh} Where BRCH =#{oldCwhm} And ZYH =#{zyhold} And JGID =#{jgid}
+    </update>
+    <!--转到空床(老)-->
+    <update id="updateKcOld">
+        UPDATE IM_HZRY SET BRCH=#{brch},BRKS=#{brks},BRBQ=#{brbq},JCKS=NULL Where ZYH=#{zyh}
+    </update>
+    <!--转到空床-->
+    <update id="updateZckc">
+        UPDATE IM_CWSZ Set ZYH = Null Where BRCH =#{oldCwhm} And ZYH =#{zyh} And JGID =#{jgid}
+    </update>
+    <!--修改床位分配信息-->
+    <update id="updateCwfp">
+        UPDATE IM_CWSZ Set ZYH=#{zyh} Where (ZYH IS Null or ZYH =-1) AND BRCH=#{brch} and JGID=#{jgid} AND KSDM = #{ksdm}
+    </update>
+
+    <!-- 锁定床号 -->
+    <update id="updateLockedBedNo">
+        UPDATE IM_CWSZ Set ZYH = ZYH Where JGID = #{jgid} And BRCH = #{brch} AND KSDM = #{ksdm}
+    </update>
+
+    <!--据病人性别查询病人可分配的床位信息-->
+    <select id="findKcByBrksAndBrxbAndJgid" resultType="com.buit.cis.ims.model.ImCwsz">
+        SELECT <include refid="columns" />
+        FROM IM_CWSZ
+        Where ksdm=#{brks} and jgid=#{jgid} and zyh is null
+        <if test="brxb==1 or brxb==2">
+            and  (cwxb=#{brxb} or cwxb= 3)
+        </if>
+    </select>
+
+    <!-- 查询符合条件空的床位号 -->
+    <select id="queryQualifiedCwhm" resultType="com.buit.cis.ims.model.ImCwsz">
+        select a.BRCH as BRCH, a.ZYH as ZYH
+        from IM_CWSZ a
+        where a.KSDM = #{ksdm}
+        and a.CWKS = #{cwks}
+        and a.ZYH is null
+        AND a.JGID = #{jgid}
+        and (a.CWXB = (select BRXB from IM_HZRY where ZYH = #{zyh}) or a.CWXB = 3)
+    </select>
+    <!--床位管理-转床（分页列表）-->
+    <select id="queryZcPatientPageInfo" resultType="com.buit.cis.ims.response.ZcPatientPageInfoResp">
+        select cwsz.brch as brch,cwsz.fjhm as fjhm,cwsz.cwks as cwks,cwsz.ksdm as ksdm,cwsz.cwxb as cwxb,cwsz.cwfy as cwfy,brry.zyhm as zyhm,brry.brxm as brxm,brry.brxb as brxb,brry.brxz as brxz from IM_CWSZ cwsz
+        left outer join IM_HZRY brry on cwsz.zyh = brry.zyh where cwsz.jgid=#{jgid}
+        and cwsz.cwks=(select cwks from IM_CWSZ where brch=#{brch} and jgid=#{jgid} and ksdm=#{brbq}) and cwsz.brch &lt;&gt;#{brch}  and cwsz.ksdm=#{brbq}
+        <if test="cwxb!=3">
+            and (cwsz.cwxb=#{cwxb} or cwsz.cwxb=3)
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(brchSearch)">
+            and cwsz.brch like CONCAT(CONCAT('%',#{brchSearch}),'%')
+        </if>
+    </select>
+
+    <!--清空床位的住院号操作-->
+    <delete id="delZyh">
+        update IM_CWSZ set zyh = null where zyh = #{zyh}
+    </delete>
+
+    <!-- 查询可转床位 -->
+    <select id="queryTransferableBeds" resultType="com.buit.cis.ims.response.ZybrCwszResp">
+        SELECT cwsz.BRCH as BRCH,
+        cwsz.FJHM as FJHM,
+        cwsz.CWKS as CWKS,
+        cwsz.KSDM as KSDM,
+        cwsz.CWXB as CWXB,
+        cwsz.CWFY as CWFY,
+        brry.ZYH  as ZYH,
+        brry.ZYHM as ZYHM,
+        brry.BRXM as BRXM,
+        brry.BRXB as BRXB,
+        brry.BRXZ as BRXZ,
+        brry.BRKS as BRKS,
+        brry.BRBQ as BRBQ
+        FROM IM_CWSZ cwsz
+        left outer join IM_HZRY brry
+        on cwsz.ZYH = brry.ZYH
+        where cwsz.JGID = #{jgid}
+        and cwsz.CWKS = (select CWKS
+        from IM_CWSZ
+        where BRCH = #{brch}
+        and JGID = #{jgid}
+        and KSDM = #{ksdm})
+        and cwsz.BRCH &lt;&gt; #{brch}
+        and cwsz.KSDM = #{ksdm}
+        <if test="@sqlt.Ognl@isNotEmpty(brxb) and brxb == 1">
+            and cwsz.CWXB &lt;&gt; 2
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(brxb) and brxb == 2">
+            and cwsz.CWXB &lt;&gt; 1
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(brchSearch)">
+            and cwsz.BRCH like CONCAT(CONCAT('%',#{brchSearch}),'%')
+        </if>
+        ORDER BY cwsz.BRCH
+    </select>
+
+    <!-- 查询床位数量 -->
+    <select id="queryBedNum" resultType="long">
+        select count(*) as count from im_cwsz where zyh = #{zyh} and jcpb &lt; 2
+    </select>
+
+    <!-- 查询床位费用信息 -->
+<!--     <select id="queryBedFyInfo" resultType="java.util.HashMap"> -->
+<!--         select ifnull(sum(a.ICU),0) as ICUJE, ifnull(sum(a.CWFY),0) as CWFJE, -->
+<!--         ifnull(sum(a.VIPCWFY),0) as VIPCWFJE , ifnull(sum(a.SBBRCWFY),0) as SBBRCWFY -->
+<!--         from im_cwsz a where a.zyh = #{zyh} group by zyh -->
+<!--     </select> -->
+    
+    <select id="queryBedFyInfo" resultType="java.util.HashMap">
+        select ifnull((select fydj from fee_ylsfxmdj where a.icufyxh = fyxh and zfpb = 0) , 0 ) as ICUJE,
+			ifnull((select fydj from fee_ylsfxmdj where a.cwfyxh = fyxh and zfpb = 0) , 0 ) as CWFJE,
+			ifnull((select fydj from fee_ylsfxmdj where a.vipfyxh = fyxh and zfpb = 0) , 0 ) as VIPCWFJE,
+			ifnull((select fydj from fee_ylsfxmdj where a.sbfyxh = fyxh and zfpb = 0) , 0 ) as SBBRCWFY, 
+			a.icufyxh as ICUFYXH,
+			a.cwfyxh as CWFYXH,
+			a.vipfyxh as VIPFYXH,
+			a.sbfyxh as SBFYXH
+	 	from im_cwsz a where a.zyh = #{zyh}
+    </select>
+    
+    <!--分页查询床位信息-->
+    <select id="queryPage" resultType="com.buit.cis.ims.response.ImCwszResp">
+        select a.JGID ,
+        a.BRCH ,
+        a.FJHM ,
+        a.CWKS ,
+        a.KSDM ,
+        a.CWXB ,
+        a.CWFY ,
+        a.ICU ,
+        a.JCPB ,
+        a.ZYH ,
+        a.YEWYH ,
+        a.ZDYCW ,
+        a.JCRQ ,
+        a.SCBZ ,
+        a.VIPCWFY ,
+        a.CECWFY ,
+        a.SBBRCWFY ,
+        a.CWZH,
+        b.CWZHMC ,
+        a.CWFYXH ,
+        a.ICUFYXH ,
+        a.VIPFYXH ,
+        a.SBFYXH ,
+        a.CEFYXH ,
+        (select fymc from fee_ylsfxm where fyxh = a.CWFYXH and zfpb = 0) as cwfymc ,
+        (select fymc from fee_ylsfxm where fyxh = a.ICUFYXH and zfpb = 0) as icufymc ,
+        (select fymc from fee_ylsfxm where fyxh = a.VIPFYXH and zfpb = 0) as vipfymc ,
+        (select fymc from fee_ylsfxm where fyxh = a.SBFYXH and zfpb = 0) as sbfymc ,
+        (select fymc from fee_ylsfxm where fyxh = a.CEFYXH and zfpb = 0) as cefymc
+        from im_cwsz a
+        left join im_cwzh b on a.cwzh = b.cwzh
+        left join dic_kszd c on a.KSDM = c.ID
+        where a.jgid = #{jgid}
+        <if test="ywlx == 1 ">
+            and c.LGBQ = 0
+        </if>
+        <if test="ywlx == 2 ">
+            and c.LGBQ = 1
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(brch)">
+            and a.brch like concat(concat('%',#{brch}),'%')
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(ksdm)">
+            and a.ksdm = #{ksdm}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(cwzh)">
+            and a.cwzh = #{cwzh}
+        </if>
+    </select>
+    <!--待床分配床位-->
+    <update id="waitBed">
+        update IM_CWSZ
+        set zyh=#{zyh}
+        where jgid = #{jgid}
+          and brch = #{brch}
+          AND KSDM = #{ksdm}
+    </update>
+
+    <select id="queryReportBedList" resultType="com.buit.cis.ims.response.ReportBedListResp">
+        SELECT
+        cw.BRCH AS brch,
+        cw.FJHM AS fjhm,
+        c.OFFICENAME AS cwks,
+        (select OFFICENAME from dic_kszd where ID = cw.KSDM) AS ksdm,
+        cw.CWXB AS cwxb,
+        cw.CWFY AS cwfy,
+        br.ZYHM AS zyhm,
+        br.BRXM AS brxm,
+        br.BRXB AS brxb,
+        (select XZMC from pub_brxz where BRXZ = br.BRXZ) AS brxz,
+        (select OFFICENAME from dic_kszd where ID = br.BRKS) AS brks,
+        (select OFFICENAME from dic_kszd where ID = br.BRBQ) AS brbq,
+        br.RYRQ AS ryrq
+        FROM
+        IM_CWSZ cw
+        LEFT JOIN IM_HZRY br ON cw.ZYH = br.ZYH
+        LEFT JOIN dic_kszd c on cw.KSDM = c.ID
+        WHERE
+        cw.JGID = #{jgid}
+        <if test="ywlx == 1 ">
+            and c.LGBQ = 0
+        </if>
+        <if test="ywlx == 2 ">
+            and c.LGBQ = 1
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(brch)">
+            AND cw.BRCH like CONCAT(CONCAT('%',#{brch}),'%')
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(cwks)">
+            AND cw.CWKS = #{cwks}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(cwbq)">
+            AND cw.KSDM = #{cwbq}
+        </if>
+        <!--        <if test="@sqlt.Ognl@isNotEmpty(ywlx)">
+                    AND br.ywlx = #{ywlx}
+                </if>-->
+        <if test="@sqlt.Ognl@isNotEmpty(zyhm)">
+            AND br.ZYHM like CONCAT(CONCAT('%',#{zyhm}),'%')
+        </if>
+        ORDER BY
+        cw.BRCH
+    </select>
+    
+    <!--查询床位使用或未使用使用数量-->
+    <select id="queryUseOrNotCwCount" resultType="com.buit.cis.ims.response.ImCwszUseResp">
+        select a.ksdm, 
+        ifnull(b.ysy, 0) as ysy,
+        ifnull(c.wsy, 0) as wsy
+        from (select ksdm from im_cwsz where jgid = #{jgid} group by ksdm) a left join 
+		(select ksdm, count(1) as ysy from  im_cwsz where jgid = #{jgid}
+		and zyh is not null 
+		group by ksdm) b 
+		on a.ksdm = b.ksdm
+		left join (select ksdm, count(1) as wsy from  im_cwsz where jgid = #{jgid}
+		and zyh is null group by ksdm) c
+		on a.ksdm = c.ksdm 
+		where 1 = 1
+		<if test="@sqlt.Ognl@isNotEmpty(ksdm)">
+            and a.ksdm = #{ksdm}
+        </if>
+    </select>
+</mapper>
+

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院_床位设置 -->
+<mapper namespace="com.buit.cis.ims.dao.InvoiceReportDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        a.ZYH,
+        a.ZYHM,
+        a.BRXM,
+        a.BRXB,
+        a.BRXZ,
+        b.FPHM,
+        a.BRKS,
+        a.BRBQ,
+        a.RYRQ,
+        a.CYRQ,
+        b.KSRQ,
+        b.ZZRQ,
+        b.JSLX,
+        b.JSRQ,
+        b.CZGH,
+        b.ZFRQ,
+        b.ZFGH,
+        b.ZFPB,
+        a.XZQHDM
+    </sql>
+
+    <select id="list" resultType="com.buit.cis.ims.dto.InvoiceReportDto">
+        SELECT <include refid="columns" />
+        FROM
+        im_hzry a,
+        im_zyjs b
+        WHERE a.ZYH = b.ZYH and a.ywlx = #{ywlx} and b.zfpb = #{zfpb}
+        <if test="fphm != null">
+            and b.fphm = #{fphm}
+        </if>
+        <if test="zyhm != null">
+            and a.zyhm = #{zyhm}
+        </if>
+        <if test="brxm != null">
+            and a.brxm like CONCAT(CONCAT('%',#{brxm}),'%')
+        </if>
+        <if test="ksrq != null and zzrq != null">
+            <if test="zfpb == 0 ">
+                and b.JSRQ &gt;#{ksrq} and b.JSRQ &lt; #{zzrq}
+            </if>
+            <if test="zfpb == 1 ">
+                and b.ZFRQ &gt;#{ksrq} and b.ZFRQ &lt; #{zzrq}
+            </if>
+        </if>
+        ORDER BY a.CYRQ desc
+    </select>
+
+
+
+</mapper>
+

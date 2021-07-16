@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 包装明细 -->
+<mapper namespace="com.buit.cis.nurse.dao.CisKpbzmxDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        BZMXID as bzmxid,KFMX as kfmx,KFDH as kfdh,YZXH as yzxh,YPXH as ypxh,BZJL as bzjl,JLDW as jldw,BZSL as bzsl,SLDW as sldw,SJMC as sjmc,SJBH as sjbh
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO CIS_KPBZMX (
+            BZMXID ,
+            KFMX ,
+            KFDH ,
+            YZXH ,
+            YPXH ,
+            BZJL ,
+            JLDW ,
+            BZSL ,
+            SLDW ,
+            SJMC ,
+            SJBH 
+        ) VALUES (
+            #{bzmxid} ,
+            #{kfmx} ,
+            #{kfdh} ,
+            #{yzxh} ,
+            #{ypxh} ,
+            #{bzjl} ,
+            #{jldw} ,
+            #{bzsl} ,
+            #{sldw} ,
+            #{sjmc} ,
+            #{sjbh} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE CIS_KPBZMX SET
+            KFMX = #{kfmx} ,
+            KFDH = #{kfdh} ,
+            YZXH = #{yzxh} ,
+            YPXH = #{ypxh} ,
+            BZJL = #{bzjl} ,
+            JLDW = #{jldw} ,
+            BZSL = #{bzsl} ,
+            SLDW = #{sldw} ,
+            SJMC = #{sjmc} ,
+            SJBH = #{sjbh} 
+        WHERE 
+            BZMXID = #{bzmxid} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM CIS_KPBZMX WHERE
+        BZMXID = #{bzmxid} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM CIS_KPBZMX <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="CisKpbzmx">
+        SELECT <include refid="columns" />
+            FROM CIS_KPBZMX 
+            WHERE 
+        BZMXID = #{bzmxid} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bzmxid)"> -->
+<!--                     AND BZMXID = #{bzmxid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kfmx)"> -->
+<!--                     AND KFMX = #{kfmx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kfdh)"> -->
+<!--                     AND KFDH = #{kfdh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yzxh)"> -->
+<!--                     AND YZXH = #{yzxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ypxh)"> -->
+<!--                     AND YPXH = #{ypxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bzjl)"> -->
+<!--                     AND BZJL = #{bzjl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jldw)"> -->
+<!--                     AND JLDW = #{jldw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bzsl)"> -->
+<!--                     AND BZSL = #{bzsl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sldw)"> -->
+<!--                     AND SLDW = #{sldw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sjmc)"> -->
+<!--                     AND SJMC = #{sjmc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sjbh)"> -->
+<!--                     AND SJBH = #{sjbh} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM CIS_KPBZMX 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="CisKpbzmx">
+        SELECT <include refid="columns" />
+        FROM CIS_KPBZMX 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+</mapper>
+

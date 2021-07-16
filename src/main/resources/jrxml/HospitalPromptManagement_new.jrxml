@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HospitalPromptManagement_new" language="groovy" pageWidth="680" pageHeight="842" columnWidth="680" leftMargin="0" rightMargin="0" topMargin="10" bottomMargin="10" uuid="5b73d459-e91f-40a4-a514-0fb0f49b8bce">
+	<property name="ireport.zoom" value="1.6105100000000019"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1" uuid="b9e3eac1-ea4a-4481-a60d-26cd458e9f78"/>
+	<field name="JKJE" class="java.lang.String"/>
+	<field name="BRCH" class="java.lang.String"/>
+	<field name="BRXM" class="java.lang.String"/>
+	<field name="BJJE" class="java.lang.String"/>
+	<field name="Month" class="java.lang.String"/>
+	<field name="ZYHM" class="java.lang.String"/>
+	<field name="Year" class="java.lang.String"/>
+	<field name="Day" class="java.lang.String"/>
+	<field name="KSBQ" class="java.lang.String"/>
+	<field name="ZFJE" class="java.lang.String"/>
+	<field name="QFJE" class="java.lang.String"/>
+	<field name="BQKS" class="java.lang.String"/>
+	<field name="JGMC" class="java.lang.String"/>
+	<field name="BRXB" class="java.lang.String"/>
+	<field name="CSNY" class="java.lang.String"/>
+	<field name="ZJJE" class="java.math.BigDecimal"/>
+	<detail>
+		<band height="270">
+			<textField>
+				<reportElement x="505" y="95" width="111" height="35" forecolor="#1485FF" uuid="8a4981de-ab91-443b-b5da-6ae70bcaeabd"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JKJE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="184" y="130" width="142" height="35" uuid="7770a747-a9c5-4d25-b31e-d7d14157ee8f"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[元，请速来补交：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="468" y="70" width="193" height="24" uuid="53c34bd3-e99b-4ccb-9431-ed5afd154a92"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="华文宋体" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CSNY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="70" width="138" height="24" uuid="571c7c55-3542-4667-8056-aeedcb8a9fbb"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="华文宋体" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BRXM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="326" y="129" width="100" height="35" forecolor="#1485FF" uuid="29ae1482-89ab-4067-93fa-306981681e78"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BJJE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="165" width="651" height="35" uuid="e0e96e7c-6af0-41a4-a867-d067b0ba3dab"/>
+				<box>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[          谢谢！]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="560" y="42" width="30" height="20" uuid="613ae68e-0029-4273-b4ca-05246e7c0bee"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Month}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="373" y="95" width="132" height="35" uuid="b0c9a566-18e5-438c-99c5-fa6b29b05ef1"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[元，其中预交款：]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="300" y="70" width="100" height="24" uuid="4a83c769-cf76-4a21-8411-510272cf7e36"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="华文宋体" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BRXB}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="200" width="651" height="47" uuid="cc504a29-86ae-4a79-9ed7-c4b7ae4f0210"/>
+				<box>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[财务科               ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="486" y="42" width="49" height="20" uuid="54975e88-2dd2-4ece-9c99-53954c3ea3d4"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Year}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="616" y="94" width="45" height="35" uuid="c10b5a77-98ef-4761-b6af-205e62d06a0e"/>
+				<box>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  元，]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="611" y="42" width="31" height="20" uuid="a7a878fa-7bee-4632-b9d5-ffd02d687dfb"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Day}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="70" width="74" height="24" uuid="cec9258e-6dfe-43c1-a4e5-79ea142d4cbb"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[姓名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="222" y="70" width="78" height="24" uuid="d6d1090c-2852-42d2-9ea8-f38d41178b51"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[性别]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="536" y="42" width="25" height="20" uuid="052d737e-a9e7-429e-baf9-b068e9b162fa"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[年]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="95" width="264" height="35" uuid="9724fbac-084c-4652-adb5-f6886aed16de"/>
+				<box>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+					<paragraph firstLineIndent="45"/>
+				</textElement>
+				<text><![CDATA[您来我院治疗至今医药费已达:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="642" y="42" width="20" height="20" uuid="a1d8e523-a021-4f07-8a62-ca3380703e66"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[日]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="85" y="42" width="109" height="20" uuid="908c20cb-b04d-48c5-85be-a8eb049370ad"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{KSBQ}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="274" y="95" width="99" height="35" forecolor="#1485FF" uuid="ff9767c7-fdf9-4a12-8eef-eb4aae8b2b16"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ZJJE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="85" y="130" width="99" height="35" forecolor="#1485FF" uuid="ae180d96-ae9b-422a-a1e5-9519f45f405a"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QFJE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="591" y="42" width="20" height="20" uuid="2eadaffe-ea3f-4e00-830e-a45787a53554"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[月]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="401" y="70" width="67" height="24" uuid="20e4b69a-cf33-48b6-bf30-8e2d46562987"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[出生日期]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="130" width="74" height="35" uuid="ab620942-878e-48b4-80fe-a904273c6315"/>
+				<box>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+					<paragraph firstLineIndent="15"/>
+				</textElement>
+				<text><![CDATA[尚欠：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="426" y="130" width="235" height="35" uuid="b9e4258f-2f7f-4770-b5b6-ca2b669486ff"/>
+				<box>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+					<paragraph firstLineIndent="15"/>
+				</textElement>
+				<text><![CDATA[元，逾期我院将做停药处理。]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="42" width="74" height="20" uuid="13d0b893-9087-4733-9853-4eada46c8ed8"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BQKS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="10" width="653" height="31" uuid="a1ecd1aa-68ab-4473-9aaa-a0d6c19f56cb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="华文宋体" size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{JGMC}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="269" width="626" height="1" uuid="1b005770-ee7e-46b6-8ea3-3c76fe46333e"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="194" y="42" width="42" height="20" uuid="37d0b94e-f4b1-45a3-87b3-1bf2ed691968"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[床号]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="239" y="42" width="68" height="20" uuid="8b9ac549-7eed-4ec5-912a-72b58eccbb3e"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BRCH}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="309" y="42" width="69" height="20" uuid="57b8c086-c286-4fb2-bcae-80aa0cdfad25"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="0.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[住院号码]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="378" y="42" width="105" height="20" uuid="67dcc0e1-adc1-4cf6-b58f-024b5dea10c8"/>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="华文宋体" size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ZYHM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

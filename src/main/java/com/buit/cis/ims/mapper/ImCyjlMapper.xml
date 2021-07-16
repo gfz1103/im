@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院_住院记录 -->
+<mapper namespace="com.buit.cis.ims.dao.ImCyjlDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,JGID as jgid,ZYH as zyh,CYSJ as cysj,CYFS as cyfs,CZLX as czlx,CZR as czr,CZRQ as czrq
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_CYJL (
+            JLXH ,
+            JGID ,
+            ZYH ,
+            CYSJ ,
+            CYFS ,
+            CZLX ,
+            CZR ,
+            CZRQ 
+        ) VALUES (
+            #{jlxh} ,
+            #{jgid} ,
+            #{zyh} ,
+            #{cysj} ,
+            #{cyfs} ,
+            #{czlx} ,
+            #{czr} ,
+            #{czrq} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE IM_CYJL SET
+            JGID = #{jgid} ,
+            ZYH = #{zyh} ,
+            CYSJ = #{cysj} ,
+            CYFS = #{cyfs} ,
+            CZLX = #{czlx} ,
+            CZR = #{czr} ,
+            CZRQ = #{czrq} 
+        WHERE 
+            JLXH = #{jlxh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM IM_CYJL WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM IM_CYJL <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="ImCyjl">
+        SELECT <include refid="columns" />
+            FROM IM_CYJL 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> -->
+<!--                     AND ZYH = #{zyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cysj)"> -->
+<!--                     AND CYSJ = #{cysj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cyfs)"> -->
+<!--                     AND CYFS = #{cyfs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czlx)"> -->
+<!--                     AND CZLX = #{czlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czr)"> -->
+<!--                     AND CZR = #{czr} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czrq)"> -->
+<!--                     AND CZRQ = #{czrq} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_CYJL 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="ImCyjl">
+        SELECT <include refid="columns" />
+        FROM IM_CYJL 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+</mapper>
+

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.dctwork.dao.NisTzxmDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        XMH as xmh,XMMC as xmmc,PYDM as pydm,ZTBZ as ztbz,XTBZ as xtbz,TZLX as tzlx,XMDW as xmdw,TWDXS as twdxs
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_TZXM (
+            XMH ,
+            XMMC ,
+            PYDM ,
+            ZTBZ ,
+            XTBZ ,
+            TZLX ,
+            XMDW ,
+            TWDXS 
+        ) VALUES (
+            #{xmh} ,
+            #{xmmc} ,
+            #{pydm} ,
+            #{ztbz} ,
+            #{xtbz} ,
+            #{tzlx} ,
+            #{xmdw} ,
+            #{twdxs} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE NIS_TZXM SET
+            XMMC = #{xmmc} ,
+            PYDM = #{pydm} ,
+            ZTBZ = #{ztbz} ,
+            XTBZ = #{xtbz} ,
+            TZLX = #{tzlx} ,
+            XMDW = #{xmdw} ,
+            TWDXS = #{twdxs} 
+        WHERE 
+            XMH = #{xmh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_TZXM WHERE
+        XMH = #{xmh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_TZXM <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisTzxm">
+        SELECT <include refid="columns" />
+            FROM NIS_TZXM 
+            WHERE 
+        XMH = #{xmh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmh)"> -->
+<!--                     AND XMH = #{xmh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmmc)"> -->
+<!--                     AND XMMC = #{xmmc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pydm)"> -->
+<!--                     AND PYDM = #{pydm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ztbz)"> -->
+<!--                     AND ZTBZ = #{ztbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xtbz)"> -->
+<!--                     AND XTBZ = #{xtbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tzlx)"> -->
+<!--                     AND TZLX = #{tzlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xmdw)"> -->
+<!--                     AND XMDW = #{xmdw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(twdxs)"> -->
+<!--                     AND TWDXS = #{twdxs} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_TZXM 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisTzxm">
+        SELECT <include refid="columns" />
+        FROM NIS_TZXM 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+</mapper>
+

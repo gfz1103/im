@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 压力性损伤预报、传报单(转归情况) -->
+<mapper namespace="com.buit.cis.nurse.dao.NisYlxsszgDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,CBDJLXH as cbdjlxh,WFS as wfs,FS as fs,JBZG as jbzg,YLXSSZG as ylxsszg,QM as qm,RQ as rq,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_YLXSSZG (
+            JLXH ,
+            CBDJLXH ,
+            WFS ,
+            FS ,
+            JBZG ,
+            YLXSSZG ,
+            QM ,
+            RQ ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{cbdjlxh} ,
+            #{wfs} ,
+            #{fs} ,
+            #{jbzg} ,
+            #{ylxsszg} ,
+            #{qm} ,
+            #{rq} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_YLXSSZG SET
+            CBDJLXH = #{cbdjlxh} ,
+            WFS = #{wfs} ,
+            FS = #{fs} ,
+            JBZG = #{jbzg} ,
+            YLXSSZG = #{ylxsszg} ,
+            QM = #{qm} ,
+            RQ = #{rq} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}         
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_YLXSSZG WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_YLXSSZG <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisYlxsszg">
+        SELECT <include refid="columns" />
+            FROM NIS_YLXSSZG 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(cbdjlxh)"> 
+                     AND CBDJLXH = #{cbdjlxh} 
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(wfs)"> -->
+<!--                     AND WFS = #{wfs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fs)"> -->
+<!--                     AND FS = #{fs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jbzg)"> -->
+<!--                     AND JBZG = #{jbzg} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ylxsszg)"> -->
+<!--                     AND YLXSSZG = #{ylxsszg} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qm)"> -->
+<!--                     AND QM = #{qm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rq)"> -->
+<!--                     AND RQ = #{rq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_YLXSSZG 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisYlxsszg">
+        SELECT <include refid="columns" />
+        FROM NIS_YLXSSZG 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <select id="queryZgByCbdjlxh" resultType="com.buit.cis.nurse.response.NisYlxsszgResp">
+        SELECT JLXH as jlxh,CBDJLXH as cbdjlxh,WFS as wfs,FS as fs,JBZG as jbzg,YLXSSZG as ylxsszg,QM as qm,date_format(RQ, '%Y-%m-%d %H:%i') as rq,JGID as jgid
+        FROM NIS_YLXSSZG 
+		WHERE CBDJLXH = #{cbdjlxh} 
+    </select>
+    
+    <select id="queryPrintZgByCbdjlxh" resultType="java.util.HashMap">
+        select date_format(rq, '%Y-%m-%d %H:%i') as rq,
+        case fs when '未发生' then '√' else '' end as wfs,
+        case fs when '非难免' then '√' else '' end as fs1,
+        case fs when '难免' then '√' else '' end as fs2,
+        case jbzg when '在院' then '√' else '' end as jbzg1,
+        case jbzg when '转科' then '√' else '' end as jbzg2,
+        case jbzg when '出院' then '√' else '' end as jbzg3,
+        case jbzg when '死亡' then '√' else '' end as jbzg4,
+        case ylxsszg when '无变化' then '√' else '' end as ylxsszg1,
+        case ylxsszg when '扩大' then '√' else '' end as ylxsszg2,
+        case ylxsszg when '好转' then '√' else '' end as ylxsszg3,
+        case ylxsszg when '愈合' then '√' else '' end as ylxsszg4,
+        qm
+        from nis_ylxsszg 
+		where cbdjlxh = #{cbdjlxh} 
+    </select>
+</mapper>
+

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 医嘱变动消息发送 -->
+<mapper namespace="com.buit.cis.dctwork.dao.CisYzmessDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,FSSJ as fssj,ZT as zt,JGID as jgid,MESSID as messid,FSRDM as fsrdm,CLRDM as clrdm
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO CIS_YZMESS (
+            JLXH ,
+            ZYH ,
+            FSSJ ,
+            ZT ,
+            JGID ,
+            MESSID ,
+            FSRDM ,
+            CLRDM 
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{fssj} ,
+            #{zt} ,
+            #{jgid} ,
+            #{messid} ,
+            #{fsrdm} ,
+            #{clrdm} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE CIS_YZMESS SET
+            ZYH = #{zyh} ,
+            FSSJ = #{fssj} ,
+            ZT = #{zt} ,
+            JGID = #{jgid} ,
+            MESSID = #{messid} ,
+            FSRDM = #{fsrdm} ,
+            CLRDM = #{clrdm} 
+        WHERE 
+            JLXH = #{jlxh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM CIS_YZMESS WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM CIS_YZMESS <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="CisYzmess">
+        SELECT <include refid="columns" />
+            FROM CIS_YZMESS 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> -->
+<!--                     AND ZYH = #{zyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fssj)"> -->
+<!--                     AND FSSJ = #{fssj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zt)"> -->
+<!--                     AND ZT = #{zt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(messid)"> -->
+<!--                     AND MESSID = #{messid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fsrdm)"> -->
+<!--                     AND FSRDM = #{fsrdm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(clrdm)"> -->
+<!--                     AND CLRDM = #{clrdm} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM CIS_YZMESS 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="CisYzmess">
+        SELECT <include refid="columns" />
+        FROM CIS_YZMESS 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+
+	<!-- 更新消息状态 -->
+    <update id="updateZtByJlxh" >
+        update cis_yzmess set zt = #{newzt}, clrdm = #{clrdm} where jlxh = #{jlxh} 
+        and zt = #{oldzt}    
+    </update>
+    
+    <!-- 查询是否存在最新发送时间已完成的消息 -->
+    <select id="queryLatestTime" resultType="CisYzmess">
+        select <include refid="columns" /> 
+        from cis_yzmess where  fssj = (
+			select max(fssj) from cis_yzmess where zyh = #{zyh}
+		) and  zyh = #{zyh} 
+    </select>
+    
+</mapper>
+

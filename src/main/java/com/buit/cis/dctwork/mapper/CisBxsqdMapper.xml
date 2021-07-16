@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.dctwork.dao.CisBxsqdDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        YLJGD as yljgd,SQDH as sqdh,BRLX as brlx,MZH as mzh,ZYH as zyh,BQDM as bqdm,KSDM as ksdm,LCXX as lcxx,SXYY as sxyy,SXXZ as sxxz,SQABOXX as sqaboxx,SQRHXX as sqrhxx,SXSBS as sxsbs,YCS as ycs,YZS as yzs,QT as qt,YDSXZL as ydsxzl,SXQJC as sxqjc,SXZSD as sxzsd,HCT as hct,ALT as alt,HBSAG as hbsag,HCV as hcv,HIV as hiv,MDKT as mdkt,XHDB as xhdb,XXB as xxb,BXB as bxb,YDSXRQ as ydsxrq,SXTYS as sxtys,YXZ as yxz,ZZYS as zzys,SJYS as sjys,KZR as kzr,YYWK as yywk,SXRQSJ as sxrqsj,ZYSX as zysx,SQSJ as sqsj,SQRDM as sqrdm,ZT as zt,FXSJ as fxsj,FXRDM as fxrdm,ZFSJ as zfsj,ZFRDM as zfrdm
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO CIS_BXSQD (
+            YLJGD ,
+            SQDH ,
+            BRLX ,
+            MZH ,
+            ZYH ,
+            BQDM ,
+            KSDM ,
+            LCXX ,
+            SXYY ,
+            SXXZ ,
+            SQABOXX ,
+            SQRHXX ,
+            SXSBS ,
+            YCS ,
+            YZS ,
+            QT ,
+            YDSXZL ,
+            SXQJC ,
+            SXZSD ,
+            HCT ,
+            ALT ,
+            HBSAG ,
+            HCV ,
+            HIV ,
+            MDKT ,
+            XHDB ,
+            XXB ,
+            BXB ,
+            YDSXRQ ,
+            SXTYS ,
+            YXZ ,
+            ZZYS ,
+            SJYS ,
+            KZR ,
+            YYWK ,
+            SXRQSJ ,
+            ZYSX ,
+            SQSJ ,
+            SQRDM ,
+            ZT ,
+            FXSJ ,
+            FXRDM ,
+            ZFSJ ,
+            ZFRDM 
+        ) VALUES (
+            #{yljgd} ,
+            #{sqdh} ,
+            #{brlx} ,
+            #{mzh} ,
+            #{zyh} ,
+            #{bqdm} ,
+            #{ksdm} ,
+            #{lcxx} ,
+            #{sxyy} ,
+            #{sxxz} ,
+            #{sqaboxx} ,
+            #{sqrhxx} ,
+            #{sxsbs} ,
+            #{ycs} ,
+            #{yzs} ,
+            #{qt} ,
+            #{ydsxzl} ,
+            #{sxqjc} ,
+            #{sxzsd} ,
+            #{hct} ,
+            #{alt} ,
+            #{hbsag} ,
+            #{hcv} ,
+            #{hiv} ,
+            #{mdkt} ,
+            #{xhdb} ,
+            #{xxb} ,
+            #{bxb} ,
+            #{ydsxrq} ,
+            #{sxtys} ,
+            #{yxz} ,
+            #{zzys} ,
+            #{sjys} ,
+            #{kzr} ,
+            #{yywk} ,
+            #{sxrqsj} ,
+            #{zysx} ,
+            #{sqsj} ,
+            #{sqrdm} ,
+            #{zt} ,
+            #{fxsj} ,
+            #{fxrdm} ,
+            #{zfsj} ,
+            #{zfrdm} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE CIS_BXSQD SET
+            BRLX = #{brlx} ,
+            MZH = #{mzh} ,
+            ZYH = #{zyh} ,
+            BQDM = #{bqdm} ,
+            KSDM = #{ksdm} ,
+            LCXX = #{lcxx} ,
+            SXYY = #{sxyy} ,
+            SXXZ = #{sxxz} ,
+            SQABOXX = #{sqaboxx} ,
+            SQRHXX = #{sqrhxx} ,
+            SXSBS = #{sxsbs} ,
+            YCS = #{ycs} ,
+            YZS = #{yzs} ,
+            QT = #{qt} ,
+            YDSXZL = #{ydsxzl} ,
+            SXQJC = #{sxqjc} ,
+            SXZSD = #{sxzsd} ,
+            HCT = #{hct} ,
+            ALT = #{alt} ,
+            HBSAG = #{hbsag} ,
+            HCV = #{hcv} ,
+            HIV = #{hiv} ,
+            MDKT = #{mdkt} ,
+            XHDB = #{xhdb} ,
+            XXB = #{xxb} ,
+            BXB = #{bxb} ,
+            YDSXRQ = #{ydsxrq} ,
+            SXTYS = #{sxtys} ,
+            YXZ = #{yxz} ,
+            ZZYS = #{zzys} ,
+            SJYS = #{sjys} ,
+            KZR = #{kzr} ,
+            YYWK = #{yywk} ,
+            SXRQSJ = #{sxrqsj} ,
+            ZYSX = #{zysx} ,
+            SQSJ = #{sqsj} ,
+            SQRDM = #{sqrdm} ,
+            ZT = #{zt} ,
+            FXSJ = #{fxsj} ,
+            FXRDM = #{fxrdm} ,
+            ZFSJ = #{zfsj} ,
+            ZFRDM = #{zfrdm} 
+        WHERE 
+            YLJGD = #{yljgd}  AND 
+                        SQDH = #{sqdh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM CIS_BXSQD WHERE
+        YLJGD = #{yljgd}  AND 
+        SQDH = #{sqdh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM CIS_BXSQD <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="CisBxsqd">
+        SELECT <include refid="columns" />
+            FROM CIS_BXSQD 
+            WHERE 
+        YLJGD = #{yljgd}  AND 
+        SQDH = #{sqdh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+                <if test="@sqlt.Ognl@isNotEmpty(yljgd)"> 
+                     AND YLJGD = #{yljgd} 
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(sqdh)"> 
+                     AND SQDH = #{sqdh} 
+                </if> 
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brlx)"> -->
+<!--                     AND BRLX = #{brlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mzh)"> -->
+<!--                     AND MZH = #{mzh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+                     AND ZYH = #{zyh} 
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bqdm)"> -->
+<!--                     AND BQDM = #{bqdm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ksdm)"> -->
+<!--                     AND KSDM = #{ksdm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lcxx)"> -->
+<!--                     AND LCXX = #{lcxx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sxyy)"> -->
+<!--                     AND SXYY = #{sxyy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sxxz)"> -->
+<!--                     AND SXXZ = #{sxxz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqaboxx)"> -->
+<!--                     AND SQABOXX = #{sqaboxx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqrhxx)"> -->
+<!--                     AND SQRHXX = #{sqrhxx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sxsbs)"> -->
+<!--                     AND SXSBS = #{sxsbs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ycs)"> -->
+<!--                     AND YCS = #{ycs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yzs)"> -->
+<!--                     AND YZS = #{yzs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qt)"> -->
+<!--                     AND QT = #{qt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ydsxzl)"> -->
+<!--                     AND YDSXZL = #{ydsxzl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sxqjc)"> -->
+<!--                     AND SXQJC = #{sxqjc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sxzsd)"> -->
+<!--                     AND SXZSD = #{sxzsd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hct)"> -->
+<!--                     AND HCT = #{hct} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(alt)"> -->
+<!--                     AND ALT = #{alt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hbsag)"> -->
+<!--                     AND HBSAG = #{hbsag} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hcv)"> -->
+<!--                     AND HCV = #{hcv} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hiv)"> -->
+<!--                     AND HIV = #{hiv} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mdkt)"> -->
+<!--                     AND MDKT = #{mdkt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xhdb)"> -->
+<!--                     AND XHDB = #{xhdb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xxb)"> -->
+<!--                     AND XXB = #{xxb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bxb)"> -->
+<!--                     AND BXB = #{bxb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ydsxrq)"> -->
+<!--                     AND YDSXRQ = #{ydsxrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sxtys)"> -->
+<!--                     AND SXTYS = #{sxtys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yxz)"> -->
+<!--                     AND YXZ = #{yxz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zzys)"> -->
+<!--                     AND ZZYS = #{zzys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sjys)"> -->
+<!--                     AND SJYS = #{sjys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kzr)"> -->
+<!--                     AND KZR = #{kzr} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yywk)"> -->
+<!--                     AND YYWK = #{yywk} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sxrqsj)"> -->
+<!--                     AND SXRQSJ = #{sxrqsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zysx)"> -->
+<!--                     AND ZYSX = #{zysx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqsj)"> -->
+<!--                     AND SQSJ = #{sqsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqrdm)"> -->
+<!--                     AND SQRDM = #{sqrdm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zt)"> -->
+<!--                     AND ZT = #{zt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fxsj)"> -->
+<!--                     AND FXSJ = #{fxsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fxrdm)"> -->
+<!--                     AND FXRDM = #{fxrdm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfsj)"> -->
+<!--                     AND ZFSJ = #{zfsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfrdm)"> -->
+<!--                     AND ZFRDM = #{zfrdm} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM CIS_BXSQD 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="CisBxsqd">
+        SELECT <include refid="columns" />
+        FROM CIS_BXSQD 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 删除备血申请单 -->
+    <delete id="deletePrepareBloodBySqidList">
+       delete from cis_bxsqd where sqdh in
+	   <foreach collection="sqidList" item="z" open="(" close=")" separator=",">
+			#{z}
+	   </foreach>
+    </delete>
+    
+    <!-- 查询备血申请单 -->
+    <select id="queryZyBloodList" resultType="com.buit.cis.dctwork.response.CisBxsqdResp">
+        select a.KSDM as KSDM,
+		       c.BRCH as BRCH,
+		       c.BRXM as BRXM,
+		       c.ZYHM as ZYHM,
+		       a.SQSJ as SQSJ,
+		       a.SQRDM as SQRDM,
+		       a.SQDH as SQDH,
+		       a.ZT as ZT,
+		       a.ZYH as ZYH,
+		       b.SXPZMC as SXPZMC,
+		       d.ZFBZ as ZFBZ
+		  from CIS_BXSQD a, CIS_BXXYPZ b, IM_HZRY c, CIS_HZYZ d
+		 where a.zyh = c.zyh
+		   and a.sqdh = b.sqdh
+		   and a.sqdh = d.sqid
+		   and d.yzlx = 2
+		   and a.yljgd = #{yljgd}
+		    <if test="@sqlt.Ognl@isNotEmpty(beginDate)">
+            	and date_format(a.SQSJ,'%Y-%m-%d') &gt;= #{beginDate}
+        	</if>
+        	<if test="@sqlt.Ognl@isNotEmpty(endDate)">
+            	and date_format(a.SQSJ,'%Y-%m-%d') &lt;= #{endDate}
+        	</if>
+        	<if test="@sqlt.Ognl@isNotEmpty(ksdm)">
+            	and a.KSDM = #{ksdm}
+        	</if>
+        	<if test="@sqlt.Ognl@isNotEmpty(brbq)">
+            	and b.BRBQ = #{brbq}
+        	</if>
+        	<if test="@sqlt.Ognl@isNotEmpty(zyh)">
+            	and a.ZYH = #{zyh}
+        	</if>
+        	<if test="@sqlt.Ognl@isNotEmpty(stop)">
+            	and d.ZFBZ = #{stop}
+        	</if>
+    </select>
+    
+    <!-- 查询首页备血申请单 -->
+    <select id="queryBloodHomePage" resultType="com.buit.cis.dctwork.response.CisBxsqdHomeResp">
+        select a.sqdh, 
+        	b.brch, 
+        	b.brxm, 
+        	a.ksdm, 
+        	a.lcxx, 
+        	a.sxyy, 
+        	a.sqrdm, 
+        	a.sqsj,
+        	a.zt 
+        from cis_bxsqd a, im_hzry b
+		where a.zyh = b.zyh
+		and a.brlx = 2
+		and a.yljgd = #{yljgd}
+		and a.zt &lt;&gt; 2
+		<if test="@sqlt.Ognl@isNotEmpty(beginDate)">
+           	and date_format(a.sqsj,'%Y-%m-%d') &gt;= #{beginDate}
+       	</if>
+       	<if test="@sqlt.Ognl@isNotEmpty(endDate)">
+           	and date_format(a.sqsj,'%Y-%m-%d') &lt;= #{endDate}
+       	</if>
+       	<if test="@sqlt.Ognl@isNotEmpty(zt)">
+           	and a.zt = #{zt}
+       	</if>
+       	<if test="@sqlt.Ognl@isNotEmpty(zt) and zt == '1'.toString()">
+           	and date_format(a.fxsj,'%Y-%m-%d') = date_format(sysdate(),'%Y-%m-%d')
+       	</if>
+       	<if test="@sqlt.Ognl@isNotEmpty(bqdm)">
+  			and b.brbq = #{bqdm}
+   		</if>
+		<if test="@sqlt.Ognl@isNotEmpty(ksdm)">
+   			and b.brks = #{ksdm}
+   		</if>
+       	order by a.sqsj
+    </select>
+    
+    <!-- 查询备血申请单打印 -->
+    <select id="queryBloodPrint" resultType="java.util.HashMap">
+        select b.BRXM,
+			date_format(b.csny,'%Y年%m月%d日') as CSRQ,
+			b.RYNL,
+			a.BRLX,
+			b.ZYHM,
+			(select officename from dic_kszd where id = a.ksdm) as KSMC,
+			(select officename from dic_kszd where id = a.bqdm) as BQMC,
+			b.BRCH,
+			b.BRXB,
+			case a.sqaboxx 
+				when '1' then 'A'
+			 	when '2' then 'B'
+			 	when '3' then '0'
+			 	when '4' then 'AB'
+			 	when '5' then '不详'
+			 	when '6' then '未查'
+			 	else '' end as SQABOXX,
+		 	case a.sqrhxx 
+			 	when '1' then '阴性'
+			 	when '2' then '阳性'
+			 	when '3' then '不详'
+			 	when '4' then '未查'
+			 	else '' end as SQRHXX,
+			a.SXXZ,
+			a.SXYY,
+			b.MQZD,
+			a.SXSBS,
+			a.YCS,
+			a.YZS,
+			a.QT,
+			year(a.sqsj) as SQYEAR,
+			month(a.sqsj) as SQMONTH,
+			day(a.sqsj) as SQDAY,
+			year(a.ydsxrq) as YDYEAR,
+			month(a.ydsxrq) as YDMONTH,
+			day(a.ydsxrq) as YDDAY,
+			a.YDSXZL,
+			case when a.SXQJC = '1' then '是'
+			when a.SXQJC = '0' then '否'
+			else '' end as SXQJC,
+			a.XHDB,
+			a.HCT,
+			a.XXB,
+			a.ALT,
+			a.HBSAG,
+			a.HCV,
+			a.HIV,
+			a.MDKT,
+			a.SXTYS,
+			a.YXZ,
+			a.SXZSD,
+			(select personname from hr_personnel where personid = a.zzys) as ZZYS,
+			(select personname from hr_personnel where personid = a.sjys) as SJYS
+		from cis_bxsqd a, im_hzry b
+			where a.zyh = b.zyh 
+			and a.sqdh = #{sqdh}
+			and b.jgid = #{jgid}
+    </select>
+    
+    <!-- 查询领血血申请单打印 -->
+    <select id="queryClinicalLeadBloodPrint" resultType="com.buit.cis.dctwork.dto.ClinicalLeadBloodParamDto">
+        select b.BRXM,
+			date_format(b.csny,'%Y年%m月%d日') as CSRQ,
+			replace(b.rynl,'岁','') as RYNL,
+			b.zyhm,
+			(select officename from dic_kszd where id = a.ksdm) as KSMC,
+			(select officename from dic_kszd where id = a.bqdm) as BQMC,
+			b.BRCH,
+			b.BRXB,
+			case a.sqaboxx 
+				when '1' then 'A'
+			 	when '2' then 'B'
+			 	when '3' then '0'
+			 	when '4' then 'AB'
+			 	when '5' then '不详'
+			 	when '6' then '未查'
+			 	else '' end as SQABOXX,
+		 	case a.sqrhxx 
+			 	when '1' then '阴性'
+			 	when '2' then '阳性'
+			 	when '3' then '不详'
+			 	when '4' then '未查'
+			 	else '' end as SQRHXX,
+			(select personname from hr_personnel where personid = a.sqrdm) as SQYSMC,
+		 	year(a.lxsj) as QXYEAR,
+		 	month(a.lxsj) as QXMONTH,
+		 	day(a.lxsj) as QXDAY,
+		 	hour(a.lxsj) as QXHOUR,
+		 	minute(a.lxsj) as QXMIN,
+		 	(select personname from hr_personnel where personid = a.lxrdm) as QXYSMC
+		from cis_bxsqd a, im_hzry b
+			where a.zyh = b.zyh 
+			and a.sqdh = #{sqdh}
+			and b.jgid = #{jgid}
+    </select>
+    
+    <!-- 查询领血血申请单列表 -->
+    <select id="queryLeadBloodList" resultType="com.buit.cis.dctwork.response.CisBxsqdLeadBloodResp">
+        select a.sqdh, 
+        	c.brbq,
+	        c.brks, 
+	        c.brch, 
+	        c.zyhm, 
+	        c.brxm,
+			c.brxb,
+			c.csny,
+			a.sqsj,
+			a.sqrdm,
+			group_concat(b.sxpzmc) as sxpzmc,
+			a.lxsj,
+			a.lxrdm,
+			a.zt
+		from cis_bxsqd a, cis_bxxypz b, im_hzry c 
+		where a.sqdh = b.sqdh
+			and a.zyh = c.zyh
+			and a.yljgd = #{yljgd}
+			and a.zt &lt;&gt; '2'
+			<if test="@sqlt.Ognl@isNotEmpty(lyzt) and lyzt == 0">
+	           	and a.lxsj is null
+	       	</if>
+	       	<if test="@sqlt.Ognl@isNotEmpty(lyzt) and lyzt == 1">
+           		and a.lxsj is not null
+	       	</if>
+			<if test="@sqlt.Ognl@isNotEmpty(beginDate)">
+	           	and date_format(a.lxsj,'%Y-%m-%d') &gt;= #{beginDate}
+	       	</if>
+	       	<if test="@sqlt.Ognl@isNotEmpty(endDate)">
+	           	and date_format(a.lxsj,'%Y-%m-%d') &lt;= #{endDate}
+	       	</if>
+	       	<if test="@sqlt.Ognl@isNotEmpty(zyhm)">
+	           	and c.zyhm like concat('%', #{zyhm}, '%') 
+	       	</if>
+	       	<if test="@sqlt.Ognl@isNotEmpty(brxm)">
+	           	and c.brxm like concat('%', #{brxm}, '%') 
+	       	</if>
+		group by 
+			a.sqdh, 
+			c.brbq, 
+			c.brch, 
+			c.zyhm, 
+			c.brxm,
+			c.brxb,
+			c.csny,
+			a.sqsj,
+			a.sqrdm,
+			a.lxsj,
+			a.lxrdm,
+			a.zt
+    </select>
+    
+    <!-- 更新领用信息 -->
+    <update id="updateLeadInfo" >
+        update cis_bxsqd 
+        	set lxsj = #{lxsj}, 
+       		lxrdm = #{lxrdm}, 
+       		lxczrdm = #{lxczrdm}, 
+       		lxczsj = #{lxczsj}
+       	where sqdh = #{sqdh}              
+    </update>
+</mapper>
+

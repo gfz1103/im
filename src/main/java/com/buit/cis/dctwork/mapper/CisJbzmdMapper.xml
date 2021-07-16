@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 疾病证明单 -->
+<mapper namespace="com.buit.cis.dctwork.dao.CisJbzmdDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,BRLX as brlx,ZYH as zyh,MZHM as mzhm,JTDZ as jtdz,JY as jy,LXDH as lxdh,ZZYS as zzys,KJRQ as kjrq,LRZDM as lrzdm,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO CIS_JBZMD (
+            JLXH ,
+            BRLX ,
+            ZYH ,
+            MZHM ,
+            JTDZ ,
+            JY ,
+            LXDH ,
+            ZZYS ,
+            KJRQ ,
+            LRZDM ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{brlx} ,
+            #{zyh} ,
+            #{mzhm} ,
+            #{jtdz} ,
+            #{jy} ,
+            #{lxdh} ,
+            #{zzys} ,
+            #{kjrq} ,
+            #{lrzdm} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE CIS_JBZMD SET
+            BRLX = #{brlx} ,
+            ZYH = #{zyh} ,
+            MZHM = #{mzhm} ,
+            JTDZ = #{jtdz} ,
+            JY = #{jy} ,
+            LXDH = #{lxdh} ,
+            ZZYS = #{zzys} ,
+            KJRQ = #{kjrq} ,
+            LRZDM = #{lrzdm} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM CIS_JBZMD WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM CIS_JBZMD <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="CisJbzmd">
+        SELECT <include refid="columns" />
+            FROM CIS_JBZMD 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brlx)"> -->
+<!--                     AND BRLX = #{brlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> -->
+<!--                     AND ZYH = #{zyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mzhm)"> -->
+<!--                     AND MZHM = #{mzhm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jtdz)"> -->
+<!--                     AND JTDZ = #{jtdz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jy)"> -->
+<!--                     AND JY = #{jy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lxdh)"> -->
+<!--                     AND LXDH = #{lxdh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zzys)"> -->
+<!--                     AND ZZYS = #{zzys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kjrq)"> -->
+<!--                     AND KJRQ = #{kjrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lrzdm)"> -->
+<!--                     AND LRZDM = #{lrzdm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM CIS_JBZMD 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="CisJbzmd">
+        SELECT <include refid="columns" />
+        FROM CIS_JBZMD 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 疾病证明单分页查询 -->
+    <select id="queryPageCisJbzmd" resultType="com.buit.cis.dctwork.response.CisJbzmdResp">
+       select a.jlxh,
+			a.zyh,
+			a.mzhm,
+			a.jtdz,
+			a.jy,
+			a.lxdh,
+			a.zzys,
+			a.kjrq,
+			b.brxm,
+			b.brxb,
+			b.sfzh,
+			b.ryrq,
+			b.jzkh,
+			group_concat(d.jbmc) as zdmc
+			from cis_jbzmd a left join im_ryzd c on a.zyh = c.zyh
+			left join dic_jbbm d on c.zdxh = d.jbxh
+			, im_hzry b 
+			where a.zyh = b.zyh  
+			<if test="@sqlt.Ognl@isNotEmpty(zyh)"> 
+				 and a.zyh = #{zyh}
+            </if> 
+            <if test="@sqlt.Ognl@isNotEmpty(mzhm)"> 
+				 and a.mzhm = #{mzhm}
+            </if> 
+			<if test="@sqlt.Ognl@isNotEmpty(jgid)"> 
+				 and a.jgid = #{jgid}
+            </if> 
+			<if test="@sqlt.Ognl@isNotEmpty(ksrq)"> 
+				 and date_format(a.kjrq, '%Y-%m-%d') &gt;= #{ksrq}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(jsrq)"> 
+				 and date_format(a.kjrq, '%Y-%m-%d') &lt;= #{jsrq}
+            </if>
+			group by 
+			a.jlxh,
+			a.zyh,
+			a.mzhm,
+			a.jtdz,
+			a.jy,
+			a.lxdh,
+			a.zzys,
+			a.kjrq,
+			b.brxm,
+			b.brxb,
+			b.sfzh,
+			b.ryrq,
+			b.jzkh 
+    </select>
+    
+    <!-- 查询疾病证明单打印 -->
+    <select id="queryCisJbzmdPrint" resultType="java.util.HashMap">
+       select b.zyh,
+       		b.brxm,
+			date_format(b.csny, '%Y-%m-%d') as csrq,
+			(select officename from dic_kszd where id = b.brks) as ksmc,
+			(select officename from dic_kszd where id = b.brbq) as bqmc,
+			b.brch,
+			b.zyhm,
+			a.jtdz,
+			a.jy,
+			a.lxdh,
+			(select personname from hr_personnel where personid = a.zzys) as zzysmc,
+			a.kjrq
+			from cis_jbzmd a, im_hzry b 
+			where a.zyh = b.zyh  
+			and a.jlxh = #{jlxh}
+    </select>
+    
+</mapper>
+

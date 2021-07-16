@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ctkprint" language="groovy" pageWidth="900" pageHeight="900" columnWidth="900" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="fae7dbfb-aff1-46c3-89a6-f33c6b75fd2a">
+	<property name="ireport.zoom" value="0.9090909090909095"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="myBaseStyleName" isBlankWhenNull="true" fontName="宋体"/>
+	<parameter name="BRCH" class="java.lang.String"/>
+	<parameter name="ZYHM" class="java.lang.String"/>
+	<parameter name="BRXM" class="java.lang.String"/>
+	<parameter name="AGE" class="java.lang.String"/>
+	<parameter name="BRXB" class="java.lang.String"/>
+	<parameter name="RYRQ" class="java.lang.String"/>
+	<parameter name="KSMC" class="java.lang.String"/>
+	<parameter name="CSRQ" class="java.lang.String"/>
+	<parameter name="TM" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select * from GY_PSJL]]>
+	</queryString>
+	<field name="BLFY" class="java.lang.String"/>
+	<title>
+		<band height="202" splitType="Stretch">
+			<staticText>
+				<reportElement style="myBaseStyleName" x="0" y="150" width="60" height="20" uuid="334e3ba4-8846-4600-8376-291a81ebc270"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="宋体" size="14"/>
+				</textElement>
+				<text><![CDATA[住院号]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="myBaseStyleName" x="0" y="30" width="60" height="20" uuid="03cfccbb-6e76-456a-ab79-e4cbeeceee5a"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="宋体" size="14"/>
+				</textElement>
+				<text><![CDATA[姓  名]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="myBaseStyleName" x="0" y="120" width="60" height="20" uuid="6854a167-4fa0-4fc4-9515-ff048d9c67a4"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="宋体" size="14"/>
+				</textElement>
+				<text><![CDATA[年  龄]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="myBaseStyleName" x="0" y="60" width="60" height="20" uuid="5c440a48-c4e9-4e47-8083-25e6b01801a6"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="宋体" size="14"/>
+				</textElement>
+				<text><![CDATA[性  别]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="myBaseStyleName" x="0" y="90" width="60" height="20" uuid="b9a46b9e-bce8-4e60-87c8-772e439189ce"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="宋体" size="14"/>
+				</textElement>
+				<text><![CDATA[出生日期]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="myBaseStyleName" x="188" y="0" width="68" height="20" uuid="be69697d-2165-48d1-8b3f-42b4935108ee"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="宋体" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BRCH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="myBaseStyleName" x="60" y="150" width="117" height="20" uuid="55193c39-032c-4ee1-9935-fff9dc67811c"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="宋体" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ZYHM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="myBaseStyleName" x="60" y="30" width="117" height="20" uuid="aa552c2a-dd74-4b39-92df-b222114f3a69"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="宋体" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BRXM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="myBaseStyleName" x="60" y="120" width="117" height="20" uuid="3ae73d19-68ba-4fbf-ad21-556f6313b988"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="宋体" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{AGE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="myBaseStyleName" x="60" y="60" width="117" height="20" uuid="e969f7e5-f866-40d1-8991-82bdf0b14bd0"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="宋体" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BRXB}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="myBaseStyleName" x="60" y="180" width="122" height="20" uuid="06d43830-a6ae-40fc-826d-7e411c670561"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="宋体" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{RYRQ}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="myBaseStyleName" x="0" y="0" width="60" height="20" uuid="7d71d664-b534-4f22-b68a-0f8483ee0e11"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="宋体" size="14"/>
+				</textElement>
+				<text><![CDATA[科  别]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="myBaseStyleName" x="0" y="180" width="60" height="20" uuid="5fdb8aea-6d10-4aa6-8f47-33da9f7c46f1"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="宋体" size="14"/>
+				</textElement>
+				<text><![CDATA[入院日期]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="myBaseStyleName" x="60" y="0" width="117" height="20" uuid="37cf1e5a-daea-40bf-bec7-cb30cec71fdc"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="宋体" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{KSMC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="myBaseStyleName" x="60" y="90" width="117" height="20" uuid="323b0029-a471-4823-ad33-e96aabfbdd44"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="宋体" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CSRQ}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 口服包装 -->
+<mapper namespace="com.buit.cis.nurse.dao.CisKpkfbzDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        KFMXID as kfmxid,KFDH as kfdh,TMBH as tmbh,YDMS as ydms,ZFBZ as zfbz,LYBS as lybs,KFZT as kfzt,ZXSJ as zxsj,ZXGH as zxgh,HDSJ as hdsj,HDGH as hdgh,DYCS as dycs,DYGH as dygh,DYSJ as dysj
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO CIS_KPKFBZ (
+            KFMXID ,
+            KFDH ,
+            TMBH ,
+            YDMS ,
+            ZFBZ ,
+            LYBS ,
+            KFZT ,
+            ZXSJ ,
+            ZXGH ,
+            HDSJ ,
+            HDGH ,
+            DYCS ,
+            DYGH ,
+            DYSJ 
+        ) VALUES (
+            #{kfmxid} ,
+            #{kfdh} ,
+            #{tmbh} ,
+            #{ydms} ,
+            #{zfbz} ,
+            #{lybs} ,
+            #{kfzt} ,
+            #{zxsj} ,
+            #{zxgh} ,
+            #{hdsj} ,
+            #{hdgh} ,
+            #{dycs} ,
+            #{dygh} ,
+            #{dysj} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE CIS_KPKFBZ SET
+            KFDH = #{kfdh} ,
+            TMBH = #{tmbh} ,
+            YDMS = #{ydms} ,
+            ZFBZ = #{zfbz} ,
+            LYBS = #{lybs} ,
+            KFZT = #{kfzt} ,
+            ZXSJ = #{zxsj} ,
+            ZXGH = #{zxgh} ,
+            HDSJ = #{hdsj} ,
+            HDGH = #{hdgh} ,
+            DYCS = #{dycs} ,
+            DYGH = #{dygh} ,
+            DYSJ = #{dysj} 
+        WHERE 
+            KFMXID = #{kfmxid} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM CIS_KPKFBZ WHERE
+        KFMXID = #{kfmxid} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM CIS_KPKFBZ <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="CisKpkfbz">
+        SELECT <include refid="columns" />
+            FROM CIS_KPKFBZ 
+            WHERE 
+        KFMXID = #{kfmxid} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kfmxid)"> -->
+<!--                     AND KFMXID = #{kfmxid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kfdh)"> -->
+<!--                     AND KFDH = #{kfdh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tmbh)"> -->
+<!--                     AND TMBH = #{tmbh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ydms)"> -->
+<!--                     AND YDMS = #{ydms} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfbz)"> -->
+<!--                     AND ZFBZ = #{zfbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lybs)"> -->
+<!--                     AND LYBS = #{lybs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kfzt)"> -->
+<!--                     AND KFZT = #{kfzt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zxsj)"> -->
+<!--                     AND ZXSJ = #{zxsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zxgh)"> -->
+<!--                     AND ZXGH = #{zxgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hdsj)"> -->
+<!--                     AND HDSJ = #{hdsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hdgh)"> -->
+<!--                     AND HDGH = #{hdgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dycs)"> -->
+<!--                     AND DYCS = #{dycs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dygh)"> -->
+<!--                     AND DYGH = #{dygh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dysj)"> -->
+<!--                     AND DYSJ = #{dysj} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM CIS_KPKFBZ 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="CisKpkfbz">
+        SELECT <include refid="columns" />
+        FROM CIS_KPKFBZ 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+</mapper>
+

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.nurse.dao.YjZy01Dao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        YJXH as yjxh,JGID as jgid,TJHM as tjhm,ZYH as zyh,ZYHM as zyhm,BRXM as brxm,KDRQ as kdrq,KSDM as ksdm,YSDM as ysdm,ZXRQ as zxrq,ZXKS as zxks,ZXYS as zxys,ZXPB as zxpb,HJGH as hjgh,BBBM as bbbm,ZYSX as zysx,ZFPB as zfpb,HYMX as hymx,YJPH as yjph,SQDH as sqdh,BWID as bwid,JBID as jbid,DJZT as djzt,SQWH as sqwh,FYBQ as fybq,TJSJ as tjsj
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO YJ_ZY01 (
+            YJXH ,
+            JGID ,
+            TJHM ,
+            ZYH ,
+            ZYHM ,
+            BRXM ,
+            KDRQ ,
+            KSDM ,
+            YSDM ,
+            ZXRQ ,
+            ZXKS ,
+            ZXYS ,
+            ZXPB ,
+            HJGH ,
+            BBBM ,
+            ZYSX ,
+            ZFPB ,
+            HYMX ,
+            YJPH ,
+            SQDH ,
+            BWID ,
+            JBID ,
+            DJZT ,
+            SQWH ,
+            FYBQ ,
+            TJSJ 
+        ) VALUES (
+            #{yjxh} ,
+            #{jgid} ,
+            #{tjhm} ,
+            #{zyh} ,
+            #{zyhm} ,
+            #{brxm} ,
+            #{kdrq} ,
+            #{ksdm} ,
+            #{ysdm} ,
+            #{zxrq} ,
+            #{zxks} ,
+            #{zxys} ,
+            #{zxpb} ,
+            #{hjgh} ,
+            #{bbbm} ,
+            #{zysx} ,
+            #{zfpb} ,
+            #{hymx} ,
+            #{yjph} ,
+            #{sqdh} ,
+            #{bwid} ,
+            #{jbid} ,
+            #{djzt} ,
+            #{sqwh} ,
+            #{fybq} ,
+            #{tjsj} 
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE YJ_ZY01 SET
+            JGID = #{jgid} ,
+            TJHM = #{tjhm} ,
+            ZYH = #{zyh} ,
+            ZYHM = #{zyhm} ,
+            BRXM = #{brxm} ,
+            KDRQ = #{kdrq} ,
+            KSDM = #{ksdm} ,
+            YSDM = #{ysdm} ,
+            ZXRQ = #{zxrq} ,
+            ZXKS = #{zxks} ,
+            ZXYS = #{zxys} ,
+            ZXPB = #{zxpb} ,
+            HJGH = #{hjgh} ,
+            BBBM = #{bbbm} ,
+            ZYSX = #{zysx} ,
+            ZFPB = #{zfpb} ,
+            HYMX = #{hymx} ,
+            YJPH = #{yjph} ,
+            SQDH = #{sqdh} ,
+            BWID = #{bwid} ,
+            JBID = #{jbid} ,
+            DJZT = #{djzt} ,
+            SQWH = #{sqwh} ,
+            FYBQ = #{fybq} ,
+            TJSJ = #{tjsj} 
+        WHERE 
+            YJXH = #{yjxh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM YJ_ZY01 WHERE
+        YJXH = #{yjxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM YJ_ZY01 <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="YjZy01">
+        SELECT <include refid="columns" />
+            FROM YJ_ZY01 
+            WHERE 
+        YJXH = #{yjxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yjxh)"> -->
+<!--                     AND YJXH = #{yjxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tjhm)"> -->
+<!--                     AND TJHM = #{tjhm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> -->
+<!--                     AND ZYH = #{zyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyhm)"> -->
+<!--                     AND ZYHM = #{zyhm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brxm)"> -->
+<!--                     AND BRXM = #{brxm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kdrq)"> -->
+<!--                     AND KDRQ = #{kdrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ksdm)"> -->
+<!--                     AND KSDM = #{ksdm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ysdm)"> -->
+<!--                     AND YSDM = #{ysdm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zxrq)"> -->
+<!--                     AND ZXRQ = #{zxrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zxks)"> -->
+<!--                     AND ZXKS = #{zxks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zxys)"> -->
+<!--                     AND ZXYS = #{zxys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zxpb)"> -->
+<!--                     AND ZXPB = #{zxpb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hjgh)"> -->
+<!--                     AND HJGH = #{hjgh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bbbm)"> -->
+<!--                     AND BBBM = #{bbbm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zysx)"> -->
+<!--                     AND ZYSX = #{zysx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfpb)"> -->
+<!--                     AND ZFPB = #{zfpb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hymx)"> -->
+<!--                     AND HYMX = #{hymx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yjph)"> -->
+<!--                     AND YJPH = #{yjph} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqdh)"> -->
+<!--                     AND SQDH = #{sqdh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bwid)"> -->
+<!--                     AND BWID = #{bwid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jbid)"> -->
+<!--                     AND JBID = #{jbid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(djzt)"> -->
+<!--                     AND DJZT = #{djzt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqwh)"> -->
+<!--                     AND SQWH = #{sqwh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(fybq)"> -->
+<!--                     AND FYBQ = #{fybq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tjsj)"> -->
+<!--                     AND TJSJ = #{tjsj} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM YJ_ZY01 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="YjZy01">
+        SELECT <include refid="columns" />
+        FROM YJ_ZY01 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 查询是否有项目医嘱未停或未执行YJ_ZY01 -->
+    <select id="queryYjNotExcuted" resultType="long">
+        SELECT count(1)
+        FROM YJ_ZY01 where
+        ZYH = #{zyh} and JGID = #{jgid} and (ZXPB = 0 OR ZXPB IS NULL)
+    </select>
+</mapper>
+

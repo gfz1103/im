@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 所有护理执行单 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisAllzxdDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,MBLX as mblx,ZH as zh,HLZD as hlzd,QT as qt,HLMB as hlmb,HLCS as hlcs,HLSJ as hlsj,XGPJSJ as xgpjsj,XGPJ as xgpj,HSQM as hsqm,YSQM as ysqm,RQ as rq,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_ALLZXD (
+            JLXH ,
+            ZYH ,
+            MBLX ,
+            ZH ,
+            HLZD ,
+            QT ,
+            HLMB ,
+            HLCS ,
+            HLSJ ,
+            XGPJSJ ,
+            XGPJ ,
+            HSQM ,
+            YSQM ,
+            RQ ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{mblx} ,
+            #{zh} ,
+            #{hlzd} ,
+            #{qt} ,
+            #{hlmb} ,
+            #{hlcs} ,
+            #{hlsj} ,
+            #{xgpjsj} ,
+            #{xgpj} ,
+            #{hsqm} ,
+            #{ysqm} ,
+            #{rq} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_ALLZXD SET
+            ZYH = #{zyh} ,
+            MBLX = #{mblx} ,
+            ZH = #{zh} ,
+            HLZD = #{hlzd} ,
+            QT = #{qt} ,
+            HLMB = #{hlmb} ,
+            HLCS = #{hlcs} ,
+            HLSJ = #{hlsj} ,
+            XGPJSJ = #{xgpjsj} ,
+            XGPJ = #{xgpj} ,
+            HSQM = #{hsqm} ,
+            YSQM = #{ysqm} ,
+            RQ = #{rq} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}          
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_ALLZXD WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_ALLZXD <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisAllzxd">
+        SELECT <include refid="columns" />
+            FROM NIS_ALLZXD 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                     AND ZYH = #{zyh}
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(mblx)">
+                     AND MBLX = #{mblx}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zh)"> -->
+<!--                     AND ZH = #{zh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlzd)"> -->
+<!--                     AND HLZD = #{hlzd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qt)"> -->
+<!--                     AND QT = #{qt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlmb)"> -->
+<!--                     AND HLMB = #{hlmb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlcs)"> -->
+<!--                     AND HLCS = #{hlcs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlsj)"> -->
+<!--                     AND HLSJ = #{hlsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xgpjsj)"> -->
+<!--                     AND XGPJSJ = #{xgpjsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xgpj)"> -->
+<!--                     AND XGPJ = #{xgpj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hsqm)"> -->
+<!--                     AND HSQM = #{hsqm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ysqm)"> -->
+<!--                     AND YSQM = #{ysqm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rq)"> -->
+<!--                     AND RQ = #{rq} -->
+<!--                </if> -->
+               <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                    AND JGID = #{jgid}
+               </if>
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_ALLZXD 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisAllzxd">
+        SELECT <include refid="columns" />
+        FROM NIS_ALLZXD 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 对应执行单查询树结构-->
+    <select id="queryZxdTree" resultType="com.buit.cis.nurse.response.NisHzmbResp">
+        SELECT CONCAT(a.RQ, '  ', b.MBMC ) as LABEL, a.MBLX as NAME
+			FROM ( SELECT DATE_FORMAT( RQ, '%m-%d %H:%i' ) AS RQ, 
+							ZYH as ZYH,
+							MBLX as MBLX,
+							JGID as JGID
+				FROM NIS_ALLZXD 
+				WHERE MBLX = #{mblx}
+				GROUP BY 
+					DATE_FORMAT(RQ, '%m-%d %H:%i'),
+					ZYH,
+					MBLX,
+					JGID 
+				) a, NIS_HZMB b WHERE
+				a.ZYH = b.ZYH 
+				AND a.MBLX = b.MBLX 
+				AND a.JGID = b.JGID
+				AND a.ZYH = #{zyh}
+				AND a.JGID = #{jgid}
+				order by a.RQ
+    </select>
+    
+    <!-- 根据日期查询模板类型对应执行单 -->
+    <select id="queryZxdByDate" resultType="NisAllzxd">
+       SELECT <include refid="columns" />
+        FROM NIS_ALLZXD 
+        WHERE ZYH = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and DATE_FORMAT(RQ, '%m-%d %H:%i') = #{queryDate}
+        </if> 
+        and MBLX = #{mblx}
+        and JGID = #{jgid}
+        order by RQ
+    </select>
+    
+    <!-- 根据组号删除 -->
+    <delete id="deleteByZh">
+        DELETE FROM NIS_ALLZXD WHERE
+        ZH = #{zh} 
+    </delete>
+</mapper>
+

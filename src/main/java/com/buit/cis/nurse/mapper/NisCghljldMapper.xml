@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 常规护理记录单 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisCghljldDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,MBLX as mblx,TW as tw,MB as mb,HX as hx,BP as bp,TTPF as ttpf,ZLNLPF as zlnlpf,DGPF as dgpf,YLXSS as ylxss,DDZCPF as ddzcpf,JCHL as jchl,HLXJ as hlxj,YY as yy,JSXL as jsxl,ZDYLONE as zdylone,ZDYLTWO as zdyltwo,ZDYLTHREE as zdylthree,ZDYLFOUR as zdylfour,ZDYLFIVE as zdylfive,ZDYLSIX as zdylsix,HLJL as hljl,HSQM as hsqm,RQ as rq,JGID as jgid,SMTZID as smtzid,ZLNLID as zlnlid,DGID as dgid,YLXSSID as ylxssid,DDZCID as ddzcid,YS as ys,SPO2 as spo2,PF as pf,DGLX as dglx,STW as stw,XYFS as xyfs,PT as pt,QTDG as qtdg,XT as xt
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_CGHLJLD (
+            JLXH ,
+            ZYH ,
+            MBLX ,
+            TW ,
+            MB ,
+            HX ,
+            BP ,
+            TTPF ,
+            ZLNLPF ,
+            DGPF ,
+            YLXSS ,
+            DDZCPF ,
+            JCHL ,
+            HLXJ ,
+            YY ,
+            JSXL ,
+            ZDYLONE ,
+            ZDYLTWO ,
+            ZDYLTHREE ,
+            ZDYLFOUR ,
+            ZDYLFIVE ,
+            ZDYLSIX ,
+            HLJL ,
+            HSQM ,
+            RQ ,
+            JGID ,
+            SMTZID ,
+            ZLNLID ,
+            DGID ,
+            YLXSSID ,
+            DDZCID ,
+			YS ,
+   			SPO2 ,
+    		PF ,
+   			DGLX ,
+   			STW ,
+    		XYFS ,
+    		PT ,
+    		QTDG ,
+    		XT
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{mblx} ,
+            #{tw} ,
+            #{mb} ,
+            #{hx} ,
+            #{bp} ,
+            #{ttpf} ,
+            #{zlnlpf} ,
+            #{dgpf} ,
+            #{ylxss} ,
+            #{ddzcpf} ,
+            #{jchl} ,
+            #{hlxj} ,
+            #{yy} ,
+            #{jsxl} ,
+            #{zdylone} ,
+            #{zdyltwo} ,
+            #{zdylthree} ,
+            #{zdylfour} ,
+            #{zdylfive} ,
+            #{zdylsix} ,
+            #{hljl} ,
+            #{hsqm} ,
+            #{rq} ,
+            #{jgid} ,
+            #{smtzid} ,
+            #{zlnlid} ,
+            #{dgid} ,
+            #{ylxssid} ,
+            #{ddzcid} ,
+            #{ys} ,
+   			#{spo2} ,
+    		#{pf} ,
+   			#{dglx} ,
+   			#{stw} ,
+    		#{xyfs} ,
+    		#{pt} ,
+    		#{qtdg} ,
+    		#{xt}
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_CGHLJLD SET
+            ZYH = #{zyh} ,
+            MBLX = #{mblx} ,
+            TW = #{tw} ,
+            MB = #{mb} ,
+            HX = #{hx} ,
+            BP = #{bp} ,
+            TTPF = #{ttpf} ,
+            ZLNLPF = #{zlnlpf} ,
+            DGPF = #{dgpf} ,
+            YLXSS = #{ylxss} ,
+            DDZCPF = #{ddzcpf} ,
+            JCHL = #{jchl} ,
+            HLXJ = #{hlxj} ,
+            YY = #{yy} ,
+            JSXL = #{jsxl} ,
+            ZDYLONE = #{zdylone} ,
+            ZDYLTWO = #{zdyltwo} ,
+            ZDYLTHREE = #{zdylthree} ,
+            ZDYLFOUR = #{zdylfour} ,
+            ZDYLFIVE = #{zdylfive} ,
+            ZDYLSIX = #{zdylsix} ,
+            HLJL = #{hljl} ,
+            HSQM = #{hsqm} ,
+            RQ = #{rq} ,
+            JGID = #{jgid} ,
+            SMTZID = #{smtzid} ,
+            ZLNLID = #{zlnlid} ,
+            DGID = #{dgid} ,
+            YLXSSID = #{ylxssid} ,
+            DDZCID = #{ddzcid} ,
+            YS = #{ys} ,
+   			SPO2 = #{spo2} ,
+    		PF = #{pf} ,
+   			DGLX = #{dglx} ,
+   			STW = #{stw} ,
+    		XYFS = #{xyfs},
+    		PT = #{pt} ,
+    		QTDG = #{qtdg} ,
+    		XT = #{xt}
+        WHERE 
+            JLXH = #{jlxh}            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_CGHLJLD WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_CGHLJLD <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisCghljld">
+        SELECT <include refid="columns" />
+            FROM NIS_CGHLJLD 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> -->
+<!--                     AND ZYH = #{zyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mblx)"> -->
+<!--                     AND MBLX = #{mblx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tw)"> -->
+<!--                     AND TW = #{tw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mb)"> -->
+<!--                     AND MB = #{mb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hx)"> -->
+<!--                     AND HX = #{hx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bp)"> -->
+<!--                     AND BP = #{bp} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ttpf)"> -->
+<!--                     AND TTPF = #{ttpf} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zlnlpf)"> -->
+<!--                     AND ZLNLPF = #{zlnlpf} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dgpf)"> -->
+<!--                     AND DGPF = #{dgpf} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ylxss)"> -->
+<!--                     AND YLXSS = #{ylxss} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ddzcpf)"> -->
+<!--                     AND DDZCPF = #{ddzcpf} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jchl)"> -->
+<!--                     AND JCHL = #{jchl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlxj)"> -->
+<!--                     AND HLXJ = #{hlxj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yy)"> -->
+<!--                     AND YY = #{yy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jsxl)"> -->
+<!--                     AND JSXL = #{jsxl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zdylone)"> -->
+<!--                     AND ZDYLONE = #{zdylone} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zdyltwo)"> -->
+<!--                     AND ZDYLTWO = #{zdyltwo} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zdylthree)"> -->
+<!--                     AND ZDYLTHREE = #{zdylthree} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zdylfour)"> -->
+<!--                     AND ZDYLFOUR = #{zdylfour} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zdylfive)"> -->
+<!--                     AND ZDYLFIVE = #{zdylfive} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zdylsix)"> -->
+<!--                     AND ZDYLSIX = #{zdylsix} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hljl)"> -->
+<!--                     AND HLJL = #{hljl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hsqm)"> -->
+<!--                     AND HSQM = #{hsqm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rq)"> -->
+<!--                     AND RQ = #{rq} -->
+<!--                </if> -->
+               <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                    AND JGID = #{jgid}
+               </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(smtzid)"> -->
+<!--                     AND SMTZID = #{smtzid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zlnlid)"> -->
+<!--                     AND ZLNLID = #{zlnlid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dgid)"> -->
+<!--                     AND DGID = #{dgid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ylxssid)"> -->
+<!--                     AND YLXSSID = #{ylxssid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ddzcid)"> -->
+<!--                     AND DDZCID = #{ddzcid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ys)"> -->
+<!--                     AND YS = #{ys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(spo2)"> -->
+<!--                     AND SPO2 = #{spo2} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pf)"> -->
+<!--                     AND PF = #{pf} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dglx)"> -->
+<!--                     DGLX = #{dglx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(stw)"> -->
+<!--                     STW = #{stw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xyfs)"> -->
+<!--                     XYFS = #{xyfs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pt)"> -->
+<!--                     PT = #{pt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qtdg)"> -->
+<!--                     QTDG = #{qtdg} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xt)"> -->
+<!--                     XT = #{xt} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_CGHLJLD 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisCghljld">
+        SELECT <include refid="columns" />
+        FROM NIS_CGHLJLD 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 查询常规护理记录单结构树 -->
+    <select id="queryCghljlTree" resultType="com.buit.cis.nurse.response.NisHzmbResp">
+        SELECT CONCAT(a.RQ, '  ', b.MBMC ) as LABEL, a.MBLX as NAME
+			FROM ( SELECT DATE_FORMAT( RQ, '%m-%d' ) AS RQ, 
+							ZYH as ZYH,
+							MBLX as MBLX,
+							JGID as JGID
+				FROM NIS_CGHLJLD
+				GROUP BY 
+					DATE_FORMAT(RQ, '%m-%d'),
+					ZYH,
+					MBLX,
+					JGID 
+				) a, NIS_HZMB b WHERE
+				a.ZYH = b.ZYH 
+				AND a.MBLX = b.MBLX 
+				AND a.JGID = b.JGID
+				AND a.ZYH = #{zyh}
+				AND a.JGID = #{jgid}
+				order by a.RQ
+    </select>
+    
+    <!-- 根据日期查询护理记录单 -->
+    <select id="queryCgHljlByDate" resultType="com.buit.cis.nurse.response.NisCghljldResp">
+       SELECT JLXH as jlxh,ZYH as zyh,MBLX as mblx,TW as tw,MB as mb,HX as hx,BP as bp,TTPF as ttpf,ZLNLPF as zlnlpf,DGPF as dgpf,YLXSS as ylxss,DDZCPF as ddzcpf,JCHL as jchl,HLXJ as hlxj,YY as yy,JSXL as jsxl,ZDYLONE as zdylone,ZDYLTWO as zdyltwo,ZDYLTHREE as zdylthree,ZDYLFOUR as zdylfour,ZDYLFIVE as zdylfive,ZDYLSIX as zdylsix,HLJL as hljl,HSQM as hsqm,date_format(RQ, '%Y-%m-%d %H:%i') as rq,JGID as jgid,SMTZID as smtzid,ZLNLID as zlnlid,DGID as dgid,YLXSSID as ylxssid,DDZCID as ddzcid,YS as ys,SPO2 as spo2,PF as pf,DGLX as dglx,STW as stw,XYFS as xyfs,PT as pt,QTDG as qtdg,XT as xt
+        FROM NIS_CGHLJLD 
+        WHERE ZYH = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and DATE_FORMAT(RQ, '%m-%d') = #{queryDate}
+        </if> 
+        and JGID = #{jgid}
+        order by RQ
+    </select>
+    
+    <!-- 根据主键查询护理记录单 -->
+    <select id="getCgHljlByJlxh" resultType="com.buit.cis.nurse.response.NisCghljldResp">
+       SELECT JLXH as jlxh,ZYH as zyh,MBLX as mblx,TW as tw,MB as mb,HX as hx,BP as bp,TTPF as ttpf,ZLNLPF as zlnlpf,DGPF as dgpf,YLXSS as ylxss,DDZCPF as ddzcpf,JCHL as jchl,HLXJ as hlxj,YY as yy,JSXL as jsxl,ZDYLONE as zdylone,ZDYLTWO as zdyltwo,ZDYLTHREE as zdylthree,ZDYLFOUR as zdylfour,ZDYLFIVE as zdylfive,ZDYLSIX as zdylsix,HLJL as hljl,HSQM as hsqm,date_format(RQ, '%Y-%m-%d %H:%i') as rq,JGID as jgid,SMTZID as smtzid,ZLNLID as zlnlid,DGID as dgid,YLXSSID as ylxssid,DDZCID as ddzcid,YS as ys,SPO2 as spo2,PF as pf,DGLX as dglx,STW as stw,XYFS as xyfs,PT as pt,QTDG as qtdg,XT as xt
+        FROM NIS_CGHLJLD 
+        WHERE JLXH = #{jlxh}
+    </select>
+</mapper>
+

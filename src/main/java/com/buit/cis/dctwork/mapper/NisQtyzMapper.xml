@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.dctwork.dao.NisQtyzDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        YZXH as yzxh,YZMC as yzmc,SRDM as srdm,YZLB as yzlb,TSBZ as tsbz,ZFBZ as zfbz,YZPX as yzpx,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_QTYZ (
+            YZXH ,
+            YZMC ,
+            SRDM ,
+            YZLB ,
+            TSBZ ,
+            ZFBZ ,
+            YZPX ,
+            JGID 
+        ) VALUES (
+            #{yzxh} ,
+            #{yzmc} ,
+            #{srdm} ,
+            #{yzlb} ,
+            #{tsbz} ,
+            #{zfbz} ,
+            #{yzpx} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_QTYZ SET
+            YZMC = #{yzmc} ,
+            SRDM = #{srdm} ,
+            YZLB = #{yzlb} ,
+            TSBZ = #{tsbz} ,
+            ZFBZ = #{zfbz} ,
+            YZPX = #{yzpx} ,
+            JGID = #{jgid} 
+        WHERE 
+            YZXH = #{yzxh}           
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_QTYZ WHERE
+        YZXH = #{yzxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_QTYZ <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisQtyz">
+        SELECT <include refid="columns" />
+            FROM NIS_QTYZ 
+            WHERE 
+        YZXH = #{yzxh} 
+    </select>
+    
+    <sql id="where">
+        <where>            
+               <if test="@sqlt.Ognl@isNotEmpty(srdm)"> 
+                     AND SRDM like concat(concat('%',#{srdm}),'%')
+               </if>             
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yzxh)"> -->
+<!--                     AND YZXH = #{yzxh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yzmc)"> -->
+<!--                     AND YZMC = #{yzmc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yzlb)"> -->
+<!--                     AND YZLB = #{yzlb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tsbz)"> -->
+<!--                     AND TSBZ = #{tsbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zfbz)"> -->
+<!--                     AND ZFBZ = #{zfbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yzpx)"> -->
+<!--                     AND YZPX = #{yzpx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_QTYZ 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisQtyz">
+        SELECT <include refid="columns" />
+        FROM NIS_QTYZ 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 其他医嘱输入发查询 -->
+    <select id="queryQtyzSrf" resultType="com.buit.cis.dctwork.response.NisQtyzSrfResp">
+         select a.YZXH as FYXH, a.YZMC as YZMC, 1 as TSYZ, a.YZMC as YPMC
+         from NIS_QTYZ a
+        where a.JGID = #{jgid}
+        	<if test="@sqlt.Ognl@isNotEmpty(srdm)"> 
+          	and a.SRDM like concat(concat('%',#{srdm}),'%')
+          </if>
+        order by length(a.YZMC), a.YZMC
+    </select>
+</mapper>
+

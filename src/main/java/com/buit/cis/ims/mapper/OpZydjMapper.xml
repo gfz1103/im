@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.ims.dao.OpZydjDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        DJID as djid,CARDNO as cardno,BRID as brid,LXRM as lxrm,LXDZ as lxdz,LXDH as lxdh,MZYS as mzys,MZKS as mzks,BRZD as brzd,RYMD as rymd,DJLX as djlx,NSZBQ as nszbq,TXBZ as txbz,KDRQ as kdrq,SQZT as sqzt,ZZD as zzd,ZZDICD10 as zzdicd10,DBJFBZ as dbjfbz
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO OP_ZYDJ (
+            DJID ,
+            CARDNO ,
+            BRID ,
+            LXRM ,
+            LXDZ ,
+            LXDH ,
+            MZYS ,
+            MZKS ,
+            BRZD ,
+            RYMD ,
+            DJLX ,
+            NSZBQ ,
+            TXBZ ,
+            KDRQ ,
+            SQZT ,
+            ZZD ,
+            ZZDICD10 ,
+            DBJFBZ ,
+            JZLSH
+        ) VALUES (
+            #{djid} ,
+            #{cardno} ,
+            #{brid} ,
+            #{lxrm} ,
+            #{lxdz} ,
+            #{lxdh} ,
+            #{mzys} ,
+            #{mzks} ,
+            #{brzd} ,
+            #{rymd} ,
+            #{djlx} ,
+            #{nszbq} ,
+            #{txbz} ,
+            #{kdrq} ,
+            #{sqzt} ,
+            #{zzd} ,
+            #{zzdicd10} ,
+            #{dbjfbz} ,
+            #{jzlsh}
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE OP_ZYDJ SET
+            CARDNO = #{cardno} ,
+            BRID = #{brid} ,
+            LXRM = #{lxrm} ,
+            LXDZ = #{lxdz} ,
+            LXDH = #{lxdh} ,
+            MZYS = #{mzys} ,
+            MZKS = #{mzks} ,
+            BRZD = #{brzd} ,
+            RYMD = #{rymd} ,
+            DJLX = #{djlx} ,
+            NSZBQ = #{nszbq} ,
+            TXBZ = #{txbz} ,
+            KDRQ = #{kdrq} ,
+            SQZT = #{sqzt} ,
+            ZZD = #{zzd} ,
+            ZZDICD10 = #{zzdicd10} ,
+            DBJFBZ = #{dbjfbz} 
+        WHERE 
+            DJID = #{djid} 
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM OP_ZYDJ WHERE
+        DJID = #{djid} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM OP_ZYDJ <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="OpZydj">
+        SELECT <include refid="columns" />
+            FROM OP_ZYDJ 
+            WHERE 
+        DJID = #{djid} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(djid)"> -->
+<!--                     AND DJID = #{djid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cardno)"> -->
+<!--                     AND CARDNO = #{cardno} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brid)"> -->
+<!--                     AND BRID = #{brid} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lxrm)"> -->
+<!--                     AND LXRM = #{lxrm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lxdz)"> -->
+<!--                     AND LXDZ = #{lxdz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lxdh)"> -->
+<!--                     AND LXDH = #{lxdh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mzys)"> -->
+<!--                     AND MZYS = #{mzys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mzks)"> -->
+<!--                     AND MZKS = #{mzks} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(brzd)"> -->
+<!--                     AND BRZD = #{brzd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rymd)"> -->
+<!--                     AND RYMD = #{rymd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(djlx)"> -->
+<!--                     AND DJLX = #{djlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(nszbq)"> -->
+<!--                     AND NSZBQ = #{nszbq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(txbz)"> -->
+<!--                     AND TXBZ = #{txbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(kdrq)"> -->
+<!--                     AND KDRQ = #{kdrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sqzt)"> -->
+<!--                     AND SQZT = #{sqzt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zzd)"> -->
+<!--                     AND ZZD = #{zzd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zzdicd10)"> -->
+<!--                     AND ZZDICD10 = #{zzdicd10} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dbjfbz)"> -->
+<!--                     AND DBJFBZ = #{dbjfbz} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM OP_ZYDJ 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="OpZydj">
+        SELECT <include refid="columns" />
+        FROM OP_ZYDJ 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    <!--门诊住院申请列表查询-->
+    <select id="findMzzydj" resultType="com.buit.op.response.OpZydjResp">
+        SELECT
+            zydj.DJID AS djid,
+            zydj.CARDNO AS cardno,
+            brda.BRXM as brxm,
+            zydj.BRID AS brid,
+            zydj.LXRM AS lxrm,
+            zydj.LXDZ AS lxdz,
+            zydj.LXDH AS lxdh,
+            suser.PERSONID AS mzys,
+            suser.PERSONNAME AS mzysStr,
+            zydj.MZKS AS mzks,
+            zydj.BRZD AS brzd,
+            zydj.RYMD AS rymd,
+            zydj.DJLX AS djlx,
+            zydj.NSZBQ AS nszbq,
+            zydj.TXBZ AS txbz,
+            zydj.KDRQ AS kdrq,
+            zydj.SQZT AS sqzt,
+            zydj.ZZD AS zzd,
+            zydj.ZZDICD10 AS zzdicd10,
+            zydj.DBJFBZ AS dbjfbz
+        FROM
+            OP_ZYDJ zydj
+           left join  MPI_BRDA brda on brda.BRID = zydj.BRID
+           left join hr_personnel  suser on zydj.MZYS = suser.PERSONID
+        WHERE
+
+             zydj.SQZT = 2
+            <if test="@sqlt.Ognl@isNotEmpty(cardno)">
+            AND CARDNO  like CONCAT('%',#{cardno},'%')
+            </if>
+
+    </select>
+    <select id="getHospitalizedRegisterList" resultType="com.buit.cis.ims.response.OpZydjPageResp">
+        SELECT
+            a.DJID AS DJID,
+            a.cardno AS CARDNO,
+            a.brid AS BRID,
+            b.BRXM AS BRXM,
+            b.BRXB AS BRXB,
+            FLOOR(DATEDIFF(CURDATE(), b.csny)/365.2422)  AS BRNL,
+            b.SFZH AS SFZH,
+            a.lxrm AS LXRM,
+            a.lxdz AS LXDZ,
+            a.lxdh AS LXDH,
+            a.mzys AS MZYS,
+            a.mzks AS MZKS,
+            a.brzd AS BRZD,
+            a.rymd AS RYMD,
+            a.djlx AS DJLX,
+            a.nszbq AS NSZBQ,
+            a.TXBZ AS TXBZ,
+            a.sqzt AS SQZT,
+            a.kdrq AS KDRQ,
+	        a.DBJFBZ as DBJFBZ
+        FROM
+            OP_ZYDJ a,
+            MPI_BRDA b
+        WHERE
+            a.BRID = b.BRID
+            AND a.MZYS = #{mzys}
+            AND b.MZHM = #{mzhm}
+        ORDER BY
+            a.DJID
+    </select>
+    <select id="getPrintInfo" resultType="java.util.Map">
+        SELECT
+            a.DJID AS DJID,
+            b.BRXM AS BRXM,
+            b.BRXB AS BRXB,
+            b.csny AS BRNL,
+            b.SFZH AS SFZH,
+            a.BRZD AS BRZD,
+            a.cardno AS CARDNO,
+            a.brid AS BRID,
+            a.lxrm AS LXRM,
+            a.lxdz AS LXDZ,
+            a.lxdh AS LXDH,
+            a.mzys AS MZYS,
+            a.mzks AS MZKS,
+            a.brzd AS BRZD,
+            a.rymd AS RYMD,
+            a.djlx AS DJLX,
+            a.nszbq AS NSZBQ,(
+            CASE
+                    a.TXBZ
+                    WHEN 0 THEN
+                    '否'
+                    WHEN 1 THEN
+                    '是'
+                END
+                ) AS TXBZ,
+                ( CASE WHEN a.DBJFBZ = '1' THEN '是' ELSE '否' END ) AS DBJFBZ,
+                a.kdrq AS KDRQ
+            FROM
+                OP_ZYDJ a,
+                MPI_BRDA b
+            WHERE
+            a.BRID = b.BRID
+            AND a.DJID = #{pkey}
+    </select>
+
+    <update id="updateSqzt">
+        UPDATE OP_ZYDJ SET
+            SQZT = #{sqzt}
+        WHERE
+            DJID = #{djid}
+    </update>
+</mapper>
+

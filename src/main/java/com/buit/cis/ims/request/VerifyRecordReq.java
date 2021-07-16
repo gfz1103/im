@@ -1,0 +1,71 @@
+package com.buit.cis.ims.request;
+
+import com.buit.commons.PageQuery;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * 费用帐卡汇总对账入参
+ */
+@ApiModel(value="费用帐卡汇总对账入参")
+public class VerifyRecordReq extends PageQuery {
+    @ApiModelProperty(value="医疗机构id",hidden = true)
+    private Integer jgid;
+    @ApiModelProperty(value="住院号")
+    private Integer zyh;
+    @ApiModelProperty(value="查询类型 0：全部 1:医疗 2：药品")
+    private Integer queryType;
+    @ApiModelProperty(value="开始日期")
+    private String startDate;
+    @ApiModelProperty(value = "结束日期")
+    private String endDate;
+    @ApiModelProperty(value = "结算次数")
+    private Integer jscs;
+    public Integer getZyh() {
+        return zyh;
+    }
+
+    public void setZyh(Integer zyh) {
+        this.zyh = zyh;
+    }
+
+    public Integer getQueryType() {
+        return queryType;
+    }
+
+    public void setQueryType(Integer queryType) {
+        this.queryType = queryType;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public Integer getJgid() {
+        return jgid;
+    }
+
+    public void setJgid(Integer jgid) {
+        this.jgid = jgid;
+    }
+
+    public Integer getJscs() {
+        return jscs;
+    }
+
+    public void setJscs(Integer jscs) {
+        this.jscs = jscs;
+    }
+}

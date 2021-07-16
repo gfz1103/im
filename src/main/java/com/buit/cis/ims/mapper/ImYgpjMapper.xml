@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院_员工票据 -->
+<mapper namespace="com.buit.cis.ims.dao.ImYgpjDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,JGID as jgid,YGDM as ygdm,LYRQ as lyrq,PJLX as pjlx,QSHM as qshm,ZZHM as zzhm,DQHM as dqhm,SYBZ as sybz
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_YGPJ (
+            JLXH ,
+            JGID ,
+            YGDM ,
+            LYRQ ,
+            PJLX ,
+            QSHM ,
+            ZZHM ,
+            DQHM ,
+            SYBZ 
+        ) VALUES (
+            #{jlxh} ,
+            #{jgid} ,
+            #{ygdm} ,
+            #{lyrq} ,
+            #{pjlx} ,
+            #{qshm} ,
+            #{zzhm} ,
+            #{dqhm} ,
+            #{sybz} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE IM_YGPJ SET
+            JGID = #{jgid} ,
+            YGDM = #{ygdm} ,
+            LYRQ = #{lyrq} ,
+            PJLX = #{pjlx} ,
+            QSHM = #{qshm} ,
+            ZZHM = #{zzhm} ,
+            DQHM = #{dqhm} ,
+            SYBZ = #{sybz} 
+        WHERE 
+            JLXH = #{jlxh}
+    </update>
+
+
+    <delete id="deleteById">
+        DELETE FROM IM_YGPJ WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM IM_YGPJ <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="ImYgpj">
+        SELECT <include refid="columns" />
+            FROM IM_YGPJ 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+                <if test="@sqlt.Ognl@isNotEmpty(jlxh)">
+                     AND JLXH = #{jlxh}
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                     AND JGID = #{jgid}
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(ygdm)">
+                     AND YGDM = #{ygdm}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lyrq)"> -->
+<!--                     AND LYRQ = #{lyrq} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(pjlx)">
+                     AND PJLX = #{pjlx}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qshm)"> -->
+<!--                     AND QSHM = #{qshm} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zzhm)">
+                     AND ZZHM = #{zzhm}
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(dqhm)">
+                     AND DQHM = #{dqhm}
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(sybz)">
+                     AND SYBZ = #{sybz}
+                </if>
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_YGPJ 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="ImYgpj">
+        SELECT <include refid="columns" />
+        FROM IM_YGPJ 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+
+    <!--     业务sql      -->
+    <!--校验号码段是否已占用-->
+    <select id="repetCheck" resultType="java.lang.Boolean">
+        SELECT count(1)>0
+        FROM IM_YGPJ
+        where PJLX = #{pjlx} and JGID=#{jgid} and LENGTH(QSHM)=LENGTH(#{qshm})
+        <if test="@sqlt.Ognl@isNotEmpty(jlxh)">
+            AND jlxh != #{jlxh}
+        </if>
+        and !(ZZHM &lt; #{qshm} or QSHM &gt; #{zzhm})
+    </select>
+    <!--校验号码段是否可以启用-->
+    <select id="activeCheck" resultType="java.lang.Boolean">
+        SELECT count(1)>0
+        FROM IM_YGPJ
+        where PJLX = #{pjlx} and JGID=#{jgid} and YGDM = #{ygdm}
+        and JLXH != #{jlxh} and SYBZ = 0
+    </select>
+    <!--校验终止票据号码-->
+    <!--<select id="checkZzhm" resultType="com.buit.cis.ims.model.ImYgpj">
+        SELECT <include refid="columns" />
+        FROM IM_YGPJ
+        where LENGTH(QSHM)=LENGTH(#{qshm})
+        and QSHM &lt;= #{zzhm} and ZZHM &gt;= #{zzhm} and JGID=#{jgid} and PJLX = #{pjlx}
+    </select>-->
+    <!--校验当前使用号码是否合法-->
+<!--    <select id="checkDqhm" resultType="com.buit.cis.ims.model.ImYgpj">
+        SELECT <include refid="columns" />
+        FROM IM_YGPJ
+        where   JGID = #{jgid} and jlxh=#{jlxh}
+        and QSHM +0  &lt; #{dqhm} and ZZHM +0  &gt; #{dqhm}
+    </select>-->
+    <!--获取当前票据最小领用时间-->
+    <select id="queryMinLyrq" resultType="java.lang.String">
+        select MIN(LYRQ) from IM_YGPJ
+        <include refid="where"/>
+    </select>
+    <!--查询员工票据分页信息-->
+    <select id="findYgpjPage" resultType="com.buit.cis.ims.response.ImYgpjResp">
+       select  a.JLXH as jlxh,a.JGID as jgid,a.YGDM as ygdm,a.LYRQ as lyrq,a.PJLX as pjlx,a.QSHM as qshm,a.ZZHM as zzhm,a.DQHM as dqhm,a.SYBZ as sybz,b.PERSONNAME as ygxm
+        from IM_YGPJ a,hr_personnel b where a.ygdm=b.PERSONID and a.jgid=#{jgid} and a.pjlx=#{pjlx} and a.ygdm=#{ygdm}
+
+    </select>
+
+    <!--修改住院员工票据当前使用号码-->
+    <update id="updateZyygpj">
+        UPDATE IM_YGPJ SET DQHM = #{dqhm} WHERE And jlxh=#{jlxh}
+        <if test="@sqlt.Ognl@isNotEmpty(ygdm)">
+            AND YGDM = #{ygdm}
+        </if>
+    </update>
+    <!--把员工票据置为不可用-->
+    <update id="updateZyygpjStatus">
+    UPDATE IM_YGPJ SET SYBZ = 1 WHERE PJLX = #{pjlx} AND SYBZ = 0 AND LYRQ = #{lyrq}
+
+    </update>
+    <!--修改员工票据的当前使用号码-->
+    <update id="updateDqhm">
+        UPDATE IM_YGPJ SET dqhm=#{dqhm}  where 1=1
+        <if test="@sqlt.Ognl@isNotEmpty(jlxh)">
+            AND jlxh = #{jlxh}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+            AND jgid = #{jgid}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(ygdm)">
+            AND ygdm = #{ygdm}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(pjlx)">
+            AND pjlx = #{pjlx}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(sybz)">
+            AND sybz = #{sybz}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(lyrq)">
+            AND lyrq = #{lyrq}
+        </if>
+    </update>
+   <!--修改票据的使用标志-->
+    <update id="updateSybz">
+     update IM_YGPJ set sybz = #{sybz} where jlxh=#{jlxh}
+
+    </update>
+    <!--修改当前号码跟终止号码-->
+<!--    <update id="updateDqhmAndZzhm">
+        UPDATE IM_YGPJ SET DQHM=#{dqhm} ,ZZHM=#{zzhm}  where 1=1
+        <if test="@sqlt.Ognl@isNotEmpty(jlxh)">
+            AND jlxh = #{jlxh}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+            AND jgid = #{jgid}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(ygdm)">
+            AND ygdm = #{ygdm}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(pjlx)">
+            AND pjlx = #{pjlx}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(sybz)">
+            AND sybz = #{sybz}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(lyrq)">
+            AND lyrq = #{lyrq}
+        </if>
+    </update>-->
+    <!--查询当前号码的有效性-->
+    <select id="verifyDqhm" resultType="com.buit.cis.ims.model.ImYgpj">
+        SELECT <include refid="columns" />
+        FROM IM_YGPJ
+        where dqhm &gt;= zzhm
+        <if test="@sqlt.Ognl@isNotEmpty(jlxh)">
+            AND jlxh = #{jlxh}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+            AND jgid = #{jgid}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(ygdm)">
+            AND ygdm = #{ygdm}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(pjlx)">
+            AND pjlx = #{pjlx}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(sybz)">
+            AND sybz = #{sybz}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(lyrq)">
+            AND lyrq = #{lyrq}
+        </if>
+
+
+    </select>
+    <!--校验修改的终止号码是否合法-->
+    <!--<select id="checkUpdateZzhm" resultType="com.buit.cis.ims.model.ImYgpj">
+        SELECT <include refid="columns" />
+        FROM IM_YGPJ
+        where LENGTH(ZZHM)=LENGTH(#{zzhm})
+        and DQHM &lt;= #{zzhm} and ZZHM &gt;= #{zzhm} and JGID=#{jgid} and pjlx = #{pjlx} and jlxh=#{jlxh}
+    </select>-->
+</mapper>
+

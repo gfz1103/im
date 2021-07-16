@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 护理交班单明细表 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisHljbdmxbDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,JBDJLXH as jbdjlxh,ZYH as zyh,ZDMC as zdmc,HZLX as hzlx,SBARLX as sbarlx,JBNR as jbnr,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_HLJBDMXB (
+            JLXH ,
+            JBDJLXH ,
+            ZYH ,
+            ZDMC ,
+            HZLX ,
+            SBARLX ,
+            JBNR ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{jbdjlxh} ,
+            #{zyh} ,
+            #{zdmc} ,
+            #{hzlx} ,
+            #{sbarlx} ,
+            #{jbnr} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_HLJBDMXB SET
+            JBDJLXH = #{jbdjlxh} ,
+            ZYH = #{zyh} ,
+            ZDMC = #{zdmc} ,
+            HZLX = #{hzlx} ,
+            SBARLX = #{sbarlx} ,
+            JBNR = #{jbnr} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_HLJBDMXB WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_HLJBDMXB <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisHljbdmxb">
+        SELECT <include refid="columns" />
+            FROM NIS_HLJBDMXB 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+               <if test="@sqlt.Ognl@isNotEmpty(jbdjlxh)">
+                    AND JBDJLXH = #{jbdjlxh}
+               </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zyh)"> -->
+<!--                     AND ZYH = #{zyh} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(zdmc)"> -->
+<!--                     AND ZDMC = #{zdmc} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hzlx)"> -->
+<!--                     AND HZLX = #{hzlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sbarlx)"> -->
+<!--                     AND SBARLX = #{sbarlx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jbnr)"> -->
+<!--                     AND JBNR = #{jbnr} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_HLJBDMXB 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisHljbdmxb">
+        SELECT <include refid="columns" />
+        FROM NIS_HLJBDMXB 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 根据交班单主键查询明细 -->
+    <select id="queryDetailByJbdJlxh" resultType="com.buit.cis.nurse.response.NisHljbdmxbResp">
+		select  a.jlxh, 
+		 a.jbdjlxh,
+		 a.zyh,
+		 b.brch,
+		 b.brxm,
+		 b.csny,
+		 b.zyhm,
+		 a.zdmc,
+		 a.hzlx,
+		 a.sbarlx,
+		 a.jbnr,
+		 c.bclx,
+		 (select n.flagdata_value_remark from sys_flag_data m, sys_flag_data_value n 
+		 where m.flagdata_code = 'JBD000002' and m.flagdata_id = n.flagdata_id
+		 and n.flagdata_value = a.sbarlx) as sbarmc
+		 from nis_hljbdmxb a, im_hzry b, nis_hljbd c
+		 where a.zyh = b.zyh
+		 and a.jbdjlxh = c.jlxh
+		 <if test="@sqlt.Ognl@isNotEmpty(jbdjlxh)">
+              and a.jbdjlxh = #{jbdjlxh}
+         </if>
+         <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+              and a.zyh = #{zyh}
+         </if>
+		 order by c.jbsj, c.bclx, a.zyh, a.hzlx, a.sbarlx
+    </select>
+    
+    <select id="queryZyhByJlxh" resultType="java.lang.Integer">
+		select zyh 
+		from nis_hljbdmxb
+		where jbdjlxh in
+		<foreach collection="jlxhlist" item="jbdjlxh" open="(" close=")" separator="," >
+                #{jbdjlxh}
+        </foreach>	
+        group by zyh
+    </select>
+</mapper>
+

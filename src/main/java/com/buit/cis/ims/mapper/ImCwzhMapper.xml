@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  -->
+<mapper namespace="com.buit.cis.ims.dao.ImCwzhDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        CWZH as cwzh,CWZHMC as cwzhmc,ZFPB as zfpb,PYDM as pydm,JGID as jgid,BQDM as bqdm
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_CWZH (
+            CWZH ,
+            CWZHMC ,
+            ZFPB ,
+            PYDM ,
+            JGID ,
+            BQDM 
+        ) VALUES (
+            #{cwzh} ,
+            #{cwzhmc} ,
+            #{zfpb} ,
+            #{pydm} ,
+            #{jgid} ,
+            #{bqdm}
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE IM_CWZH SET
+            CWZHMC = #{cwzhmc} ,
+            ZFPB = #{zfpb} ,
+            PYDM = #{pydm} ,
+            JGID = #{jgid} ,
+            BQDM = #{bqdm}
+        WHERE 
+            CWZH = #{cwzh}        
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM IM_CWZH WHERE
+        CWZH = #{cwzh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM IM_CWZH <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="ImCwzh">
+        SELECT <include refid="columns" />
+            FROM IM_CWZH 
+            WHERE 
+        CWZH = #{cwzh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+                <if test="@sqlt.Ognl@isNotEmpty(cwzh)"> 
+                     AND CWZH = #{cwzh} 
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(cwzhmc)"> 
+                    AND CWZHMC like concat('%', #{cwzhmc},'%')
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(zfpb)">
+                     AND ZFPB = #{zfpb} 
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(pydm)"> 
+                     AND PYDM like concat('%', #{pydm},'%')
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> 
+                     AND JGID = #{jgid} 
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(bqdm)"> 
+                     AND BQDM = #{bqdm} 
+                </if>  
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_CWZH 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="ImCwzh">
+        SELECT <include refid="columns" />
+        FROM IM_CWZH 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 作废或取消作废床位组号信息 -->
+    <update id="invalidByCwzh" >
+        update im_cwzh set
+            zfpb = #{zfpb}
+        where 
+            cwzh = #{cwzh}        
+        and jgid = #{jgid} 
+    </update>
+</mapper>
+

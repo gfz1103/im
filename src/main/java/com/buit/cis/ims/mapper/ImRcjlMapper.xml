@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 住院_临床病人入出记录 -->
+<mapper namespace="com.buit.cis.ims.dao.ImRcjlDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,JGID as jgid,CZRQ as czrq,LCRQ as lcrq,CZLX as czlx,ZYH as zyh,BRKS as brks,YJZYRS as yjzyrs,BQPB as bqpb,CYFS as cyfs,BZXX as bzxx,SCBZ as scbz,SF as sf
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_RCJL (
+            JLXH ,
+            JGID ,
+            CZRQ ,
+            LCRQ ,
+            CZLX ,
+            ZYH ,
+            BRKS ,
+            YJZYRS ,
+            BQPB ,
+            CYFS ,
+            BZXX ,
+            SCBZ ,
+            SF
+        ) VALUES (
+            #{jlxh} ,
+            #{jgid} ,
+            #{czrq} ,
+            #{lcrq} ,
+            #{czlx} ,
+            #{zyh} ,
+            #{brks} ,
+            #{yjzyrs} ,
+            #{bqpb} ,
+            #{cyfs} ,
+            #{bzxx} ,
+            #{scbz} ,
+            #{sf}
+        )
+    </insert>
+    
+    <update id="update" ><!--  
+        UPDATE IM_RCJL SET
+            JGID = #{jgid} ,
+            CZRQ = #{czrq} ,
+            LCRQ = #{lcrq} ,
+            CZLX = #{czlx} ,
+            ZYH = #{zyh} ,
+            BRKS = #{brks} ,
+            YJZYRS = #{yjzyrs} ,
+            BQPB = #{bqpb} ,
+            CYFS = #{cyfs} ,
+            BZXX = #{bzxx} ,
+            SCBZ = #{scbz} ,
+            SF = #{sf}
+        WHERE 
+            JLXH = #{jlxh} 
+            -->            
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM IM_RCJL WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM IM_RCJL <include refid="where"/>  
+    </delete>
+
+
+    <select id="getById" resultType="ImRcjl">
+        SELECT <include refid="columns" />
+            FROM IM_RCJL 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+                <if test="@sqlt.Ognl@isNotEmpty(jlxh)">
+                     AND JLXH = #{jlxh}
+                </if>
+                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> 
+                     AND JGID = #{jgid} 
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czrq)"> -->
+<!--                     AND CZRQ = #{czrq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(lcrq)"> -->
+<!--                     AND LCRQ = #{lcrq} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(czlx)"> 
+                     AND CZLX = #{czlx} 
+               </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                     AND ZYH = #{zyh}
+                </if> 
+                <if test="@sqlt.Ognl@isNotEmpty(brks)">
+                     AND BRKS = #{brks}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yjzyrs)"> -->
+<!--                     AND YJZYRS = #{yjzyrs} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(bqpb)">
+                     AND BQPB = #{bqpb}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(cyfs)"> -->
+<!--                     AND CYFS = #{cyfs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bzxx)"> -->
+<!--                     AND BZXX = #{bzxx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(scbz)"> -->
+<!--                     AND SCBZ = #{scbz} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sf)"> -->
+<!--                     AND SF = #{sf} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_RCJL 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="ImRcjl">
+        SELECT <include refid="columns" />
+        FROM IM_RCJL 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 查询出入院记录条数 -->
+    <select id="queryZyrcjl" resultType="long">
+        select count(1) from IM_RCJL where JGID = #{JGID} and ZYH = #{ZYH} 
+        and CZLX = #{CZLX} and BRKS = #{BRKS} AND BQPB = #{BQPB}
+    </select>
+    
+    <!-- 查询临床日期 -->
+    <select id="queryClinicalDate" resultType="ImRcjl">
+	    select JLXH as JLXH, LCRQ as LCRQ from IM_RCJL where JGID = #{jgid} and ZYH = #{zyh} and CZLX = #{czlx}
+	    and BQPB = #{bqpb}
+    </select>
+    
+    <!-- 更新出院方式状态 -->
+    <update id="updateCyfsStatus">
+	    UPDATE IM_RCJL SET CYFS = #{CYFS}, BZXX = #{BZXX} Where 
+	    JGID = #{JGID} and ZYH=#{ZYH} and CZLX = -1
+    </update>
+    
+    <!-- 更新入出记录出入方式状态 -->
+    <update id="updateImRcjlCyfsStatus">
+	    update IM_RCJL set LCRQ = #{lcrq}, CZRQ = #{czrq}, 
+	    CYFS = #{cyfs}, BZXX = #{bzxx}, SF = #{sf} 
+	    where JGID = #{jgid} and ZYH = #{zyh} and CZLX = -1 
+    </update>
+
+    <!--进行取消入院处理-->
+    <delete id="qxrycl">
+        DELETE FROM IM_RCJL Where JGID=#{jgid} and ZYH=#{zyh} AND CZLX =#{czlx}
+    </delete>
+    <!--修改住院临床记录的临床日期-->
+    <update id="updateLcrq">
+        UPDATE IM_RCJL Set LCRQ=#{lcrq},CZRQ=#{czrq} Where JGID=#{jgid} and ZYH=#{zyh} AND CZLX=#{czlx}
+    </update>
+</mapper>
+

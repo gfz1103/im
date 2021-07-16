@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 一般护理记录单 -->
+<mapper namespace="com.buit.cis.nurse.dao.NisHljlDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,ZYH as zyh,MBLX as mblx,YS as ys,TW as tw,MB as mb,HX as hx,SBP as sbp,DBP as dbp,SPO2 as spo2,XT as xt,YY as yy,JSXL as jsxl,DGHL as dghl,QTDG as qtdg,HLZD as hlzd,BQCS as bqcs,HSQM as hsqm,RQ as rq,JGID as jgid
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO NIS_HLJL (
+            JLXH ,
+            ZYH ,
+            MBLX ,
+            YS ,
+            TW ,
+            MB ,
+            HX ,
+            SBP ,
+            DBP ,
+            SPO2 ,
+            XT ,
+            YY ,
+            JSXL ,
+            DGHL ,
+            QTDG ,
+            HLZD ,
+            BQCS ,
+            HSQM ,
+            RQ ,
+            JGID 
+        ) VALUES (
+            #{jlxh} ,
+            #{zyh} ,
+            #{mblx} ,
+            #{ys} ,
+            #{tw} ,
+            #{mb} ,
+            #{hx} ,
+            #{sbp} ,
+            #{dbp} ,
+            #{spo2} ,
+            #{xt} ,
+            #{yy} ,
+            #{jsxl} ,
+            #{dghl} ,
+            #{qtdg} ,
+            #{hlzd} ,
+            #{bqcs} ,
+            #{hsqm} ,
+            #{rq} ,
+            #{jgid} 
+        )
+    </insert>
+    
+    <update id="update" >
+        UPDATE NIS_HLJL SET
+            ZYH = #{zyh} ,
+            MBLX = #{mblx} ,
+            YS = #{ys} ,
+            TW = #{tw} ,
+            MB = #{mb} ,
+            HX = #{hx} ,
+            SBP = #{sbp} ,
+            DBP = #{dbp} ,
+            SPO2 = #{spo2} ,
+            XT = #{xt} ,
+            YY = #{yy} ,
+            JSXL = #{jsxl} ,
+            DGHL = #{dghl} ,
+            QTDG = #{qtdg} ,
+            HLZD = #{hlzd} ,
+            BQCS = #{bqcs} ,
+            HSQM = #{hsqm} ,
+            RQ = #{rq} ,
+            JGID = #{jgid} 
+        WHERE 
+            JLXH = #{jlxh}      
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM NIS_HLJL WHERE
+        JLXH = #{jlxh} 
+    </delete>
+    
+    <delete id="removeByEntity">
+        DELETE FROM NIS_HLJL <include refid="where"/>  
+    </delete>
+    
+    <select id="getById" resultType="NisHljl">
+        SELECT <include refid="columns" />
+            FROM NIS_HLJL 
+            WHERE 
+        JLXH = #{jlxh} 
+    </select>
+    
+    <sql id="where">
+        <where>                          
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jlxh)"> -->
+<!--                     AND JLXH = #{jlxh} -->
+<!--                </if> -->
+                <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                     AND ZYH = #{zyh}
+                </if>
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mblx)"> -->
+<!--                     AND MBLX = #{mblx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(ys)"> -->
+<!--                     AND YS = #{ys} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(tw)"> -->
+<!--                     AND TW = #{tw} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(mb)"> -->
+<!--                     AND MB = #{mb} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hx)"> -->
+<!--                     AND HX = #{hx} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(sbp)"> -->
+<!--                     AND SBP = #{sbp} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dbp)"> -->
+<!--                     AND DBP = #{dbp} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(spo2)"> -->
+<!--                     AND SPO2 = #{spo2} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(xt)"> -->
+<!--                     AND XT = #{xt} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yy)"> -->
+<!--                     AND YY = #{yy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jsxl)"> -->
+<!--                     AND JSXL = #{jsxl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(dghl)"> -->
+<!--                     AND DGHL = #{dghl} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(qtdg)"> -->
+<!--                     AND QTDG = #{qtdg} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hlzd)"> -->
+<!--                     AND HLZD = #{hlzd} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(bqcs)"> -->
+<!--                     AND BQCS = #{bqcs} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(hsqm)"> -->
+<!--                     AND HSQM = #{hsqm} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(rq)"> -->
+<!--                     AND RQ = #{rq} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(jgid)"> -->
+<!--                     AND JGID = #{jgid} -->
+<!--                </if> -->
+        </where>
+    </sql>
+        
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM NIS_HLJL 
+        <include refid="where"/>    
+    </select>
+    
+    <select id="findByEntity" resultType="NisHljl">
+        SELECT <include refid="columns" />
+        FROM NIS_HLJL 
+        <include refid="where"/>
+        
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    
+    <!-- 一般护理记录单查询树结构-->
+    <select id="queryHljlTree" resultType="com.buit.cis.nurse.response.NisHzmbResp">
+        SELECT CONCAT(a.RQ, '  ', b.MBMC ) as LABEL, a.MBLX as NAME
+			FROM ( SELECT DATE_FORMAT( RQ, '%m-%d' ) AS RQ, 
+							ZYH as ZYH,
+							MBLX as MBLX,
+							JGID as JGID
+				FROM NIS_HLJL 
+				GROUP BY 
+					DATE_FORMAT(RQ, '%m-%d'),
+					ZYH,
+					MBLX,
+					JGID 
+				) a, NIS_HZMB b WHERE
+				a.ZYH = b.ZYH 
+				AND a.MBLX = b.MBLX 
+				AND a.JGID = b.JGID
+				AND a.ZYH = #{zyh}
+				AND a.JGID = #{jgid}
+				order by a.RQ
+    </select>
+    
+    <!-- 根据日期查询一般护理记录单 -->
+    <select id="queryHljlByDate" resultType="NisHljl">
+       SELECT <include refid="columns" />
+        FROM NIS_HLJL 
+        WHERE ZYH = #{zyh}
+		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
+			  and DATE_FORMAT(RQ, '%m-%d') = #{queryDate}
+        </if> 
+        and JGID = #{jgid}
+        order by RQ
+    </select>
+</mapper>
+
