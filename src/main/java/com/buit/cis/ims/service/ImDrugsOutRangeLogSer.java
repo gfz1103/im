@@ -49,7 +49,7 @@ public class ImDrugsOutRangeLogSer extends BaseManagerImp<ImDrugsOutRangeLog, In
     }
 
     /**
-     * 将超出出院时间的药品的费用时间保存到本记录表，然后将该费用明细费用日期改为其记账时间,保证其能在结算时间段内查询到
+     * 将超出出院时间的药品的费用时间保存到本记录表，然后将该费用明细费用日期改为出院时间前一秒,保证其能在结算时间段内查询到
      */
     @Locked(value = {"saveAccountMoney_[zyh]"})
     @Transactional(rollbackFor = Exception.class)
@@ -98,6 +98,7 @@ public class ImDrugsOutRangeLogSer extends BaseManagerImp<ImDrugsOutRangeLog, In
             for (ImDrugsOutRangeLog log : logList) {
                 //恢复费用明细的费用日期
                 feeFymxSer.updateFyrq(log.getFymxJlxh(), log.getSjfyrq());
+                imDrugsOutRangeLogDao.deleteById(log.getJlxh());
             }
         }
     }

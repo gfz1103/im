@@ -33,6 +33,9 @@ public class ImHzryQueryReq  {
 
 	@ApiModelProperty(value="会诊关联")
 	private Integer hzgl;
+	
+	@ApiModelProperty(value="出院方式")
+	private Integer cyfs;
 
 	public String getBeginDate() {
 		return beginDate;
@@ -89,4 +92,13 @@ public class ImHzryQueryReq  {
 	public void setHzgl(Integer hzgl) {
 		this.hzgl = hzgl;
 	}
+
+	public Integer getCyfs() {
+		return cyfs;
+	}
+
+	public void setCyfs(Integer cyfs) {
+		this.cyfs = cyfs;
+	}
+	
 }

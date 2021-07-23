@@ -498,7 +498,7 @@ public class ImTwdnrSer extends BaseManagerImp<ImTwdnr,Integer> {
 				}	
 				Map<String, Object> ryMap = new HashMap<String, Object>(16);
 				ryMap.put("time", ryTime);
-				ryMap.put("text", "入\n院\n" + DigitalConversionUtil.wrapStringLoop(DigitalConversionUtil.numberToChinese(
+				ryMap.put("text", "入\n院\n丨\n" + DigitalConversionUtil.wrapStringLoop(DigitalConversionUtil.numberToChinese(
 						DateUtil.hour(ryrq, true))) + "时\n" + DigitalConversionUtil.wrapStringLoop(
 								DigitalConversionUtil.numberToChinese(DateUtil.minute(ryrq))) + "分");
 				ryMap.put("position", 42);
@@ -557,7 +557,7 @@ public class ImTwdnrSer extends BaseManagerImp<ImTwdnr,Integer> {
 								text+=strArr[j] + "\n";
 							}; 
 						}
-						ssMap.put("text", text + DigitalConversionUtil.wrapStringLoop(DigitalConversionUtil.numberToChinese(
+						ssMap.put("text", text + "丨\n" + DigitalConversionUtil.wrapStringLoop(DigitalConversionUtil.numberToChinese(
 								DateUtil.hour(twdnr.getCzsj(), true))) + "时\n" + DigitalConversionUtil.wrapStringLoop(
 										DigitalConversionUtil.numberToChinese(DateUtil.minute(twdnr.getCzsj()))) + "分");
 						ssMap.put("position", 42);

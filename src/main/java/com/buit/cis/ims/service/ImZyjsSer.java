@@ -4,7 +4,10 @@ package com.buit.cis.ims.service;
 import com.buit.aop.lock.Locked;
 import com.buit.cis.ims.dao.*;
 import com.buit.cis.ims.enums.CypbEnum;
-import com.buit.cis.ims.model.*;
+import com.buit.cis.ims.model.ImCwsz;
+import com.buit.cis.ims.model.ImHzry;
+import com.buit.cis.ims.model.ImJszf;
+import com.buit.cis.ims.model.ImZyjs;
 import com.buit.cis.ims.preService.ZyjsPreService;
 import com.buit.cis.ims.request.SaveSettleAccountsReq;
 import com.buit.cis.ims.request.UpdateSettleAccountsReq;
@@ -441,6 +444,8 @@ public class ImZyjsSer extends BaseManagerImp<ImZyjs, Integer> {
      * @return
      */
     public ReturnEntity<BalanceAccountsSettleResp> queryBalanceAccountsSettle(Integer zyh, String jslx, String jsrq, String carddata, String cardtype, String accountattr, String ip, SysUser user, String ksrq, String zzrq, String ybjsksrq, String gsrdh) throws ParseException {
+        imDrugsOutRangeLogSer.outRangeDrugBalance(zyh);
+
         BalanceAccountsSettleResp balanceAccountsSettleResp = new BalanceAccountsSettleResp();
         ImHzry imHzry = imHzryDao.getById(zyh);
         PubBrxzOut req = new PubBrxzOut();
@@ -732,11 +737,15 @@ public class ImZyjsSer extends BaseManagerImp<ImZyjs, Integer> {
             throw BaseException.create("ERROR_HIS_IM_IMS_ZYBRRY_00070");
         }
 
-        //时间检查, 防止选择时间段内有新的费用明细或者缴款记录产生产生
+        //费用明细时间检查, 防止选择时间段内有新的费用明细或者缴款记录产生产生
         Timestamp ksrq = DateUtils.convertTimestamp(DateUtils.YEAR_MONTH_DAY_HOUR_MINUTE_SECOND, req.getKsrq());
         Timestamp zzrq = DateUtils.convertTimestamp(DateUtils.YEAR_MONTH_DAY_HOUR_MINUTE_SECOND, req.getZzrq());
         if (zzrq.after(now)) {
             throw BaseException.create("ERROR_HIS_IM_IMS_ZYBRRY_00072");
+        }
+        boolean isOutRange = imFeeFymxDao.isOutOfRange(req.getZyh(), req.getCzsj(), req.getZzrq(), 5 == req.getJslx());
+        if (isOutRange) {
+            throw BaseException.create("ERROR_HIS_IM_IMS_ZYBRRY_00081");
         }
         //开始日期不能大于终止日期
         if (ksrq.compareTo(zzrq) > 0) {
@@ -878,12 +887,6 @@ public class ImZyjsSer extends BaseManagerImp<ImZyjs, Integer> {
 
         //保存付款信息
         zyjsPreService.imFkxxSettleHandler(req, sysUser, ip, imHzry.getBrid());
-
-        //费用明细检查
-        boolean isOutRange = imFeeFymxDao.isOutOfRange(req.getZyh(), req.getCzsj(), req.getZzrq());
-        if (isOutRange) {
-            throw BaseException.create("ERROR_HIS_IM_IMS_ZYBRRY_00081");
-        }
         //2021.1.7 jiangwei 无用代码梳理 传入参数中无pos信息
             /*Map<String, Object> pos = (Map<String, Object>) map_jsxx.get("pos");
             // 付费方式：POS机(新添微信支付宝)，写入pos机交易信息

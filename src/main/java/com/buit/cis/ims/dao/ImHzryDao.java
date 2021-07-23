@@ -1,6 +1,7 @@
 package com.buit.cis.ims.dao;
 
 
+import com.buit.cis.dctwork.response.CisJcsq01PrintResp;
 import com.buit.cis.dctwork.response.YsZyHzBgResp;
 import com.buit.cis.im.request.ImHzryBaReq;
 import com.buit.cis.im.request.ImHzryEmrReq;
@@ -1052,4 +1053,12 @@ public interface ImHzryDao extends EntityDao<ImHzry,Integer> {
      * 查询在院病人
      */
     ImHzry getInHospitalPatient(ImHzry query);
+
+    /**
+     * 检查指引单打印数据查询
+     *
+     * @param zyh      住院号
+     * @param jcxhList 检查序号
+     */
+    List<CisJcsq01PrintResp> findPatientCheckList(@Param("zyh") Integer zyh, @Param("jcxhList") List<Integer> jcxhList);
 }

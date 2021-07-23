@@ -998,6 +998,7 @@
         <if test="@sqlt.Ognl@isNotEmpty(zzrq)">
             and a.FYRQ &lt;= #{zzrq}
         </if>
+        order by a.fyrq desc 
     </select>
     <!--结算时更新结算次数-->
     <update id="updateJscs">
@@ -2481,7 +2482,11 @@
     </select>
 
     <select id="isOutOfRange" resultType="java.lang.Boolean">
-        SELECT EXISTS(SELECT 1 FROM IM_FEE_FYMX WHERE ZYH = #{zyh} AND JFRQ &gt; #{czsj} AND fyrq &lt;#{zzrq}) FROM DUAL
+        SELECT EXISTS(SELECT 1 FROM IM_FEE_FYMX WHERE ZYH = #{zyh} AND JFRQ &gt; #{czsj}
+        <if test="!isDischarge">
+            AND fyrq &lt;#{zzrq}
+        </if>
+        )
     </select>
     
 

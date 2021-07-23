@@ -1424,6 +1424,38 @@ public class ImHzryByDctworkSer extends BaseManagerImp<ImHzry, Integer>{
             if (CollectionUtils.isNotEmpty(zlList)) {
                 zlRwfpService.deleteByYzJlxh(zlList.stream().map(ZlRwfpUpdateReq::getYzJlxh).collect(Collectors.toList()));
             }
+            
+            List<PubPharUnfreezeDto> unFreeList = new ArrayList<PubPharUnfreezeDto>();
+			List<CisHzyzInvalidBody> ypList = list.stream().filter(o -> o.getYplx() > 0)
+					.collect(Collectors.toList());
+			if(!ypList.isEmpty()) {
+				List<Integer> jlxhList = list.stream().filter(o -> (o.getZtbz() == null || o.getZtbz() == 0) 
+						&& o.getYplx() > 0).map(CisHzyzInvalidBody::getJlxh).collect(Collectors.toList());
+				for(Integer item : jlxhList) {
+					PubPharUnfreezeDto unfreezeDto = new PubPharUnfreezeDto();
+					unfreezeDto.setJgid(user.getHospitalId());
+					unfreezeDto.setJlxh(item);
+					unfreezeDto.setYwlb(3);
+					unFreeList.add(unfreezeDto);
+				}
+				
+				List<Integer> ztjlxhList = list.stream().filter(o -> (o.getZtbz() != null && o.getZtbz() == 1))
+						.map(CisHzyzInvalidBody::getJlxh).collect(Collectors.toList());
+				for(Integer ztjlxh : ztjlxhList) {
+					CisHzyz cisHzyz = new CisHzyz();    
+					cisHzyz.setZtyzjlxh(ztjlxh);
+					cisHzyz.setJgid(user.getHospitalId());
+					List<CisHzyz> hzyzList =cisHzyzDao.findByEntity(cisHzyz);
+					for(CisHzyz resp : hzyzList) {
+						PubPharUnfreezeDto unfreezeDto = new PubPharUnfreezeDto();
+						unfreezeDto.setJgid(user.getHospitalId());
+						unfreezeDto.setJlxh(resp.getJlxh());
+						unfreezeDto.setYwlb(3);
+						unFreeList.add(unfreezeDto);
+					}
+				}
+				pubDrugKcdjSerImpl.unfreeze(unFreeList);
+			}
 
 		}
 
@@ -2710,9 +2742,6 @@ public class ImHzryByDctworkSer extends BaseManagerImp<ImHzry, Integer>{
 			cisHzyzZt.setYpcd(0);
 			cisHzyzZt.setXmlx(1);
 			cisHzyzZt.setYplx(3);
-			cisHzyzZt.setMrcs(1);
-			cisHzyzZt.setYcjl(BigDecimal.ZERO);
-			cisHzyzZt.setYcsl(BigDecimal.ONE);
 			cisHzyzZt.setMzcs(0);
 			cisHzyzZt.setTzsj(cisHzyzHerbalReq.getKssj());
 			cisHzyzZt.setYpdj(ztdj);

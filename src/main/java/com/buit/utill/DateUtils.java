@@ -259,6 +259,16 @@ public class DateUtils {
         return toString(date, YEAR_MONTH_DAY_HOUR_MINUTE_SECOND);
     }
 
+    /**
+     * 时间转换为yyyy-MM-dd 时间字符串
+     *
+     * @param date 时间
+     * @return 时间字符串
+     */
+    public static String formatToDate(Date date) {
+        return toString(date, YEAR_MONTH_DAY);
+    }
+
     public static void main(String[] args) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         System.out.println(getMonthStartTime(timestamp));

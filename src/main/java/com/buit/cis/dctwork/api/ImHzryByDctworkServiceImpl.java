@@ -14,6 +14,10 @@ import com.github.pagehelper.PageInfo;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author liushijie
  */
@@ -35,7 +39,10 @@ public class ImHzryByDctworkServiceImpl implements ImHzryByDctworkService {
     public PageInfo<CisHzyzQueryResp> execute(CisHzyzQueryApiReq cisHzyzQueryReqApi, SysUserModel userModel, PageQuery page) {
         CisHzyzQueryApiReq req = BeanUtil.toBean(cisHzyzQueryReqApi, CisHzyzQueryApiReq.class);
         SysUser user = BeanUtil.toBean(userModel, SysUser.class);
-        PageInfo<CisHzyzQueryResp> pageInfo = PageUtil.getPageInfo(page.getPageNum(), page.getPageSize(),imHzryByDctworkSer.execute(req, user));
+
+        List<CisHzyzQueryResp> list = imHzryByDctworkSer.execute(req, user);
+
+        PageInfo<CisHzyzQueryResp> pageInfo = PageUtil.getPageInfo(page.getPageNum(), page.getPageSize(),list.stream().sorted(Comparator.comparing(CisHzyzQueryResp :: getKssj).reversed()).collect(Collectors.toList()));
 
         return pageInfo;
     }

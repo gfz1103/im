@@ -898,7 +898,7 @@ public interface ImFeeFymxDao extends EntityDao<ImFeeFymx, Integer> {
      * @param czsj 起始时间
      * @param zzrq 结算终止时间
      */
-    boolean isOutOfRange(@Param("zyh") Integer zyh, @Param("czsj") String czsj, @Param("zzrq") String zzrq);
+    boolean isOutOfRange(@Param("zyh") Integer zyh, @Param("czsj") String czsj, @Param("zzrq") String zzrq, @Param("isDischarge") boolean isDischarge);
     
     /**
      * 查询医嘱费用总大于0的医嘱序号

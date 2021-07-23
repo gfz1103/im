@@ -1,6 +1,7 @@
 package com.buit.cis.ims.service;
 
 
+import com.buit.cis.im.response.ImRyzdModel;
 import com.buit.cis.ims.dao.ImRyzdDao;
 import com.buit.cis.ims.model.ImRyzd;
 import com.buit.commons.BaseManagerImp;
@@ -9,12 +10,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 住院_入院诊断<br>
+ *
  * @author ZHOUHAISHENG
  */
 @Service
-public class ImRyzdSer extends BaseManagerImp<ImRyzd,Long> {
+public class ImRyzdSer extends BaseManagerImp<ImRyzd, Long> {
 
     static final Logger logger = LoggerFactory.getLogger(ImRyzdSer.class);
 
@@ -30,4 +34,14 @@ public class ImRyzdSer extends BaseManagerImp<ImRyzd,Long> {
         imRyzdDao.updateAdmittingDiagnosis(zyh, zdxh);
     }
 
+    /**
+     * 查询病人所有诊断
+     *
+     * @param zyh  住院号
+     * @param zxlb 中西类别 1：西医 2：中医
+     * @return
+     */
+    public List<ImRyzdModel> findListByZyhAndZxlb(Integer zyh, int zxlb) {
+        return imRyzdDao.findListByZyhAndZxlb(zyh, zxlb);
+    }
 }

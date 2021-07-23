@@ -7,6 +7,7 @@ import com.buit.aop.lock.Locked;
 import com.buit.cis.bedresev.model.ImBedresev;
 import com.buit.cis.bedresev.service.ImBedresevSer;
 import com.buit.cis.dctwork.dao.CisHzyzDao;
+import com.buit.cis.dctwork.response.CisJcsq01PrintResp;
 import com.buit.cis.im.request.ImHzryEmrReq;
 import com.buit.cis.im.response.ImHzryEmrResp;
 import com.buit.cis.im.response.ImHzryResp;
@@ -46,7 +47,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.checkerframework.checker.units.qual.C;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -1990,5 +1990,9 @@ public class ImHzrySer extends BaseManagerImp<ImHzry, Integer> {
         resp.setFylj(fylj);
         resp.setZflj(zflj);
         return resp;
+    }
+
+    public List<CisJcsq01PrintResp> findPatientCheckList(Integer zyh, List<Integer> jcxhList) {
+        return imHzryDao.findPatientCheckList(zyh, jcxhList);
     }
 }

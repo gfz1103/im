@@ -231,6 +231,7 @@ public class NisCghljldSer extends BaseManagerImp<NisCghljld,Integer> {
 							newResp.setHljl(jlStr[i]);
 						}
 						newList.add(newResp);
+						newResp = null;
 					}
 				 } 
 	        }else if(StrUtil.isNotBlank(dglx)) {
@@ -244,11 +245,12 @@ public class NisCghljldSer extends BaseManagerImp<NisCghljld,Integer> {
 						newResp.setJlxh(resp.getJlxh());
 						newResp.setDglx(dgStr[i]);
 	 					newList.add(newResp);
+	 					newResp = null;
 	 				}
 	       	 }
 	        }else if(StrUtil.isNotBlank(hljl)) {
-	       	 String[] jlStr = hljl.split("@");
-	       	 for(int i = 0; i < jlStr.length; i++) {
+	       	 	String[] jlStr = hljl.split("@");
+	       	 	for(int i = 0; i < jlStr.length; i++) {
 	  				if(i == 0) {
 	  					resp.setHljl(jlStr[i]);
 	  					newList.add(resp);
@@ -257,10 +259,11 @@ public class NisCghljldSer extends BaseManagerImp<NisCghljld,Integer> {
 						newResp.setJlxh(resp.getJlxh());
 						newResp.setHljl(jlStr[i]);
 	  					newList.add(newResp);
+	  					newResp = null;
 	  				}
 	        	 }
 	        }else {
-	       	 newList.add(resp);
+	       	 	newList.add(resp);
 	        }
 	    }
 	    return newList;

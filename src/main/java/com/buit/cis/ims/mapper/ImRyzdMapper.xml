@@ -70,36 +70,36 @@
 
     <sql id="where">
         <where>
-                <if test="@sqlt.Ognl@isNotEmpty(zyh)">
-                    AND ZYH = #{zyh}
-               </if>
-<!--                <if test="@sqlt.Ognl@isNotEmpty(zdxh)"> -->
-<!--                     AND ZDXH = #{zdxh} -->
-<!--                </if> -->
-<!--                <if test="@sqlt.Ognl@isNotEmpty(zdlb)"> -->
-<!--                     AND ZDLB = #{zdlb} -->
-<!--                </if> -->
-               <if test="@sqlt.Ognl@isNotEmpty(jgid)">
-                     AND JGID = #{jgid}
-                </if>
-<!--                <if test="@sqlt.Ognl@isNotEmpty(zgqk)"> -->
-<!--                     AND ZGQK = #{zgqk} -->
-<!--                </if> -->
-<!--                <if test="@sqlt.Ognl@isNotEmpty(txbz)"> -->
-<!--                     AND TXBZ = #{txbz} -->
-<!--                </if> -->
-<!--                <if test="@sqlt.Ognl@isNotEmpty(scbz)"> -->
-<!--                     AND SCBZ = #{scbz} -->
-<!--                </if> -->
-<!--                <if test="@sqlt.Ognl@isNotEmpty(zdrq)"> -->
-<!--                     AND ZDRQ = #{zdrq} -->
-<!--                </if> -->
-<!--                <if test="@sqlt.Ognl@isNotEmpty(rybqdm)"> -->
-<!--                     AND RYBQDM = #{rybqdm} -->
-<!--                </if> -->
-<!--                <if test="@sqlt.Ognl@isNotEmpty(zxlb)"> -->
-<!--                     AND ZXLB = #{zxlb} -->
-<!--                </if> -->
+            <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                AND ZYH = #{zyh}
+            </if>
+            <!--                <if test="@sqlt.Ognl@isNotEmpty(zdxh)"> -->
+            <!--                     AND ZDXH = #{zdxh} -->
+            <!--                </if> -->
+            <if test="@sqlt.Ognl@isNotEmpty(zdlb)">
+                AND ZDLB = #{zdlb}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(jgid)">
+                AND JGID = #{jgid}
+            </if>
+            <!--                <if test="@sqlt.Ognl@isNotEmpty(zgqk)"> -->
+            <!--                     AND ZGQK = #{zgqk} -->
+            <!--                </if> -->
+            <!--                <if test="@sqlt.Ognl@isNotEmpty(txbz)"> -->
+            <!--                     AND TXBZ = #{txbz} -->
+            <!--                </if> -->
+            <!--                <if test="@sqlt.Ognl@isNotEmpty(scbz)"> -->
+            <!--                     AND SCBZ = #{scbz} -->
+            <!--                </if> -->
+            <!--                <if test="@sqlt.Ognl@isNotEmpty(zdrq)"> -->
+            <!--                     AND ZDRQ = #{zdrq} -->
+            <!--                </if> -->
+            <!--                <if test="@sqlt.Ognl@isNotEmpty(rybqdm)"> -->
+            <!--                     AND RYBQDM = #{rybqdm} -->
+            <!--                </if> -->
+            <if test="@sqlt.Ognl@isNotEmpty(zxlb)">
+                AND ZXLB = #{zxlb}
+            </if>
         </where>
     </sql>
 
@@ -271,5 +271,42 @@
         where ZYH = #{zyh}
           and ZDLB = 2
     </update>
+
+    <select id="findListByZyhAndZxlb" resultType="com.buit.cis.im.response.ImRyzdModel">
+        SELECT t.*
+        FROM (
+                 SELECT ryzd.ZYH,
+                        ryzd.ZDXH,
+                        jbdm.ICD_CODE AS zddm,
+                        jbdm.JBMC     AS zdmc,
+                        ryzd.ZDLB,
+                        ryzd.JGID,
+                        ryzd.ZGQK,
+                        ryzd.TXBZ,
+                        ryzd.SCBZ,
+                        ryzd.ZDRQ,
+                        ryzd.RYBQDM,
+                        ryzd.ZXLB
+                 FROM im_ryzd ryzd
+                          INNER JOIN dic_jbbm jbdm ON (ryzd.ZDXH = jbdm.JBXH AND ryzd.ZXLB = 1)
+                 UNION
+                 SELECT ryzd.ZYH,
+                        ryzd.ZDXH,
+                        zyjb.JBDM AS zddm,
+                        zyjb.JBMC AS zdmc,
+                        ryzd.ZDLB,
+                        ryzd.JGID,
+                        ryzd.ZGQK,
+                        ryzd.TXBZ,
+                        ryzd.SCBZ,
+                        ryzd.ZDRQ,
+                        ryzd.RYBQDM,
+                        ryzd.ZXLB
+                 FROM im_ryzd ryzd
+                          INNER JOIN dic_zyjb zyjb ON (ryzd.ZDXH = zyjb.JBBS AND ryzd.ZXLB = 2)
+             ) t
+        WHERE ZYH = #{zyh}
+          AND ZXLB = #{zxlb}
+    </select>
 </mapper>
 

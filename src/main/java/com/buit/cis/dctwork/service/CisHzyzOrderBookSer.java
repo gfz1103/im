@@ -395,7 +395,7 @@ public class CisHzyzOrderBookSer extends BaseManagerImp<CisHzyz,Integer> {
 						dynr += ypyfmc + " " + sypcmc;
 					}
 					
-					if(cis.getZfyp().intValue() == 1){
+					if(cis.getZfyp() != null && cis.getZfyp().intValue() == 1){
 						dynr ="(自备)" + dynr;
 					}
 					if(cis.getJfbz() != null && cis.getJfbz().intValue() != 3 && cis.getBzxx() != null 
@@ -643,7 +643,7 @@ public class CisHzyzOrderBookSer extends BaseManagerImp<CisHzyz,Integer> {
 					dynr += ypyfmc + " " + sypcmc;
 				}
 				
-				if(cis.getZfyp().intValue() == 1){
+				if(cis.getZfyp() != null && cis.getZfyp().intValue() == 1){
 					dynr="(自备)" + dynr;
 				}
 				if(cis.getJfbz() != null && cis.getJfbz().intValue() != 3 && cis.getBzxx() != null 
@@ -1433,7 +1433,7 @@ public class CisHzyzOrderBookSer extends BaseManagerImp<CisHzyz,Integer> {
 					yzmc += ypyfmc + " " + sypcmc;
 				}
 				
-				if(cis.getZfyp().intValue() == 1){
+				if(cis.getZfyp() != null && cis.getZfyp().intValue() == 1){
 					yzmc ="(自备)" + yzmc;
 				}
 				if(cis.getJfbz() != null && cis.getJfbz().intValue() != 3 && cis.getBzxx() != null 

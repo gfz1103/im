@@ -71,6 +71,9 @@ public class CisHzyzInvalidReq {
 
 		@ApiModelProperty(value="组套标志")
 		private Integer ztbz;
+		
+		@ApiModelProperty(value="药品类型")
+		private Integer yplx;
 
 		public Integer getJlxh() {
 			return jlxh;
@@ -86,6 +89,14 @@ public class CisHzyzInvalidReq {
 
 		public void setZtbz(Integer ztbz) {
 			this.ztbz = ztbz;
+		}
+
+		public Integer getYplx() {
+			return yplx;
+		}
+
+		public void setYplx(Integer yplx) {
+			this.yplx = yplx;
 		}
 
 		public boolean equals(Object obj){

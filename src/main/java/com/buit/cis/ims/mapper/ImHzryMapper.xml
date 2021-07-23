@@ -1541,6 +1541,9 @@
            <if test="@sqlt.Ognl@isNotEmpty(bqdm)">
             	and ih.BRBQ = #{bqdm}
            </if>
+           <if test="@sqlt.Ognl@isNotEmpty(cyfs)">
+            	and ih.CYFS = #{cyfs}
+           </if>
            <if test="@sqlt.Ognl@isNotEmpty(ksdm)">
                 <choose>
                     <when test="hzgl == 1 ">
@@ -2355,6 +2358,34 @@
 			and a.jgid = #{jgid}
     </select>
 
+    <!-- 查询检查申请单打印 -->
+    <select id="findPatientCheckList" resultType="com.buit.cis.dctwork.response.CisJcsq01PrintResp">
+        SELECT
+        sq.JCXH,
+        zxks.OFFICENAME zxks,
+        sq.SQSJ,
+        sq.JCXM,
+        CASE
+        sq.SFJJ
+        WHEN 1 THEN
+        '是' ELSE '否'
+        END sfjj,
+        hr.PERSONNAME sqys,
+        sqks.OFFICENAME sqks
+        FROM
+        cis_jcsq01 sq
+        INNER JOIN im_hzry hz ON hz.zyh = sq.zyh
+        LEFT JOIN dic_kszd zxks ON zxks.id = sq.ZXKS
+        LEFT JOIN dic_kszd sqks ON sqks.id = hz.brks
+        LEFT JOIN hr_personnel hr ON hr.PERSONID = sq.SQYS
+        WHERE
+        sq.ZYH = #{zyh}
+        AND sq.JCXH IN
+        <foreach collection="jcxhList" item="r" separator="," open="(" close=")">
+            #{r}
+        </foreach>
+    </select>
+
     <select id="queryDbxx" resultType="java.util.HashMap">
 			select SYSDATE() as dqsj,a.personname as personname,a.cardid as cardid,a.sfzh as sfzh,b.brdh as lxdh,b.xzz_qtdz as lxdz,
 			'' as wtrxm,'' as wtrsfzh,
@@ -2668,16 +2699,19 @@
         left join sys_user b on a.zyys = b.USER_ID
         where a.jgid = #{jgid} and a.cypb = 8
         <if test="@sqlt.Ognl@isNotEmpty(startDate) ">
-            and date_format(cyrq, '%Y-%m-%d') &gt;= #{startDate}
+            and date_format(a.cyrq, '%Y-%m-%d') &gt;= #{startDate}
         </if>
         <if test="@sqlt.Ognl@isNotEmpty(endDate) ">
-            and date_format(cyrq, '%Y-%m-%d') &lt;= #{endDate}
+            and date_format(a.cyrq, '%Y-%m-%d') &lt;= #{endDate}
         </if>
         <if test="@sqlt.Ognl@isNotEmpty(brks) ">
-            and brks = #{brks}
+            and a.brks = #{brks}
         </if>
         <if test="@sqlt.Ognl@isNotEmpty(brbq) ">
-            and brbq = #{brbq}
+            and a.brbq = #{brbq}
+        </if>
+        <if test="@sqlt.Ognl@isNotEmpty(brch) ">
+            and a.brch = #{brch}
         </if>
         <if test="@sqlt.Ognl@isNotEmpty(cyfs)">
             AND a.cyfs = #{cyfs}

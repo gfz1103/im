@@ -193,14 +193,14 @@ public class DoctorTypeWriteCtr extends BaseSpringController {
 			Map<String, Object> zfblMap = cisHzyzSer.getPayProportion(params);
 			BigDecimal zfbl = (BigDecimal) zfblMap.get("ZFBL");
 			o.setZfbl(zfbl);
-			return req.getBqdm() + "-" + o.getXmbm();
+			return req.getBqdm() + "-" + o.getFyxh();
     	}).collect(Collectors.toList());
     	
     	logger.error("耗材传参" + strList);
     	if(CollectionUtils.isNotEmpty(pageInfo.getList())) {
     		List<HighQualityConsumablesResp> highResp;
     		try {
-    			highResp = mdiVejkfBatchViewService.queryHighQualityConsumables(strList);
+    		    highResp = mdiVejkfBatchViewService.queryHighQualityConsumables(strList);
     		} catch (Exception e2) {
     			highResp = new ArrayList<HighQualityConsumablesResp>();
     		}

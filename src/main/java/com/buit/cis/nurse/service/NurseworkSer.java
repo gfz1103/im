@@ -2318,7 +2318,7 @@ public class NurseworkSer extends BaseManagerImp<ImHzry, Integer> {
             if (yplx == FymxYplxEnum.NOT_MEDICINE.getValue()) {
                 FeeYlsfxmOutResp feeYlsfxmOutResp = feeYlsfxmOutSer.getById(fyxh);
                 if (FeeYlsfxmXmlxEnum.MATERIALS.equals(feeYlsfxmOutResp.getXmlx())) {
-                    List<HighQualityConsumablesResp> list = mdiVejkfBatchViewService.queryHighQualityConsumables(Arrays.asList(new String[]{imHzry.getBrbq() + "-" + feeYlsfxmOutResp.getXmbm()}));
+                        List<HighQualityConsumablesResp> list = mdiVejkfBatchViewService.queryHighQualityConsumables(Arrays.asList(new String[]{imHzry.getBrbq() + "-" + feeYlsfxmOutResp.getFyxh()}));
                     if (CollectionUtil.isEmpty(list) || StrUtil.isBlank(list.get(0).getAmount())) {
                         throw BaseException.create("ERROR_NURSEWORK_ZYBRRY_00056", new String[]{fymc});
                     }
@@ -2626,7 +2626,7 @@ public class NurseworkSer extends BaseManagerImp<ImHzry, Integer> {
         if (oldRecord.getYplx() == FymxYplxEnum.NOT_MEDICINE.getValue()) {
             FeeYlsfxmOutResp feeYlsfxmOutResp = feeYlsfxmOutSer.getById(fyxh);
             if (FeeYlsfxmXmlxEnum.MATERIALS.equals(feeYlsfxmOutResp.getXmlx())) {
-                List<HighQualityConsumablesResp> list = mdiVejkfBatchViewService.queryHighQualityConsumables(Arrays.asList(new String[]{imHzry.getBrbq() + "-" + feeYlsfxmOutResp.getXmbm()}));
+                    List<HighQualityConsumablesResp> list = mdiVejkfBatchViewService.queryHighQualityConsumables(Arrays.asList(new String[]{imHzry.getBrbq() + "-" + feeYlsfxmOutResp.getFyxh()}));
                 if (CollectionUtil.isEmpty(list) || StrUtil.isBlank(list.get(0).getAmount())) {
                     throw BaseException.create("ERROR_NURSEWORK_ZYBRRY_00056", new String[]{oldRecord.getFymc()});
                 }

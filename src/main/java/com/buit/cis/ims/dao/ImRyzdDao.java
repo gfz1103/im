@@ -6,8 +6,8 @@ import com.buit.cis.ims.model.ImRyzd;
 import com.buit.cis.ims.request.ImRyzdReq;
 import com.buit.cis.ims.response.ImRyzdResp;
 import com.buit.commons.EntityDao;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -107,4 +107,13 @@ public interface ImRyzdDao extends EntityDao<ImRyzd,Long> {
 	 * @param zdxh 诊断序号
 	 */
 	void updateAdmittingDiagnosis(Integer zyh, Integer zdxh);
+
+	/**
+	 * 查询病人所有诊断
+	 *
+	 * @param zyh  住院号
+	 * @param zxlb 中西类别 1：西医 2：中医
+	 * @return
+	 */
+	List<ImRyzdModel> findListByZyhAndZxlb(@Param("zyh") Integer zyh, @Param("zxlb") int zxlb);
 }
