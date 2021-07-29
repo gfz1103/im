@@ -574,7 +574,7 @@ public class CisZyHzsqSer extends BaseManagerImp<CisZyHzsq,Integer> {
 			dto.setContent(ObjectToTypes.parseString(map.get("OFFICENAME")));
 			dtoList.add(dto);
 			wait.setContents(dtoList);
-			wait.setData(BeanUtil.fillBeanWithMapIgnoreCase(map, new CisZyHzsqMessDto(), true));
+			wait.setData(new CisZyHzsqMessDto(sqxh));
 			wait.setRelativePath("1");
 			List<Integer> userIdList = new ArrayList<Integer>();
 			CisZyHzyqdx cisZyHzyqdx = new CisZyHzyqdx(); 

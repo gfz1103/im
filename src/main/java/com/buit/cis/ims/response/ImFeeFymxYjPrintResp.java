@@ -45,6 +45,8 @@ public class ImFeeFymxYjPrintResp {
     private BigDecimal ycsl;
     @ApiModelProperty(value="单价")
     private BigDecimal ypdj;
+    @ApiModelProperty(value="备注信息")
+    private String bzxx;
 	public Integer getZyh() {
 		return zyh;
 	}
@@ -134,6 +136,12 @@ public class ImFeeFymxYjPrintResp {
 	}
 	public void setYpdj(BigDecimal ypdj) {
 		this.ypdj = ypdj;
+	}
+	public String getBzxx() {
+		return bzxx;
+	}
+	public void setBzxx(String bzxx) {
+		this.bzxx = bzxx;
 	}
 	
    

@@ -51,7 +51,7 @@ public abstract class BaseSpringController extends BaseController{
 			//如果开发环境 为了测试方便
             if(env.getProperty(ACTIVE)==null||env.getProperty(ACTIVE).equals("false")) {
                 loginUser =new SysUser();
-                loginUser.setUserId(0);
+                loginUser.setUserId(1000021);
                 loginUser.setHospitalName("上海天佑医院");
                 loginUser.setUserName("超级管理员");
                 loginUser.setHospitalId(310112001);
@@ -71,11 +71,17 @@ public abstract class BaseSpringController extends BaseController{
 	 * @return 客户端Ip
 	 */
     public String getIpAddress(){
-        String xff = request.getHeader("REQUEST-IP");
-        if (StrUtil.isEmpty(xff)) {
+        String xff = StrUtil.isEmpty(request.getHeader("REQUEST-IP")) ? request.getParameter("REQUEST-IP") : request.getHeader("REQUEST-IP");
+        String splitIp = null;
+        if(StrUtil.isNotEmpty(request.getHeader("X-Forwarded-For"))){
+            String [] strings = request.getHeader("X-Forwarded-For").split(",");
+            splitIp = strings[0];
+        }
+        logger.info("X-Forwarded-For ===> " + request.getHeader("X-Forwarded-For") + "     splitIp ===>  " + splitIp);
+        if (StrUtil.isEmpty(xff) && StrUtil.isEmpty(splitIp)) {
             throw BaseException.create("ERROR_IP_0001");
-        }else{
-            return xff;
+        }else {
+            return StrUtil.isEmpty(xff) || xff.equals("null") ? splitIp : xff;
         }
     }
 }

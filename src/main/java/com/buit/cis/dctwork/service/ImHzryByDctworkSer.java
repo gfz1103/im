@@ -934,7 +934,7 @@ public class ImHzryByDctworkSer extends BaseManagerImp<ImHzry, Integer>{
 		params.put("YSGH", userId);
 		params.put("JGID", manageUnit);
 		params.put("LSYZ", body.get("lsyz"));
-		
+		params.put("XMLX", body.get("xmlx"));
 		//取当前用户的最大抗生素等级
 		String[] strLevel = null;
 		int level = 0;

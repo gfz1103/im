@@ -15,13 +15,20 @@ import com.buit.cis.dctwork.request.*;
 import com.buit.cis.dctwork.response.*;
 import com.buit.cis.dctwork.service.CisHzyzSer;
 import com.buit.cis.dctwork.service.CisHzyzZtSer;
+import com.buit.cis.ims.enums.OperateLogCategoryEnum;
+import com.buit.cis.ims.enums.OperateLogDocPrintStatusEnum;
+import com.buit.cis.ims.enums.OperateLogDocPrintTypeEnum;
 import com.buit.cis.ims.model.ImHzry;
+import com.buit.cis.ims.model.ImOperateLog;
 import com.buit.cis.ims.response.ImHzryYpSumbitResp;
 import com.buit.cis.ims.service.ImHzrySer;
+import com.buit.cis.ims.service.ImOperateLogSer;
 import com.buit.cis.ims.service.ImRyzdSer;
 import com.buit.cis.nurse.request.CisHzyzJySqdReq;
 import com.buit.commons.BaseSpringController;
 import com.buit.commons.PageQuery;
+import com.buit.commons.SysUser;
+import com.buit.constans.TableName;
 import com.buit.file.IReportExportFileSer;
 import com.buit.mms.cmo.response.IOptSssqResp;
 import com.buit.mms.cmo.service.OptSssqService;
@@ -29,6 +36,7 @@ import com.buit.system.model.DicKszd;
 import com.buit.system.response.DiccLdxmglApiResp;
 import com.buit.system.service.DicKszdOutSer;
 import com.buit.utill.DateUtils;
+import com.buit.utill.RedisFactory;
 import com.buit.utill.ReturnEntity;
 import com.buit.utill.ReturnEntityUtil;
 import com.github.pagehelper.PageHelper;
@@ -48,6 +56,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -88,6 +97,12 @@ public class CisHzyzCtr extends BaseSpringController {
 
     @DubboReference
     private DicKszdOutSer dicKszdOutSer;
+
+    @Autowired
+    private ImOperateLogSer imOperateLogSer;
+
+    @Autowired
+    private RedisFactory redisFactory;
 
     @RequestMapping("/getDoctorAdviceBrQuery")
     @ResponseBody
@@ -341,7 +356,15 @@ public class CisHzyzCtr extends BaseSpringController {
     @ResponseBody
     @ApiOperation(value = "住院检查申请单查询-分页", httpMethod = "POST")
     public ReturnEntity<PageInfo<CisJcsq01QueryResp>> queryZyJcSqdList(CisJcsq01QueryReq cisJcsq01QueryReq, PageQuery page) {
-        return ReturnEntityUtil.success(cisjcsqd01Service.queryZyJcSqdList(cisJcsq01QueryReq, page));
+        PageInfo<CisJcsq01QueryResp> pageInfo = cisjcsqd01Service.queryZyJcSqdList(cisJcsq01QueryReq, page);
+        List<CisJcsq01QueryResp> list = pageInfo.getList();
+        if (CollectionUtil.isNotEmpty(list)) {
+            for (CisJcsq01QueryResp resp : list) {
+                resp.setDybz(imOperateLogSer.getLastPrintStatus(TableName.CIS_JCSQ01, resp.getJcxh()));
+            }
+        }
+        pageInfo.setList(list);
+        return ReturnEntityUtil.success(pageInfo);
     }
 
     @RequestMapping("/queryAllergicDrugsCode")
@@ -356,10 +379,25 @@ public class CisHzyzCtr extends BaseSpringController {
     @ApiOperation(value = "检查申请单打印")
     public void hosCheckFormPrintFile(@RequestParam("jcxh") Integer jcxh, HttpServletResponse response) {
         String jasperName = "jrxml/HosCheckForm.jasper";
+        SysUser sysUser = this.getUser();
         Map<String, Object> map = imHzrySer.getEntityMapper()
-                .queryPatientJcsqd(this.getUser().getHospitalId(), jcxh);
+                .queryPatientJcsqd(sysUser.getHospitalId(), jcxh);
         map.put("TITLE", this.getUser().getHospitalName() + "检查申请单");
         iReportExportFileSer.reportHtmlForStream(map, jasperName, response);
+
+        //增加操作日志
+        ImOperateLog log = new ImOperateLog();
+        log.setJlxh(redisFactory.getTableKey(TableName.DB_NAME, TableName.IM_OPERATE_LOG));
+        log.setCategory(OperateLogCategoryEnum.DOCUMENT_PRINT.getValue());
+        log.setType(OperateLogDocPrintTypeEnum.EXAMINATION_ASSAY_PAPER.getValue());
+        log.setStatus(OperateLogDocPrintStatusEnum.FIRST_PRINT.getValue());
+        Integer zyh = (Integer) map.get("ZYH");
+        log.setZyh(zyh);
+        log.setDataTable(TableName.CIS_JCSQ01);
+        log.setDataId(String.valueOf(jcxh));
+        log.setOperateUser(sysUser.getUserId());
+        log.setOperateTime(DateUtils.getNow());
+        imOperateLogSer.insert(log);
     }
 
     @GetMapping("/hosCheckGuideFormPrintFile")
@@ -401,6 +439,23 @@ public class CisHzyzCtr extends BaseSpringController {
             }
         }
         iReportExportFileSer.reportHtmlForStream(list, map, jasperName, response);
+
+        Integer userId = getUser().getUserId();
+        Timestamp now = DateUtils.getNow();
+        //增加操作日志
+        for (Integer jcxh : ids) {
+            ImOperateLog log = new ImOperateLog();
+            log.setJlxh(redisFactory.getTableKey(TableName.DB_NAME, TableName.IM_OPERATE_LOG));
+            log.setCategory(OperateLogCategoryEnum.DOCUMENT_PRINT.getValue());
+            log.setType(OperateLogDocPrintTypeEnum.EXAMINATION_ASSAY_PAPER.getValue());
+            log.setStatus(OperateLogDocPrintStatusEnum.FIRST_PRINT.getValue());
+            log.setZyh(zyh);
+            log.setDataTable(TableName.CIS_JCSQ01);
+            log.setDataId(String.valueOf(jcxh));
+            log.setOperateUser(userId);
+            log.setOperateTime(now);
+            imOperateLogSer.insert(log);
+        }
     }
 
     @RequestMapping("/queryMedicalAdviceInfoByZyh")

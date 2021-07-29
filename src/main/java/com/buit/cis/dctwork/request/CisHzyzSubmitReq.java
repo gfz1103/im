@@ -31,6 +31,9 @@ public class CisHzyzSubmitReq {
 	@ApiModelProperty(value="机构id", hidden = true)
 	private Integer jgid;
 	
+	@ApiModelProperty(value="项目类型(急诊2,出院3)")
+	private Integer xmlx;
+	
 
 	public Integer getZyh() {
 		return zyh;
@@ -78,6 +81,14 @@ public class CisHzyzSubmitReq {
 
 	public void setJgid(Integer jgid) {
 		this.jgid = jgid;
+	}
+
+	public Integer getXmlx() {
+		return xmlx;
+	}
+
+	public void setXmlx(Integer xmlx) {
+		this.xmlx = xmlx;
 	}
 	
 	

@@ -630,6 +630,9 @@ public class TableName {
 
 	//药品费用超出结算时间记录表 药品费用超出结算时间点时，保存其费用日期，保证其能在结算时间段内查询到，然后将其费用日期改为记账日期（作废时回从本表再重新改回）
 	public static final String IM_DRUGS_OUT_RANGE_LOG = "IM_DRUGS_OUT_RANGE_LOG";
+
+	//患者住院操作日志表
+	public static final String IM_OPERATE_LOG = "IM_OPERATE_LOG";
 }
 
 

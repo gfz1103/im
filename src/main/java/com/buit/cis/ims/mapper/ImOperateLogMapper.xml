@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 患者住院操作日志 -->
+<mapper namespace="com.buit.cis.ims.dao.ImOperateLogDao">
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        JLXH as jlxh,CATEGORY as category,TYPE as type,STATUS as status,ZYH as zyh,DATA_TABLE as dataTable,DATA_ID as dataId,OPERATE_USER as operateUser,OPERATE_TIME as operateTime
+    </sql>
+
+    <insert id="insert">
+        INSERT INTO IM_OPERATE_LOG (
+            JLXH ,
+            CATEGORY ,
+            TYPE ,
+            STATUS ,
+            ZYH ,
+            DATA_TABLE ,
+            DATA_ID ,
+            OPERATE_USER ,
+            OPERATE_TIME 
+        ) VALUES (
+            #{jlxh} ,
+            #{category} ,
+            #{type} ,
+            #{status} ,
+            #{zyh} ,
+            #{dataTable} ,
+            #{dataId} ,
+            #{operateUser} ,
+            #{operateTime} 
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE IM_OPERATE_LOG SET
+            CATEGORY = #{category} ,
+            TYPE = #{type} ,
+            STATUS = #{status} ,
+            ZYH = #{zyh} ,
+            DATA_TABLE = #{dataTable} ,
+            DATA_ID = #{dataId} ,
+            OPERATE_USER = #{operateUser} ,
+            OPERATE_TIME = #{operateTime} 
+        WHERE 
+            JLXH = #{jlxh} 
+    </update>
+
+    <update id="updateByEntity">
+        UPDATE IM_OPERATE_LOG
+        <set>
+            <if test="@sqlt.Ognl@isNotEmpty(category)">
+                CATEGORY = #{category},
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(type)">
+                TYPE = #{type},
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(status)">
+                STATUS = #{status},
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                ZYH = #{zyh},
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(dataTable)">
+                DATA_TABLE = #{dataTable},
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(dataId)">
+                DATA_ID = #{dataId},
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(operateUser)">
+                OPERATE_USER = #{operateUser},
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(operateTime)">
+                OPERATE_TIME = #{operateTime},
+            </if>
+        </set>
+        WHERE
+        JLXH = #{jlxh}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM IM_OPERATE_LOG WHERE
+        JLXH = #{jlxh} 
+    </delete>
+
+    <delete id="removeByEntity">
+        DELETE FROM IM_OPERATE_LOG
+        <include refid="where"/>
+    </delete>
+
+    <select id="getById" resultType="ImOperateLog">
+        SELECT
+        <include refid="columns"/>
+        FROM IM_OPERATE_LOG
+        WHERE
+        JLXH = #{jlxh}
+    </select>
+
+    <sql id="where">
+        <where>
+            <if test="@sqlt.Ognl@isNotEmpty(jlxh)">
+                AND JLXH = #{jlxh}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(category)">
+                AND CATEGORY = #{category}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(type)">
+                AND TYPE = #{type}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(status)">
+                AND STATUS = #{status}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(zyh)">
+                AND ZYH = #{zyh}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(dataTable)">
+                AND DATA_TABLE = #{dataTable}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(dataId)">
+                AND DATA_ID = #{dataId}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(operateUser)">
+                AND OPERATE_USER = #{operateUser}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(operateTime)">
+                AND OPERATE_TIME = #{operateTime}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findByEntityCount" resultType="long">
+        SELECT count(*) FROM IM_OPERATE_LOG
+        <include refid="where"/>
+    </select>
+
+    <select id="findByEntity" resultType="ImOperateLog">
+        SELECT
+        <include refid="columns"/>
+        FROM IM_OPERATE_LOG
+        <include refid="where"/>
+
+        <if test="@sqlt.Ognl@orderIsNotEmpty(sortColumns)">
+            ORDER BY ${sortColumns}
+        </if>
+    </select>
+    <!--     业务sql      -->
+    <select id="getLastPrintStatus" resultType="java.lang.Integer">
+        SELECT
+            STATUS
+        FROM
+            IM_OPERATE_LOG
+        WHERE
+            DATA_TABLE = #{tableName}
+            AND DATA_ID = #{dataId}
+            AND CATEGORY = 3
+        ORDER BY
+            OPERATE_TIME desc
+        LIMIT 1
+    </select>
+</mapper>
+

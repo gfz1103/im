@@ -31,6 +31,9 @@ public class CisYzkpdyjl  extends  PageQuery{
 	//@ApiModelProperty(value="打印标志")
     /** 打印标志 */
     private Integer dybz;
+    //@ApiModelProperty(value="医嘱类别")
+    /** 打印标志 */
+    private Integer yzlb;
 
     /** 设置:记录序号  */
     public void setId(Integer value) {
@@ -94,6 +97,13 @@ public class CisYzkpdyjl  extends  PageQuery{
     public Integer getDybz() {
         return dybz;
     }
+	
+	public void setYzlb(Integer yzlb) {
+		this.yzlb = yzlb;
+	}
 
+	public Integer getYzlb() {
+		return yzlb;
+	}
 
 }

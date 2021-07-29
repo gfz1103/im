@@ -398,7 +398,8 @@
 			c.fhgh,
 			c.ycsl,
 			c.ypdj,
-			c.yzlx 
+			c.yzlx,
+			c.bzxx 
 		from
 			im_fee_fymx_yj a,
 			cis_hzyz b,
@@ -428,7 +429,8 @@
 			b.fhgh,
 			b.ycsl,
 			b.ypdj,
-			b.yzlx  
+			b.yzlx,
+			b.bzxx  
 		from 	
 			im_fee_fymx a,
 			cis_hzyz b

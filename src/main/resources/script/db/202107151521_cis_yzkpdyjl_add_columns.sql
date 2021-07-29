@@ -1,0 +1,2 @@
+ALTER TABLE `cis_yzkpdyjl` 
+ADD COLUMN `YZLB` int(0) NULL COMMENT '医嘱类别' AFTER `DYBZ`;

@@ -21,6 +21,9 @@ public class CisHzyzCancelPrintResp extends PageQuery{
 	*/
 	private static final long serialVersionUID = 1L;
 
+	@ApiModelProperty(value="主键")
+	private Integer id;
+	
 	@ApiModelProperty(value="住院号码")
 	private String zyhm;
 	
@@ -92,6 +95,14 @@ public class CisHzyzCancelPrintResp extends PageQuery{
 	
 	@ApiModelProperty(value="医嘱组号")
 	private Integer yzzh;
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getZyhm() {
 		return zyhm;

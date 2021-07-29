@@ -1608,5 +1608,19 @@ public interface CisHzyzDao extends EntityDao<CisHzyz, Integer> {
      * @throws
      */
     List<CisHzyzKcdjResp> queryYpKcdjInfo(Map<String, Object> parameters);
+    
+
+    /**
+     * 查询未复核出院医嘱
+     * @Title: queryNotReviewedDischargeOrder
+     * @Description: TODO(这里用一句话描述这个方法的作用)
+     * @param @param zyh
+     * @param @param jgid
+     * @param @return    设定文件
+     * @return String    返回类型
+     * @author 龚方舟
+     * @throws
+     */
+    String queryNotReviewedDischargeOrder(@Param("zyh") Integer zyh, @Param("jgid") Integer jgid);
 
 }

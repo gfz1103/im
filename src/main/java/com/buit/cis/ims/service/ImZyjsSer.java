@@ -1,6 +1,8 @@
 package com.buit.cis.ims.service;
 
 
+import cn.hutool.core.date.DateUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.buit.aop.lock.Locked;
 import com.buit.cis.ims.dao.*;
 import com.buit.cis.ims.enums.CypbEnum;
@@ -705,10 +707,14 @@ public class ImZyjsSer extends BaseManagerImp<ImZyjs, Integer> {
     public ReturnEntity<String> saveSettleAccounts(SaveSettleAccountsReq req, SysUser sysUser, String ip) {
         //结算时操作时间点
         Timestamp now = DateUtils.getNow();
+        logger.info("住院结算参数:" + "操作时间-" + DateUtils.formatToDateTime(now) + ", req-" + JSONObject.toJSONString(req));
         Integer jgid = sysUser.getHospitalId();
         Integer userId = sysUser.getUserId();
         //门诊类别，区分医保线路
         Integer mzlb = opMzlbService.getMzlb(sysUser.getHospitalId(), ip);
+        if (mzlb == null) {
+            throw BaseException.create("ERROR_REG_0070", new String[]{ip});
+        }
         //判断VIP
         Boolean isVIP = zyjsPreService.isVIP(jgid, String.valueOf(req.getBrxz()));
         //上级病人性质
@@ -1017,7 +1023,7 @@ public class ImZyjsSer extends BaseManagerImp<ImZyjs, Integer> {
                 dao.doSqlUpdate(invoiceSql.toString(), invoiceInfo);*//*
             }*/
         //医保开始
-        logger.info("住院实结算开始1：");
+        logger.info("住院医保实时结算开始：" + DateUtil.now());
         String YBSYPB = sysXtcsCacheSer.getCsz(jgid, "YBSYPB");
         String YBXZ = sysXtcsCacheSer.getCsz(jgid, "YBXZ");
         if (sjxzs.equals(YBXZ) && "0".equals(YBSYPB)) {
@@ -1109,7 +1115,7 @@ public class ImZyjsSer extends BaseManagerImp<ImZyjs, Integer> {
         } else {
             imJsmxDao.insertJsMx(imJsmxParameters);
         }
-
+        logger.info("住院结算结束:" + "结束时间-" + DateUtil.now());
         //医保结束
         return ReturnEntityUtil.success();
     }

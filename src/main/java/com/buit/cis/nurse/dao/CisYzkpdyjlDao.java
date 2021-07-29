@@ -3,6 +3,8 @@ package com.buit.cis.nurse.dao;
 import com.buit.commons.EntityDao;
 
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -27,4 +29,7 @@ public interface CisYzkpdyjlDao extends EntityDao<CisYzkpdyjl,Integer>{
 	  * @throws
 	  */
 	 void cancelKpdy(@Param("yzzh") Integer yzzh, @Param("yysj") Timestamp yysj);
+	 
+	 List<Map<String, Object>> reTypeCardInfo(Map<String, Object> parameters);
+	 
 }

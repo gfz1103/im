@@ -1655,6 +1655,15 @@ public class NurseworkSer extends BaseManagerImp<ImHzry, Integer> {
             codeMsg.append("cyz|");
         }
         
+        String yzmc = cisHzyzDao.queryNotReviewedDischargeOrder(zyh, jgid);
+        if(StrUtil.isNotBlank(yzmc)) {
+        	 returnEntity.setError("ERROR_NURSEWORK_ZYBRRY_00062", new String[] {
+        			 yzmc
+        	 });
+             expiredMsg.append(returnEntity.getMessage());
+             codeMsg.append("cyyz|");
+        }
+        
 //        l = imFeeFymxDao.queryAfterCyIsExistCostCount(jgid, zyh, cyrq);
 //        if(l > 0) {
 //        	 returnEntity.setError("ERROR_NURSEWORK_ZYBRRY_00054", null);

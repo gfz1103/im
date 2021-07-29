@@ -2613,6 +2613,9 @@
 			and a.jgid = #{JGID}   
 			and (a.zfbz = 0 or a.yzzf is null)
 			and (a.kjywsp &lt;&gt; 1 or a.kjywsp is null)
+			<if test="@sqlt.Ognl@isNotEmpty(XMLX)"> 
+				and a.xmlx = #{XMLX}
+     		</if>
 			order by a.yzzh
 	</select>
 	
@@ -2683,54 +2686,54 @@
 		       b.YEPB as YEPB,
 		       b.YZZXSJ as YZZXSJ,
 		       b.DS as DS
-		  FROM dic_sypc a, cis_hzyz b, im_dic_ypyf c, im_hzry d, drugs_typk e
-		 WHERE b.YPXH = e.YPXH
-		   and a.PCBM = b.SYPC
+		  from dic_sypc a, cis_hzyz b, im_dic_ypyf c, im_hzry d, drugs_typk e
+		 where b.ypxh = e.ypxh
+		   and a.pcbm = b.sypc
 		   <choose>
 	            <when test="@sqlt.Ognl@isNotEmpty(lsyz) and lsyz == 0">
-	                and b.LSYZ = 0
-	                AND b.LSBZ = 0
+	                and b.lsyz = 0
+	                and b.lsbz = 0
 	            </when>
 	            <when test="@sqlt.Ognl@isNotEmpty(lsyz) and lsyz == 1">
-	                and b.LSYZ = 1 and date_format(b.KSSJ, '%Y-%m-%d') = #{yysj}
+	                and b.lsyz = 1 and date_format(b.kssj, '%Y-%m-%d') = #{yysj}
 	            </when>
 	            <otherwise>
-	            	and ( b.LSYZ = 0 or (b.LSYZ = 1 and date_format(b.KSSJ, '%Y-%m-%d') = #{yysj}))
+	            	and ( b.lsyz = 0 or (b.lsyz = 1 and date_format(b.kssj, '%Y-%m-%d') = #{yysj}))
 	            </otherwise>
            </choose>
-		   and b.ZYH = d.ZYH
-		   and c.YPYF = b.YPYF
-		   and d.CYPB = 0
-		   AND (b.ZYH in 
-				<foreach collection="zyhList" item="zyh" open="(" close=")" separator="," >
-                	#{zyh}
-        		</foreach>	
-			)
-		   AND (b.BRBQ = #{bqdm})
-		   AND (b.YCSL > 0)
+		   and b.zyh = d.zyh
+		   and c.ypyf = b.ypyf
+		   and d.cypb = 0
+		   <if test="@sqlt.Ognl@isNotEmpty(zyhList)">
+                and b.zyh in 
+			   <foreach collection="zyhList" item="zyh" open="(" close=")" separator="," >
+	               	#{zyh}
+	       	   </foreach>
+	       	    and not exists (select 1
+		          from cis_yzkpdyjl dyjl
+		         where b.jlxh = dyjl.yzxh
+		           and dyjl.dybz = 1
+		           and date_format(dyjl.yysj, '%Y-%m-%d') &gt;= #{yysj}
+		           and date_format(dyjl.yysj, '%Y-%m-%d') &lt; date_add(#{yysj}, interval 1 day))	
+           </if>
+		   and b.brbq = #{bqdm}
+		   and b.ycsl &gt; 0
 		   <choose>
 	            <when test="@sqlt.Ognl@isNotEmpty(xmlb)">
-	                AND ((((#{yzlb} = 2 OR #{yzlb} = 3 OR #{yzlb} = 4 OR #{yzlb} = 7) AND b.YPLX > 0 
-		   			AND b.XMLX = 1) OR #{yzlb} = 5 OR #{yzlb} = 9) AND c.XMLB = #{yzlb})
+	                and ((((#{yzlb} = 2 or #{yzlb} = 3 or #{yzlb} = 4 or #{yzlb} = 7) and b.yplx &gt; 0 
+		   			and b.xmlx = 1) or #{yzlb} = 5 or #{yzlb} = 9) and c.xmlb = #{yzlb})
 	            </when>
 	            <otherwise>
-	            	AND c.XMLB = #{yzlb}
+	            	and c.xmlb = #{yzlb}
 	            </otherwise>
            </choose>
-		   AND (b.YSBZ = 0 OR (b.YSBZ = 1 AND b.YSTJ = 1))
-		   AND (b.YZPB = 0)
-		   and b.ZFBZ = 0
-		   and b.JGID = #{jgid}
-		   and b.YPLX &gt; 0
+		   and (b.ysbz = 0 or (b.ysbz = 1 and b.ystj = 1))
+		   and (b.yzpb = 0)
+		   and b.zfbz = 0
+		   and b.jgid = #{jgid}
+		   and b.yplx &gt; 0
 		   and (#{fhbz} = 0 or b.FHBZ = 1)
-		   and not exists
-		 (select 1
-		          from cis_yzkpdyjl dyjl
-		         where b.JLXH = dyjl.YZXH
-		           and dyjl.DYBZ = 1
-		           and date_format(dyjl.YYSJ, '%Y-%m-%d') &gt;= #{yysj}
-		           and date_format(dyjl.YYSJ, '%Y-%m-%d') &lt; date_add(#{yysj}, interval 1 day))
-		 ORDER BY d.BRCH ASC, b.YZZH ASC
+		 order by d.brch asc, b.yzzh asc
 	</select>
 	
 	<!-- 查询医嘱口服执行单打印信息  -->
@@ -2847,43 +2850,62 @@
 	
 	<!-- 查询取消打印数据  -->
 	<select id="queryCancelPrintList"  resultType="com.buit.cis.nurse.response.CisHzyzCancelPrintResp">
-		SELECT RY.ZYHM as ZYHM,
-		       RY.BRXM as BRXM,
-		       A.JLXH as JLXH,
-		       A.KSSJ as KSSJ,
-		       A.YZMC as YZMC,
-		       A.YCJL as YCJL,
-		       A.YCSL as YCSL,
-		       A.SYPC as SYPC,
-		       A.YZZXSJ as YZZXSJ,
-		       A.SRCS as SRCS,
-		       A.YPYF as YPYF,
-		       A.YPDJ as YPDJ,
-		       A.YSGH as YSGH,
-		       A.TZSJ as TZSJ,
-		       A.TZYS as TZYS,
-		       A.CZGH as CZGH,
-		       A.FHGH as FHGH,
-		       A.FYFS as FYFS,
-		       A.BZXX as BZXX,
-		       A.YPCD as YPCD,
-		       A.YFSB as YFSB,
-		       B.DYSJ as DYSJ,
-		       B.YYSJ as YYSJ,
-		       A.YZZH as YZZH
-		  FROM CIS_HZYZ A
-		  JOIN CIS_YZKPDYJL B
-		    ON A.JLXH = B.YZXH
-		  JOIN IM_HZRY RY
-		    ON A.ZYH = RY.ZYH
-		 WHERE B.DYBZ = '1'
-		   AND A.ZYH = B.ZYH
-		   AND B.ZYH in 
+		select ry.zyhm,
+		       ry.brxm,
+		       a.jlxh,
+		       a.kssj,
+		       a.yzmc,
+		       a.ycjl,
+		       a.ycsl,
+		       a.sypc,
+		       a.yzzxsj,
+		       a.srcs,
+		       a.ypyf,
+		       a.ypdj,
+		       a.ysgh,
+		       a.tzsj,
+		       a.tzys,
+		       a.czgh,
+		       a.fhgh,
+		       a.fyfs,
+		       a.bzxx,
+		       a.ypcd,
+		       a.yfsb,
+		       b.dysj,
+		       b.yysj,
+		       a.yzzh,
+		       b.id
+		  from cis_hzyz a
+		  join cis_yzkpdyjl b
+		    on a.jlxh = b.yzxh
+		  join im_hzry ry
+		    on a.zyh = ry.zyh
+		 where b.dybz = 1
+		   and a.zyh = b.zyh
+		   <if test="@sqlt.Ognl@isNotEmpty(yzlb)">
+                  and b.yzlb = #{yzlb}
+           </if>
+           <if test="@sqlt.Ognl@isNotEmpty(lsyz)">
+                  and a.lsyz = #{lsyz}
+           </if>
+		   and b.zyh in 
 		   <foreach collection="zyhList" item="zyh" open="(" close=")" separator="," >
                 	#{zyh}
-           </foreach>	
-		   and date_format(B.YYSJ, '%Y-%m-%d') &gt;= #{yysj}
-		 order by B.YYSJ desc, A.YZZH asc
+           </foreach>
+           <if test="@sqlt.Ognl@isNotEmpty(sfyyk) and sfyyk == 0">
+                and a.ypxh not in
+                <foreach collection="yykList" item="z" open="(" close=")" separator="," >
+               		#{z}
+       	   		</foreach>	
+           </if>
+           <if test="@sqlt.Ognl@isNotEmpty(sfyyk) and sfyyk == 1">
+                and a.ypxh in
+                <foreach collection="yykList" item="z" open="(" close=")" separator="," >
+               		#{z}
+       	   		</foreach>	
+           </if>	
+		   and date_format(b.yysj, '%Y-%m-%d') = #{yysj}
+		 order by b.yysj desc, a.yzzh asc
 	</select>
 	
 	<!-- 查询医嘱会诊申请单号 -->
@@ -3540,10 +3562,18 @@
 		   and b.zyh = d.zyh
 		   and c.ypyf = b.ypyf
 		   and d.cypb = 0
-		   and b.ZYH in 
-		   <foreach collection="zyhList" item="zyh" open="(" close=")" separator="," >
-               	#{zyh}
-       	   </foreach>	
+		   <if test="@sqlt.Ognl@isNotEmpty(zyhList)">
+                and b.zyh in 
+			   <foreach collection="zyhList" item="zyh" open="(" close=")" separator="," >
+	               	#{zyh}
+	       	   </foreach>
+	       	    and not exists (select 1
+		          from cis_yzkpdyjl dyjl
+		         where b.jlxh = dyjl.yzxh
+		           and dyjl.dybz = 1
+		           and date_format(dyjl.yysj, '%Y-%m-%d') &gt;= #{yysj}
+		           and date_format(dyjl.yysj, '%Y-%m-%d') &lt; date_add(#{yysj}, interval 1 day))	
+           </if>
 		   and b.brbq = #{bqdm}
 	       and c.xmlb = #{yzlb}
 		   and (b.ysbz = 0 or (b.ysbz = 1 and b.ystj = 1))
@@ -3562,14 +3592,7 @@
                 <foreach collection="yykList" item="z" open="(" close=")" separator="," >
                		#{z}
        	   		</foreach>	
-           </if>
-		   and not exists
-		 (select 1
-		          from cis_yzkpdyjl dyjl
-		         where b.jlxh = dyjl.yzxh
-		           and dyjl.dybz = 1
-		           and date_format(dyjl.YYSJ, '%Y-%m-%d') &gt;= #{yysj}
-		           and date_format(dyjl.YYSJ, '%Y-%m-%d') &lt; date_add(#{yysj}, interval 1 day))
+           </if>		  
 		 order by d.brch, b.yzzh
 	</select>
    
@@ -3892,6 +3915,21 @@
 	           	 	#{z}
 	        	</foreach>
 	       </if>   
+   </select>
+   
+    <!-- 查询未复核出院医嘱 -->
+   <select id="queryNotReviewedDischargeOrder" resultType="java.lang.String">
+		select yzmc
+			from cis_hzyz
+		where (ydlb = 303 or ydlb = 304)
+		   and fhbz = 0
+		   and zfbz = 0
+		   and lsbz = 0
+		   and ysbz = 1
+		   and ystj = 1
+		   and lsyz = 1
+		   and zyh = #{zyh}
+		   and jgid = #{jgid}
    </select>
 
 </mapper>

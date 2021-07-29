@@ -25,6 +25,7 @@ import com.buit.cis.ims.model.ImHzry;
 import com.buit.cis.ims.service.ImHzrySer;
 import com.buit.cis.nurse.request.CisHzyzCardCancelReq;
 import com.buit.cis.nurse.request.CisHzyzCardQueryReq;
+import com.buit.cis.nurse.request.CisHzyzCardReTypeReq;
 import com.buit.cis.nurse.request.CisHzyzCardReq;
 import com.buit.cis.nurse.response.CisHzyzCancelPrintResp;
 import com.buit.cis.nurse.response.CisHzyzCardKsResp;
@@ -179,12 +180,9 @@ public class NurseOrderCardCtr extends BaseSpringController{
     @ResponseBody
     @ApiOperation(value="医嘱卡片取消打印查询" ,httpMethod="POST")
     public ReturnEntity<PageInfo<CisHzyzCancelPrintResp>> queryCancelPrintList(@RequestBody CisHzyzCardReq cisHzyzCardReq){
-		Map<String, Object> parameters = new HashMap<String, Object>(16);
-		parameters.put("zyhList", cisHzyzCardReq.getZyhList());
-		parameters.put("yysj", DateUtil.date().toSqlDate());
 		PageInfo<CisHzyzCancelPrintResp> pageInfo = PageHelper.startPage(
 				cisHzyzCardReq.getPageNum(), cisHzyzCardReq.getPageSize()).doSelectPageInfo(
-						() -> cisHzyzSer.getEntityMapper().queryCancelPrintList(parameters)
+						() -> nurseOrderCardSer.queryCancelPrintList(cisHzyzCardReq, this.getUser().getHospitalId())
 				);
         return ReturnEntityUtil.success(pageInfo);    
     }
@@ -245,5 +243,18 @@ public class NurseOrderCardCtr extends BaseSpringController{
 			iReportExportFileSer.reportHtmlForStream(list, map, jasperName, response);
 		}
     }
+	
+	@GetMapping("/reTypeCardInfo")
+    @ApiOperation(value="卡片重打")
+    public void reTypeCardInfo(@RequestParam("reqStr") String reqStr, HttpServletResponse response){
+		CisHzyzCardReTypeReq cisHzyzCardReTypeReq = JSONUtil.toBean(reqStr, CisHzyzCardReTypeReq.class);
+		List<Map<String, Object>> list = nurseOrderCardSer.reTypeCardInfo(cisHzyzCardReTypeReq, this.getUser());
+		String jasperName = "jrxml/OralCardFileds.jasper";
+		if(cisHzyzCardReTypeReq.getYzlb() != 2) {
+			jasperName = "jrxml/OrderCardsStillDripCardLB.jasper";
+		}
+		iReportExportFileSer.reportHtmlForStream(list, nurseOrderCardSer.getOralCardParameters(), 
+				jasperName, response);
+	}
 	
 }

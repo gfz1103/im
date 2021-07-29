@@ -941,7 +941,7 @@
         FHBZ = 0 and YZPB = 0 and LSBZ = 0 and KSSJ &gt; DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s')
         <include refid="iconSql"/>
         ) XKYZ,(select count(*) from CIS_HZYZ where ZYH = t.ZYH and JGID = t.JGID
-        and YZPB = 0 and TZFHBZ = 0 and LSBZ = 0 and TZSJ &gt; DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s')
+        and YZPB = 0 and TZFHBZ = 0 and LSYZ = 0 and LSBZ = 0 and TZSJ &gt; DATE_FORMAT(CURDATE(),'%Y-%m-%d %H:%i:%s')
         <include refid="iconSql"/>
         ) XTYZ,(select count(*) from IM_RCJL where JGID = t.JGID and ZYH = t.ZYH and CZLX = -1) CYZ,
         (select count(*) from SKIN_PSJL where SKIN_PSJL.BRID= t.BRID) GMYWSIGN,
@@ -2338,6 +2338,7 @@
 			(select officename from dic_kszd where id = a.brbq) as BQMC,
 			a.brch as BRCH,
 			a.zyhm as ZYHM,
+			a.zyh as ZYH,
 			b.jcxm as JCXM,
 			case when b.sfjj = 1 then '√' else '' end as JJYES,
 			case when b.sfjj = 0 then '√' else '' end as JJNO,

@@ -367,6 +367,7 @@ public class ImHzrySer extends BaseManagerImp<ImHzry, Integer> {
                     Map<String, Object> xxnrMap = (Map<String, Object>) tempMap.get("xxnr");
                     String jzdyh = StrUtil.null2Str(xxnrMap.get("jzdyh"));
                     //imHzryDao.updateJzdyh(jzdyh, zyh);
+                    cardno = cardno.length()==28?cardno.substring(0,10):cardno;
                     imHzryDao.updateZyybxx(jzdyh, cardno, zyh);
                 }
             } else if ("0".equals(YBSYPB) && !"6021".equals(sjxzs) && cardno != null) {//医保转自费登记撤销
@@ -1155,9 +1156,10 @@ public class ImHzrySer extends BaseManagerImp<ImHzry, Integer> {
             balanceAccountsListRespList = imHzryDao.ztjs(user.getHospitalId(), queryBalanceAccountsPageReq.getZyhm(),
                     queryBalanceAccountsPageReq.getYwlx(), queryBalanceAccountsPageReq.getZzrq(),
                     queryBalanceAccountsPageReq.getBrch());
+
             //查询费用明细中 高价药结算的记录
-            List<BalanceAccountsListResp> fymxZtjsList = imHzryDao.fymxZtjs(user.getHospitalId(), queryBalanceAccountsPageReq.getZyhm(), queryBalanceAccountsPageReq.getYwlx());
-            balanceAccountsListRespList.addAll(fymxZtjsList);
+//            List<BalanceAccountsListResp> fymxZtjsList = imHzryDao.fymxZtjs(user.getHospitalId(), queryBalanceAccountsPageReq.getZyhm(), queryBalanceAccountsPageReq.getYwlx());
+//            balanceAccountsListRespList.addAll(fymxZtjsList);
             for (BalanceAccountsListResp balanceAccountsListResp : balanceAccountsListRespList) {
                 //判断是否是高价药
 //                int count = imFeeFymxDao.findZtjsGjyByZyh(balanceAccountsListResp.getZyh());
@@ -1182,6 +1184,8 @@ public class ImHzrySer extends BaseManagerImp<ImHzry, Integer> {
                 }
                 balanceAccountsListResp.setJsts(String.valueOf(DateUtils.getDaysDiff(balanceAccountsListResp.getKsrq(), balanceAccountsListResp.getZzrq())));
             }
+            //过滤结算开始日期大于结算终止日期的数据
+            balanceAccountsListRespList = balanceAccountsListRespList.stream().filter(r -> r.getKsrq().before(r.getZzrq())).collect(Collectors.toList());
         }
         //发票作废
         if (queryBalanceAccountsPageReq.getJslx() == 10) {
@@ -1189,7 +1193,7 @@ public class ImHzrySer extends BaseManagerImp<ImHzry, Integer> {
 
             //判断是否是高价药
             for (BalanceAccountsListResp balanceAccountsListResp : balanceAccountsListRespList) {
-                balanceAccountsListResp.setGjybz(0);
+//                balanceAccountsListResp.setGjybz(0);
 
                 //计算住院天数
                 String ryrq = DateUtils.toString(balanceAccountsListResp.getRyrq(), DateUtils.YEAR_MONTH_DAY_HOUR_MINUTE_SECOND);

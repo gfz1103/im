@@ -1,25 +1,7 @@
 
 package com.buit.cis.dctwork.controller;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.dubbo.config.annotation.DubboReference;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import cn.hutool.core.collection.CollectionUtil;
 import com.buit.cis.dctwork.model.NisQtyz;
 import com.buit.cis.dctwork.request.DrugsTypkBqyzYpSrfReq;
 import com.buit.cis.dctwork.response.NisQtyzSrfResp;
@@ -53,10 +35,27 @@ import com.buit.utill.ReturnEntityUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 住院医生站输入法
@@ -176,49 +175,69 @@ public class DoctorTypeWriteCtr extends BaseSpringController {
     @ResponseBody
     @ApiOperationSupport(author = "龚方舟")
     @ApiOperation(value = "费用记账项目输入法查询(包含商保性质)", httpMethod = "POST")
-    public ReturnEntity<PageInfo<FeeYlsfxmProjectSrfResp>> queryExpenseAccounting(@Valid FeeYlsfxmProjectSrfReq 
-    		req) {
-    	req.setJgid(getUser().getHospitalId());
-    	PageInfo<FeeYlsfxmProjectSrfResp> pageInfo = feeYlsfxmOutSer.
-    			queryExpenseAccountingByPageInfo(req);
-    	List<String> strList = pageInfo.getList().stream().map(o -> {
-    		Integer fyxh = o.getFyxh();// 费用序号
-			Integer fygb = cisHzyzSer.getfygb(0, fyxh);// 获取费用归并
-			Map<String, Object> params = new HashMap<String, Object>(16);
-			params.put("BRXZ", req.getBrxz());// 病人性质
-			params.put("FYGB", fygb);// 费用归并
-			params.put("TYPE", 0);// 药品类型 0=项目
-			params.put("FYXH", fyxh);// 费用序号
-			//=========================获取医保病人的支付比例支付比例的方法=============================
-			Map<String, Object> zfblMap = cisHzyzSer.getPayProportion(params);
-			BigDecimal zfbl = (BigDecimal) zfblMap.get("ZFBL");
-			o.setZfbl(zfbl);
-			return req.getBqdm() + "-" + o.getFyxh();
-    	}).collect(Collectors.toList());
-    	
-    	logger.error("耗材传参" + strList);
-    	if(CollectionUtils.isNotEmpty(pageInfo.getList())) {
-    		List<HighQualityConsumablesResp> highResp;
-    		try {
-    		    highResp = mdiVejkfBatchViewService.queryHighQualityConsumables(strList);
-    		} catch (Exception e2) {
-    			highResp = new ArrayList<HighQualityConsumablesResp>();
-    		}
-    		if(!highResp.isEmpty()) {
-    			Map<String, HighQualityConsumablesResp> map = highResp.stream().collect(Collectors.toMap(o -> String.format("%s-%s", o.getHisbmbm(), o.getSfdm()), 
-    				e -> e, (e1, e2) -> e1));
-    			
-    			pageInfo.getList().forEach(item -> {
-        			String str = req.getBqdm()+"-"+item.getXmbm();
-        			item.setHcgg(map.get(str)!= null ? map.get(str).getGg() : null);
-        			item.setCjmc(map.get(str)!= null ? map.get(str).getSccjmc() : null);
-        			item.setSl(map.get(str)!= null ? map.get(str).getAmount() : null);
-        		});
-    		}
-    		
-    	}
-    	
-    	return ReturnEntityUtil.success(pageInfo);
+    public ReturnEntity<PageInfo<FeeYlsfxmProjectSrfResp>> queryExpenseAccounting(@Valid FeeYlsfxmProjectSrfReq
+                                                                                          req) {
+        req.setJgid(getUser().getHospitalId());
+        PageInfo<FeeYlsfxmProjectSrfResp> pageInfo = feeYlsfxmOutSer.queryExpenseAccountingByPageInfo(req);
+        List<FeeYlsfxmProjectSrfResp> list = pageInfo.getList();
+        if (CollectionUtils.isEmpty(list)) {
+            return ReturnEntityUtil.success();
+        }
+        //计算自负比列
+        List<String> strList = list.stream().map(o -> {
+            Integer fyxh = o.getFyxh();// 费用序号
+            Integer fygb = cisHzyzSer.getfygb(0, fyxh);// 获取费用归并
+            Map<String, Object> params = new HashMap<String, Object>(16);
+            params.put("BRXZ", req.getBrxz());// 病人性质
+            params.put("FYGB", fygb);// 费用归并
+            params.put("TYPE", 0);// 药品类型 0=项目
+            params.put("FYXH", fyxh);// 费用序号
+            //=========================获取医保病人的支付比例支付比例的方法=============================
+            Map<String, Object> zfblMap = cisHzyzSer.getPayProportion(params);
+            BigDecimal zfbl = (BigDecimal) zfblMap.get("ZFBL");
+            o.setZfbl(zfbl);
+            return req.getBqdm() + "-" + o.getFyxh();
+        }).collect(Collectors.toList());
+
+        logger.error("耗材传参" + strList);
+        //查询物资耗材库存视图
+        List<HighQualityConsumablesResp> highResp = null;
+        try {
+            highResp = mdiVejkfBatchViewService.queryHighQualityConsumables(strList);
+//            String json ="[{\"amount\":\"30\",\"gg\":\"针式：JP2-1-107\",\"hisbmbm\":\"35\",\"hisbmmc\":\"三病区\",\"price\":\"83\",\"sccjmc\":\"江苏雅凯医疗科技有限公司\",\"sfdm\":\"516\",\"unit\":\"支\",\"xh\":\"25支/盒 100支/箱\",\"zcmc\":\"一次性使用肠内营养泵管\"},{\"amount\":\"5\",\"gg\":\"针式：JP2-1-107\",\"hisbmbm\":\"35\",\"hisbmmc\":\"三病区\",\"price\":\"93\",\"sccjmc\":\"江苏雅凯医疗科技有限公司\",\"sfdm\":\"516\",\"unit\":\"支\",\"xh\":\"25支/盒 100支/箱\",\"zcmc\":\"一次性使用肠内营养泵管\"}]";
+//            highResp = JSONArray.parseArray(json, HighQualityConsumablesResp.class);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        if (CollectionUtil.isEmpty(highResp)) {
+            return ReturnEntityUtil.success(pageInfo);
+        }
+
+        //最终返回结果封装
+        List<FeeYlsfxmProjectSrfResp> results = new ArrayList<>();
+        //按项目编号分组（同一个项目有多种价格，每个价格对应一个库存）
+        Map<String, List<HighQualityConsumablesResp>> highRespGroup = highResp.stream().collect(Collectors.groupingBy(HighQualityConsumablesResp::getSfdm));
+
+        for (FeeYlsfxmProjectSrfResp resp : list) {
+            //基础信息
+            FeeYlsfxmProjectSrfResp result = new FeeYlsfxmProjectSrfResp();
+            BeanUtils.copyProperties(resp, result);
+
+            //库存信息
+            List<HighQualityConsumablesResp> highRespListOfFyxm = highRespGroup.get(String.valueOf(resp.getFyxh()));
+            if (CollectionUtils.isNotEmpty(highRespListOfFyxm)) {
+                HighQualityConsumablesResp baseResp = highRespListOfFyxm.get(0);
+                result.setHcgg(baseResp.getGg());
+                result.setCjmc(baseResp.getSccjmc());
+                BigDecimal sl = highRespListOfFyxm.stream().map(r -> new BigDecimal(r.getAmount())).reduce(BigDecimal.ZERO, BigDecimal::add);
+                result.setSl(sl.toString());
+            }
+            results.add(result);
+        }
+        //将数据填充进分页对象里
+        pageInfo.setList(results);
+
+        return ReturnEntityUtil.success(pageInfo);
     }
     
     @RequestMapping("/queryProjectStackAccounting")

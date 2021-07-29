@@ -5,7 +5,7 @@
 
     <!-- 用于select查询公用抽取的列 -->
     <sql id="columns">
-        ID as id,ZYH as zyh,YZXH as yzxh,YZZH as yzzh,DYSJ as dysj,YYSJ as yysj,DYBZ as dybz
+        ID as id,ZYH as zyh,YZXH as yzxh,YZZH as yzzh,DYSJ as dysj,YYSJ as yysj,DYBZ as dybz,YZLB as yzlb
     </sql>
 
     <insert id="insert">
@@ -16,7 +16,8 @@
             YZZH ,
             DYSJ ,
             YYSJ ,
-            DYBZ 
+            DYBZ ,
+            YZLB
         ) VALUES (
             #{id} ,
             #{zyh} ,
@@ -24,7 +25,8 @@
             #{yzzh} ,
             #{dysj} ,
             #{yysj} ,
-            #{dybz} 
+            #{dybz} ,
+       		#{yzlb}
         )
     </insert>
     
@@ -35,7 +37,8 @@
             YZZH = #{yzzh} ,
             DYSJ = #{dysj} ,
             YYSJ = #{yysj} ,
-            DYBZ = #{dybz} 
+            DYBZ = #{dybz} ,
+            YZLB = #{yzlb}
         WHERE 
             ID = #{id} 
             -->            
@@ -80,6 +83,9 @@
 <!--                <if test="@sqlt.Ognl@isNotEmpty(dybz)"> -->
 <!--                     AND DYBZ = #{dybz} -->
 <!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(yzlb)"> -->
+<!--                     AND YZLB = #{yzlb} -->
+<!--                </if> -->
         </where>
     </sql>
         
@@ -104,5 +110,71 @@
         update cis_yzkpdyjl m set m.dybz = 2 where m.yzzh = #{yzzh}
         and  m.yysj = #{yysj}
     </update>
+    
+    <select id="reTypeCardInfo" resultType="java.util.HashMap">
+        select c.BFDW as SLDW,
+		       b.YJZX as YJZX,
+		       b.BRBQ as BRBQ,
+		       b.YPYF as YPYF,
+		       f.ZYHM as ZYHM,
+		       b.ZYH as ZYH,
+		       b.ZFYP as ZFYP,
+       		  (case when c.YPMC is null then b.YZMC when b.YPCD = 0 then b.YZMC
+               else c.YPMC end) as YZMC,
+		       b.YPLX as YPLX,
+		       b.YPXH as YPXH,
+		       b.KSSJ as KSSJ,
+		       b.TZSJ as TZSJ,
+		       b.YCSL as YCSL,
+		       b.YCJL as YCJL,
+		       b.YZZH as YZZH,
+		       b.SYPC as SYPC,
+		       f.BRCH as BRCH,
+		       f.BRXM as BRXM,
+		       f.BRXB as BRXB,
+		       f.CSNY as CSNY,
+		       b.MRCS as MRCS,
+           	   b.SRCS as SRCS,
+		       d.PCMC as PCMC,
+		       e.XMMC as XMMC,
+		       b.BZXX as BZXX,
+		       b.JLXH as JLXH,
+		       c.JLDW as JLDW,
+		       b.LSYZ as LSYZ,
+		       b.SRKS as SRKS,
+		       b.YEPB as YEPB,
+		       date_format(a.YYSJ, '%H:%i') as YZZXSJ,
+		       b.DS as DS
+		   from cis_yzkpdyjl a inner join cis_hzyz b on a.yzxh  = b.jlxh
+				left join drugs_typk c on b.ypxh = c.ypxh
+				inner join dic_sypc d on d.pcbm = b.sypc
+				inner join im_dic_ypyf e on e.ypyf = b.ypyf
+				inner join im_hzry f on f.zyh = b.zyh
+		where  a.id in
+		   <foreach collection="idList" item="id" open="(" close=")" separator="," >
+               	#{id}
+     	   </foreach>	
+		   and b.brbq = #{bqdm}
+	       and e.xmlb = #{yzlb}
+		   and (b.ysbz = 0 or (b.ysbz = 1 and b.ystj = 1))
+		   and b.yzpb = 0
+		   and b.zfbz = 0
+		   and b.jgid = #{jgid}
+		   and (#{fhbz} = 0 or b.fhbz = 1)
+		   and f.cypb = 0
+		   <if test="@sqlt.Ognl@isNotEmpty(sfyyk) and sfyyk == 0">
+                and b.ypxh not in
+                <foreach collection="yykList" item="z" open="(" close=")" separator="," >
+               		#{z}
+       	   		</foreach>	
+           </if>
+           <if test="@sqlt.Ognl@isNotEmpty(sfyyk) and sfyyk == 1">
+                and b.ypxh in
+                <foreach collection="yykList" item="z" open="(" close=")" separator="," >
+               		#{z}
+       	   		</foreach>	
+           </if>
+		 order by f.brch asc, date_format(a.yysj, '%H:%i') desc, b.yzzh
+    </select>
 </mapper>
 

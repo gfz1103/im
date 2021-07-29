@@ -263,8 +263,8 @@ public class ZyjsPreService {
         if (payment != null) {
             payment.setJkxh(redisFactory.getTableKey(TableName.DB_NAME, TableName.IM_TBKK));
             payment.setJkje(payment.getJkje().multiply(new BigDecimal(-1)));
-            payment.setZfgh(Integer.valueOf(imZyjs.getZfgh()));
-            payment.setZfrq(imZyjs.getZfrq());
+            payment.setCzgh(imZyjs.getZfgh());
+            payment.setJkrq(imZyjs.getZfrq());
             payment.setJklx(JklxEnum.SETTLEMENT_CANCEL.getValue());
             imTbkkDao.insert(payment);
         }

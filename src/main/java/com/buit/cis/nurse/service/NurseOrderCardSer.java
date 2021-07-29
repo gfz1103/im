@@ -39,7 +39,9 @@ import com.buit.cis.nurse.model.CisKpbzmx;
 import com.buit.cis.nurse.model.CisKpkfbz;
 import com.buit.cis.nurse.model.CisYzkpdyjl;
 import com.buit.cis.nurse.request.CisHzyzCardCancelReq;
+import com.buit.cis.nurse.request.CisHzyzCardReTypeReq;
 import com.buit.cis.nurse.request.CisHzyzCardReq;
+import com.buit.cis.nurse.response.CisHzyzCancelPrintResp;
 import com.buit.commons.BaseManagerImp;
 import com.buit.commons.SysUser;
 import com.buit.constans.SysXtcsCsmcCts;
@@ -155,7 +157,7 @@ public class NurseOrderCardSer extends BaseManagerImp<CisHzyz,Integer> {
 				if(cisHzyzCardReq.getLsyz() == 0 && ObjectToTypes.parseInt(yzzxsj.substring(0,2)) >= 16) {
 					o.put("DYRQ", DateUtil.offset(kpyysj, DateField.DAY_OF_MONTH, -1).toSqlDate());
 				}else {
-					o.put("DYRQ", kpyysj);
+					o.put("DYRQ", DateUtil.date(kpyysj).toSqlDate());
 				}
 				o.put("TITLE", user.getHospitalName() + "口服贴" + (cisHzyzCardReq.getLsyz() == 0 ? "(长期)" : "(临时)"));
 				o.put("BRXB", "1".equals(ObjectToTypes.parseString(map.get("BRXB"))) ? "男" : "女");
@@ -168,7 +170,7 @@ public class NurseOrderCardSer extends BaseManagerImp<CisHzyz,Integer> {
 				o.put("PCMC", iReportExportFileSer.conVerDataSource(yzList));
 				if(dybz == 1){
 					saveKfInfo(yzList, nowYear, nowMouth, nowDay, user, kpyysj);
-					saveYzkpdyjl(yzList, DateUtil.date(), kpyysj);
+					saveYzkpdyjl(yzList, DateUtil.date(), kpyysj, cisHzyzCardReq.getYzlb(), yzzxsj);
 				}
 				resList.add(o);
 			}
@@ -195,7 +197,7 @@ public class NurseOrderCardSer extends BaseManagerImp<CisHzyz,Integer> {
 		Integer jgid = user.getHospitalId();
 			// 获取表单参数
 		List<Integer> zyhList = cisHzyzCardReq.getZyhList();
-		if (zyhList.size() > 0) {
+		if (!zyhList.isEmpty()) {
 			// 获得系统参数中关于 医嘱符合标识 的设置
 			// "FHYZHJF","1","医嘱不复核是否可进行后续业务FHYZHJF，0:可以进行，1:不可以进行"
 			SysXtcs sysXtcs = sysXtcsCacheSer.getByJGIdAndCsmc(jgid, SysXtcsCsmcCts.FHYZHJF);
@@ -637,7 +639,7 @@ public class NurseOrderCardSer extends BaseManagerImp<CisHzyz,Integer> {
 						o.put("PCMC", iReportExportFileSer.conVerDataSource(yzList));
 						resList.add(o);
 						if(dybz == 1){
-							saveYzkpdyjl(yzList, DateUtil.date(), kpyysj);
+							saveYzkpdyjl(yzList, DateUtil.date(), kpyysj, cisHzyzCardReq.getYzlb(), zxsjStr[i]);
 						}
 					}
 				}
@@ -850,7 +852,7 @@ public class NurseOrderCardSer extends BaseManagerImp<CisHzyz,Integer> {
 					resList.add(o);
 					//点击的是打印按钮，才进入这里，如果是生成打印页面的则不进入
 					if(dybz == 1){	
-						saveYzkpdyjl(yzList, DateUtil.date(), dyrq);
+						saveYzkpdyjl(yzList, DateUtil.date(), dyrq, yzlb, zxsjStr[i]);
 					}
 				}
 			}
@@ -1016,7 +1018,7 @@ public class NurseOrderCardSer extends BaseManagerImp<CisHzyz,Integer> {
 	 * @author 龚方舟
 	 * @throws
 	 */
-	public void saveYzkpdyjl(List<Map<String, Object>> yzList, Date kpdysj, Date kpyysj) {
+	public void saveYzkpdyjl(List<Map<String, Object>> yzList, Date kpdysj, Date kpyysj, Integer yzlb, String zxsj) {
 		List<String> dyList = new ArrayList<String>();
 		for (int v = 0 ; v < yzList.size(); v++ ){
 			if(dyList.contains(yzList.get(v).get("JLXH").toString()) == false){
@@ -1027,7 +1029,9 @@ public class NurseOrderCardSer extends BaseManagerImp<CisHzyz,Integer> {
 				cisYzkpdyjl.setDybz(1);
 				cisYzkpdyjl.setId(redisFactory.getTableKey(TableName.DB_NAME, TableName.CIS_YZKPDYJL));
 				cisYzkpdyjl.setDysj(DateUtil.date(kpdysj).toTimestamp());
-				cisYzkpdyjl.setYysj(DateUtil.date(kpyysj).toTimestamp());
+				cisYzkpdyjl.setYysj(DateUtil.parse(DateUtil.format(kpyysj, DatePattern.NORM_DATE_PATTERN) 
+						+ " " + zxsj + ":00").toTimestamp());
+				cisYzkpdyjl.setYzlb(yzlb);
 				cisYzkpdyjlDao.insert(cisYzkpdyjl);
 				dyList.add(yzList.get(v).get("JLXH").toString());
 			}
@@ -1550,4 +1554,125 @@ public class NurseOrderCardSer extends BaseManagerImp<CisHzyz,Integer> {
 		return date;
 	}
 	
+	public List<CisHzyzCancelPrintResp> queryCancelPrintList(CisHzyzCardReq cisHzyzCardReq, Integer hospitalId) {
+		if(cisHzyzCardReq.getYzlb() != null && cisHzyzCardReq.getYzlb() == 11) {
+			cisHzyzCardReq.setYzlb(4);
+		}
+		Date kpyysj = setCardDateTime(cisHzyzCardReq.getTypeDate());
+		Map<String, Object> parameters = new HashMap<String, Object>(16);
+		parameters.put("zyhList", cisHzyzCardReq.getZyhList());
+		parameters.put("yysj", DateUtil.date(kpyysj).toSqlDate());
+		parameters.put("yzlb", cisHzyzCardReq.getYzlb());
+		parameters.put("lsyz", cisHzyzCardReq.getLsyz());
+		SysXtcs sysXtcs = sysXtcsCacheSer.getByJGIdAndCsmc(hospitalId, SysXtcsCsmcCts.YYKYPXH);
+		List<String> yykList = Arrays.asList(sysXtcs.getCsz().split(","));
+		if(!yykList.isEmpty()) {
+			parameters.put("sfyyk", cisHzyzCardReq.getSfyyk());
+			parameters.put("yykList", yykList);
+		}
+		return cisHzyzDao.queryCancelPrintList(parameters);
+	}
+	
+	
+	public List<Map<String, Object>> reTypeCardInfo(CisHzyzCardReTypeReq cisHzyzCardReTypeReq, SysUser user) {
+		DecimalFormat df = new DecimalFormat("##########.##########");
+		String bqmc = dicKszdOutSer.getNameById(cisHzyzCardReTypeReq.getBqdm());
+		List<Map<String, Object>> resList = new ArrayList<Map<String,Object>>();
+		Date kpyysj = setCardDateTime(cisHzyzCardReTypeReq.getTypeDate());
+		Integer yzlb = cisHzyzCardReTypeReq.getYzlb();
+		SysXtcs sysXtcs = sysXtcsCacheSer.getByJGIdAndCsmc(user.getHospitalId(), SysXtcsCsmcCts.FHYZHJF);
+		String fhbz = sysXtcs == null ? "0" : sysXtcs.getCsz();
+		Map<String, Object> parameters = new HashMap<String, Object>(16);
+		parameters.put("idList", cisHzyzCardReTypeReq.getIdList());
+		parameters.put("fhbz", fhbz);
+		parameters.put("yzlb", yzlb);
+		parameters.put("bqdm", cisHzyzCardReTypeReq.getBqdm());
+		parameters.put("jgid", user.getHospitalId());
+		if(yzlb == 2) {
+			sysXtcs = sysXtcsCacheSer.getByJGIdAndCsmc(user.getHospitalId(), SysXtcsCsmcCts.YYKYPXH);
+			List<String> yykList = Arrays.asList(sysXtcs.getCsz().split(","));
+			if(!yykList.isEmpty()) {
+				parameters.put("sfyyk", cisHzyzCardReTypeReq.getSfyyk());
+				parameters.put("yykList", yykList);
+			}
+		}
+		List<Map<String, Object>> list = cisYzkpdyjlDao.reTypeCardInfo(parameters);
+		Iterator<Map<String, Object>> iter = list.iterator();
+		while (iter.hasNext()) {
+			Map<String, Object> rec = iter.next();
+			String sypc = ObjectToTypes.parseString(rec.get("SYPC"));
+			Date kssj = DateUtil.parse(rec.get("KSSJ") + "");
+			int zxbz = validOrders(sypc, kssj, kpyysj);
+			if (zxbz != 1) {
+				iter.remove();
+			}
+		}
+		Map<String, List<Map<String, Object>>> groups = new HashMap<String, List<Map<String,Object>>>();
+		if(yzlb == 2) {
+			groups = list.stream().
+	    			collect(Collectors.groupingBy(o -> String.format("%s-%s", ObjectToTypes.parseString(o.get("ZYHM")), 
+	    					ObjectToTypes.parseString(o.get("YZZXSJ"))), LinkedHashMap::new, Collectors.toList()));
+		}else {
+			groups = list.stream().
+	    			collect(Collectors.groupingBy(o -> String.format("%s-%s-%s", ObjectToTypes.parseString(o.get("ZYHM")), 
+	    					ObjectToTypes.parseString(o.get("YZZXSJ")), ObjectToTypes.parseString(o.get("YZZH"))), LinkedHashMap::new, Collectors.toList()));
+		}
+ 
+		for (Map.Entry<String, List<Map<String, Object>>> entry : groups.entrySet()){
+			List<Map<String, Object>> yzList = entry.getValue();
+			Map<String, Object> map = yzList.get(0);
+			for(Map<String, Object> yzMap : yzList) {
+				yzMap.put("YCJL", df.format(ObjectToTypes.parseBigDecimal(yzMap.get("YCJL"))));
+			}
+			Date csny = DateUtil.parse(map.get("CSNY") + "");
+			Calendar cs = Calendar.getInstance();
+			cs.setTime(csny);
+			int borthYear = cs.get(Calendar.YEAR);
+			int borthMouth = cs.get(Calendar.MONTH) + 1;
+			int borthDay = cs.get(Calendar.DATE);
+			// 当前时间
+			Date nowDate = new Date();
+			Calendar c = Calendar.getInstance();// 可以对每个时间域单独修改
+			c.setTime(nowDate);
+
+			int nowYear = c.get(Calendar.YEAR);
+			int nowMouth = c.get(Calendar.MONTH) + 1;
+			int nowDay = c.get(Calendar.DATE);
+			// 计算年龄
+			int age = nowYear - borthYear - 1;
+			boolean dateFlag = borthMouth < nowMouth || borthMouth == nowMouth
+					&& borthDay <= nowDay;
+			if (dateFlag) {
+				age++;
+			}
+			String yzzxsj  = ObjectToTypes.parseString(map.get("YZZXSJ"));
+			Map<String, Object> o = new HashMap<String, Object>(16);
+			if(yzlb == 2 && cisHzyzCardReTypeReq.getLsyz() == 0 && ObjectToTypes.parseInt(yzzxsj.substring(0,2)) >= 16) {
+				o.put("DYRQ", DateUtil.offset(kpyysj, DateField.DAY_OF_MONTH, -1).toSqlDate());
+			}else {
+				o.put("DYRQ", kpyysj);
+			}
+			
+			o.put("BRXB", "1".equals(ObjectToTypes.parseString(map.get("BRXB"))) ? "男" : "女");
+			o.put("BRNL", age);// 病人年龄
+			o.put("BQMC", bqmc);// 病区名称
+			o.put("TIME", yzzxsj);// 医嘱执行时间
+			o.put("BRXM", map.get("BRXM"));
+			o.put("BRCH", map.get("BRCH"));
+			o.put("ZYHM", map.get("ZYHM"));
+			o.put("PCMC", iReportExportFileSer.conVerDataSource(yzList));
+			if(yzlb == 2) {
+				o.put("TITLE", user.getHospitalName() + "口服贴" + (cisHzyzCardReTypeReq.getLsyz() == 0 ? "(长期)" : "(临时)"));
+			}else if(yzlb == 3) {
+				o.put("TITLE", user.getHospitalName() + "注射贴" + (cisHzyzCardReTypeReq.getLsyz() == 0 ? "(长期)" : "(临时)"));
+			}else if(yzlb == 4) {
+				o.put("TITLE", user.getHospitalName() + "输液贴" + (cisHzyzCardReTypeReq.getLsyz() == 0 ? "(长期)" : "(临时)"));
+			}else if(yzlb == 99) {
+				o.put("TITLE", user.getHospitalName() + (cisHzyzCardReTypeReq.getLsyz() == 0 ? "(长期)" : "(临时)"));
+			}
+			o.put("PCMC", iReportExportFileSer.conVerDataSource(yzList));
+			resList.add(o);
+	    }
+		return resList;
+	}
 }

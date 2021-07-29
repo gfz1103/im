@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.buit.aop.lock.Locked;
 import com.buit.cis.dctwork.dao.CisYzmessDao;
@@ -61,6 +62,7 @@ public class CisYzmessSer extends BaseManagerImp<CisYzmess,Integer> {
      * @throws
      */
     @Locked(value = {"updateZt_#[jlxh]"})
+    @Transactional(rollbackFor = Exception.class)
 	public void updateZt(Integer jlxh, SysUser user) {
     	CisYzmess cisYzmess = cisYzmessDao.getById(jlxh);
     	if(cisYzmess != null && cisYzmess.getZt() != 0) {
@@ -71,7 +73,7 @@ public class CisYzmessSer extends BaseManagerImp<CisYzmess,Integer> {
     	List<Integer> userIdList = new ArrayList<Integer>();
 		SysYwqxkz sysYwqxkz = new SysYwqxkz();
 		sysYwqxkz.setKsdm(imHzry.getBrbq());
-		sysYwqxkz.setYwlb(2);
+		sysYwqxkz.setYwlb(1);
 		sysYwqxkz.setJgid(user.getHospitalId());
 		List<SysYwqxkz> qxkzList = sysYwqxkzService.findByEntity(sysYwqxkz);
 		for(SysYwqxkz qxkz : qxkzList) {
