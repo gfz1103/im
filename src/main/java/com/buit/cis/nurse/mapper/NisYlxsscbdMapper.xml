@@ -142,14 +142,14 @@
     
      <!-- 压力性损伤预报、传报单查询树结构-->
     <select id="queryYlxsscbdTree" resultType="com.buit.cis.nurse.response.NisHzmbResp">
-        SELECT CONCAT(a.RQ, '  ', b.MBMC ) as LABEL, a.MBLX as NAME
-			FROM ( SELECT DATE_FORMAT( RQ, '%m-%d %H:%i' ) AS RQ, 
+        SELECT a.RQ as LABEL, a.MBLX as NAME
+			FROM ( SELECT DATE_FORMAT( RQ, '%Y-%m' ) AS RQ, 
 							ZYH as ZYH,
 							MBLX as MBLX,
 							JGID as JGID
 				FROM NIS_YLXSSCBD 
 				GROUP BY 
-					DATE_FORMAT(RQ, '%m-%d %H:%i'),
+					DATE_FORMAT(RQ, '%Y-%m'),
 					ZYH,
 					MBLX,
 					JGID 
@@ -219,6 +219,19 @@
         </if> 
         and a.jgid = #{jgid}
         order by a.rq
+    </select>
+    
+    <select id="queryYlxsscbdTreeDetail" resultType="com.buit.cis.nurse.response.NisHzmbDetailResp">
+         select concat(date_format(a.rq, '%m-%d %H:%i'), '  ', b.mbmc ) as label, a.mblx as name
+			from nis_ylxsscbd a, nis_hzmb b 
+			where a.zyh = b.zyh 
+			and a.mblx = b.mblx 
+			and a.jgid = b.jgid
+			and a.zyh = #{zyh}
+			and a.jgid = #{jgid}
+			and date_format(a.rq, '%Y-%m') = #{yearMonth}
+			group by concat(date_format(a.rq, '%m-%d %H:%i'), ' ', b.mbmc ), a.mblx
+			order by a.rq
     </select>
 </mapper>
 

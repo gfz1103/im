@@ -421,9 +421,6 @@ public class ImHzryByDctworkSer extends BaseManagerImp<ImHzry, Integer>{
 	public DicJbbmInfoResp savePatientInfo(ImHzryInfoReq imHzryInfoReq, SysUser user) {
 		String openBy = imHzryInfoReq.getOpenBy();
 		// 可能医生站和护士站同都用到需要区分
-//    	if(OpenTypeEnum.doctor.getCode().equals(openBy)) {
-//    		
-//    	}
 		DicJbbmInfoResp dicJbbmInfoResp = new DicJbbmInfoResp();
 		Integer manageUnit = user.getHospitalId();
 		Integer zyh = imHzryInfoReq.getZyh();
@@ -1287,7 +1284,7 @@ public class ImHzryByDctworkSer extends BaseManagerImp<ImHzry, Integer>{
 						if("-1".equals(yqdxStr)) {
 							SysYwqxkz sysYwqxkz = new SysYwqxkz();
 							sysYwqxkz.setKsdm(ObjectToTypes.parseInt(yqdx.getNyqhzks()));
-							sysYwqxkz.setYwlb(7);
+							sysYwqxkz.setYwlb(6);
 							sysYwqxkz.setJgid(user.getHospitalId());
 							List<SysYwqxkz> qxkzList = sysYwqxkzService.findByEntity(sysYwqxkz);
 							for(SysYwqxkz qxkz : qxkzList) {

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.buit.cis.nurse.request.NisHlQueryReq;
 import com.buit.cis.nurse.request.NisZxjmpgbReq;
 import com.buit.cis.nurse.response.NisZxjmpgbResp;
 import com.buit.cis.nurse.service.NisHzmbSer;
@@ -58,11 +59,9 @@ public class NisZxjmpgbCtr extends BaseSpringController{
     @RequestMapping("/queryZxjmpgbByDate")
     @ResponseBody
     @ApiOperation(value="根据日期查询中心静脉导管相关性感染风险因素评估表" ,httpMethod="POST")
-    public ReturnEntity<List<NisZxjmpgbResp>> queryZxjmpgbByDate(@ApiParam(name = "zyh", value = "住院号", required = true)
-    @RequestParam Integer zyh, @ApiParam(name = "queryDate", value = "查询时间(M-d)", required = false)
-    @RequestParam(value="queryDate", required = false) String queryDate){
-        return ReturnEntityUtil.success(nisZxjmpgbSer.getEntityMapper().queryZxjmpgbByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId()));
+    public ReturnEntity<List<NisZxjmpgbResp>> queryZxjmpgbByDate(NisHlQueryReq nisHlQueryReq){
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+        return ReturnEntityUtil.success(nisZxjmpgbSer.getEntityMapper().queryZxjmpgbByDate(nisHlQueryReq));
     }
   
     @RequestMapping("/saveZxjmpgb")
@@ -90,10 +89,10 @@ public class NisZxjmpgbCtr extends BaseSpringController{
     
     @GetMapping("/centralVenousCatheterPrint")
     @ApiOperation(value="中心静脉导管相关性感染风险因素评估表打印")
-    public void centralVenousCatheterPrint(@RequestParam(value="zyh") Integer zyh, @RequestParam(value="queryDate", required = false) String queryDate,
+    public void centralVenousCatheterPrint(NisHlQueryReq nisHlQueryReq,
     		HttpServletResponse response) {
-    	List<Map<String, Object>> list = nisZxjmpgbSer.getEntityMapper().queryPrintZxjmpgbByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId());
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+    	List<Map<String, Object>> list = nisZxjmpgbSer.getEntityMapper().queryPrintZxjmpgbByDate(nisHlQueryReq);
         String jasperName = "jrxml/CentralVenousCatheterPrint.jasper";
         nisHzmbSer.ComplementEmptyline(list, 18);
         iReportExportFileSer.reportHtmlForStream(list, null, jasperName, response);

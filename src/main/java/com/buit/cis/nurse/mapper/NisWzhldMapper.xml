@@ -250,14 +250,14 @@
     
     <!-- 危重患者护理单查询树结构-->
     <select id="queryWzhldTree" resultType="com.buit.cis.nurse.response.NisHzmbResp">
-        SELECT CONCAT(a.RQ, '  ', b.MBMC ) as LABEL, a.MBLX as NAME
-			FROM ( SELECT DATE_FORMAT( RQ, '%m-%d' ) AS RQ, 
+        SELECT a.RQ as LABEL, a.MBLX as NAME
+			FROM ( SELECT DATE_FORMAT( RQ, '%Y-%m' ) AS RQ, 
 							ZYH as ZYH,
 							MBLX as MBLX,
 							JGID as JGID
 				FROM NIS_WZHLD 
 				GROUP BY 
-					DATE_FORMAT(RQ, '%m-%d'),
+					DATE_FORMAT(RQ, '%Y-%m'),
 					ZYH,
 					MBLX,
 					JGID 
@@ -278,6 +278,9 @@
 		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
 			  and DATE_FORMAT(RQ, '%m-%d') = #{queryDate}
         </if> 
+        <if test="@sqlt.Ognl@isNotEmpty(yearMonth)">
+			  and DATE_FORMAT(RQ, '%Y-%m') = #{yearMonth}
+        </if> 
         and JGID = #{jgid}
         order by RQ
     </select>
@@ -290,8 +293,30 @@
 		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
 			  and DATE_FORMAT(RQ, '%m-%d') = #{queryDate}
         </if> 
+        <if test="@sqlt.Ognl@isNotEmpty(yearMonth)">
+			  and DATE_FORMAT(RQ, '%Y-%m') = #{yearMonth}
+        </if> 
         and JGID = #{jgid}
         order by RQ
+    </select>
+    
+    <select id="queryWzhldTreeDetail" resultType="com.buit.cis.nurse.response.NisHzmbDetailResp">
+         select concat(date_format(a.rq, '%m-%d'), '  ', b.mbmc ) as label, a.mblx as name
+			from nis_wzhld a, nis_hzmb b 
+			where a.zyh = b.zyh 
+			and a.mblx = b.mblx 
+			and a.jgid = b.jgid
+			and a.zyh = #{zyh}
+			and a.jgid = #{jgid}
+			and date_format(a.rq, '%Y-%m') = #{yearMonth}
+			group by concat(date_format(a.rq, '%m-%d'), ' ', b.mbmc ), a.mblx
+			order by a.rq
+    </select>
+    
+    <select id="getWzhldByJlxh" resultType="com.buit.cis.nurse.response.NisWzhldResp">
+       SELECT JLXH as jlxh,ZYH as zyh,MBLX as mblx,YS as ys,TW as tw,MB as mb,HX as hx,SBP as sbp,DBP as dbp,YY as yy,JSXL as jsxl,SPO2 as spo2,DXZ as dxz,DXY as dxy,DGZ as dgz,DGY as dgy,XT as xt,case when find_in_set('其他',DGHL) then replace (DGHL, '其他', QTDG) else dghl end as dghl,QTDG as qtdg,RLMC as rlmc,RL as rl,CLMC as clmc,CL as cl,HLZD as hlzd,BQCS as bqcs,HSQM as hsqm,date_format(RQ, '%Y-%m-%d %H:%i') as rq,JGID as jgid,STW as stw,PF as pf,XYFS as xyfs,PT as pt
+        FROM NIS_WZHLD 
+        WHERE JLXH = #{jlxh}
     </select>
 </mapper>
 

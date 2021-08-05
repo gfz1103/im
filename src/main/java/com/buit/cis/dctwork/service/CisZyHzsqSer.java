@@ -687,7 +687,7 @@ public class CisZyHzsqSer extends BaseManagerImp<CisZyHzsq,Integer> {
 				if("-1".equals(yqdxStr)) {
 					SysYwqxkz sysYwqxkz = new SysYwqxkz();
 					sysYwqxkz.setKsdm(ObjectToTypes.parseInt(yqdx.getNyqhzks()));
-					sysYwqxkz.setYwlb(7);
+					sysYwqxkz.setYwlb(6);
 					sysYwqxkz.setJgid(user.getHospitalId());
 					List<SysYwqxkz> qxkzList = sysYwqxkzService.findByEntity(sysYwqxkz);
 					for(SysYwqxkz qxkz : qxkzList) {

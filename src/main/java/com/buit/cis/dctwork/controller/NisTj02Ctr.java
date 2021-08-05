@@ -3,6 +3,8 @@ package com.buit.cis.dctwork.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +42,7 @@ public class NisTj02Ctr extends BaseSpringController{
     @RequestMapping("/queryBqDrugReturnHzInfo")
     @ResponseBody
     @ApiOperation(value = "查询可退回病区药品病人信息", httpMethod = "POST")
-    public ReturnEntity<List<NisTj02HzInfoResp>> queryBqDrugReturnHzInfo(NisTj02HzInfoReq req) {
+    public ReturnEntity<List<NisTj02HzInfoResp>> queryBqDrugReturnHzInfo(@Valid NisTj02HzInfoReq req) {
         req.setJgid(this.getUser().getHospitalId());
         return ReturnEntityUtil.success(nisTj02Ser.getEntityMapper().queryBqDrugReturnHzInfo(req));
     }

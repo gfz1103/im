@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MealCard" language="groovy" pageWidth="263" pageHeight="100" columnWidth="263" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="468bd773-2695-4453-8681-c4f4fdb3a6f7">
+	<property name="ireport.zoom" value="1.818181818181819"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="myBaseStyleName" isBlankWhenNull="true" fontName="宋体"/>
+	<field name="kpmc" class="java.lang.String"/>
+	<field name="bqmc" class="java.lang.String"/>
+	<field name="brch" class="java.lang.String"/>
+	<field name="yzmc" class="java.lang.String"/>
+	<field name="brxm" class="java.lang.String"/>
+	<field name="birthday" class="java.lang.String"/>
+	<field name="dyrq" class="java.lang.String"/>
+	<detail>
+		<band height="95" splitType="Stretch">
+			<textField>
+				<reportElement style="myBaseStyleName" x="159" y="20" width="40" height="20" uuid="4345ebf4-8849-49d0-8467-06135a00e3e4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{brch}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="myBaseStyleName" x="0" y="65" width="45" height="20" uuid="2a27b672-f26e-447b-a937-686dcb7c9883"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="宋体" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{brxm}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="myBaseStyleName" x="199" y="20" width="25" height="20" uuid="f35e85b6-34b5-468d-b1da-efe9eb429bc7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="宋体" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[床]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="myBaseStyleName" x="45" y="65" width="65" height="20" uuid="456cd2be-5ade-487f-a017-e3e8bedc635c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="宋体" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{birthday}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="myBaseStyleName" x="0" y="20" width="89" height="20" uuid="f7d5b5c9-0fed-4b83-b27c-2f643a332945"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bqmc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="myBaseStyleName" x="0" y="0" width="263" height="20" uuid="e0647555-59e6-4e4e-af2d-eeebce7a5d6a"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kpmc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="myBaseStyleName" x="0" y="40" width="100" height="25" uuid="fdb73d7e-4dba-4efa-8fda-f74354bfdb5d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="宋体" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{yzmc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="myBaseStyleName" x="159" y="85" width="65" height="10" uuid="691a0776-dcc7-4e55-8934-05046dbb1bd5"/>
+				<textElement textAlignment="Justified" verticalAlignment="Bottom">
+					<font fontName="宋体" size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dyrq}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

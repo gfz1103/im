@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.buit.cis.nurse.model.NisCqhld;
 import com.buit.cis.nurse.request.NisCqhldPrintReq;
 import com.buit.cis.nurse.request.NisCqhldReq;
+import com.buit.cis.nurse.request.NisHlQueryReq;
 import com.buit.cis.nurse.service.NisCqhldSer;
 import com.buit.commons.BaseSpringController;
 import com.buit.constans.TableName;
@@ -52,11 +53,9 @@ public class NisCqhldCtr extends BaseSpringController{
     @RequestMapping("/queryCqhldByDate")
     @ResponseBody
     @ApiOperation(value="根据日期查询产前护理记录单" ,httpMethod="POST")
-    public ReturnEntity<List<NisCqhld>> queryCqhldByDate(@ApiParam(name = "zyh", value = "住院号", required = true)
-    @RequestParam Integer zyh, @ApiParam(name = "queryDate", value = "查询时间(M-d)", required = false)
-    @RequestParam(value="queryDate", required = false) String queryDate){
-        return ReturnEntityUtil.success(nisCqhldSer.getEntityMapper().queryCqhldByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId()));
+    public ReturnEntity<List<NisCqhld>> queryCqhldByDate(NisHlQueryReq nisHlQueryReq){
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+        return ReturnEntityUtil.success(nisCqhldSer.getEntityMapper().queryCqhldByDate(nisHlQueryReq));
     }
     
     @RequestMapping("/saveCqhld")

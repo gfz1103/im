@@ -1,11 +1,18 @@
 package com.buit.cis.nurse.service;
 
 
-import com.buit.commons.BaseException;
-import com.buit.commons.BaseManagerImp;
-import com.buit.commons.SysUser;
-import com.buit.constans.TableName;
-import com.buit.utill.RedisFactory;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.poi.ss.formula.functions.T;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.buit.aop.lock.Locked;
 import com.buit.cis.nurse.dao.NisAllzxdDao;
 import com.buit.cis.nurse.dao.NisBqyjpgdDao;
@@ -52,18 +59,13 @@ import com.buit.cis.nurse.model.NisYlxsscbd;
 import com.buit.cis.nurse.model.NisZspdl;
 import com.buit.cis.nurse.model.NisZxjmpgb;
 import com.buit.cis.nurse.request.NisHzmbReq;
+import com.buit.cis.nurse.response.NisHzmbDetailResp;
 import com.buit.cis.nurse.response.NisHzmbResp;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.buit.commons.BaseException;
+import com.buit.commons.BaseManagerImp;
+import com.buit.commons.SysUser;
+import com.buit.constans.TableName;
+import com.buit.utill.RedisFactory;
 /**
  * 患者护理记录模板表<br>
  * @author GONGFANGZHOU
@@ -415,5 +417,62 @@ public class NisHzmbSer extends BaseManagerImp<NisHzmb,Integer> {
 		}
 		nisHzmbDao.removeByEntity(nisHzmb);
 	}
+	
+	public List<NisHzmbDetailResp> queryHzmbTreeDetail(Integer zyh, String mblx, String yearMonth, SysUser user){
+		Integer jgid = user.getHospitalId();
+		List<NisHzmbDetailResp> respList = new ArrayList<NisHzmbDetailResp>();
+		if(NursingTypeEnum.commonly.getCode().equals(mblx)) {
+			respList = nisHljlDao.queryHljlTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.commonlyGrave.getCode().equals(mblx)) {
+			respList = nisWzhldDao.queryWzhldTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.diseaseWarning.getCode().equals(mblx)) {
+			respList = nisBqyjpgdDao.queryBqyjpgdTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.barthelRecord.getCode().equals(mblx)) {
+			respList = nisZspdlDao.queryZspdlTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.prenatalCare.getCode().equals(mblx)) {
+			respList = nisCqhldDao.queryCqhldTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.postpartumCare.getCode().equals(mblx)) {
+			respList = nisChhldDao.queryChhldTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.pressureSore.getCode().equals(mblx)) {
+			respList = nisYcwxpgbDao.queryYcwxpgbTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.acquiredPneumonia.getCode().equals(mblx)) {
+			respList = nisFyfxpgdDao.queryFyfxpgdTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.pipeSlippage.getCode().equals(mblx)) {
+			respList = nisGdhtwxysbDao.queryGdhtTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.nursingRecord.getCode().equals(mblx)) {
+			respList = nisCghljldDao.queryCghljlTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.fallingBed.getCode().equals(mblx)) {
+			respList = nisDdzcpgbDao.queryDdzcpgbTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.catheterInfection.getCode().equals(mblx)) {
+			respList = nisLzdngpgbDao.queryLzdngTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.stressInjury.getCode().equals(mblx)) {
+			respList = nisYlxsscbdDao.queryYlxsscbdTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.centralVenousCatheter.getCode().equals(mblx)) {
+			respList = nisZxjmpgbDao.queryZxjmpgbTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.emotionalDisorder.getCode().equals(mblx)
+				|| NursingTypeEnum.patientCare.getCode().equals(mblx)
+				|| NursingTypeEnum.youthCare.getCode().equals(mblx)
+				|| NursingTypeEnum.abuseNeglect.getCode().equals(mblx)
+				|| NursingTypeEnum.frailOldMan.getCode().equals(mblx)
+				|| NursingTypeEnum.infectiousDiseases.getCode().equals(mblx)
+				|| NursingTypeEnum.terminalPregnancy.getCode().equals(mblx)
+				|| NursingTypeEnum.stageDisease.getCode().equals(mblx)
+				|| NursingTypeEnum.chemotherapyPatient.getCode().equals(mblx)
+				|| NursingTypeEnum.chronicPain.getCode().equals(mblx)
+				|| NursingTypeEnum.hypoimmunityPatient.getCode().equals(mblx)) {
+			respList = nisAllzxdDao.queryZxdTreeDetail(zyh, jgid, mblx, yearMonth);
+		}else if(NursingTypeEnum.pulmonaryEmbolism.getCode().equals(mblx)) {
+			respList = nisFssriskDao.queryFssriskTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.deepVeinThrombosis.getCode().equals(mblx)) {
+			respList = nisFsspgbDao.queryFsspgbTreeDetail(zyh, jgid, mblx, yearMonth);
+		}else if(NursingTypeEnum.admissionNursing.getCode().equals(mblx)) {
+			respList = nisRyhldDao.queryRyhldTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.neurologyRecords.getCode().equals(mblx)) {
+			respList = nisSjkjldDao.querySjkjldTreeDetail(zyh, jgid, yearMonth);
+		}else if(NursingTypeEnum.dayWard.getCode().equals(mblx)) {
+			respList = nisRjbfhldDao.queryRjbfhldTreeDetail(zyh, jgid, yearMonth);
+		}
+    	return respList;
+    }
 
 }

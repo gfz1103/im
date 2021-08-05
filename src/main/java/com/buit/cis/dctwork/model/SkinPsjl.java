@@ -1,7 +1,10 @@
 package com.buit.cis.dctwork.model;
 
 import java.sql.Timestamp;
+
 import com.buit.commons.PageQuery;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 类名称：SkinPsjl<br> 
@@ -10,33 +13,42 @@ import com.buit.commons.PageQuery;
  * @ApiModel(value="公用_病人皮试记录")
  */
 public class SkinPsjl  extends  PageQuery{
-	//@ApiModelProperty(value="记录序号")
+	@ApiModelProperty(value="记录序号")
     /** 记录序号 */
     private Integer jlxh;
-	//@ApiModelProperty(value="病人编号")
+	@ApiModelProperty(value="病人编号")
     /** 病人编号 */
     private Integer brid;
-	//@ApiModelProperty(value="药品序号")
+	@ApiModelProperty(value="药品序号")
     /** 药品序号 */
     private Integer ypxh;
-	//@ApiModelProperty(value="机构代码")
+	@ApiModelProperty(value="机构代码")
     /** 机构代码 */
     private Integer jgid;
-	//@ApiModelProperty(value="皮试结果")
+	@ApiModelProperty(value="皮试结果")
     /** 皮试结果 */
     private Integer psjg;
-	//@ApiModelProperty(value="皮试来源 1:门诊 2:住院 3:家床")
+	@ApiModelProperty(value="皮试来源 1:门诊 2:住院 3:家床")
     /** 皮试来源 1:门诊 2:住院 3:家床 */
     private Integer psly;
-	//@ApiModelProperty(value="过敏症状")
+	@ApiModelProperty(value="过敏症状")
     /** 过敏症状 */
     private String gmzz;
-	//@ApiModelProperty(value="其他症状")
+	@ApiModelProperty(value="其他症状")
     /** 其他症状 */
     private String qtzz;
-	//@ApiModelProperty(value="不良反映")
+	@ApiModelProperty(value="不良反映")
     /** 不良反映 */
     private String blfy;
+    
+    @ApiModelProperty(value="操作时间")
+    private Timestamp czsj;
+    
+    @ApiModelProperty(value="皮试时间")
+    private Timestamp pssj;
+    
+    @ApiModelProperty(value="过敏类别(对应字典sys_flag_data:FD000030)")
+    private Integer gmlb;
 
     /** 设置:记录序号  */
     public void setJlxh(Integer value) {
@@ -118,6 +130,26 @@ public class SkinPsjl  extends  PageQuery{
     public String getBlfy() {
         return blfy;
     }
+    
+    public void setCzsj(Timestamp czsj) {
+		this.czsj = czsj;
+	}
+    
+	public Timestamp getCzsj() {
+		return czsj;
+	}
 
-
+	public Timestamp getPssj() {
+		return pssj;
+	}
+	public void setPssj(Timestamp pssj) {
+		this.pssj = pssj;
+	}
+	public void setGmlb(Integer gmlb) {
+		this.gmlb = gmlb;
+	}
+	
+	public Integer getGmlb() {
+		return gmlb;
+	}
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.buit.cis.nurse.enums.NursingTypeEnum;
 import com.buit.cis.nurse.request.NisCghljldColumnHeadReq;
+import com.buit.cis.nurse.request.NisHlQueryReq;
 import com.buit.cis.nurse.request.NisSjkjldReq;
 import com.buit.cis.nurse.response.NisSjkjldResp;
 import com.buit.cis.nurse.service.NisHljldzdySer;
@@ -61,11 +62,9 @@ public class NisSjkjldCtr extends BaseSpringController{
     @RequestMapping("/querySjkjldByDate")
     @ResponseBody
     @ApiOperation(value="根据日期查询神经科记录单" ,httpMethod="POST")
-    public ReturnEntity<List<NisSjkjldResp>> querySjkjldByDate(@ApiParam(name = "zyh", value = "住院号", required = true)
-    @RequestParam Integer zyh, @ApiParam(name = "queryDate", value = "查询时间(M-d)", required = false)
-    @RequestParam(value="queryDate", required = false) String queryDate) {
-        List<NisSjkjldResp> list = nisSjkjldSer.getEntityMapper().querySjkjldByDate(zyh,
-                queryDate, this.getUser().getHospitalId());
+    public ReturnEntity<List<NisSjkjldResp>> querySjkjldByDate(NisHlQueryReq nisHlQueryReq){
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+        List<NisSjkjldResp> list = nisSjkjldSer.getEntityMapper().querySjkjldByDate(nisHlQueryReq);
         List<Map<String, Object>> listMap = BUHISUtil.ListObjToMap(list);
         for (Map<String, Object> map : listMap) {
             List<Map<String, Object>> zdyList = nisHljldzdySer.getEntityMapper().queryZdynrByZdyId(
@@ -99,11 +98,11 @@ public class NisSjkjldCtr extends BaseSpringController{
     
     @GetMapping("/neurologyRecordsPrint")
     @ApiOperation(value="神经科记录单打印")
-    public void neurologyRecordsPrint(@RequestParam(value="zyh") Integer zyh, @RequestParam(value="queryDate", required = false) String queryDate,
+    public void neurologyRecordsPrint(NisHlQueryReq nisHlQueryReq,
     		HttpServletResponse response){
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
         String jasperName = "jrxml/NeurologyRecordsPrint.jasper";
-        List<Map<String, Object>> listMap = nisSjkjldSer.querySjkjldByDatePrintInfo(zyh, queryDate, 
-        		this.getUser().getHospitalId());
+        List<Map<String, Object>> listMap = nisSjkjldSer.querySjkjldByDatePrintInfo(nisHlQueryReq);
         nisHzmbSer.ComplementEmptyline(listMap, 23);
         iReportExportFileSer.reportHtmlForStream(listMap, null, jasperName, response);
     }

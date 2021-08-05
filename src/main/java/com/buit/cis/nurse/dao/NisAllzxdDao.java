@@ -2,10 +2,11 @@ package com.buit.cis.nurse.dao;
 
 import java.util.List;
 
-import com.buit.cis.nurse.model.NisAllzxd;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.buit.cis.nurse.model.NisAllzxd;
+import com.buit.cis.nurse.response.NisHzmbDetailResp;
 import com.buit.cis.nurse.response.NisHzmbResp;
 import com.buit.commons.EntityDao;
 
@@ -56,4 +57,18 @@ public interface NisAllzxdDao extends EntityDao<NisAllzxd,Integer>{
 	  * @throws
 	  */
 	 void deleteByZh(Integer zh);
+	 
+	 /**
+	  * 对应执行单查询树结构
+	  * @Title: queryZxdTreeDetail
+	  * @Description: TODO(这里用一句话描述这个方法的作用)
+	  * @param @param zyh
+	  * @param @param jgid
+	  * @param @return    设定文件
+	  * @return List<NisHzmbDetailResp>    返回类型
+	  * @author 龚方舟
+	  * @throws
+	  */
+	 List<NisHzmbDetailResp> queryZxdTreeDetail(@Param("zyh") Integer zyh, @Param("jgid") Integer jgid,
+			 @Param("mblx") String mblx, @Param("yearMonth") String yearMonth); 
 }

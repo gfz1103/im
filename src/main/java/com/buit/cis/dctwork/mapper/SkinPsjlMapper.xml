@@ -5,7 +5,7 @@
 
     <!-- 用于select查询公用抽取的列 -->
     <sql id="columns">
-        JLXH as jlxh,BRID as brid,YPXH as ypxh,JGID as jgid,PSJG as psjg,PSLY as psly,GMZZ as gmzz,QTZZ as qtzz,BLFY as blfy
+        JLXH as jlxh,BRID as brid,YPXH as ypxh,JGID as jgid,PSJG as psjg,PSLY as psly,GMZZ as gmzz,QTZZ as qtzz,BLFY as blfy,CZSJ as czsj,PSSJ as pssj,GMLB as gmlb
     </sql>
 
     <insert id="insert">
@@ -18,7 +18,10 @@
             PSLY ,
             GMZZ ,
             QTZZ ,
-            BLFY 
+            BLFY ,
+            CZSJ ,
+            PSSJ ,
+            GMLB 
         ) VALUES (
             #{jlxh} ,
             #{brid} ,
@@ -28,11 +31,14 @@
             #{psly} ,
             #{gmzz} ,
             #{qtzz} ,
-            #{blfy} 
+            #{blfy} ,
+            #{czsj} ,
+            #{pssj} ,
+            #{gmlb}
         )
     </insert>
     
-    <update id="update" ><!--  
+    <update id="update" >
         UPDATE SKIN_PSJL SET
             BRID = #{brid} ,
             YPXH = #{ypxh} ,
@@ -41,10 +47,12 @@
             PSLY = #{psly} ,
             GMZZ = #{gmzz} ,
             QTZZ = #{qtzz} ,
-            BLFY = #{blfy} 
+            BLFY = #{blfy} ,
+            CZSJ = #{czsj} ,
+            PSSJ = #{pssj} ,
+            GMLB = #{gmlb}
         WHERE 
-            JLXH = #{jlxh} 
-            -->            
+            JLXH = #{jlxh}             
     </update>
 
     <delete id="deleteById">
@@ -91,6 +99,15 @@
 <!--                </if> -->
 <!--                <if test="@sqlt.Ognl@isNotEmpty(blfy)"> -->
 <!--                     AND BLFY = #{blfy} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(czsj)"> -->
+<!--                     AND CZSJ = #{czsj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(pssj)"> -->
+<!--                     AND PSSJ = #{pssj} -->
+<!--                </if> -->
+<!--                <if test="@sqlt.Ognl@isNotEmpty(gmlb)"> -->
+<!--                     AND GMLB = #{gmlb} -->
 <!--                </if> -->
         </where>
     </sql>
@@ -144,13 +161,71 @@
     <!-- -->
     <update id="updateAllergicDrugs" >
         UPDATE SKIN_PSJL SET
-            YPXH = #{ypxhnew} ,
             GMZZ = #{gmzz} ,
             QTZZ = #{qtzz} ,
-            BLFY = #{blfy} 
+            BLFY = #{blfy} ,
+            PSSJ = #{pssj} ,
+            GMLB = #{gmlb} ,
+            PSJG = #{psjg}
         WHERE 
-            BRID = #{brid} and YPXH = #{ypxh}  and JGID = #{jgid} 
+            JLXH = #{jlxh}
     </update>
+
+    <!-- 查询是否存在过敏药物类别最大时间 -->
+    <select id="queryIsExtisMaxDate" resultType="SkinPsjl">
+    	select * from skin_psjl where pssj  = (
+            select max(pssj) from skin_psjl
+            where brid = #{brid}
+            and jgid = #{jgid}
+            <if test="@sqlt.Ognl@isNotEmpty(ypxh)"> 
+                and ypxh = #{ypxh}
+            </if>
+            <if test="@sqlt.Ognl@isNotEmpty(gmlb)"> 
+                and gmlb = #{gmlb}
+            </if>
+        )
+    </select>
     
+    <!-- 过敏药物信息 -->
+    <select id="queryAllergyDrugsInfo" resultType="com.buit.cis.dctwork.response.SkinPsjlDrugsResp">
+        select a.jlxh as jlxh,
+		       a.brid as brid,
+		       a.ypxh as ypxh,
+		       c.ypmc as ypmc,
+		       a.blfy as blfy,
+		       a.gmzz as gmzz,
+		       a.qtzz as qtzz,
+		       a.psjg as psjg,
+		       a.psly as psly,
+		       a.jgid as jgid,
+		       a.czsj as czsj,
+		       a.pssj as pssj,
+		       a.gmlb as gmlb,
+		       b.psyxq as psyxq
+			  from skin_psjl a left join v_drugs_typk c on a.ypxh = c.ypxh
+				left join skin_xm b on a.gmlb = b.gmywlx
+			 where 1 = 1
+			  <if test="@sqlt.Ognl@isNotEmpty(brid)"> 
+	                and a.brid = #{brid} 
+	          </if>
+	          <if test="@sqlt.Ognl@isNotEmpty(jgid)"> 
+	                and a.jgid = #{jgid} 
+	          </if> 
+    </select>
+    
+    <update id="updatePssj" >
+        update skin_psjl set pssj = #{pssj} where pssj in (select a.pssj from (
+            select max(pssj) as pssj from skin_psjl
+            where brid = #{brid}
+            and gmlb in
+            <foreach collection="gmlbList" item="z" open="(" close=")" separator="," >
+               	#{z}
+     	    </foreach>	
+        ) a ) and brid = #{brid}
+        and gmlb in
+        <foreach collection="gmlbList" item="z" open="(" close=")" separator="," >
+            #{z}
+   	    </foreach>	
+    </update>
 </mapper>
 

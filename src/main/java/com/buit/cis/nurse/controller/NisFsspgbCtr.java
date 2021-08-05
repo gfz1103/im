@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.buit.cis.nurse.request.NisFsspgbReq;
+import com.buit.cis.nurse.request.NisHlQueryReq;
 import com.buit.cis.nurse.response.NisFsspgbResp;
 import com.buit.cis.nurse.service.NisFsspgbSer;
 import com.buit.cis.nurse.service.NisHzmbSer;
@@ -59,12 +60,9 @@ public class NisFsspgbCtr extends BaseSpringController{
     @RequestMapping("/queryFsspgbByDate")
     @ResponseBody
     @ApiOperation(value="根据日期查询深静脉血栓风险评估表" ,httpMethod="POST")
-    public ReturnEntity<List<NisFsspgbResp>> queryFsspgbByDate(@ApiParam(name = "zyh", value = "住院号", required = true)
-    @RequestParam Integer zyh, @ApiParam(name = "queryDate", value = "查询时间(M-d)", required = false)
-    @RequestParam(value="queryDate", required = false) String queryDate, @ApiParam(name = "mblx", value = "模板类型", required = true)
-    @RequestParam String mblx){
-        return ReturnEntityUtil.success(nisFsspgbSer.getEntityMapper().queryFsspgbByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId(), mblx));
+    public ReturnEntity<List<NisFsspgbResp>> queryFsspgbByDate(NisHlQueryReq nisHlQueryReq){
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+        return ReturnEntityUtil.success(nisFsspgbSer.getEntityMapper().queryFsspgbByDate(nisHlQueryReq));
     }
   
     @RequestMapping("/saveFsspgb")
@@ -92,10 +90,9 @@ public class NisFsspgbCtr extends BaseSpringController{
     
     @GetMapping("/deepVeinThrombosisPrint")
     @ApiOperation(value="深静脉血栓风险评估表打印")
-    public void deepVeinThrombosisPrint(@RequestParam(value="zyh") Integer zyh, @RequestParam(value="queryDate", required = false) String queryDate,
-    		@RequestParam(value="mblx") String mblx, HttpServletResponse response){
-    	List<Map<String, Object>> list = nisFsspgbSer.getEntityMapper().queryPrintFsspgbByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId(), mblx);
+    public void deepVeinThrombosisPrint(NisHlQueryReq nisHlQueryReq, HttpServletResponse response){
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+    	List<Map<String, Object>> list = nisFsspgbSer.getEntityMapper().queryPrintFsspgbByDate(nisHlQueryReq);
         String jasperName = "jrxml/DeepVeinThrombosisPrint.jasper";
         nisHzmbSer.ComplementEmptyline(list, 16);
         iReportExportFileSer.reportHtmlForStream(list, null, jasperName, response);

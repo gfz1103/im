@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.buit.cis.nurse.request.NisFyfxpgdReq;
+import com.buit.cis.nurse.request.NisHlQueryReq;
 import com.buit.cis.nurse.response.NisFyfxpgdResp;
 import com.buit.cis.nurse.service.NisFyfxpgdSer;
 import com.buit.cis.nurse.service.NisHzmbSer;
@@ -58,11 +59,9 @@ public class NisFyfxpgdCtr extends BaseSpringController{
     @RequestMapping("/queryFyfxpgdByDate")
     @ResponseBody
     @ApiOperation(value="根据日期查询医院获得性肺炎风险因素评估单" ,httpMethod="POST")
-    public ReturnEntity<List<NisFyfxpgdResp>> queryFyfxpgdByDate(@ApiParam(name = "zyh", value = "住院号", required = true)
-    @RequestParam Integer zyh, @ApiParam(name = "queryDate", value = "查询时间(M-d)", required = false)
-    @RequestParam(value="queryDate", required = false) String queryDate){
-        return ReturnEntityUtil.success(nisFyfxpgdSer.getEntityMapper().queryFyfxpgdByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId()));
+    public ReturnEntity<List<NisFyfxpgdResp>> queryFyfxpgdByDate(NisHlQueryReq nisHlQueryReq){
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+        return ReturnEntityUtil.success(nisFyfxpgdSer.getEntityMapper().queryFyfxpgdByDate(nisHlQueryReq));
     }
  
     @RequestMapping("/saveFyfxpgd")
@@ -90,10 +89,10 @@ public class NisFyfxpgdCtr extends BaseSpringController{
  
     @GetMapping("/acquiredPneumoniaPrint")
     @ApiOperation(value="医院获得性肺炎风险因素评估单打印")
-    public void acquiredPneumoniaPrint(@RequestParam(value="zyh") Integer zyh, @RequestParam(value="queryDate", required = false) String queryDate,
+    public void acquiredPneumoniaPrint(NisHlQueryReq nisHlQueryReq,
     		HttpServletResponse response){
-    	List<Map<String, Object>> list = nisFyfxpgdSer.getEntityMapper().queryPrintFyfxpgdByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId());
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+    	List<Map<String, Object>> list = nisFyfxpgdSer.getEntityMapper().queryPrintFyfxpgdByDate(nisHlQueryReq);
         String jasperName = "jrxml/AcquiredPneumoniaPrint.jasper";
         nisHzmbSer.ComplementEmptyline(list, 17);
         iReportExportFileSer.reportHtmlForStream(list, null, jasperName, response);

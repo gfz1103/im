@@ -1,16 +1,35 @@
 
 package com.buit.cis.dctwork.controller;
-
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.buit.apply.request.CisJcsq01QueryReq;
 import com.buit.apply.response.CisJcsq01QueryResp;
 import com.buit.apply.service.Cisjcsqd01Service;
 import com.buit.cis.dctwork.model.CisHzyz;
 import com.buit.cis.dctwork.model.CisHzyzZt;
+import com.buit.system.model.DicKszd;
 import com.buit.cis.dctwork.request.*;
 import com.buit.cis.dctwork.response.*;
 import com.buit.cis.dctwork.service.CisHzyzSer;
@@ -32,7 +51,6 @@ import com.buit.constans.TableName;
 import com.buit.file.IReportExportFileSer;
 import com.buit.mms.cmo.response.IOptSssqResp;
 import com.buit.mms.cmo.service.OptSssqService;
-import com.buit.system.model.DicKszd;
 import com.buit.system.response.DiccLdxmglApiResp;
 import com.buit.system.service.DicKszdOutSer;
 import com.buit.utill.DateUtils;
@@ -44,22 +62,9 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.dubbo.config.annotation.DubboReference;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-import java.math.BigDecimal;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -218,6 +223,14 @@ public class CisHzyzCtr extends BaseSpringController {
                                                   @RequestParam String kssj) {
         return ReturnEntityUtil.success(cisHzyzSer.doLoadAmqcCount(zyh, ypxh, kssj));
     }
+    
+	@RequestMapping("/updateSkinTest")
+    @ResponseBody
+    @ApiOperation(value="更新皮试结果状态" ,httpMethod="POST")
+    public ReturnEntity updateSkinTest(@Valid CisHzyzSkinReq req){
+        cisHzyzSer.updateSkinTestByJlxh(req, this.getUser().getHospitalId());
+        return ReturnEntityUtil.success();
+    }
 
     @RequestMapping("/getAllYfs")
     @ResponseBody
@@ -280,15 +293,6 @@ public class CisHzyzCtr extends BaseSpringController {
                 () -> cisHzyzZtSer.getEntityMapper().queryZyJySqdList(cisHzyzZtQueryReq)
         );
         return ReturnEntityUtil.success(pageInfo);
-    }
-
-    @RequestMapping("/updateSkinTest")
-    @ResponseBody
-    @ApiOperation(value = "更新皮试结果状态", httpMethod = "POST")
-    public ReturnEntity<Long> updateSkinTest(@ApiParam(name = "jlxh", value = "记录序号", required = true)
-                                             @RequestParam Integer jlxh, @ApiParam(name = "psjg", value = "皮试结果", required = true)
-                                             @RequestParam Integer psjg) {
-        return ReturnEntityUtil.success(cisHzyzSer.getEntityMapper().updateSkinTestByJlxh(psjg, jlxh, this.getUser().getHospitalId()));
     }
 
     @RequestMapping("/queryDicZlxmInfo")
@@ -499,8 +503,8 @@ public class CisHzyzCtr extends BaseSpringController {
 
     @RequestMapping("/stopOrdersAndCheckAuthority")
     @ResponseBody
-    @ApiOperation(value = "停医嘱同时校验医生权限", httpMethod = "POST")
-    public ReturnEntity<String> stopOrdersAndCheckAuthority(@RequestBody List<CisHzyzStopCheckReq> list) {
+    @ApiOperation(value="停医嘱同时校验医生权限" ,httpMethod="POST")
+    public ReturnEntity<String> stopOrdersAndCheckAuthority(@Valid @RequestBody List<CisHzyzStopCheckReq> list){
         return ReturnEntityUtil.success(cisHzyzSer.stopOrdersAndCheckAuthority(list, this.getUser()));
     }
 
@@ -517,6 +521,14 @@ public class CisHzyzCtr extends BaseSpringController {
     public ReturnEntity deleteOrdersByJlxhList(@Valid @RequestBody List<CisHzyzDeteleReq> list) {
         cisHzyzSer.deleteOrdersByJlxhList(list);
         return ReturnEntityUtil.success();
+    }
+
+    
+    @RequestMapping("/checkSkinTest")
+    @ResponseBody
+    @ApiOperation(value="校验医嘱是否需要皮试" ,httpMethod="POST")
+    public ReturnEntity<CisHzyzCheckSkinResp> checkSkinTest(@Valid CisHzyzCheckSkinReq req){
+        return ReturnEntityUtil.success(cisHzyzSer.checkSkinTest(req, this.getUser().getHospitalId()));
     }
 
 }

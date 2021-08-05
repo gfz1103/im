@@ -22,7 +22,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.buit.cis.dctwork.model.CisHzyz;
 import com.buit.cis.dctwork.service.CisHzyzSer;
+import com.buit.cis.dctwork.request.CisHzyzDataReq;
+import com.buit.cis.dctwork.request.CisHzyzQueryApiReq;
+import com.buit.cis.dctwork.request.CisHzyzReq;
+import com.buit.cis.dctwork.request.CisHzyzSaveReq;
+import com.buit.cis.dctwork.request.CisHzyzSubmitReq;
+import com.buit.cis.dctwork.request.CisHzyzXhListReq;
+import com.buit.cis.dctwork.request.SkinPsjlCheckReq;
+import com.buit.cis.dctwork.response.CisHzyzDocSubmitResp;
+import com.buit.cis.dctwork.response.CisHzyzQueryResp;
+import com.buit.cis.dctwork.response.CisHzyzResp;
+import com.buit.cis.dctwork.response.NisFyyfQxResp;
+import com.buit.cis.dctwork.response.SkinPsjlCheckResp;
+import com.buit.cis.dctwork.response.SkinPsjlDrugsResp;
+import com.buit.cis.dctwork.response.SkinPsjlQueryResp;
+import com.buit.cis.dctwork.response.YsZyHzBgResp;
 import com.buit.cis.dctwork.service.ImHzryByDctworkSer;
+import com.buit.cis.dctwork.service.SkinPsjlSer;
 import com.buit.cis.ims.model.ImHzry;
 import com.buit.cis.ims.request.ImFeeFymxDbReq;
 import com.buit.cis.ims.request.ImHzryDctworkReq;
@@ -82,6 +98,10 @@ public class ImHzryByDctworkCtr extends BaseSpringController {
 	
 	@Autowired
 	private CisHzyzSer cisHzyzSer;
+
+	@Autowired
+	private SkinPsjlSer skinPsjlSer;
+
 	
 	@RequestMapping("/queryPageByPatientInfo")
     @ResponseBody
@@ -108,9 +128,10 @@ public class ImHzryByDctworkCtr extends BaseSpringController {
 	@RequestMapping("/getAllergicDrugsByEntity")
 	@ResponseBody
 	@ApiOperation(value="病区病人管理病人过敏药物" ,httpMethod="POST")
-	public ReturnEntity<List<SkinPsjlResp>> getAllergicDrugsByEntity(@ApiParam(name = "brid", value = "病人id", required = true) 
+	public ReturnEntity<List<SkinPsjlDrugsResp>> getAllergicDrugsByEntity(@ApiParam(name = "brid", value = "病人id", required = true) 
 	@RequestParam Integer brid){
-	  	return ReturnEntityUtil.success(imHzryByDctworkSer.getAllergicDrugsByEntity(brid, this.getUser()));
+	  	return ReturnEntityUtil.success(skinPsjlSer.getEntityMapper().
+	  			queryAllergyDrugsInfo(brid, this.getUser().getHospitalId()));
   	}
   
 	@RequestMapping("/deleteByCompositeKeys")

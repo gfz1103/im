@@ -2410,6 +2410,15 @@
 			<if test="@sqlt.Ognl@isNotEmpty(type) and type == 2">
        			and hljb = 1
        		</if>
+       		<if test="@sqlt.Ognl@isNotEmpty(type) and type == 3">
+       			and brqk = 1
+       		</if>
+       		<if test="@sqlt.Ognl@isNotEmpty(type) and type == 4">
+       			and brqk = 2
+       		</if>
+       		<if test="@sqlt.Ognl@isNotEmpty(type) and type == 5">
+       			and hljb = 0
+       		</if>
     </select>
 
     <!-- 查询手术患者 -->

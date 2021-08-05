@@ -27,6 +27,7 @@ import com.buit.cis.nurse.request.CisHzyzCardCancelReq;
 import com.buit.cis.nurse.request.CisHzyzCardQueryReq;
 import com.buit.cis.nurse.request.CisHzyzCardReTypeReq;
 import com.buit.cis.nurse.request.CisHzyzCardReq;
+import com.buit.cis.nurse.request.CisHzyzMenuReq;
 import com.buit.cis.nurse.response.CisHzyzCancelPrintResp;
 import com.buit.cis.nurse.response.CisHzyzCardKsResp;
 import com.buit.cis.nurse.service.NurseOrderCardSer;
@@ -255,6 +256,23 @@ public class NurseOrderCardCtr extends BaseSpringController{
 		}
 		iReportExportFileSer.reportHtmlForStream(list, nurseOrderCardSer.getOralCardParameters(), 
 				jasperName, response);
+	}
+	
+	@GetMapping("/orderMenuFile")
+	@ApiOperation(value="点菜单打印")
+	public void orderMenuFile(@RequestParam("reqStr") String reqStr, HttpServletResponse response){
+		CisHzyzMenuReq cisHzyzMenuReq = JSONUtil.toBean(reqStr, CisHzyzMenuReq.class);
+		Map<String, Object> map = nurseOrderCardSer.getOrderMenuParameters(cisHzyzMenuReq, this.getUser());
+		List<Map<String, Object>> list = nurseOrderCardSer.orderMenuPrintFileds(cisHzyzMenuReq, this.getUser());
+		String jasperName = "jrxml/OrderMenu.jasper";
+		if(cisHzyzMenuReq.getType() == 2) {
+			jasperName = "jrxml/MealCard.jasper";
+		}else if(cisHzyzMenuReq.getType() == 3) {
+			jasperName = "jrxml/SpecialMedicalDiet.jasper";
+		}
+		if(CollectionUtils.isNotEmpty(list)) {
+			iReportExportFileSer.reportHtmlForStream(list, map, jasperName, response);
+		}
 	}
 	
 }

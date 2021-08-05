@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -55,7 +56,7 @@ public class NisHljbdCtr extends BaseSpringController{
     @RequestMapping("/queryPageHljbd")
     @ResponseBody
     @ApiOperation(value="交班单-分页查询" ,httpMethod="POST")
-    public ReturnEntity<PageInfo<NisHljbd>> queryPageHljbd(NisHljbdQueryReq nishljbd,PageQuery page){
+    public ReturnEntity<PageInfo<NisHljbd>> queryPageHljbd(@Valid NisHljbdQueryReq nishljbd,PageQuery page){
     	nishljbd.setJgid(this.getUser().getHospitalId());
     	PageInfo<NisHljbd> pageInfo = PageHelper.startPage(
             page.getPageNum(), page.getPageSize()).doSelectPageInfo(

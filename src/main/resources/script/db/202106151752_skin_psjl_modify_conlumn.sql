@@ -1,0 +1,2 @@
+ALTER TABLE `skin_psjl` 
+MODIFY COLUMN `YPXH` int(0) NULL COMMENT '药品序号' AFTER `BRID`;

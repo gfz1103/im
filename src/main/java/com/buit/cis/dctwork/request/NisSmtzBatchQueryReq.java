@@ -37,6 +37,15 @@ public class NisSmtzBatchQueryReq {
 	@ApiModelProperty(value="是否为发热患者")
 	private boolean frFlag;	
 	
+	@ApiModelProperty(value="是否病危患者")
+	private boolean bwFlag;	
+	
+	@ApiModelProperty(value="是否病重患者")
+	private boolean bzFlag;	
+	
+	@ApiModelProperty(value="是否特级护理")
+	private boolean tjFlag;	
+	
 	public String getQueryDate() {
 		return queryDate;
 	}
@@ -100,5 +109,30 @@ public class NisSmtzBatchQueryReq {
 	public void setFrFlag(boolean frFlag) {
 		this.frFlag = frFlag;
 	}
+
+	public boolean isBwFlag() {
+		return bwFlag;
+	}
+
+	public void setBwFlag(boolean bwFlag) {
+		this.bwFlag = bwFlag;
+	}
+
+	public boolean isBzFlag() {
+		return bzFlag;
+	}
+
+	public void setBzFlag(boolean bzFlag) {
+		this.bzFlag = bzFlag;
+	}
+
+	public boolean isTjFlag() {
+		return tjFlag;
+	}
+
+	public void setTjFlag(boolean tjFlag) {
+		this.tjFlag = tjFlag;
+	}
+	
 	
 }

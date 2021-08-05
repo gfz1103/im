@@ -1059,6 +1059,9 @@ public class ImTwdnrSer extends BaseManagerImp<ImTwdnr,Integer> {
 	    	boolean ssFlag = req.isSsFlag();
 	    	boolean yjFlag = req.isYjhlFlag();
 	    	boolean frFlag = req.isFrFlag();
+	    	boolean bwFlag = req.isBwFlag();
+	    	boolean bzFlag = req.isBzFlag();
+	    	boolean tjFlag = req.isTjFlag();
 	    	//新入患者(每日2次*3天)
 	    	if(xrFlag && (hour == 6 || hour == 14)) {
 	    		zyhList.addAll(imHzryDao.queryNewAdmissionPatient(bqdm, user.getHospitalId(), 1, queryDate));
@@ -1100,6 +1103,15 @@ public class ImTwdnrSer extends BaseManagerImp<ImTwdnr,Integer> {
 	    			zyhList.addAll(imHzryDao.queryFeverPatient(bqdm, user.getHospitalId(), 2, 
 	    					DateUtil.parse(datetime, DatePattern.NORM_DATETIME_PATTERN).toTimestamp()));
 	    		}
+	    	}
+	    	if(bwFlag) {
+	    		zyhList.addAll(imHzryDao.queryNewAdmissionPatient(bqdm, user.getHospitalId(), 3, queryDate));
+	    	}
+	    	if(bzFlag) {
+	    		zyhList.addAll(imHzryDao.queryNewAdmissionPatient(bqdm, user.getHospitalId(), 4, queryDate));
+	    	}
+	    	if(tjFlag) {
+	    		zyhList.addAll(imHzryDao.queryNewAdmissionPatient(bqdm, user.getHospitalId(), 5, queryDate));
 	    	}
     	}
     	List<Map<String, Object>> list = imHzryDao.queryTemperatureHzInfo(hour, queryDate, 
@@ -1155,6 +1167,8 @@ public class ImTwdnrSer extends BaseManagerImp<ImTwdnr,Integer> {
 		}).get()).collect(Collectors.toList());
     	if(CollectionUtils.isNotEmpty(zyhList)) {
     		list = list.stream().filter(o -> zyhList.contains(o.get("zyh"))).collect(Collectors.toList());
+    	}else if(!req.isQbFlag() && zyhList.isEmpty()){
+    		return null;
     	}
     	for(Map<String, Object> map : list) {
     		List<Map<String, Object>> smtzList = nisSmtzDao.queryZdySmtz(ObjectToTypes.parseInt(map.get("zyh")), 

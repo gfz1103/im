@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.buit.cis.nurse.request.NisHlQueryReq;
 import com.buit.cis.nurse.request.NisLzdngpgbReq;
 import com.buit.cis.nurse.response.NisLzdngpgbResp;
 import com.buit.cis.nurse.service.NisHzmbSer;
@@ -58,11 +59,9 @@ public class NisLzdngpgbCtr extends BaseSpringController{
     @RequestMapping("/queryLzdngByDate")
     @ResponseBody
     @ApiOperation(value="根据日期查询留置导尿管感染风险因素评估表" ,httpMethod="POST")
-    public ReturnEntity<List<NisLzdngpgbResp>> queryLzdngByDate(@ApiParam(name = "zyh", value = "住院号", required = true)
-    @RequestParam Integer zyh, @ApiParam(name = "queryDate", value = "查询时间(M-d)", required = false)
-    @RequestParam(value="queryDate", required = false) String queryDate){
-        return ReturnEntityUtil.success(nisLzdngpgbSer.getEntityMapper().queryLzdngByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId()));
+    public ReturnEntity<List<NisLzdngpgbResp>> queryLzdngByDate(NisHlQueryReq nisHlQueryReq){
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+        return ReturnEntityUtil.success(nisLzdngpgbSer.getEntityMapper().queryLzdngByDate(nisHlQueryReq));
     }
   
     @RequestMapping("/saveLzdng")
@@ -90,10 +89,10 @@ public class NisLzdngpgbCtr extends BaseSpringController{
     
     @GetMapping("/catheterInfectionPrint")
     @ApiOperation(value="留置导尿管感染风险因素评估表打印")
-    public void catheterInfectionPrint(@RequestParam(value="zyh") Integer zyh, @RequestParam(value="queryDate", required = false) String queryDate,
+    public void catheterInfectionPrint(NisHlQueryReq nisHlQueryReq,
     		HttpServletResponse response){
-    	List<Map<String, Object>> list = nisLzdngpgbSer.getEntityMapper().queryPrintLzdngByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId());
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+    	List<Map<String, Object>> list = nisLzdngpgbSer.getEntityMapper().queryPrintLzdngByDate(nisHlQueryReq);
         String jasperName = "jrxml/CatheterInfectionPrint.jasper";
         nisHzmbSer.ComplementEmptyline(list, 16);
         iReportExportFileSer.reportHtmlForStream(list, null, jasperName, response);

@@ -166,14 +166,14 @@
     
     <!-- 肺栓塞风险因素评估表查询树结构-->
     <select id="queryFssriskTree" resultType="com.buit.cis.nurse.response.NisHzmbResp">
-        SELECT CONCAT(a.RQ, '  ', b.MBMC ) as LABEL, a.MBLX as NAME
-			FROM ( SELECT DATE_FORMAT( RQ, '%m-%d' ) AS RQ, 
+        SELECT a.RQ as LABEL, a.MBLX as NAME
+			FROM ( SELECT DATE_FORMAT( RQ, '%Y-%m' ) AS RQ, 
 							ZYH as ZYH,
 							MBLX as MBLX,
 							JGID as JGID
 				FROM NIS_FSSRISK 
 				GROUP BY 
-					DATE_FORMAT(RQ, '%m-%d'),
+					DATE_FORMAT(RQ, '%Y-%m'),
 					ZYH,
 					MBLX,
 					JGID 
@@ -194,6 +194,9 @@
 		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
 			  and DATE_FORMAT(RQ, '%m-%d') = #{queryDate}
         </if> 
+        <if test="@sqlt.Ognl@isNotEmpty(yearMonth)">
+			  and DATE_FORMAT(RQ, '%Y-%m') = #{yearMonth}
+        </if>  
         and JGID = #{jgid}
         order by RQ
     </select>
@@ -220,8 +223,24 @@
 		<if test="@sqlt.Ognl@isNotEmpty(queryDate)">
 			  and date_format(rq, '%m-%d') = #{queryDate}
         </if> 
+        <if test="@sqlt.Ognl@isNotEmpty(yearMonth)">
+			  and date_format(rq, '%Y-%m') = #{yearMonth}
+        </if>  
         and jgid = #{jgid}
         order by rq
+    </select>
+    
+    <select id="queryFssriskTreeDetail" resultType="com.buit.cis.nurse.response.NisHzmbDetailResp">
+         select concat(date_format(a.rq, '%m-%d'), '  ', b.mbmc ) as label, a.mblx as name
+			from nis_fssrisk a, nis_hzmb b 
+			where a.zyh = b.zyh 
+			and a.mblx = b.mblx 
+			and a.jgid = b.jgid
+			and a.zyh = #{zyh}
+			and a.jgid = #{jgid}
+			and date_format(a.rq, '%Y-%m') = #{yearMonth}
+			group by concat(date_format(a.rq, '%m-%d'), ' ', b.mbmc ), a.mblx
+			order by a.rq
     </select>
 </mapper>
 

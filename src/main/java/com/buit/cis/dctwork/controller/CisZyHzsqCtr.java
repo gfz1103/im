@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
@@ -73,7 +74,7 @@ public class CisZyHzsqCtr extends BaseSpringController{
     @RequestMapping("/updateCisZyHzsq")
 	@ResponseBody
 	@ApiOperation(value="修改保存会诊申请" ,httpMethod="POST")
-	public ReturnEntity updateCisZyHzsq(CisZyHzsqReq cisZyHzsqReq) {
+	public ReturnEntity updateCisZyHzsq(@Valid CisZyHzsqReq cisZyHzsqReq) {
 		cisZyHzsqSer.updateCisZyHzsq(cisZyHzsqReq, this.getUser());        
 	    return ReturnEntityUtil.success();            
 	}   

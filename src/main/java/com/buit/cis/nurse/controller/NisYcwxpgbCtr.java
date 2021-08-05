@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.buit.cis.nurse.model.NisYcwxpgb;
+import com.buit.cis.nurse.request.NisHlQueryReq;
 import com.buit.cis.nurse.request.NisYcwxpgbReq;
 import com.buit.cis.nurse.response.NisYcwxpgbResp;
 import com.buit.cis.nurse.service.NisHzmbSer;
@@ -59,11 +60,9 @@ public class NisYcwxpgbCtr extends BaseSpringController{
     @RequestMapping("/queryYcwxpgbByDate")
     @ResponseBody
     @ApiOperation(value="根据日期查询住院患者压疮危险因素评估表" ,httpMethod="POST")
-    public ReturnEntity<List<NisYcwxpgbResp>> queryYcwxpgbByDate(@ApiParam(name = "zyh", value = "住院号", required = true)
-    @RequestParam Integer zyh, @ApiParam(name = "queryDate", value = "查询时间(M-d)", required = false)
-    @RequestParam(value="queryDate", required = false) String queryDate){
-        return ReturnEntityUtil.success(nisYcwxpgbSer.getEntityMapper().queryYcwxpgbByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId()));
+    public ReturnEntity<List<NisYcwxpgbResp>> queryYcwxpgbByDate(NisHlQueryReq nisHlQueryReq){
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+        return ReturnEntityUtil.success(nisYcwxpgbSer.getEntityMapper().queryYcwxpgbByDate(nisHlQueryReq));
     }
     
     
@@ -95,10 +94,10 @@ public class NisYcwxpgbCtr extends BaseSpringController{
    
     @GetMapping("/riskFactorsPrint")
     @ApiOperation(value="住院患者压疮危险因素评估表打印")
-    public void postpartumNursingRecordPrint(@RequestParam(value="zyh") Integer zyh, @RequestParam(value="queryDate", required = false) String queryDate,
+    public void postpartumNursingRecordPrint(NisHlQueryReq nisHlQueryReq,
     		HttpServletResponse response){
-    	List<Map<String, Object>> list = nisYcwxpgbSer.getEntityMapper().queryPrintYcwxpgbByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId());
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+    	List<Map<String, Object>> list = nisYcwxpgbSer.getEntityMapper().queryPrintYcwxpgbByDate(nisHlQueryReq);
         String jasperName = "jrxml/RiskFactorsPrint.jasper";
         nisHzmbSer.ComplementEmptyline(list, 17);
         iReportExportFileSer.reportHtmlForStream(list, null, jasperName, response);

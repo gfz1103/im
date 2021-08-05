@@ -57,6 +57,7 @@ import com.buit.cis.dctwork.dao.NisTj02Dao;
 import com.buit.cis.dctwork.dto.PharFyjlMessDto;
 import com.buit.cis.dctwork.dao.OpSbhyDao;
 import com.buit.cis.dctwork.dao.OptSssqDao;
+import com.buit.cis.dctwork.dao.SkinPsjlDao;
 import com.buit.cis.dctwork.enums.OperationTypeEnum;
 import com.buit.cis.dctwork.model.CisHzyz;
 import com.buit.cis.dctwork.model.CisHzyzZt;
@@ -64,10 +65,12 @@ import com.buit.cis.dctwork.model.NisFyyf;
 import com.buit.cis.dctwork.model.NisTj01;
 import com.buit.cis.dctwork.model.NisTj02;
 import com.buit.cis.dctwork.model.PharYflb;
+import com.buit.cis.dctwork.model.SkinPsjl;
 import com.buit.cis.dctwork.request.CisHzyzAntibioticsReq;
 import com.buit.cis.dctwork.request.CisHzyzCheckAntimicrobialReq;
 import com.buit.cis.dctwork.request.CisHzyzCheckAntimicrobialReq.YzxxBody;
 import com.buit.cis.dctwork.request.CisHzyzCheckKcReq;
+import com.buit.cis.dctwork.request.CisHzyzCheckSkinReq;
 import com.buit.cis.dctwork.request.CisHzyzChooseProjectReq;
 import com.buit.cis.dctwork.request.CisHzyzCommonReq;
 import com.buit.cis.dctwork.request.CisHzyzCopyReq;
@@ -77,6 +80,7 @@ import com.buit.cis.dctwork.request.CisHzyzJcxmReq;
 import com.buit.cis.dctwork.request.CisHzyzProjectReq;
 import com.buit.cis.dctwork.request.CisHzyzReq;
 import com.buit.cis.dctwork.request.CisHzyzSaveReq;
+import com.buit.cis.dctwork.request.CisHzyzSkinReq;
 import com.buit.cis.dctwork.request.CisHzyzStackReq;
 import com.buit.cis.dctwork.request.CisHzyzStopCheckReq;
 import com.buit.cis.dctwork.request.CisHzyzXmImportReq;
@@ -86,6 +90,7 @@ import com.buit.cis.dctwork.request.DrugsTypkBqyzYpSrfReq;
 import com.buit.cis.dctwork.request.NisTj02Req;
 import com.buit.cis.dctwork.request.NisTjSureReq;
 import com.buit.cis.dctwork.request.SkinPsjlCheckReq;
+import com.buit.cis.dctwork.response.CisHzyzCheckSkinResp;
 import com.buit.cis.dctwork.response.CisHzyzChooseProjectResp;
 import com.buit.cis.dctwork.response.CisHzyzCommonResp;
 import com.buit.cis.dctwork.response.CisHzyzProjectResp;
@@ -125,6 +130,7 @@ import com.buit.his.treatment.ResultsUtil;
 import com.buit.his.treatment.model.ZlHzyz;
 import com.buit.his.treatment.service.ZlRwfpService;
 import com.buit.mms.antimi.service.AmqcKjywsysqypService;
+import com.buit.op.service.SkinXmService;
 import com.buit.system.model.DicYjlxModel;
 import com.buit.system.model.DiccZlsfdzModel;
 import com.buit.system.model.FeeYlsfxmModel;
@@ -263,6 +269,9 @@ public class CisHzyzSer extends BaseManagerImp<CisHzyz,Integer> {
 	
 	@DubboReference
 	private Cisjcsqd03Service cisjcsqd03Service;
+
+	@Autowired
+	private SkinPsjlDao skinPsjlDao;
 	
 	@Autowired
 
@@ -301,6 +310,8 @@ public class CisHzyzSer extends BaseManagerImp<CisHzyz,Integer> {
 	@Autowired
 	private PubDrugKcdjSerImpl pubDrugKcdjSerImpl;
 
+	@DubboReference
+	private SkinXmService skinXmService;
     
     /**
     * @Title: getDoctorAdviceBrQuery
@@ -3741,7 +3752,6 @@ public class CisHzyzSer extends BaseManagerImp<CisHzyz,Integer> {
 		return resList.stream().distinct().collect(Collectors.toList());
 	}
 
-
 	/**
 	 * @Description
 	 * @author  gfz
@@ -3800,6 +3810,12 @@ public class CisHzyzSer extends BaseManagerImp<CisHzyz,Integer> {
 		if(!newList.isEmpty()) {
 			cisHzyzDao.updateStopOrdersByJlxh(ObjectToTypes.parseString(userId), newList.get(0).getTzsj(), 
 					newList.stream().map(CisHzyzStopCheckReq::getJlxh).collect(Collectors.toList()));
+			
+			List<Integer> psList = newList.stream().filter(o -> o.getPspb() != null &&  o.getPspb() > 0 
+					&& o.getGmywlb() != null).map(o -> o.getGmywlb()).collect(Collectors.toList());
+		    if(!psList.isEmpty()) {
+		    	skinPsjlDao.updatePssj(newList.get(0).getTzsj(), newList.get(0).getBrid(), psList);
+		    }
 		}
 		
 		return warnMsg;
@@ -3905,6 +3921,97 @@ public class CisHzyzSer extends BaseManagerImp<CisHzyz,Integer> {
 				amqcKjywsyhzksysDao.deleteBatchYjBySqidList(ywList);
 			}
 		}
+	}
+
+	/**
+	 * @Description 更新皮试结果状态
+	 * @Title  updateSkinTestByJlxh
+	 * @author  gfz
+	 * @Date  2021/6/7 22:32
+	 * @param req
+	 * @param hospitalId
+	 * @Return  void
+	 * @Exception
+	*/
+	@Transactional(rollbackFor = Exception.class)
+    public void updateSkinTestByJlxh(CisHzyzSkinReq req, Integer hospitalId) {
+		cisHzyzDao.updateSkinTestByJlxh(req.getPsjg(), req.getJlxh(), hospitalId);
+		DrugsTypkDetailResp resp = drugsTypkOutSer.getDrugsTypkById(req.getYpxh());
+		SkinPsjl skinPsjl = new SkinPsjl();
+		skinPsjl.setBrid(req.getBrid());
+		skinPsjl.setYpxh(req.getYpxh());
+		skinPsjl.setJgid(hospitalId);
+		skinPsjl.setPsjg(req.getPsjg());
+		skinPsjl.setCzsj(DateUtil.date().toTimestamp());
+		skinPsjl.setPssj(DateUtil.date().toTimestamp());
+		if(resp != null) {
+			skinPsjl.setGmlb(resp.getGmywlb());
+		}
+		skinPsjl.setJlxh(redisFactory.getTableKey(TableName.DB_NAME, TableName.SKIN_PSJL));
+		skinPsjlDao.insert(skinPsjl);
+	}
+
+	/**
+	 * @Description 校验医嘱是否需要皮试
+	 * @Title  checkSkinTest
+	 * @author  gfz
+	 * @Date  2021/6/7 23:38
+	 * @param req
+	 * @param hospitalId
+	 * @Return  java.lang.Integer
+	 * @Exception  
+	*/
+	public CisHzyzCheckSkinResp checkSkinTest(CisHzyzCheckSkinReq req, Integer hospitalId) {
+		CisHzyzCheckSkinResp resp = new CisHzyzCheckSkinResp();
+		ReturnEntity<String> returnEntity = new ReturnEntity<String>();
+		Integer isUse = 0;
+		//先用具体的药品查询最大的操作时间,没有则根据过敏类别查询
+		SkinPsjl psjl = skinPsjlDao.queryIsExtisMaxDate(req.getBrid(), req.getYpxh(), null, hospitalId);
+		if(psjl == null) {
+			psjl = skinPsjlDao.queryIsExtisMaxDate(req.getBrid(), null, req.getGmywlb(), hospitalId);
+		}
+		Integer yxts = 0;
+		if(psjl != null) {
+			//查询皮试项目有效天数
+			yxts = skinXmService.getSkinYxq(psjl.getGmlb());
+			if(yxts == null) {
+				returnEntity.setError("ERROR_DCTWORK_ZYBQYZ_00061", null);
+				resp.setMessage(returnEntity.getMessage());
+			}else {
+				boolean flag = DateUtil.parse(DateUtil.offsetDay(psjl.getPssj(), yxts).toString(), DatePattern.NORM_DATE_PATTERN).compareTo(
+						DateUtil.parse(req.getKssj().toString(), DatePattern.NORM_DATE_PATTERN)) >= 0;
+				if(flag) {
+					if(psjl.getPsjg() != null && psjl.getPsjg() != 3) {
+						isUse = 1;
+					}else {
+						returnEntity.setError("ERROR_DCTWORK_ZYBQYZ_00058", new String[] {
+								req.getYzmc()
+						});
+						resp.setMessage(returnEntity.getMessage());
+					}
+				}else {
+					if(req.getLsyz() == 1) {
+						isUse = 1;
+					}else {
+						returnEntity.setError("ERROR_DCTWORK_ZYBQYZ_00059", new String[] {
+								req.getYzmc()
+						});
+						resp.setMessage(returnEntity.getMessage());
+					}
+				}
+			}
+		}else{
+			if(req.getLsyz() == 1) {
+				isUse = 1;
+			}else {
+				returnEntity.setError("ERROR_DCTWORK_ZYBQYZ_00060", new String[] {
+						req.getYzmc()
+				});
+				resp.setMessage(returnEntity.getMessage());
+			}
+		}
+		resp.setIsUse(isUse);
+		return resp;
 	}
 
 

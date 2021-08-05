@@ -2096,7 +2096,8 @@
 	       c.CDMC,
 	       a.KJYWSP,
 	       a.DS,
-	       a.FHSJ
+	       a.FHSJ,
+	       b.GMYWLB
 	  from CIS_HZYZ a
 	  left join DRUGS_TYPK b
 	    on (a.YPXH = b.YPXH)
@@ -3151,9 +3152,11 @@
    		select b.brch,
    			b.brxm,
    			date_format(b.csny,'%Y-%m-%d') as csrq,
+   			date_format(b.csny,'%Y%m%d') as birthday,
    			a.yzmc,
-   			a.tzsj
-		from cis_hzyz a, im_hzry b, fee_ylsfxm c
+   			a.tzsj,
+   			d.officename as bqmc
+		from cis_hzyz a, im_hzry b left join dic_kszd d on b.brbq = d.id, fee_ylsfxm c
 		where a.jgid = #{jgid}
 		and a.ypxh = c.fyxh
 		and a.yplx = 0
@@ -3168,7 +3171,14 @@
            	and a.zyh = #{zyh}
     	</if>
 		and a.zyh = b.zyh
-		and a.lsyz = #{lsyz}
+    	<choose>
+            <when test="@sqlt.Ognl@isNotEmpty(lsyz)">
+                and a.lsyz = #{lsyz}
+            </when>
+            <otherwise>
+            	and ((a.lsyz = 0 and tzsj is null) or a.lsyz = 1)
+            </otherwise>
+        </choose>
 		and c.xmlx = 9
 		and a.zfbz = 0
 		and a.fhbz = 1
@@ -3917,6 +3927,7 @@
 	       </if>   
    </select>
    
+
     <!-- 查询未复核出院医嘱 -->
    <select id="queryNotReviewedDischargeOrder" resultType="java.lang.String">
 		select yzmc
@@ -3930,6 +3941,40 @@
 		   and lsyz = 1
 		   and zyh = #{zyh}
 		   and jgid = #{jgid}
+   </select>  
+   
+   <select id="querySpecialMedicalDiet" resultType="java.util.HashMap">
+   		select b.brxm,
+   			date_format(b.csny,'%Y%m%d') as birthday,
+   			b.zyhm,
+   			d.officename as bqmc,
+   			case b.brxb when 1 then '男'
+   			when 2 then '女'
+   			else '未知' end as brxb, 
+   			b.brch,
+   			e.officename as ksmc,
+   			a.yzmc,
+   			round(a.ycsl) as ycsl,
+   			a.yfdw
+		from cis_hzyz a, im_hzry b left join dic_kszd d on b.brbq = d.id
+		left join dic_kszd e on b.brks = e.id, fee_ylsfxm c
+		where a.jgid = #{jgid}
+		and a.ypxh = c.fyxh
+		and a.yplx = 0
+		and a.jfbz &lt;&gt; 3
+		<if test="@sqlt.Ognl@isNotEmpty(zyhList)"> 
+           	and a.zyh in 
+   			<foreach collection="zyhList" item="zyh" open="(" close=")" separator="," >
+             	#{zyh}
+   			</foreach>	
+    	</if>
+		and a.zyh = b.zyh
+        and ((a.lsyz = 0 and tzsj is null) or a.lsyz = 1)
+		and c.xmlx = 13
+		and a.zfbz = 0
+		and a.fhbz = 1
+		and a.lsbz = 0
+		order by b.brch, a.kssj, a.yzzh
    </select>
 
 </mapper>

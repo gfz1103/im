@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.buit.cis.nurse.request.NisCghljldColumnHeadReq;
 import com.buit.cis.nurse.request.NisCghljldReq;
+import com.buit.cis.nurse.request.NisHlQueryReq;
 import com.buit.cis.nurse.response.NisCghljldResp;
 import com.buit.cis.nurse.service.NisCghljldSer;
 import com.buit.cis.nurse.service.NisHljldzdySer;
@@ -61,11 +62,9 @@ public class NisCghljldCtr extends BaseSpringController{
     @RequestMapping("/queryCgHljlByDate")
     @ResponseBody
     @ApiOperation(value="根据日期查询护理记录单" ,httpMethod="POST")
-    public ReturnEntity<PageInfo<NisCghljldResp>> queryCgHljlByDate(@ApiParam(name = "zyh", value = "住院号", required = true)
-    @RequestParam Integer zyh, @ApiParam(name = "queryDate", value = "查询时间(M-d)", required = false)
-    @RequestParam(value="queryDate", required = false) String queryDate, PageQuery page) {
-    	List<Map<String, Object>> list = BUHISUtil.ListObjToMap(nisCghljldSer.queryNisCghljldByDateInfo(zyh, queryDate, 
-				this.getUser().getHospitalId()));
+    public ReturnEntity<PageInfo<NisCghljldResp>> queryCgHljlByDate(NisHlQueryReq nisHlQueryReq, PageQuery page) {
+		nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+    	List<Map<String, Object>> list = BUHISUtil.ListObjToMap(nisCghljldSer.queryNisCghljldByDateInfo(nisHlQueryReq));
     	nisHzmbSer.ComplementEmptyline(list, 23);
         return ReturnEntityUtil.success(PageUtil.getPageInfo(page.getPageNum(), 
         		page.getPageSize(), BUHISUtil.ListToResultSet(list, new NisCghljldResp())));
@@ -90,10 +89,10 @@ public class NisCghljldCtr extends BaseSpringController{
    
     @GetMapping("/nurseRecordPrint")
     @ApiOperation(value="护理记录单打印")
-    public void nurseRecordPrint(@RequestParam(value="zyh") Integer zyh, @RequestParam(value="queryDate", required = false) String queryDate,
+    public void nurseRecordPrint(NisHlQueryReq nisHlQueryReq,
     		HttpServletResponse response){
-        List<Map<String, Object>> listMap = nisCghljldSer.queryNisCghljldByDatePrintInfo(zyh, queryDate, 
-        		this.getUser().getHospitalId());
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+        List<Map<String, Object>> listMap = nisCghljldSer.queryNisCghljldByDatePrintInfo(nisHlQueryReq);
         nisHzmbSer.ComplementEmptyline(listMap, 23);
 		String jasperName = "jrxml/NurseRecordCgPrintHd.jasper";
 		iReportExportFileSer.reportHtmlForStream(listMap, null, jasperName, response);

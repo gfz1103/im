@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.buit.cis.nurse.model.NisZspdl;
+import com.buit.cis.nurse.request.NisHlQueryReq;
+import com.buit.cis.nurse.response.NisHzmbDetailResp;
 import com.buit.cis.nurse.response.NisHzmbResp;
 import com.buit.cis.nurse.response.NisZspdlResp;
 import com.buit.commons.EntityDao;
-import org.apache.ibatis.annotations.Param;
 /**
  * Barthel指数平定量表<br>
  * @author GONGFANGZHOU
@@ -42,8 +44,7 @@ public interface NisZspdlDao extends EntityDao<NisZspdl,Integer>{
 	  * @author 龚方舟
 	  * @throws
 	  */
-	 List<NisZspdlResp> queryZspdlByDate(@Param("zyh") Integer zyh, @Param("queryDate") String queryDate,
-			 @Param("jgid") Integer jgid);
+	 List<NisZspdlResp> queryZspdlByDate(NisHlQueryReq nisHlQueryReq);
 	 
 
 	 /**
@@ -58,6 +59,19 @@ public interface NisZspdlDao extends EntityDao<NisZspdl,Integer>{
 	  * @author 龚方舟
 	  * @throws
 	  */
-     List<Map<String, Object>> queryPrintZspdlByDate(@Param("zyh") Integer zyh, @Param("queryDate") String queryDate,
-			 @Param("jgid") Integer jgid);
+     List<Map<String, Object>> queryPrintZspdlByDate(NisHlQueryReq nisHlQueryReq);
+     
+     /**
+	  * Barthel指数平定量表查询树结构明细
+	  * @Title: queryZspdlTreeDetail
+	  * @Description: TODO(这里用一句话描述这个方法的作用)
+	  * @param @param zyh
+	  * @param @param jgid
+	  * @param @return    设定文件
+	  * @return List<NisHzmbDetailResp>    返回类型
+	  * @author 龚方舟
+	  * @throws
+	  */
+	 List<NisHzmbDetailResp> queryZspdlTreeDetail(@Param("zyh") Integer zyh, @Param("jgid") Integer jgid,
+	    		@Param("yearMonth") String yearMonth);
 }

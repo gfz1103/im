@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.buit.cis.nurse.dao.NisWzhldDao;
 import com.buit.cis.nurse.model.NisWzhld;
+import com.buit.cis.nurse.request.NisHlQueryReq;
 import com.buit.cis.nurse.response.NisWzhldResp;
 import com.buit.commons.BaseManagerImp;
 import com.buit.utill.BUHISUtil;
@@ -35,8 +36,8 @@ public class NisWzhldSer extends BaseManagerImp<NisWzhld,Integer> {
         return nisWzhldDao;
     }
     
-    public List<Map<String, Object>> queryWzhldByDatePrintInfo(Integer zyh, String queryDate, Integer jgid){
-    	List<NisWzhldResp> list = nisWzhldDao.queryPrintWzhldByDate(zyh, queryDate, jgid);
+    public List<Map<String, Object>> queryWzhldByDatePrintInfo(NisHlQueryReq nisHlQueryReq){
+    	List<NisWzhldResp> list = nisWzhldDao.queryPrintWzhldByDate(nisHlQueryReq);
     	List<NisWzhldResp> newList = new ArrayList<NisWzhldResp>();
     	for(NisWzhldResp resp : list) {
     		String dghl = resp.getDghl();
@@ -57,7 +58,8 @@ public class NisWzhldSer extends BaseManagerImp<NisWzhld,Integer> {
      					resp.setBqcs(bqStr[i]);
      					newList.add(resp);
      				}else {
-     					NisWzhldResp newResp = new NisWzhldResp();				
+     					NisWzhldResp newResp = new NisWzhldResp();			
+     					newResp.setJlxh(resp.getJlxh());
      					if(i < dgStr.length) {
      						newResp.setDghl(dgStr[i]);
      					}
@@ -68,6 +70,7 @@ public class NisWzhldSer extends BaseManagerImp<NisWzhld,Integer> {
      						newResp.setBqcs(bqStr[i]);
      					}
      					newList.add(newResp);
+     					newResp = null;
      				}
               	}
     		}else if(StrUtil.isNotBlank(dghl) && StrUtil.isNotBlank(hlzd)) {
@@ -81,6 +84,7 @@ public class NisWzhldSer extends BaseManagerImp<NisWzhld,Integer> {
      					newList.add(resp);
      				}else {
      					NisWzhldResp newResp = new NisWzhldResp();	
+     					newResp.setJlxh(resp.getJlxh());
      					if(i < dgStr.length) {
      						newResp.setDghl(dgStr[i]);
      					}
@@ -88,6 +92,7 @@ public class NisWzhldSer extends BaseManagerImp<NisWzhld,Integer> {
      						newResp.setHlzd(hlStr[i]);
      					}
      					newList.add(newResp);
+     					newResp = null;
      				}
      			 } 
              }else if(StrUtil.isNotBlank(dghl) && StrUtil.isNotBlank(bqcs)) {
@@ -101,6 +106,7 @@ public class NisWzhldSer extends BaseManagerImp<NisWzhld,Integer> {
      					newList.add(resp);
      				}else {
      					NisWzhldResp newResp = new NisWzhldResp();	
+     					newResp.setJlxh(resp.getJlxh());
      					if(i < dgStr.length) {
      						newResp.setDghl(dgStr[i]);
      					}
@@ -108,6 +114,7 @@ public class NisWzhldSer extends BaseManagerImp<NisWzhld,Integer> {
      						newResp.setBqcs(bqStr[i]);
      					}
      					newList.add(newResp);
+     					newResp = null;
      				}
      			 } 
              }else if(StrUtil.isNotBlank(hlzd) && StrUtil.isNotBlank(bqcs)) {
@@ -121,6 +128,7 @@ public class NisWzhldSer extends BaseManagerImp<NisWzhld,Integer> {
      					newList.add(resp);
      				}else {
      					NisWzhldResp newResp = new NisWzhldResp();	
+     					newResp.setJlxh(resp.getJlxh());
      					if(i < hlStr.length) {
      						resp.setHlzd(hlStr[i]);
      					}
@@ -128,6 +136,7 @@ public class NisWzhldSer extends BaseManagerImp<NisWzhld,Integer> {
      						resp.setBqcs(bqStr[i]);
      					}
      					newList.add(newResp);
+     					newResp = null;
      				}
      			 } 
              }else if(StrUtil.isNotBlank(dghl)) {
@@ -138,8 +147,10 @@ public class NisWzhldSer extends BaseManagerImp<NisWzhld,Integer> {
      					newList.add(resp);
      				 }else {
      					NisWzhldResp newResp = new NisWzhldResp();
+     					newResp.setJlxh(resp.getJlxh());
      					newResp.setDghl(str[i]);
      					newList.add(newResp);
+     					newResp = null;
      				 }
      			 }
              }else if(StrUtil.isNotBlank(hlzd)) {
@@ -150,8 +161,10 @@ public class NisWzhldSer extends BaseManagerImp<NisWzhld,Integer> {
      					newList.add(resp);
      				 }else {
      					NisWzhldResp newResp = new NisWzhldResp();
+     					newResp.setJlxh(resp.getJlxh());
      					newResp.setHlzd(str[i]);
      					newList.add(newResp);
+     					newResp = null;
      				 }
      			 }
              }else if(StrUtil.isNotBlank(bqcs)) {
@@ -162,8 +175,10 @@ public class NisWzhldSer extends BaseManagerImp<NisWzhld,Integer> {
      					newList.add(resp);
      				 }else {
      					NisWzhldResp newResp = new NisWzhldResp();
+     					newResp.setJlxh(resp.getJlxh());
      					newResp.setBqcs(str[i]);
      					newList.add(newResp);
+     					newResp = null;
      				 }
      			 }
              }else {

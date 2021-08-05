@@ -430,8 +430,7 @@ public class NurseworkSer extends BaseManagerImp<ImHzry, Integer> {
         long ptCount = 0L;
         long ztCount = 0L;
         if(!ptList.isEmpty()) {
-        	//查询是否存在未做皮试的医嘱
-            List<Map<String, Object>> listMap = cisHzyzDao.queryIsNeedSkinTestBatch(user.getHospitalId(), null, ptList);
+
             //查询未审批或审批不通过的抗菌药物
             List<Map<String, Object>> kjywlistMap = cisHzyzDao.queryNotApprovedKjywBatch(user.getHospitalId(), null, ptList);
             
@@ -439,20 +438,6 @@ public class NurseworkSer extends BaseManagerImp<ImHzry, Integer> {
             
             boolean flag = false;
             List<Integer> list = new ArrayList<Integer>();
-            if (CollectionUtils.isNotEmpty(listMap)) {
-                flag = true;
-                StringBuffer str = new StringBuffer();
-                ReturnEntity<String> returnEntity = new ReturnEntity<String>();
-                for (Map<String, Object> map : listMap) {
-                    list.add(ObjectToTypes.parseInt(map.get("YZZH")));
-                    str.append(ObjectToTypes.parseInt(map.get("YZMC"))).append(",");
-                }
-                str.deleteCharAt(str.length() - 1);
-                returnEntity.setError("ERROR_NURSEWORK_ZYBRRY_00044", new String[]{
-                        str.toString()
-                });
-                cisHzyzReviewResp.setWarningMessage(returnEntity.getMessage());
-            }
             if (CollectionUtils.isNotEmpty(kjywlistMap)) {
                 flag = true;
                 StringBuffer str = new StringBuffer();
@@ -479,7 +464,6 @@ public class NurseworkSer extends BaseManagerImp<ImHzry, Integer> {
                 zlRwfpService.add(yzjlxhList);
             }
         }
-        
         List<Integer> ztList = reqList.stream().filter(o -> (o.getZtbz() != null && o.getZtbz() == 1))
 				.map(CisHzyzReviewReq::getJlxh).collect(Collectors.toList());
         if(!ztList.isEmpty()) {
@@ -2839,25 +2823,10 @@ public class NurseworkSer extends BaseManagerImp<ImHzry, Integer> {
   
         //查询是否存在未做皮试的医嘱(皮试只存在医嘱)
         List<Integer> listInt = new ArrayList<Integer>();
+
         if(!jlxhList.isEmpty()) {
-        	 List<Map<String, Object>> listMap = cisHzyzDao.queryIsNeedSkinTestBatch(jgid, req.getSrks(), jlxhList);
              //批量查询抗菌药物未审批或审批不通过
              List<Map<String, Object>> kjywlistMap = cisHzyzDao.queryNotApprovedKjywBatch(jgid, req.getSrks(), jlxhList);
-             if (CollectionUtils.isNotEmpty(listMap)) {
-                 StringBuffer str = new StringBuffer();
-                 ReturnEntity<String> returnEntity = new ReturnEntity<String>();
-                 for (Map<String, Object> map : listMap) {
-                     listInt.add(ObjectToTypes.parseInt(map.get("YZZH")));
-                     str.append(ObjectToTypes.parseString(map.get("YZMC"))).append(",");
-                 }
-                 if (str.length() > 0) {
-                     str.deleteCharAt(str.length() - 1);
-                     returnEntity.setError("ERROR_NURSEWORK_ZYBRRY_00045", new String[]{
-                             str.toString()
-                     });
-                     cisHzyzReviewBatchResp.setWarningMessage(returnEntity.getMessage());
-                 }
-             }
              if (CollectionUtils.isNotEmpty(kjywlistMap)) {
                  StringBuffer str = new StringBuffer();
                  ReturnEntity<String> returnEntity = new ReturnEntity<String>();
@@ -2909,7 +2878,6 @@ public class NurseworkSer extends BaseManagerImp<ImHzry, Integer> {
                 }
             }
         }
-        
         cisHzyzReviewBatchResp.setTsbz(tsbz);
         return cisHzyzReviewBatchResp;
     }

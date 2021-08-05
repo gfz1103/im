@@ -34,7 +34,16 @@ public class CisHzyzStopCheckReq {
     @NotNull(message = "长期临时医嘱类型不能为空")
     @ApiModelProperty(value="临时医嘱")
     private Integer lsyz;
-
+    
+    @ApiModelProperty(value="皮试判别")
+    private Integer pspb;
+    
+    @ApiModelProperty(value="过敏药物类别")
+    private Integer gmywlb;
+    
+    @ApiModelProperty(value="病人id")
+    private Integer brid;
+    
 	public Integer getJlxh() {
 		return jlxh;
 	}
@@ -73,6 +82,30 @@ public class CisHzyzStopCheckReq {
 
 	public void setLsyz(Integer lsyz) {
 		this.lsyz = lsyz;
+	}
+
+	public Integer getPspb() {
+		return pspb;
+	}
+
+	public void setPspb(Integer pspb) {
+		this.pspb = pspb;
+	}
+
+	public Integer getGmywlb() {
+		return gmywlb;
+	}
+
+	public void setGmywlb(Integer gmywlb) {
+		this.gmywlb = gmywlb;
+	}
+
+	public Integer getBrid() {
+		return brid;
+	}
+
+	public void setBrid(Integer brid) {
+		this.brid = brid;
 	}
     
     

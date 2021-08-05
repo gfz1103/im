@@ -16,6 +16,7 @@ import cn.hutool.core.util.StrUtil;
 import com.buit.cis.nurse.dao.NisHljldzdyDao;
 import com.buit.cis.nurse.dao.NisSjkjldDao;
 import com.buit.cis.nurse.enums.NursingTypeEnum;
+import com.buit.cis.nurse.request.NisHlQueryReq;
 import com.buit.cis.nurse.request.NisHljldzdyReq;
 import com.buit.cis.nurse.request.NisSjkjldReq;
 import com.buit.cis.nurse.response.NisSjkjldResp;
@@ -99,14 +100,14 @@ public class NisSjkjldSer extends BaseManagerImp<NisSjkjld,Integer> {
     	}
     }
     
-    public List<Map<String, Object>> querySjkjldByDatePrintInfo(Integer zyh, String queryDate, Integer jgid){
-    	 List<NisSjkjldResp> list = nisSjkjldDao.querySjkjldByDate(zyh, queryDate, jgid);
+    public List<Map<String, Object>> querySjkjldByDatePrintInfo(NisHlQueryReq nisHlQueryReq){
+    	 List<NisSjkjldResp> list = nisSjkjldDao.querySjkjldByDate(nisHlQueryReq);
          List<Map<String, Object>> listMap = BUHISUtil.ListObjToMap(list);
          List<Map<String, Object>> newList = new ArrayList<Map<String,Object>>();
         
          for (Map<String, Object> map : listMap) {
              List<Map<String, Object>> zdyList = nisHljldzdySer.getEntityMapper().queryZdynrByZdyId(
-                     ObjectToTypes.parseInt(map.get("jlxh")), NursingTypeEnum.neurologyRecords.getCode(), jgid);
+                     ObjectToTypes.parseInt(map.get("jlxh")), NursingTypeEnum.neurologyRecords.getCode(), nisHlQueryReq.getJgid());
              if (CollectionUtils.isNotEmpty(zdyList)) {
                  for (int i = 0; i < zdyList.size(); i++) {
                      map.put("zdyl" + (i + 1), zdyList.get(i).get("zdynr"));

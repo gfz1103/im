@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.buit.cis.nurse.model.NisGdhtwxysb;
 import com.buit.cis.nurse.request.NisGdhtwxysbReq;
+import com.buit.cis.nurse.request.NisHlQueryReq;
 import com.buit.cis.nurse.response.NisGdhtwxysbResp;
 import com.buit.cis.nurse.service.NisGdhtwxysbSer;
 import com.buit.cis.nurse.service.NisHzmbSer;
@@ -59,11 +60,9 @@ public class NisGdhtwxysbCtr extends BaseSpringController{
     @RequestMapping("/queryGdhtwByDate")
     @ResponseBody
     @ApiOperation(value="根据日期查询道滑脱危险因素表" ,httpMethod="POST")
-    public ReturnEntity<List<NisGdhtwxysbResp>> queryGdhtwByDate(@ApiParam(name = "zyh", value = "住院号", required = true)
-    @RequestParam Integer zyh, @ApiParam(name = "queryDate", value = "查询时间(M-d)", required = false)
-    @RequestParam(value="queryDate", required = false) String queryDate){
-        return ReturnEntityUtil.success(nisGdhtwxysbSer.getEntityMapper().queryGdhtwByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId()));
+    public ReturnEntity<List<NisGdhtwxysbResp>> queryGdhtwByDate(NisHlQueryReq nisHlQueryReq){
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+        return ReturnEntityUtil.success(nisGdhtwxysbSer.getEntityMapper().queryGdhtwByDate(nisHlQueryReq));
     }
     
     @RequestMapping("/saveGdhtw")
@@ -94,10 +93,10 @@ public class NisGdhtwxysbCtr extends BaseSpringController{
   
     @GetMapping("/pipeSlippagePrint")
     @ApiOperation(value="管道滑脱危险因素表打印")
-    public void pipeSlippagePrint(@RequestParam(value="zyh") Integer zyh, @RequestParam(value="queryDate", required = false) String queryDate,
+    public void pipeSlippagePrint(NisHlQueryReq nisHlQueryReq,
     		HttpServletResponse response){
-    	List<Map<String, Object>> list = nisGdhtwxysbSer.getEntityMapper().queryPrintGdhtwByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId());
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+    	List<Map<String, Object>> list = nisGdhtwxysbSer.getEntityMapper().queryPrintGdhtwByDate(nisHlQueryReq);
         String jasperName = "jrxml/PipeSlippagePrint.jasper";
         nisHzmbSer.ComplementEmptyline(list, 16);
         iReportExportFileSer.reportHtmlForStream(list, null, jasperName, response);

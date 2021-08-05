@@ -20,6 +20,7 @@ import com.buit.cis.nurse.dao.NisCghljldDao;
 import com.buit.cis.nurse.dao.NisHljldzdyDao;
 import com.buit.cis.nurse.enums.NursingTypeEnum;
 import com.buit.cis.nurse.request.NisCghljldReq;
+import com.buit.cis.nurse.request.NisHlQueryReq;
 import com.buit.cis.nurse.request.NisHljldzdyReq;
 import com.buit.cis.nurse.response.NisCghljldResp;
 import com.buit.cis.nurse.response.NisWzhldResp;
@@ -101,13 +102,13 @@ public class NisCghljldSer extends BaseManagerImp<NisCghljld,Integer> {
     	}
     }
     
-    public List<Map<String, Object>> queryNisCghljldByDatePrintInfo(Integer zyh, String queryDate, Integer jgid){
-    	 List<NisCghljldResp> list = nisCghljldDao.queryCgHljlByDate(zyh, queryDate, jgid);
+    public List<Map<String, Object>> queryNisCghljldByDatePrintInfo(NisHlQueryReq nisHlQueryReq){
+    	 List<NisCghljldResp> list = nisCghljldDao.queryCgHljlByDate(nisHlQueryReq);
          List<Map<String, Object>> listMap = BUHISUtil.ListObjToMap(list);
          List<Map<String, Object>> newList = new ArrayList<Map<String,Object>>();
          for (Map<String, Object> map : listMap) {
              List<Map<String, Object>> zdyList = nisHljldzdySer.getEntityMapper().queryZdynrByZdyId(
-                     ObjectToTypes.parseInt(map.get("jlxh")), NursingTypeEnum.nursingRecord.getCode(), jgid);
+                     ObjectToTypes.parseInt(map.get("jlxh")), NursingTypeEnum.nursingRecord.getCode(), nisHlQueryReq.getJgid());
              if (CollectionUtils.isNotEmpty(zdyList)) {
                  for (int i = 0; i < zdyList.size(); i++) {
                      map.put("zdyl" + (i + 1), zdyList.get(i).get("zdynr"));
@@ -202,8 +203,8 @@ public class NisCghljldSer extends BaseManagerImp<NisCghljld,Integer> {
      * @author 龚方舟
      * @throws
      */
-    public List<NisCghljldResp> queryNisCghljldByDateInfo(Integer zyh, String queryDate, Integer jgid){
-   	 	List<NisCghljldResp> list = nisCghljldDao.queryCgHljlByDate(zyh, queryDate, jgid);
+    public List<NisCghljldResp> queryNisCghljldByDateInfo(NisHlQueryReq nisHlQueryReq){
+   	 	List<NisCghljldResp> list = nisCghljldDao.queryCgHljlByDate(nisHlQueryReq);
    	 	List<NisCghljldResp> newList = new ArrayList<NisCghljldResp>();
 	    for (NisCghljldResp resp : list) {	
 	        String dglx = resp.getDglx();

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.buit.cis.nurse.model.NisZspdl;
+import com.buit.cis.nurse.request.NisHlQueryReq;
 import com.buit.cis.nurse.request.NisZspdlReq;
 import com.buit.cis.nurse.response.NisZspdlResp;
 import com.buit.cis.nurse.service.NisHzmbSer;
@@ -58,11 +59,9 @@ public class NisZspdlCtr extends BaseSpringController{
     @RequestMapping("/queryZspdlByDate")
     @ResponseBody
     @ApiOperation(value="根据日期查询Barthel指数评定量表" ,httpMethod="POST")
-    public ReturnEntity<List<NisZspdlResp>> queryZspdlByDate(@ApiParam(name = "zyh", value = "住院号", required = true)
-    @RequestParam Integer zyh, @ApiParam(name = "queryDate", value = "查询时间(M-d)", required = false)
-    @RequestParam(value="queryDate", required = false) String queryDate){
-        return ReturnEntityUtil.success(nisZspdlSer.getEntityMapper().queryZspdlByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId()));
+    public ReturnEntity<List<NisZspdlResp>> queryZspdlByDate(NisHlQueryReq nisHlQueryReq){
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+        return ReturnEntityUtil.success(nisZspdlSer.getEntityMapper().queryZspdlByDate(nisHlQueryReq));
     }
     
     @RequestMapping("/saveZspdl")
@@ -93,10 +92,10 @@ public class NisZspdlCtr extends BaseSpringController{
     
     @GetMapping("/indexRatingScalePrint")
     @ApiOperation(value="Barthel指数评定量表打印")
-    public void indexRatingScalePrint(@RequestParam(value="zyh") Integer zyh, @RequestParam(value="queryDate", required = false) String queryDate,
+    public void indexRatingScalePrint(NisHlQueryReq nisHlQueryReq,
     		HttpServletResponse response){
-    	List<Map<String, Object>> list = nisZspdlSer.getEntityMapper().queryPrintZspdlByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId());
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+    	List<Map<String, Object>> list = nisZspdlSer.getEntityMapper().queryPrintZspdlByDate(nisHlQueryReq);
         String jasperName = "jrxml/IndexRatingScalePrint.jasper";
         nisHzmbSer.ComplementEmptyline(list, 18);
         iReportExportFileSer.reportHtmlForStream(list, null, jasperName, response);

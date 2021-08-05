@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.buit.cis.nurse.request.NisBqyjpgdReq;
+import com.buit.cis.nurse.request.NisHlQueryReq;
 import com.buit.cis.nurse.response.NisBqyjpgdResp;
 import com.buit.cis.nurse.service.NisBqyjpgdSer;
 import com.buit.cis.nurse.service.NisHzmbSer;
@@ -58,11 +59,9 @@ public class NisBqyjpgdCtr extends BaseSpringController{
     @RequestMapping("/queryBqyjpgdByDate")
     @ResponseBody
     @ApiOperation(value="根据日期查询患者病情预警评估单" ,httpMethod="POST")
-    public ReturnEntity<List<NisBqyjpgdResp>> queryBqyjpgdByDate(@ApiParam(name = "zyh", value = "住院号", required = true)
-    @RequestParam Integer zyh, @ApiParam(name = "queryDate", value = "查询时间(M-d)", required = false)
-    @RequestParam(value="queryDate", required = false) String queryDate){
-        return ReturnEntityUtil.success(nisBqyjpgdSer.getEntityMapper().queryBqyjpgdByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId()));
+    public ReturnEntity<List<NisBqyjpgdResp>> queryBqyjpgdByDate(NisHlQueryReq nisHlQueryReq){
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+        return ReturnEntityUtil.success(nisBqyjpgdSer.getEntityMapper().queryBqyjpgdByDate(nisHlQueryReq));
     }
   
     @RequestMapping("/saveBqyjpgd")
@@ -90,10 +89,10 @@ public class NisBqyjpgdCtr extends BaseSpringController{
 
     @GetMapping("/patientConditionWarningPrint")
     @ApiOperation(value="患者病情预警评估单打印")
-    public void patientConditionWarningPrint(@RequestParam(value="zyh") Integer zyh, @RequestParam(value="queryDate", required = false) String queryDate,
+    public void patientConditionWarningPrint(NisHlQueryReq nisHlQueryReq,
     		HttpServletResponse response) {
-    	List<Map<String, Object>> list = nisBqyjpgdSer.getEntityMapper().queryPrintBqyjpgdByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId());
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+    	List<Map<String, Object>> list = nisBqyjpgdSer.getEntityMapper().queryPrintBqyjpgdByDate(nisHlQueryReq);
         String jasperName = "jrxml/PatientConditionWarningPrint.jasper";
         nisHzmbSer.ComplementEmptyline(list, 18);
 		iReportExportFileSer.reportHtmlForStream(list, null, jasperName, response);

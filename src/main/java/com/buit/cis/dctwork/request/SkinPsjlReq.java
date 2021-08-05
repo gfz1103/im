@@ -2,6 +2,8 @@
 package com.buit.cis.dctwork.request;
 
 
+import java.sql.Timestamp;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -38,6 +40,15 @@ public class SkinPsjlReq {
     
     @ApiModelProperty(value="药品序号(新)")
     private Integer ypxhnew;
+    
+    @ApiModelProperty(value="录入时间")
+    private Timestamp czsj;
+    
+    @ApiModelProperty(value="皮试时间")
+    private Timestamp pssj;
+    
+    @ApiModelProperty(value="药品序号(新)")
+    private Integer gmlb;
     
     /**
      * 设置:记录序号
@@ -162,6 +173,30 @@ public class SkinPsjlReq {
 	
 	public void setYpxhnew(Integer ypxhnew) {
 		this.ypxhnew = ypxhnew;
+	}
+	
+	public Timestamp getCzsj() {
+		return czsj;
+	}
+	
+	public void setCzsj(Timestamp czsj) {
+		this.czsj = czsj;
+	}
+	
+	public Timestamp getPssj() {
+		return pssj;
+	}
+	
+	public void setPssj(Timestamp pssj) {
+		this.pssj = pssj;
+	}
+	
+	public Integer getGmlb() {
+		return gmlb;
+	}
+	
+	public void setGmlb(Integer gmlb) {
+		this.gmlb = gmlb;
 	}  
 	
 	

@@ -1,9 +1,8 @@
    
 package com.buit.cis.dctwork.response;
 
-import java.sql.Timestamp;
-
 import com.buit.commons.PageQuery;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -13,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 类描述：公用_病人皮试记录<br>
  * @author GONGFANGZHOU
  */
-@ApiModel(value="公用_病人皮试记录")
+@ApiModel(value="公用_病人皮试记录_Resp")
 public class SkinPsjlResp  extends  PageQuery{
     @ApiModelProperty(value="记录序号")
     private Integer jlxh;

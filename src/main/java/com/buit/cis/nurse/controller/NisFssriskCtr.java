@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.buit.cis.nurse.request.NisFssriskReq;
+import com.buit.cis.nurse.request.NisHlQueryReq;
 import com.buit.cis.nurse.response.NisFssriskResp;
 import com.buit.cis.nurse.service.NisFssriskSer;
 import com.buit.cis.nurse.service.NisHzmbSer;
@@ -58,11 +59,9 @@ public class NisFssriskCtr extends BaseSpringController{
     @RequestMapping("/queryFssriskByDate")
     @ResponseBody
     @ApiOperation(value="根据日期查询肺栓塞风险因素评估表" ,httpMethod="POST")
-    public ReturnEntity<List<NisFssriskResp>> queryFssriskByDate(@ApiParam(name = "zyh", value = "住院号", required = true)
-    @RequestParam Integer zyh, @ApiParam(name = "queryDate", value = "查询时间(M-d)", required = false)
-    @RequestParam(value="queryDate", required = false) String queryDate){
-        return ReturnEntityUtil.success(nisFssriskSer.getEntityMapper().queryFssriskByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId()));
+    public ReturnEntity<List<NisFssriskResp>> queryFssriskByDate(NisHlQueryReq nisHlQueryReq){
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+        return ReturnEntityUtil.success(nisFssriskSer.getEntityMapper().queryFssriskByDate(nisHlQueryReq));
     }
   
     @RequestMapping("/saveFssrisk")
@@ -90,10 +89,10 @@ public class NisFssriskCtr extends BaseSpringController{
     
     @GetMapping("/pulmonaryEmbolismPrint")
     @ApiOperation(value="肺栓塞风险因素评估表打印")
-    public void pulmonaryEmbolismPrint(@RequestParam(value="zyh") Integer zyh, @RequestParam(value="queryDate", required = false) String queryDate,
+    public void pulmonaryEmbolismPrint(NisHlQueryReq nisHlQueryReq,
     		HttpServletResponse response){
-    	List<Map<String, Object>> list = nisFssriskSer.getEntityMapper().queryPrintFssriskByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId());
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+    	List<Map<String, Object>> list = nisFssriskSer.getEntityMapper().queryPrintFssriskByDate(nisHlQueryReq);
         String jasperName = "jrxml/PulmonaryEmbolismPrint.jasper";
         nisHzmbSer.ComplementEmptyline(list, 18);
         iReportExportFileSer.reportHtmlForStream(list, null, jasperName, response);

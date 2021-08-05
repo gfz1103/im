@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -42,6 +43,7 @@ import com.buit.cis.nurse.request.CisHzyzCardCancelReq;
 import com.buit.cis.nurse.request.CisHzyzCardReTypeReq;
 import com.buit.cis.nurse.request.CisHzyzCardReq;
 import com.buit.cis.nurse.response.CisHzyzCancelPrintResp;
+import com.buit.cis.nurse.request.CisHzyzMenuReq;
 import com.buit.commons.BaseManagerImp;
 import com.buit.commons.SysUser;
 import com.buit.constans.SysXtcsCsmcCts;
@@ -1133,7 +1135,9 @@ public class NurseOrderCardSer extends BaseManagerImp<CisHzyz,Integer> {
 							}
 						}
 					}	
-					chlidMap.put("ypyf", iReportExportFileSer.conVerDataSource(newList));
+					chlidMap.put("ypyf", iReportExportFileSer.conVerDataSource(newList.stream().sorted(
+							Comparator.comparing(o -> ObjectToTypes.parseInt(o.get("yzzh")))).sorted(
+									Comparator.comparing(o -> ObjectToTypes.parseString(o.get("yzzxsj")))).collect(Collectors.toList())));
 				}
 			}
 		}
@@ -1552,6 +1556,58 @@ public class NurseOrderCardSer extends BaseManagerImp<CisHzyz,Integer> {
 			date = DateUtil.offset(date, DateField.DAY_OF_MONTH, 2);
 		}
 		return date;
+	}
+
+	public Map<String, Object> getOrderMenuParameters(CisHzyzMenuReq cisHzyzMenuReq, SysUser user) {
+		Map<String, Object> responseMap = new HashMap<String, Object>(16);
+		if(cisHzyzMenuReq.getType() == 1) {
+			responseMap.put("title", dicKszdOutSer.getNameById(cisHzyzMenuReq.getBqdm()) + "点菜单");
+		}else if(cisHzyzMenuReq.getType() == 3) {
+			responseMap.put("SUBREPORT_DIR", this.getClass().getClassLoader().getResource("jrxml/"));
+			responseMap.put("pzrq", DateUtil.format(DateUtil.date(), DatePattern.NORM_DATETIME_PATTERN));
+			responseMap.put("title", user.getHospitalName() + "营养科制");
+		}
+		
+		return responseMap;
+	}
+
+	public List<Map<String, Object>> orderMenuPrintFileds(CisHzyzMenuReq cisHzyzMenuReq, SysUser user) {
+		if(cisHzyzMenuReq.getType() == 1) {
+			return cisHzyzDao.queryDietList(user.getHospitalId(), cisHzyzMenuReq.getZyhList(), null, null);
+		}else if(cisHzyzMenuReq.getType() == 2) {
+			List<Map<String, Object>> noonList = cisHzyzDao.queryDietList(user.getHospitalId(), cisHzyzMenuReq.getZyhList(), null, null);
+			List<Map<String, Object>> afterList = new ArrayList<Map<String,Object>>();
+			for(Map<String, Object> noonMap : noonList) {
+				noonMap.put("kpmc", "午餐");
+				noonMap.put("dyrq", DateUtil.date().toSqlDate());
+				Map<String, Object> afterMap = new HashMap<String, Object>(16);
+				afterMap.putAll(noonMap);
+				afterMap.put("kpmc", "晚餐");
+				afterList.add(afterMap);
+			}
+			noonList.addAll(afterList);
+			return noonList.stream().sorted(Comparator.comparing(o -> ObjectToTypes.parseString(
+					o.get("brch")))).collect(Collectors.toList());
+		}else if(cisHzyzMenuReq.getType() == 3) {
+			List<Map<String, Object>> respList = new ArrayList<Map<String,Object>>();
+			List<Map<String, Object>> list = cisHzyzDao.querySpecialMedicalDiet(user.getHospitalId(), cisHzyzMenuReq.getZyhList());
+			Map<String, List<Map<String, Object>>> groups = list.stream().
+        			collect(Collectors.groupingBy(o -> ObjectToTypes.parseString(o.get("zyhm")), LinkedHashMap::new, Collectors.toList()));
+			for(Map.Entry<String, List<Map<String, Object>>> entry : groups.entrySet()) {
+				Map<String, Object> map = new HashMap<String, Object>(16);
+				map.put("brxm", entry.getValue().get(0).get("brxm"));
+				map.put("birthday", entry.getValue().get(0).get("birthday"));
+				map.put("zyhm", entry.getValue().get(0).get("zyhm"));
+				map.put("bqmc", entry.getValue().get(0).get("bqmc"));
+				map.put("brxb", entry.getValue().get(0).get("brxb"));
+				map.put("brch", entry.getValue().get(0).get("brch"));
+				map.put("ksmc", entry.getValue().get(0).get("ksmc"));
+				map.put("child", iReportExportFileSer.conVerDataSource(entry.getValue()));
+				respList.add(map);
+			}
+			return respList;
+		}
+		return null;
 	}
 	
 	public List<CisHzyzCancelPrintResp> queryCancelPrintList(CisHzyzCardReq cisHzyzCardReq, Integer hospitalId) {

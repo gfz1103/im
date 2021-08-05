@@ -154,6 +154,9 @@ public class CisHzyzCommonResp {
     @ApiModelProperty(value="作废判别")
     private Integer zfpb;
     
+    @ApiModelProperty(value="过敏药物类别")
+    private Integer gmywlb;
+    
     @ApiModelProperty(value="产地集合")
     private List<CisHzyzYpcdDetailResp> ypcdList;
 
@@ -517,14 +520,6 @@ public class CisHzyzCommonResp {
 		this.blfy = blfy;
 	}
 
-	public List<CisHzyzYpcdDetailResp> getYpcdList() {
-		return ypcdList;
-	}
-
-	public void setYpcdList(List<CisHzyzYpcdDetailResp> ypcdList) {
-		this.ypcdList = ypcdList;
-	}
-
 	public Integer getZfpb() {
 		return zfpb;
 	}
@@ -532,6 +527,20 @@ public class CisHzyzCommonResp {
 	public void setZfpb(Integer zfpb) {
 		this.zfpb = zfpb;
 	}
-	
-	
+		
+	public Integer getGmywlb() {
+		return gmywlb;
+	}
+
+	public void setGmywlb(Integer gmywlb) {
+		this.gmywlb = gmywlb;
+	}
+
+	public List<CisHzyzYpcdDetailResp> getYpcdList() {
+		return ypcdList;
+	}
+
+	public void setYpcdList(List<CisHzyzYpcdDetailResp> ypcdList) {
+		this.ypcdList = ypcdList;
+	}
 }

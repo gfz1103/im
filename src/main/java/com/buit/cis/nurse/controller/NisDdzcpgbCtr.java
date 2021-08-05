@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.buit.cis.nurse.model.NisDdzcpgb;
 import com.buit.cis.nurse.request.NisDdzcpgbReq;
+import com.buit.cis.nurse.request.NisHlQueryReq;
 import com.buit.cis.nurse.response.NisDdzcpgbResp;
 import com.buit.cis.nurse.service.NisDdzcpgbSer;
 import com.buit.cis.nurse.service.NisHzmbSer;
@@ -58,11 +59,9 @@ public class NisDdzcpgbCtr extends BaseSpringController{
     @RequestMapping("/queryDdzcpgbByDate")
     @ResponseBody
     @ApiOperation(value="根据日期查询跌倒、坠床危险因素评估表" ,httpMethod="POST")
-    public ReturnEntity<List<NisDdzcpgbResp>> queryDdzcpgbByDate(@ApiParam(name = "zyh", value = "住院号", required = true)
-    @RequestParam Integer zyh, @ApiParam(name = "queryDate", value = "查询时间(M-d)", required = false)
-    @RequestParam(value="queryDate", required = false) String queryDate){
-        return ReturnEntityUtil.success(nisDdzcpgbSer.getEntityMapper().queryDdzcpgbByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId()));
+    public ReturnEntity<List<NisDdzcpgbResp>> queryDdzcpgbByDate(NisHlQueryReq nisHlQueryReq){
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+        return ReturnEntityUtil.success(nisDdzcpgbSer.getEntityMapper().queryDdzcpgbByDate(nisHlQueryReq));
     }
     
     @RequestMapping("/saveDdzcpgb")
@@ -93,10 +92,10 @@ public class NisDdzcpgbCtr extends BaseSpringController{
     
     @GetMapping("/fallingBedPrint")
     @ApiOperation(value="跌倒、坠床危险因素评估表打印")
-    public void fallingBedPrint(@RequestParam(value="zyh") Integer zyh, @RequestParam(value="queryDate", required = false) String queryDate,
+    public void fallingBedPrint(NisHlQueryReq nisHlQueryReq,
     		HttpServletResponse response){
-    	List<Map<String, Object>> list = nisDdzcpgbSer.getEntityMapper().queryPrintDdzcpgbByDate(zyh, 
-        		queryDate, this.getUser().getHospitalId());
+    	nisHlQueryReq.setJgid(this.getUser().getHospitalId());
+    	List<Map<String, Object>> list = nisDdzcpgbSer.getEntityMapper().queryPrintDdzcpgbByDate(nisHlQueryReq);
         nisHzmbSer.ComplementEmptyline(list, 16);
         String jasperName = "jrxml/FallingBedPrint.jasper";
         iReportExportFileSer.reportHtmlForStream(list, null, jasperName, response);

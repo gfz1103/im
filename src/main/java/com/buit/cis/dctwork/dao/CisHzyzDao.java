@@ -1623,4 +1623,7 @@ public interface CisHzyzDao extends EntityDao<CisHzyz, Integer> {
      */
     String queryNotReviewedDischargeOrder(@Param("zyh") Integer zyh, @Param("jgid") Integer jgid);
 
+
+    List<Map<String, Object>> querySpecialMedicalDiet(@Param("jgid") Integer jgid, 
+    		@Param("zyhList") List<Integer> zyhList);
 }
